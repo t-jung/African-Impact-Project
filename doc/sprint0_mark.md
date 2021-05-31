@@ -73,7 +73,7 @@
     - 1 mark  = Part of the stories do not mention persona
     - 0 marks = No personas mentioned in user stories
 
-    Your mark: 0
+    Your mark: 1
 
   - All user stories identify goal/desire and all identify why/benefit (max 2 marks) 
 
@@ -91,7 +91,7 @@
 
     Your mark: 2
 
-  PB.md Total Mark: 6 / 8
+  PB.md Total Mark: 7 / 8
 
 ---
 
@@ -253,7 +253,7 @@
 
 ## Total Mark  
 
-Sprint 0 Total Mark : 42 / 45   
+Sprint 0 Total Mark : 43 / 45   
 
 **Notes:** Great done.md, I recommend adding it as a PULL_REQUEST_TEMPLATE.md into your repo so that the criteria can be checked off for each PR.
 
