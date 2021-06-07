@@ -4,14 +4,24 @@ import './ProfileForm.css'
 import React from 'react';
 // import { VisualViewport, image, StyleSheet } from 'react-native';
 
-const ProfileForm = () => {
+const ProfileForm = ({userID}) => {
+    // User userID to get the following details:
+    var userName = "User Name Here";
+    var profilePic = "https://cdn.discordapp.com/attachments/486906466951888896/851098437960335400/stick33er.webp";
+    var userEmail = "userName.cscc01@email.com";
+    var userPhone = "+1 000-0000-0000";
+    var description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     return (
         <div>
             <div class="topContainer">
                 <div class="d-flex flex-row">
-                    <div><NameCard /></div>
+                    <div><NameCard
+                        userName={userName}
+                        profilePic={profilePic}
+                        userEmail={userEmail}
+                        userPhone={userPhone}/></div>
                     <div class="align-self-center flex-grow-1">
-                        <div class=""><InfoCard /></div>
+                        <div class=""><InfoCard info={description}/></div>
                     </div>
                     
                 </div>
@@ -33,17 +43,18 @@ const ProfileForm = () => {
     );
 }
 
-const NameCard = () => {
+const NameCard = ({userName, userPhone, profilePic, userEmail}) => {
+
     return (
         <div class="nameCard">
             <div class="p-2 align-self-center">
                 <img class="profilePicture"
-                    src="https://cdn.discordapp.com/attachments/486906466951888896/851098437960335400/stick33er.webp"
+                    src={profilePic}
             />
             </div>
             <div class="p-2 align-self-center">
-                <h4 class="userName">userName Here</h4>
-                <h5>email here | telephone number here</h5>
+                <h4 class="userName">{userName}</h4>
+                <h5>{userEmail} | {userPhone}</h5>
                 <div class="d-flex">
                     <button class="btn message text-uppercase btn-block">message</button>
                     <button class="btn follow text-uppercase btn-block">follow</button>
@@ -55,11 +66,11 @@ const NameCard = () => {
 
 }
 
-const InfoCard = () => {
+const InfoCard = ({info}) => {
     return (
         <div class="infoCard">
             <div class="d-flex flex-column align-self-md-center">
-                <h5>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</h5>
+                <h5>{info}</h5>
             </div>
         </div>
 
@@ -102,7 +113,10 @@ const LessonBoard = () => {
 
 const CompanyMembers = () => {
     return(
-        <div class="d-flex flex-row"></div>
+        <div class="d-flex flex-row">
+            
+
+        </div>
     )
 }
 
