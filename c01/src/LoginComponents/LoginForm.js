@@ -23,11 +23,12 @@ const LoginForm = () => {
                                     <input type="checkbox" class="form-check-input" id="check" />
                                     <label for="check" class="form-check-label">Remember password</label>
                                 </div>
-                                <button class="btn btn-lg btn-primary text-uppercase btn-block">sign in</button>
+                                <button class="btn btn-primary text-uppercase btn-block">sign in</button>
+                                <button class="btn btn-secondary text-uppercase btn-block">register</button>
                                 <hr />
-                                <button class="btn gbtn btn-lg  text-uppercase btn-block">sign in with google</button>
+                                <button class="btn gbtn text-uppercase btn-block">sign in with google</button>
                                 <br />
-                                <button class="btn fbbtn btn-lg  text-uppercase btn-block">sign in with facebook</button>
+                                <button class="btn fbbtn text-uppercase btn-block">sign in with facebook</button>
                             </form>
                         </div>
                     </div>

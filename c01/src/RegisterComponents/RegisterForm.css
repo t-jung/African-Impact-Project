@@ -1,0 +1,26 @@
+
+  .container {  
+      padding: 50px;  
+    background-color: lightblue;  
+  }  
+    
+  .card {
+	margin-top: 60px;
+	background-color: #ffffff;
+	border-radius: 20px ;
+	padding: 40px;
+}
+
+.btn {
+    border-radius: 800px;
+    font-size: 70%;
+    font-weight: bold;
+    padding: 15px;
+    letter-spacing: 1px;
+	background-color: blue;
+  }
+
+.text{
+    border: none ;
+    border-color: transparent;
+  }
