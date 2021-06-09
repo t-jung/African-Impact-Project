@@ -7,12 +7,14 @@ import React from 'react';
 const ProfileForm = ({userID}) => {
     // User userID to get the following details:
     var userName = "User Name Here";
-    var profilePic = "https://cdn.discordapp.com/attachments/486906466951888896/851098437960335400/stick33er.webp";
+    var profilePic = "https://i1.sndcdn.com/artworks-Z8AyljiXPrMSNaPb-ecOERw-t500x500.jpg";
     var userEmail = "userName.cscc01@email.com";
     var userPhone = "+1 000-0000-0000";
     var description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    var show = true;
     return (
         <div>
+            <div><EditButton show={show}/></div>
             <div class="topContainer">
                 <div class="d-flex flex-row">
                     <div><NameCard
@@ -41,6 +43,18 @@ const ProfileForm = ({userID}) => {
         </div>
 
     );
+}
+
+const EditButton = ({show}) => {
+    if(show == true) {
+        return (
+            <div >
+                <button class="btn">Edit</button>
+            </div>
+        )
+    } else {
+        return(<div></div>)
+    }
 }
 
 const NameCard = ({userName, userPhone, profilePic, userEmail}) => {
