@@ -1,13 +1,55 @@
+.bigContainer{
+    display: flex;
+    flex-direction: column;
+}
+
 .topContainer{
-    height: 280px;
     margin: 5% 5%;
+    display: flex;
+}
+
+.bottomContainer{
+    display: flex;
+    flex-direction: row-reverse;
 }
 
 .nameCard{
     width: auto;
     min-width:max-content;
     display: flex;
-    justify-content: flex-start;
+}
+
+@media screen and (max-width: 1127px) {
+    .nameCard{
+        flex-direction: column;
+    }
+
+    .infoCard{
+        flex-direction: column;
+        text-align: center;
+        margin: auto;
+    }
+
+    .topContainer{
+        min-height: fit-content;
+        flex-direction: column;
+    }
+
+    .bottomContainer{
+        flex-direction: column;
+    }
+
+    .lessonBoard{
+        margin: 5%;
+        align-items: stretch;
+        min-width: 100vh;
+        display:flex;
+        flex-direction: row;
+    }
+
+    .lessonMargin{
+        margin: 5%;
+    }
 }
 
 .postBoard{
@@ -16,7 +58,7 @@
 }
 
 .infoCard{
-    padding-left: 10%;
+    margin-left: 5%;
 }
 
 .userName{
@@ -56,6 +98,7 @@
 .lessonBoard {
     max-width: 25vh;
     min-width: fit-content;
+    display: flex;
 }
 
 .lessonMargin {
