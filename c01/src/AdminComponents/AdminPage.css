@@ -1,0 +1,35 @@
+.header{
+    background-color: grey;
+    border-radius: 20px;
+    height: 150px;
+    padding: 1%;
+    margin: 1% 1%;
+}
+
+.btn{
+    background-color: lightblue;
+    margin-top: 1%;
+}
+
+.PendingBoard{
+    max-width: 25vh;
+}
+
+.pendingVerification {
+    margin-left: 1%;
+}
+
+.card{
+	background-color: #ffffff;
+	border-radius: 20px ;
+	padding: 40px;
+}
+
+.reports{
+    margin-left: 1%;
+}
+
+.ReportBoard{
+    max-width:100vh;
+    min-width:100vh;
+}
