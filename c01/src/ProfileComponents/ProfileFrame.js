@@ -1,12 +1,8 @@
 
-import './ProfileForm.css'
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import './ProfileFrame.css'
 import React from 'react';
-// import { VisualViewport, image, StyleSheet } from 'react-native';
 
-const ProfileForm = ({userID}) => {
+const ProfileFrame = ({userID}) => {
     // User userID to get the following details:
     var userName = "User Name Here";
     var profilePic = "https://i1.sndcdn.com/artworks-Z8AyljiXPrMSNaPb-ecOERw-t500x500.jpg";
@@ -134,4 +130,4 @@ const CompanyMembers = () => {
     )
 }
 
-export default ProfileForm
+export default ProfileFrame
