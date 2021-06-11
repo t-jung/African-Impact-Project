@@ -144,10 +144,6 @@ export const CompanyRegistrationForm = () => {
                                 <input type='text' class="form-control" placeholder='Got a link to your companies website?' />
                             </div>
                             <div className='form-group'>
-                                <label class='description'>Company Website</label>
-                                <input type='text' class="form-control" placeholder='Got a link to your companies website?' />
-                            </div>
-                            <div className='form-group'>
                                 <label class='description'>Company Description</label>   
                                 <textarea className="form-control multiText" placeholder='Tell us a little about your company.'/>
                             </div> 
