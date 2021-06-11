@@ -1,46 +1,53 @@
 
-import './ProfileForm.css'
-
+import './ProfileFrame.css'
 import React from 'react';
-// import { VisualViewport, image, StyleSheet } from 'react-native';
 
-const ProfileForm = ({userID}) => {
+const ProfileFrame = ({userID}) => {
     // User userID to get the following details:
     var userName = "User Name Here";
-    var profilePic = "https://cdn.discordapp.com/attachments/486906466951888896/851098437960335400/stick33er.webp";
+    var profilePic = "https://i1.sndcdn.com/artworks-Z8AyljiXPrMSNaPb-ecOERw-t500x500.jpg";
     var userEmail = "userName.cscc01@email.com";
     var userPhone = "+1 000-0000-0000";
     var description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    var show = true;
     return (
-        <div>
+        <div class="bigContainer">                   
+            <div><EditButton show={show}/></div>
             <div class="topContainer">
-                <div class="d-flex flex-row">
-                    <div><NameCard
-                        userName={userName}
-                        profilePic={profilePic}
-                        userEmail={userEmail}
-                        userPhone={userPhone}/></div>
-                    <div class="align-self-center flex-grow-1">
-                        <div class=""><InfoCard info={description}/></div>
-                    </div>
-                    
+                <div class="nameCard"><NameCard
+                    userName={userName}
+                    profilePic={profilePic}
+                    userEmail={userEmail}
+                    userPhone={userPhone}/></div>
+                <div class="align-self-center flex-grow-1">
+                    <div><InfoCard info={description}/></div>
                 </div>
             </div>
             <div class="bottomContainer">
-
-                <div class="d-flex flex-row">
-                    <div class="postBoard">
-                        <h2>Posts:</h2>
-                        <PostBoard/>
-                    </div>
-                    <div class="lessonMargin">
-                        <LessonBoard/>
-                    </div>
+                <div class="lessonMargin">
+                    <LessonBoard/>
                 </div>
+                <div class="postBoard">
+                    <h2>Posts:</h2>
+                    <PostBoard/>
+                </div>
+                
             </div>
         </div>
 
     );
+}
+
+const EditButton = ({show}) => {
+    if(show === true) {
+        return (
+            <div >
+                <button class="btn">Edit</button>
+            </div>
+        )
+    } else {
+        return(<div></div>)
+    }
 }
 
 const NameCard = ({userName, userPhone, profilePic, userEmail}) => {
@@ -99,13 +106,16 @@ const BlogPost = () => {
 
 
 const LessonBoard = () => {
+    var courses = ["Course 1", "Course 2"];
     return (
         <div>
-            <div class="lessonBoard card">
+            <div class="card">
                 <h4>Currently learning:</h4>
-                <li>Course 1</li>
-                <li>Course 2</li>
-            </div> 
+                <div class="lessonBoard">
+                    {courses.map(course => <pre>{course}, </pre>)}
+                </div> 
+            </div>
+
         </div>
 
     )
@@ -120,4 +130,4 @@ const CompanyMembers = () => {
     )
 }
 
-export default ProfileForm
+export default ProfileFrame
