@@ -50,6 +50,15 @@
     .lessonMargin{
         margin: 5%;
     }
+
+    .inputContainer{
+        flex-direction: column;
+    }
+
+    label.title{
+        min-width: fit-content;
+        text-align: center;
+    }
 }
 
 .postBoard{
@@ -103,4 +112,32 @@
 
 .lessonMargin {
     margin-right: 5%;
+}
+
+
+.navbar{
+    width: 5rem;
+    height: 100vh;
+    position: fixed;
+}
+
+label.title{
+    min-width: 15ch;
+    text-align: right;
+    vertical-align: center;
+    margin-right: 1rem;
+}
+
+.inputContainer{
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.multiText{
+    min-height: fit-content;
+}
+
+.formContainer{
+    margin-right: 5rem;
+    margin-left: 5rem;
 }
