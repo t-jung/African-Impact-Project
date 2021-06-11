@@ -2,6 +2,7 @@ import './App.css';
 import LoginForm from './LoginComponents/LoginForm'
 import ProfileEditForm from './ProfileComponents/ProfileEditForm'
 import RegisterForm from './RegisterComponents/RegisterForm'
+import PartnerRegistrationForm from './PartnerRegistrationFormComponents/PartnerRegistrationForm'
 import AdminPage from './AdminComponents/AdminPage';
 import ProfileFrame from './ProfileComponents/ProfileFrame';
 import CompanyForm from './LoginComponents/CompanyRegistrationForm'
@@ -18,6 +19,7 @@ function App() {
       <ProfileFrame /> <br/><br/><br/><br/>
       <ProfileEditForm /> <br/><br/><br/><br/>
       <AdminPage /> <br/><br/><br/><br/>
+      <PartnerRegistrationForm/> <br/><br/><br/><br/>
     </div>
   );
 }
