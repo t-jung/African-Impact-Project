@@ -1,0 +1,143 @@
+.bigContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+.topContainer{
+    margin: 5% 5%;
+    display: flex;
+}
+
+.bottomContainer{
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.nameCard{
+    width: auto;
+    min-width:max-content;
+    display: flex;
+}
+
+@media screen and (max-width: 1127px) {
+    .nameCard{
+        flex-direction: column;
+    }
+
+    .infoCard{
+        flex-direction: column;
+        text-align: center;
+        margin: auto;
+    }
+
+    .topContainer{
+        min-height: fit-content;
+        flex-direction: column;
+    }
+
+    .bottomContainer{
+        flex-direction: column;
+    }
+
+    .lessonBoard{
+        margin: 5%;
+        align-items: stretch;
+        min-width: 100vh;
+        display:flex;
+        flex-direction: row;
+    }
+
+    .lessonMargin{
+        margin: 5%;
+    }
+
+    .inputContainer{
+        flex-direction: column;
+    }
+
+    label.title{
+        min-width: fit-content;
+        text-align: center;
+    }
+}
+
+.postBoard{
+    margin-right: 1%;
+    margin-left: 5%;
+}
+
+.infoCard{
+    margin-left: 5%;
+}
+
+.userName{
+    text-align: center;
+}
+
+.sub{
+    margin-left: 10%;
+}
+
+.profilePicture{
+    width: 280px;
+    height: 280px;
+    border-radius: 140px;
+}
+
+.btn{
+    margin-right: 10px;
+}
+
+.message{
+    color: white;
+	background-color: rgb(63, 130, 255);
+}
+
+.follow{
+    color: white;
+	background-color: rgb(255, 109, 153);
+}
+
+.card {
+	background-color: #ffffff;
+	border-radius: 20px ;
+    margin-top: 0;
+}
+
+.lessonBoard {
+    max-width: 25vh;
+    min-width: fit-content;
+    display: flex;
+}
+
+.lessonMargin {
+    margin-right: 5%;
+}
+
+
+.navbar{
+    width: 5rem;
+    height: 100vh;
+    position: fixed;
+}
+
+label.title{
+    min-width: 15ch;
+    text-align: right;
+    vertical-align: center;
+    margin-right: 1rem;
+}
+
+.inputContainer{
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.multiText{
+    min-height: fit-content;
+}
+
+.formContainer{
+    margin-right: 5rem;
+    margin-left: 5rem;
+}
