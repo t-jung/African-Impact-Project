@@ -61,7 +61,7 @@ const PartnerRegistrationForm = () => {
                     </form>
                 </div>
                 <br/>
-                <button type="submit" class="btn">Register</button>   
+                <button type="submit" class="btn btn2">Register</button>   
         </div>
         </div>
     </div>     

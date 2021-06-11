@@ -18,7 +18,10 @@ input[type="text"].onclick{
 }
 
 .btn{
-    background-color: dimgrey;
     color: white;
     height: 50px;
+}
+
+.btn2{
+    background-color: dimgray;    
 }

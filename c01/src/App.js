@@ -10,6 +10,9 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 function App() {
   return (
     <div className="App">
+      <LoginForm/><br/><br/>
+      <RegisterForm/><br/><br/>
+      <ProfileForm/><br/><br/>
       <PartnerRegistrationForm/>  
     </div>
   );
