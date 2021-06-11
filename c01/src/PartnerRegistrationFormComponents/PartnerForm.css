@@ -1,81 +1,24 @@
-body{
-    background-image: url(https://upload.wikimedia.org/wikipedia/commons/f/f1/Huguenot_Monument_in_Franschhoek%2C_South_Africa.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
+
+input[type="text"]{
+    border-radius: 10px;
+    width: 100%;
+    border: 3px solid lightgray;
+    height: 35px; 
 }
 
-.rg-box{
-    background-color: rgba(240, 255, 240, 0.7);
-    border-radius: 20px;
-    margin: auto;
-    position: absolute;
-    display: block;
-    left: 20%;
-    right: 20%;
-    top: 50px;
-    min-width: 696px;
+input:focus{
+    outline: 0;
+    border-color: lightskyblue;
 }
 
-.rg-left{
-    float: left;
-    margin: 15px;
+input[type="text"].onclick{
+    border-radius: 10px;
+    border: 2px solid lightgray;
+    height: 35px; 
 }
 
-.rg-left > p:first-child{
-    color: navy;
-    font-size: 20px;
-}
-
-.rg-middle{
-    float: left;
-    margin: 15px;
-}
-
-.td_left{
-    text-align: left;
-    vertical-align: top;
-    height: 30px;
-    width: 250px;
-}
-
-.td_right{
-    padding-left: 50px;
-    vertical-align: top;
-}
-
-.btn_tb{
+.btn{
+    background-color: dimgrey;
+    color: white;
     height: 50px;
-    text-align: center;
-    vertical-align: bottom;
 }
-
-.form_header{
-    text-align: center;
-    background-color: rgb(238, 232, 170, 0.8);
-    border-radius: 5px;
-}
-
-#btn{
-    width: 150px;
-    height: 40px;
-    background-color:rgb(211, 211, 211, 0.5);
-    border: 3px solid rgba(105, 105, 105, 0.7);
-    border-radius: 4px;
-    font-size: 16px;
-}
-
-#btn:hover{background-color:rgba(105, 105, 105, 0.7)}
-
-#investor, #service_provider, #corporation{
-    text-decoration: none;
-    font-size: 17px;   
-}
-
-input{
-    background-color: rgba(211, 211, 211, 0.5);
-    height: 25px;
-    border: 3px solid rgba(105, 105, 105, 0.7);
-}
-
-button:hover{color: dodgerblue;}

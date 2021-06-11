@@ -1,224 +1,73 @@
 import './PartnerForm.css';
 import React from 'react';
-import RegisterForm from '../RegisterComponents/RegisterForm';
+
 
 const PartnerRegistrationForm = () => {
-    var registration_state = {state : 1};
+
     return (
-        <div>
-            <div class="rg-box">
-                <div class="rg-left">
-                    <p>Who are you?</p>
-                    <p><button type="button" onClick={()=>registration_state.state=1}>Investor</button></p>
-                    <p><button type="button" onClick={()=>registration_state.state=2}>Service Provider</button></p>
-                </div>
-                <div class="rg-middle">
+        <div class="container">
+            Investor and Service Provider Form are the same (just changing some title)
+            <br/>
+            <div class="mx-auto col-lg-10">
+            <div class="card">
+            <h3>Investor Registration Form</h3>
+            <p>Sign up as an investor</p>
+                <div class="card">
                     <form>
-                        <RegistrationType 
-                        state = {registration_state}/> 
-                    </form>      
+                        <h3>Basic Information</h3>
+                        <label>Organization/Company</label>
+                        <input type="text" name="com_name" placeholder="Enter the organization/company name" required/><br/><br/>
+                        <label>Address</label>
+                        <input type="text" name="com_add" placeholder="Address" required/><br/><br/>
+                        <label>Phone Number</label>
+                        <input type="text" name="com_phone" placeholder="Phone number" required/><br/><br/>
+                        <label>Email Address</label>
+                        <input type="text" name="com_email" placeholder="Email address" required/><br/><br/>
+                        <label>Fax Number (if any)</label>
+                        <input type="text" name="com_fax" placeholder="Fax number"/><br/>
+                    </form>
+                    
                 </div>
-            </div>
+                <br/>
+                <div class="card">
+                    <form>
+                        <h3>Additional Information</h3>
+                        <label>Investing Area</label><br/>
+                        <input class="input_checkbox" type="checkbox" name="ids[]"/> Agriculture <br/>
+                        <input class="input_checkbox" type="checkbox" name="ids[]"/> Automotive Products & Services <br/>
+                        <input class="input_checkbox" type="checkbox" name="ids[]"/> Aviation <br/>
+                        <input class="input_checkbox" type="checkbox" name="ids[]"/> Biotechnology & Life Sciences <br/>
+                        <input class="input_checkbox" type="checkbox" name="ids[]"/> Building Services & Products <br/>
+                        <input class="input_checkbox" type="checkbox" name="ids[]"/> Education & Training <br/>
+                        <input class="input_checkbox" type="checkbox" name="ids[]"/> Energy & Mining <br/>
+                        <input class="input_checkbox" type="checkbox" name="ids[]"/> Entertainment & Film <br/>
+                        <input class="input_checkbox" type="checkbox" name="ids[]"/> Fashion & Beauty <br/>
+                        <input class="input_checkbox" type="checkbox" name="ids[]"/> Food & Beverage <br/>
+                        <input class="input_checkbox" type="checkbox" name="ids[]"/> Hospitality, Restaurants & Bars <br/>
+                        <input class="input_checkbox" type="checkbox" name="ids[]"/> Internet, eCommerce & Apps <br/>
+                        <input class="input_checkbox" type="checkbox" name="ids[]"/> IT, Hardware & Software <br/>
+                        <input class="input_checkbox" type="checkbox" name="ids[]"/> Leisure, Tourism & Hotels <br/>
+                        <input class="input_checkbox" type="checkbox" name="ids[]"/> Manufacturing <br/>
+                        <input class="input_checkbox" type="checkbox" name="ids[]"/> Marketing & Advertising <br/>
+                        <input class="input_checkbox" type="checkbox" name="ids[]"/> Media & Publishing<br/>
+                        <input class="input_checkbox" type="checkbox" name="ids[]"/> Medical, Pharmaceuticals & Health Car <br/>
+                        <input class="input_checkbox" type="checkbox" name="ids[]"/> Products & Inventions <br/>
+                        <input class="input_checkbox" type="checkbox" name="ids[]"/> Real Estate <br/>
+                        <input class="input_checkbox" type="checkbox" name="ids[]"/> Retail <br/>
+                        <input class="input_checkbox" type="checkbox" name="ids[]"/> Security & Defence <br/>
+                        <input class="input_checkbox" type="checkbox" name="ids[]"/> Technology <br/>
+                        <input class="input_checkbox" type="checkbox" name="ids[]"/> Telecom & Mobile <br/>
+                        <input class="input_checkbox" type="checkbox" name="ids[]"/> Transportation <br/>
+                    </form>
+                </div>
+                <br/>
+                <button type="submit" class="btn">Register</button>   
         </div>
-        
+        </div>
+    </div>     
     )
 }
 
-const RegistrationType = ({state}) => {
-    if(state.state===1){
-        return <Investor/>
-    }
-    else{
-        return <Serviceprovider/>
-    }
     
-}
-const Investor = () => {
-    return(
-        <tbody>
-            <tr>
-                <td colspan="2" class="form_header"><h3>Investor Registration Form</h3></td>
-            </tr>
-            <tr>
-            <td colspan="2"><h3></h3></td> 
-            </tr>
-            <tr>
-            <td class="td_left">
-                <b>Organization/Company</b><br/>
-                <i>
-                    Name of Organization to be registered
-                </i>
-                </td>
-                <td class="td_right">
-                    <input type="text" name="inv_com" value="" size="50" maxlenght="100"/>
-                </td>
-            </tr>
-            <tr>
-                <td class="td_left"><b>Address</b></td>
-                <td class="td_right"><input type="text" name="inv_com_add" value="" size="50" maxlenght="100"/></td>
-            </tr>
-            <tr>
-                <td class="td_left"><b>City/Town</b></td>
-                <td class="td_right"><input type="text" name="inv_com_city" value="" size="50" maxlenght="50"/></td>
-            </tr>
-            <tr>
-                <td class="td_left"><b>Province</b></td>
-                <td class="td_right"><input type="text" name="inv_com_prov" value="" size="50" maxlenght="50"/></td>
-            </tr>
-            <tr>
-                <td class="td_left"><b>Country</b></td>
-                <td class="td_right"><input type="text" name="inv_com_country" value="" size="50" maxlenght="50"/></td>
-            </tr>
-            <tr>
-                <td class="td_left"><b>Phone Number</b></td>
-                <td class="td_right"><input type="text" name="ser_com_phone" value="" size="50" maxlenght="20"/></td>
-            </tr>
-            <tr>
-                <td class="td_left"><b>Fax Number</b></td>
-                <td class="td_right"><input type="text" name="ser_com_fax" value="" size="50" maxlenght="30"/></td>
-            </tr>
-            <tr>
-                <td class="td_left"><b>Email Address</b></td>
-                <td class="td_right"><input type="text" name="ser_com_email" value="" size="50" maxlenght="30"/></td>
-            </tr>
-            <tr>            
-                <td class="td_left">
-                    <b>Service Industry</b><br></br>
-                    <i>
-                        Select the service industries the Organization provided
-                    </i>
-                </td>
-                <td class="td_right">
-                    <input class="input_checkbox" type="checkbox" name="inv_ids[]"/> Agriculture <br/>
-                    <input class="input_checkbox" type="checkbox" name="inv_ids[]"/> Automotive Products & Services <br/>
-                    <input class="input_checkbox" type="checkbox" name="inv_ids[]"/> Aviation <br/>
-                    <input class="input_checkbox" type="checkbox" name="inv_ids[]"/> Biotechnology & Life Sciences <br/>
-                    <input class="input_checkbox" type="checkbox" name="inv_ids[]"/> Building Services & Products <br/>
-                    <input class="input_checkbox" type="checkbox" name="inv_ids[]"/> Education & Training <br/>
-                    <input class="input_checkbox" type="checkbox" name="inv_ids[]"/> Energy & Mining <br/>
-                    <input class="input_checkbox" type="checkbox" name="inv_ids[]"/> Entertainment & Film <br/>
-                    <input class="input_checkbox" type="checkbox" name="inv_ids[]"/> Fashion & Beauty <br/>
-                    <input class="input_checkbox" type="checkbox" name="inv_ids[]"/> Food & Beverage <br/>
-                    <input class="input_checkbox" type="checkbox" name="inv_ids[]"/> Hospitality, Restaurants & Bars <br/>
-                    <input class="input_checkbox" type="checkbox" name="inv_ids[]"/> Internet, eCommerce & Apps <br/>
-                    <input class="input_checkbox" type="checkbox" name="inv_ids[]"/> IT, Hardware & Software <br/>
-                    <input class="input_checkbox" type="checkbox" name="inv_ids[]"/> Leisure, Tourism & Hotels <br/>
-                    <input class="input_checkbox" type="checkbox" name="inv_ids[]"/> Manufacturing <br/>
-                    <input class="input_checkbox" type="checkbox" name="inv_ids[]"/> Marketing & Advertising <br/>
-                    <input class="input_checkbox" type="checkbox" name="inv_ids[]"/> Media & Publishing<br/>
-                    <input class="input_checkbox" type="checkbox" name="inv_ids[]"/> Medical, Pharmaceuticals & Health Car <br/>
-                    <input class="input_checkbox" type="checkbox" name="inv_ids[]"/> Products & Inventions <br/>
-                    <input class="input_checkbox" type="checkbox" name="inv_ids[]"/> Real Estate <br/>
-                    <input class="input_checkbox" type="checkbox" name="inv_ids[]"/> Retail <br/>
-                    <input class="input_checkbox" type="checkbox" name="inv_ids[]"/> Security & Defence <br/>
-                    <input class="input_checkbox" type="checkbox" name="inv_ids[]"/> Technology <br/>
-                    <input class="input_checkbox" type="checkbox" name="inv_ids[]"/> Telecom & Mobile <br/>
-                    <input class="input_checkbox" type="checkbox" name="inv_ids[]"/> Transportation <br/>
-                </td>
-            </tr>
-            <tr>
-                <td class="btn_tb" colspan="2" align="center">
-                    <input type="submit" value="Submit Profile" class="SubmitButton" id="btn"/>
-                </td>
-            </tr>
-        </tbody>
-    )
-}
-
-const Serviceprovider = () => {
-    return (
-        <tbody>
-            <tr>
-                <td colspan="2" class="form_header"><h2>Service Provider Registration Form</h2></td>
-            </tr>
-            <tr>
-                <td colspan="2" class="td_left"><h3>General Information</h3></td>
-            </tr>
-            <tr>
-                <td class="td_left">
-                    <b>Organization/Company</b><br/>
-                    <i>
-                        Name of Organization to be registered
-                    </i>
-                </td>
-                <td class="td_right">
-                    <input type="text" name="cor_name" value="" size="50" maxlenght="100"/>
-                </td>
-            </tr>
-            <tr>
-                <td class="td_left"><b>Address</b></td>
-                <td class="td_right"><input type="text" name="ser_add" value="" size="50" maxlenght="100"/></td>
-            </tr>
-            <tr>
-                <td class="td_left"><b>City/Town</b></td>
-                <td class="td_right"><input type="text" name="ser_city" value="" size="50" maxlenght="50"/></td>
-            </tr>
-            <tr>
-                <td class="td_left"><b>Province</b></td>
-                <td class="td_right"><input type="text" name="ser_prov" value="" size="50" maxlenght="50"/></td>
-            </tr>
-            <tr>
-                <td class="td_left"><b>Country</b></td>
-                <td class="td_right"><input type="text" name="ser_country" value="" size="50" maxlenght="50"/></td>
-            </tr>
-            <tr>
-                <td class="td_left"><b>Phone Number</b></td>
-                <td class="td_right"><input type="text" name="ser_phone" value="" size="50" maxlenght="20"/></td>
-            </tr>
-            <tr>
-                <td class="td_left"><b>Fax Number</b></td>
-                <td class="td_right"><input type="text" name="ser_fax" value="" size="50" maxlenght="30"/></td>
-            </tr>
-            <tr>
-                <td class="td_left"><b>Email Address</b></td>
-                <td class="td_right"><input type="text" name="ser_email" value="" size="50" maxlenght="30"/></td>
-            </tr>
-            <tr>
-                <td class="td_left"><h3>Service Details</h3></td>
-            </tr>
-            <tr>            
-                <td class="td_left">
-                    <b>Service Industry</b><br/>
-                    <i>
-                        Select the service industries the Organization provided
-                    </i>
-                </td>
-                <td class="td_right">
-                    <input class="input_checkbox" type="checkbox" name="ser_ids[]"/> Agriculture <br/>
-                    <input class="input_checkbox" type="checkbox" name="ser_ids[]"/> Automotive Products & Services <br/>
-                    <input class="input_checkbox" type="checkbox" name="ser_ids[]"/> Aviation <br/>
-                    <input class="input_checkbox" type="checkbox" name="ser_ids[]"/> Biotechnology & Life Sciences <br/>
-                    <input class="input_checkbox" type="checkbox" name="ser_ids[]"/> Building Services & Products <br/>
-                    <input class="input_checkbox" type="checkbox" name="ser_ids[]"/> Education & Training <br/>
-                    <input class="input_checkbox" type="checkbox" name="ser_ids[]"/> Energy & Mining <br/>
-                    <input class="input_checkbox" type="checkbox" name="ser_ids[]"/> Entertainment & Film <br/>
-                    <input class="input_checkbox" type="checkbox" name="ser_ids[]"/> Fashion & Beauty <br/>
-                    <input class="input_checkbox" type="checkbox" name="ser_ids[]"/> Food & Beverage <br/>
-                    <input class="input_checkbox" type="checkbox" name="ser_ids[]"/> Hospitality, Restaurants & Bars <br/>
-                    <input class="input_checkbox" type="checkbox" name="ser_ids[]"/> Internet, eCommerce & Apps <br/>
-                    <input class="input_checkbox" type="checkbox" name="ser_ids[]"/> IT, Hardware & Software <br/>
-                    <input class="input_checkbox" type="checkbox" name="ser_ids[]"/> Leisure, Tourism & Hotels <br/>
-                    <input class="input_checkbox" type="checkbox" name="ser_ids[]"/> Manufacturing <br/>
-                    <input class="input_checkbox" type="checkbox" name="ser_ids[]"/> Marketing & Advertising <br/>
-                    <input class="input_checkbox" type="checkbox" name="ser_ids[]"/> Media & Publishing<br/>
-                    <input class="input_checkbox" type="checkbox" name="ser_ids[]"/> Medical, Pharmaceuticals & Health Care <br/>
-                    <input class="input_checkbox" type="checkbox" name="ser_ids[]"/> Products & Inventions <br/>
-                    <input class="input_checkbox" type="checkbox" name="ser_ids[]"/> Real Estate <br/>
-                    <input class="input_checkbox" type="checkbox" name="ser_ids[]"/> Retail <br/>
-                    <input class="input_checkbox" type="checkbox" name="ser_ids[]"/> Security & Defence <br/>
-                    <input class="input_checkbox" type="checkbox" name="ser_ids[]"/> Technology <br/>
-                    <input class="input_checkbox" type="checkbox" name="ser_ids[]"/> Telecom & Mobile <br/>
-                    <input class="input_checkbox" type="checkbox" name="ser_ids[]"/> Transportation <br/>
-                </td>
-            </tr>
-            <tr>
-                <td class="btn_tb" colspan="2" align="center">
-                    <input type="submit" value="Submit Profile" class="SubmitButton" id="btn"/>
-                </td>
-            </tr>               
-        </tbody>               
-    )
-}
-
 
 export default PartnerRegistrationForm;
