@@ -4,7 +4,7 @@ Participants: Darren Liu, Cheryl (Pui Lam) Chen, Justin Wang, Tyler (YeonOh) Jun
 Team Capacity: 70 story points
 Sprint Capacity: Estimated 83 story points
  
-The goal of this sprint is to create a working back-end using MongoDB and connecting it with the front-end created in sprint1. This includes finishing social media aspects, namely login and registration for individuals, company and partner profile creation, and viewing profiles. We aim to fully implement the user stories related to the login/registration epic, and begin working on stories within the community epic. This includes … Finally, we will begin implementing searching for user profiles and filtered searching (CSCCPROJ-19 & CSCCPROJ-21).
+The goal of this sprint is to create a working back-end using MongoDB and connecting it with the front-end created in sprint1. This includes finishing social media aspects, namely login and registration for individuals, company and partner profile creation, and viewing profiles. We aim to fully implement the user stories related to the login/registration epic, and begin working on stories within the community epic.  Finally, we will begin implementing searching for user profiles and filtered searching (CSCCPROJ-19 & CSCCPROJ-21).
  
 Setting up the routing for the front-end and finalizing the design will be completed this sprint (CSCCPROJ-83). This will be handled by Cheryl and Tyler.
  
