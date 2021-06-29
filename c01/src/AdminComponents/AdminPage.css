@@ -7,8 +7,11 @@
 }
 
 .btn{
-    background-color: lightblue;
     margin-top: 1%;
+}
+
+.adminbtn{
+    background-color: lightblue;
 }
 
 .PendingBoard{
