@@ -11,7 +11,7 @@ const AdminPage = () => {
                 <button class="btn text-uppercase">View User List</button>
                 <button class="btn text-uppercase">View Banned Users</button>
                 <button class="btn text-uppercase">Return to Main View</button>
-                <button class="btn text-uppercase">Log Out</button>
+                <a href="/" button class="btn text-uppercase">Log Out</a>
                 </div>
                 </div>
             </div>
@@ -35,8 +35,7 @@ const PendingBoard = () => {
         <div>
             <div class="pendingBoard card">
                 <h4>Pending Verification:</h4>
-                <a href = "Wcdonalds">Wcdonalds - Company</a>
-                <a href ="Musk Elon">Musk Elon - Investor</a>
+
             </div> 
         </div>
 
