@@ -1,4 +1,4 @@
-
+import React, { useEffect, useState, useContext } from 'react';
 import './AdminPage.css'
 import styles from '../styles.js'
 
@@ -36,25 +36,35 @@ const TabButton =  withStyles((theme) => ({
 }))(Button);
 
 const AdminPage = () => {
+    const [displayPendingBoard, setPendingBoard] = React.useState(true);
+    const [displayPendingVerif, setPendingVerif] = React.useState(false);
+    const [displayViewUserList, setViewUserList] = React.useState(false);
+    const [displayV, setV] = React.useState(false);
+
     return (
         <div class="admin-container">
             <div class="admin-topbar">
             <ThemeProvider theme={styletheme}>
-                <Grid container direction="row" spacing={24} justify="space-between" alignItems="center">
-                    <Grid item container direction="row" justify="flex-start" alignItems="center">
-                        <IconButton>
-                            <ArrowBackIcon/>
-                        </IconButton>
-                        <Typography style={{
-                            color: theme.palette.primary.main,
-                            fontWeight: 900,
-                            fontSize: 30,
-                        }}>
-                            Adminstrator page
-                        </Typography>
+                <Grid container direction="row" justify="space-between" alignItems="center">
+                    <Grid item direction="row">
+                        <div class="admin-sidebyside">
+                            <IconButton>
+                                <ArrowBackIcon/>
+                            </IconButton>
+                            <Typography style={{
+                                color: theme.palette.primary.main,
+                                fontWeight: 900,
+                                fontSize: 30,
+                            }}>
+                                Adminstrator page
+                            </Typography>
+                        </div>
                     </Grid>
-                    <Grid item>
-                        <Avatar>C</Avatar>
+                    <Grid item direction="row" alignItems="center">
+                        <div class="admin-sidebyside">
+                           <Avatar>C</Avatar>
+                        <a href="/" button class="btn text-uppercase">Log Out</a> 
+                        </div>
                     </Grid>
                 </Grid>
             </ThemeProvider>

@@ -23,8 +23,8 @@ const LoginForm = () => {
                                     <input type="checkbox" class="form-check-input" id="check" />
                                     <label for="check" class="form-check-label">Remember password</label>
                                 </div>
-                                <button class="btn btn-primary text-uppercase btn-block">sign in</button>
-                                <button class="btn btn-secondary text-uppercase btn-block">register</button>
+                                <a href="/profile" class="btn btn-primary text-uppercase btn-block">sign in</a>
+                                <a href="/register" button class="btn btn-secondary text-uppercase btn-block">register</a>
                                 <hr />
                                 <button class="btn gbtn text-uppercase btn-block">sign in with google</button>
                                 <br />

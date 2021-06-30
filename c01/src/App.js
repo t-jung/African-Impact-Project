@@ -6,14 +6,35 @@ import PartnerRegistrationForm from './PartnerRegistrationFormComponents/Partner
 import AdminPage from './AdminComponents/AdminPage'
 import ProfileFrame from './ProfileComponents/ProfileFrame'
 import CompanyForm from './LoginComponents/CompanyRegistrationForm'
-import Messenger from './MessengerComponents/Messenger'
+import Nav from './NavbarComponents/Nav'
+// import Messenger from './MessengerComponents/Messenger'
 import { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 
 function App() {
   return (
+    <Router>
     <div className="App">
+    <Nav/>
+      <Switch>
+  
+        <Route path="/" exact component={LoginForm} />
+        <Route path="/register" component={RegisterForm} />
+        <Route path="/profile" component={ProfileFrame} />
+        <Route path="/profile_edit" component={ProfileEditForm} />
+        <Route path="/adminpage" component={AdminPage} />
+        <Route path="/partner_register" component={PartnerRegistrationForm} />
+      </Switch>
+    </div>
+
+    </Router>
+  );
+}
+
+export default App;
+
+/*
       <LoginForm /><br/><br/><br/><br/>
       <CompanyForm /><br/><br/><br/><br/>
       <RegisterForm /><br/><br/><br/><br/>
@@ -21,9 +42,5 @@ function App() {
       <ProfileEditForm /> <br/><br/><br/><br/>
       <AdminPage /> <br/><br/><br/><br/>
       <PartnerRegistrationForm/> <br/><br/><br/><br/>
-      <Messenger/> <br/><br/><br/><br/>
-    </div>
-  );
-}
 
-export default App;
+*/

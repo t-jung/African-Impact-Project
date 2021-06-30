@@ -72,7 +72,9 @@ const ProfileEditForm = ({userID}) => {
                         name="body"
                         defaultValue={description}/>
                 </div>
-                <div class="d-flex justify-content-center"><input class="btn" type="submit" value="Save!"/></div>
+                <div class="d-flex justify-content-center">
+                    <a href="/profile" button class="btn" type="submit" value="Save!">Edit</a>
+                </div>
                 
                 
             </form>

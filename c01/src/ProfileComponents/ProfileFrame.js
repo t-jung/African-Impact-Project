@@ -42,7 +42,7 @@ const EditButton = ({show}) => {
     if(show === true) {
         return (
             <div >
-                <button class="btn">Edit</button>
+                <a href="/profile_edit" button class="btn">Edit</a>
             </div>
         )
     } else {
