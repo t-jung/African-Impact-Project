@@ -7,7 +7,12 @@
 }
 
 .admin-topbar{
-    width: 100vh;
+}
+
+.admin-sidebyside{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .admin-container{
