@@ -28,10 +28,11 @@ const TabButton =  withStyles((theme) => ({
         color: 'black',
         textAlign: 'center',
         fontFamily: theme.typography.fontFamily,
-        fontWeight: 300,
+        fontWeight: 200,
         paddingRight: 15,
         paddingLeft: 15,
-        marginBottom: 3
+        marginBottom: 3,
+        textTransform: 'none'
     },
 }))(Button);
 
@@ -39,7 +40,39 @@ const AdminPage = () => {
     const [displayPendingBoard, setPendingBoard] = React.useState(true);
     const [displayPendingVerif, setPendingVerif] = React.useState(false);
     const [displayViewUserList, setViewUserList] = React.useState(false);
-    const [displayV, setV] = React.useState(false);
+    const [displayBannedUsers , setBannedUsers ] = React.useState(false);
+
+    const selectPendingBoard = () => {
+        setPendingBoard(true);
+        setPendingVerif(false);
+        setViewUserList(false);
+        setBannedUsers(false);
+    };
+
+    const selectPendingVerif = () => {
+        setPendingBoard(false);
+        setPendingVerif(true);
+        setViewUserList(false);
+        setBannedUsers(false);
+    };
+
+    const selectViewUserList = () => {
+        setPendingBoard(false);
+        setPendingVerif(false);
+        setViewUserList(true);
+        setBannedUsers(false);
+    };
+
+    const selectBannedUsers = () => {
+        setPendingBoard(false);
+        setPendingVerif(false);
+        setViewUserList(false);
+        setBannedUsers(true);
+    };
+
+    useEffect(() => {
+
+    }, [displayPendingBoard, displayPendingVerif, displayBannedUsers, displayViewUserList])
 
     return (
         <div class="admin-container">
@@ -72,39 +105,85 @@ const AdminPage = () => {
             <div class="admin-tabbuttons">
                 <Grid container direction="row" nowrap="false" justify="space-between" alignItems="center">
                     <ThemeProvider theme={styletheme}>
-                        <TabButton>Pending board</TabButton>
-                        <TabButton>Pending verifications</TabButton>
-                        <TabButton>View user list</TabButton>
-                        <TabButton>View banned users</TabButton>
+                        <TabButton onClick={selectPendingBoard}>Pending reports</TabButton>
+                        <TabButton onClick={selectPendingVerif}>Pending verifications</TabButton>
+                        <TabButton onClick={selectViewUserList}>View user list</TabButton>
+                        <TabButton onClick={selectBannedUsers }>View banned users</TabButton>
                     </ThemeProvider>
                     
                 </Grid>
             </div>
-            <PendingBoard/>
+            <DisplayBoard   displayBannedUsers={displayBannedUsers}
+                            displayPendingVerif={displayPendingVerif}
+                            displayViewUserList={displayViewUserList}
+                            displayPendingBoard={displayPendingBoard}/>
         </div>
     );
 }
 
-const PendingBoard = () => {
+const DisplayBoard = (props) => {
+    if(props.displayBannedUsers) {
+
+    } else if (props.displayPendingVerif) {
+        return (
+           <VerifBoard {...props}/> 
+        );
+        
+    } else if (props.displayViewUserList) {
+
+    } else {
+        return (
+            <PendingBoard {...props}/>
+        );
+    }
+}
+
+const PendingBoard = (props) => {
     return (
         <Grid container>
-            <Grid item container direction="row" justify="space-between" alignItems="center">
+            <Grid item container direction="row" justify="flex-start" alignItems="center">
+                <ReportCard reporter="REPORTER" reported="REPORTED" reason="REASON 1"/>
+                <ReportCard reporter="REPORTER" reported="REPORTED" reason="REASON 1"/>
+                <ReportCard reporter="REPORTER" reported="REPORTED" reason="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elementum accumsan purus vel sollicitudin. Ut eu nibh massa. In consequat sagittis enim, sed gravida lectus aliquet non. Nulla in eros sed quam tempor euismod. Curabitur libero dolor, hendrerit vel pharetra at, venenatis sed elit. Fusce venenatis dolor et lacinia..."/>
                 <ReportCard reporter="REPORTER" reported="REPORTED" reason="REASON 1"/>
                 <ReportCard reporter="REPORTER" reported="REPORTED" reason="REASON 1"/>
                 <ReportCard reporter="REPORTER" reported="REPORTED" reason="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elementum accumsan purus vel sollicitudin. Ut eu nibh massa. In consequat sagittis enim, sed gravida lectus aliquet non. Nulla in eros sed quam tempor euismod. Curabitur libero dolor, hendrerit vel pharetra at, venenatis sed elit. Fusce venenatis dolor et lacinia..."/>
             </Grid>
         </Grid>
-
     )
 }
 
-const CustomizedCard =  withStyles((theme) => ({
+const VerifBoard = (props) => {
+    return (
+        <Grid container>
+            <Grid item container direction="row" justify="flex-start" alignItems="center">
+                <VerifCard companyName="Some Company" link={<a href="https://www.w3schools.com">Visit W3Schools</a>}/>
+                <VerifCard companyName="Another Company" link={<a href="https://www.w3schools.com">Visit W3Schools</a>}/>
+            </Grid>
+        </Grid>
+    )
+}
+
+const ReportCardStyled =  withStyles((theme) => ({
     root: {
         width: '30%',
+        height: 180,
         minWidth: 200,
-        minHeight: 300,
-        height: '100%',
         background: theme.palette.secondaryBackground.main,
+        borderRadius: 20,
+        border: 0,
+        color: 'black',
+        fontFamily: theme.typography.fontFamily,
+        margin: 10
+    },
+}))(Card);
+
+const VerfCardStyled =  withStyles((theme) => ({
+    root: {
+        width: '30%',
+        height: 180,
+        minWidth: 200,
+        background: theme.palette.verificationBackground.main,
         borderRadius: 20,
         border: 0,
         color: 'black',
@@ -112,17 +191,50 @@ const CustomizedCard =  withStyles((theme) => ({
     },
 }))(Card);
 
-const CustomizedTypography = withStyles((theme) => ({
-    root: {
-        fontFamily: theme.typography.fontFamily,
-        fontSize: 50,
-    }
-}))
+const VerifCard = (props) => {
+    return(
+<ThemeProvider theme={styles}>
+            <ReportCardStyled variant="outlined">
+                <Grid
+                    container
+                    direction="column"
+                    justify="flex-start"
+                    alignItems="stretch">
+                    <Grid item xs zeroMinWidth wrap="nowrap">
+                        <div>
+                            <CardContent>
+                                <Typography style={{fontWeight: 700}}>
+                                    {props.companyName}
+                                </Typography>
+                                <Typography noWrap>
+                                    {props.link}
+                                </Typography>
+                            </CardContent>
+                        </div>
+                    </Grid>
+                    <Grid item
+                        container
+                        direction="row"
+                        justify="center"
+                        alignItems="center">
+                        <CardActions alignSelf="flex-end">
+                            <div class="admin-cardBtn admin-stickBottom">
+                                <Button size="small">Approve</Button>
+                                <Button size="small">Disapprove</Button>
+                                <Button size="small">Details</Button>
+                            </div>
+                        </CardActions>
+                    </Grid>
+                </Grid>
+            </ReportCardStyled>
+        </ThemeProvider>
+    );
+}
 
 const ReportCard = (props) => {
     return(
         <ThemeProvider theme={styles}>
-            <CustomizedCard variant="outlined">
+            <ReportCardStyled variant="outlined">
                 <Grid
                     container
                     direction="column"
@@ -154,27 +266,10 @@ const ReportCard = (props) => {
                         </CardActions>
                     </Grid>
                 </Grid>
-            </CustomizedCard>
+            </ReportCardStyled>
         </ThemeProvider>
         
     );
 }
 
-const ReportBoard = () => {
-    return (
-        <div>
-            <div class = "ReportBoard card">
-                <h3>Pending Reports by User:</h3>
-                <dt>Report from Paul Logan#1 to Paul Jake#1</dt>
-                <dd>This guy is pretending to be my brother! Ban him!</dd>
-                <dt>Report from Manav Patel#1 to Manav Patel#125</dt>
-                <dd>I am the true manav. Please ban this person thank you sir.</dd>
-                <dt>Report from Lorem#22 to ipsum#33</dt>
-                <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elementum accumsan purus vel sollicitudin. Ut eu nibh massa. In consequat sagittis enim, sed gravida lectus aliquet non. Nulla in eros sed quam tempor euismod. Curabitur libero dolor, hendrerit vel pharetra at, venenatis sed elit. Fusce venenatis dolor et lacinia volutpat. Integer id nulla eget est ultrices porta. Ut fermentum ipsum efficitur tincidunt fringilla. Proin sollicitudin tristique nulla sit amet hendrerit. Nulla vel sem vitae enim placerat eleifend. Ut ac metus eu justo finibus posuere vel sed massa. Pellentesque ante magna, convallis vel dictum sed, dictum eget ipsum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Ut lacinia ut dui et ullamcorper. Donec a eros nibh. Integer vulputate tortor pellentesque, posuere nisl sit amet, eleifend ligula.</dd>
-                
-            </div>
-        </div>
-    )
-
-}
 export default AdminPage
