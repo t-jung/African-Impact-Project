@@ -10,15 +10,65 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import { ThemeProvider, withStyles, makeStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
+import List from '@material-ui/core/List';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import { flexbox, sizing } from '@material-ui/system';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import "@fontsource/roboto";
 import theme from '../styles.js';
-import { Avatar } from '@material-ui/core';
+import { Avatar, ListItemAvatar } from '@material-ui/core';
 
 const styletheme = styles;
+const userList = [
+    {
+        name: 'John Doe',
+        icon: <Avatar>J</Avatar>
+    },
+    {
+        name: 'John1 Doe1',
+        icon: <Avatar>J1</Avatar>
+    },
+    {
+        name: 'John2 Doe2',
+        icon: <Avatar>J2</Avatar>
+    },
+];
+const bannedList = [
+    {
+        name: 'Tim Hortons',
+        icon: <Avatar>T</Avatar>
+    },
+    {
+        name: 'Tim1 Hortons1',
+        icon: <Avatar>T1</Avatar>
+    },
+    {
+        name: 'Tim2 Hortons2',
+        icon: <Avatar>T2</Avatar>
+    },
+];
+const reportsList = [
+    {
+        reporter: 'Tim Hortons',
+        reported: 'John Doe',
+        reason: "I DON'T LIKE THIS DUDE OKAY"
+    },
+    {
+        reporter: 'Tim2 Hortons2',
+        reported: 'John2 Doe2',
+        reason: "we are all just duplicates..."
+    },
+    {
+        reporter: 'Tim3 Hortons3',
+        reported: 'John3 Doe3',
+        reason: "we are all just numbers..."
+    },
+];
+
 
 const TabButton =  withStyles((theme) => ({
     root: {
@@ -113,52 +163,80 @@ const AdminPage = () => {
                     
                 </Grid>
             </div>
-            <DisplayBoard   displayBannedUsers={displayBannedUsers}
-                            displayPendingVerif={displayPendingVerif}
-                            displayViewUserList={displayViewUserList}
-                            displayPendingBoard={displayPendingBoard}/>
+            <DisplayBoard
+                displayBannedUsers={displayBannedUsers}
+                displayPendingVerif={displayPendingVerif}
+                displayViewUserList={displayViewUserList}
+                displayPendingBoard={displayPendingBoard}/>
         </div>
     );
 }
 
 const DisplayBoard = (props) => {
     if(props.displayBannedUsers) {
-
+        return(
+            <ViewUserList bannedUsers={true}/>
+        );
     } else if (props.displayPendingVerif) {
         return (
-           <VerifBoard {...props}/> 
+           <VerifBoard/> 
         );
-        
     } else if (props.displayViewUserList) {
-
+        return(
+            <ViewUserList bannedUsers={false}/>
+        );
     } else {
         return (
-            <PendingBoard {...props}/>
+            <PendingBoard/>
         );
     }
 }
 
-const PendingBoard = (props) => {
+const ViewUserList = (props) => {
+    const list = (props.bannedUsers ? bannedList : userList);
+    return(
+        <List>
+            {list.map(item => (
+                <ListItem key={item.name}>
+                    <ListItemAvatar>{item.icon}</ListItemAvatar>
+                    <ListItemText primary={item.name}/>
+                </ListItem>
+            ))}
+        </List>
+    );
+    
+}
+
+const PendingBoard = () => {
     return (
         <Grid container>
             <Grid item container direction="row" justify="flex-start" alignItems="center">
-                <ReportCard reporter="REPORTER" reported="REPORTED" reason="REASON 1"/>
-                <ReportCard reporter="REPORTER" reported="REPORTED" reason="REASON 1"/>
-                <ReportCard reporter="REPORTER" reported="REPORTED" reason="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elementum accumsan purus vel sollicitudin. Ut eu nibh massa. In consequat sagittis enim, sed gravida lectus aliquet non. Nulla in eros sed quam tempor euismod. Curabitur libero dolor, hendrerit vel pharetra at, venenatis sed elit. Fusce venenatis dolor et lacinia..."/>
-                <ReportCard reporter="REPORTER" reported="REPORTED" reason="REASON 1"/>
-                <ReportCard reporter="REPORTER" reported="REPORTED" reason="REASON 1"/>
-                <ReportCard reporter="REPORTER" reported="REPORTED" reason="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elementum accumsan purus vel sollicitudin. Ut eu nibh massa. In consequat sagittis enim, sed gravida lectus aliquet non. Nulla in eros sed quam tempor euismod. Curabitur libero dolor, hendrerit vel pharetra at, venenatis sed elit. Fusce venenatis dolor et lacinia..."/>
+                {reportsList.map(item => (
+                    <ReportCard reporter={item.reporter} reported={item.reported} reason={item.reason}/>
+                ))}
             </Grid>
         </Grid>
     )
 }
 
-const VerifBoard = (props) => {
+const verifList = [
+    {
+        name: 'Some Company',
+        site: 'https://www.w3schools.com',
+    },
+    {
+        name: 'Another Company',
+        site: 'https://www.w3schools.com',
+    },
+];
+
+const VerifBoard = () => {
     return (
         <Grid container>
             <Grid item container direction="row" justify="flex-start" alignItems="center">
-                <VerifCard companyName="Some Company" link={<a href="https://www.w3schools.com">Visit W3Schools</a>}/>
-                <VerifCard companyName="Another Company" link={<a href="https://www.w3schools.com">Visit W3Schools</a>}/>
+                {verifList.map(item => {
+                    <VerifCard companyName={item.name} link={item.site}/>
+                })}
             </Grid>
         </Grid>
     )
@@ -166,10 +244,10 @@ const VerifBoard = (props) => {
 
 const ReportCardStyled =  withStyles((theme) => ({
     root: {
+        background: theme.palette.secondaryBackground.main,
         width: '30%',
         height: 180,
         minWidth: 200,
-        background: theme.palette.secondaryBackground.main,
         borderRadius: 20,
         border: 0,
         color: 'black',
@@ -178,23 +256,24 @@ const ReportCardStyled =  withStyles((theme) => ({
     },
 }))(Card);
 
-const VerfCardStyled =  withStyles((theme) => ({
+const VerifCardStyled =  withStyles((theme) => ({
     root: {
+        background: theme.palette.verificationBackground.main,
         width: '30%',
         height: 180,
         minWidth: 200,
-        background: theme.palette.verificationBackground.main,
         borderRadius: 20,
         border: 0,
         color: 'black',
-        fontFamily: theme.typography.fontFamily
+        fontFamily: theme.typography.fontFamily,
+        margin: 10
     },
 }))(Card);
 
 const VerifCard = (props) => {
     return(
-<ThemeProvider theme={styles}>
-            <ReportCardStyled variant="outlined">
+        <ThemeProvider theme={styles}>
+            <VerifCardStyled variant="outlined">
                 <Grid
                     container
                     direction="column"
@@ -207,7 +286,7 @@ const VerifCard = (props) => {
                                     {props.companyName}
                                 </Typography>
                                 <Typography noWrap>
-                                    {props.link}
+                                    <a href={props.link}/>
                                 </Typography>
                             </CardContent>
                         </div>
@@ -217,7 +296,7 @@ const VerifCard = (props) => {
                         direction="row"
                         justify="center"
                         alignItems="center">
-                        <CardActions alignSelf="flex-end">
+                        <CardActions alignself="flex-end">
                             <div class="admin-cardBtn admin-stickBottom">
                                 <Button size="small">Approve</Button>
                                 <Button size="small">Disapprove</Button>
@@ -226,7 +305,7 @@ const VerifCard = (props) => {
                         </CardActions>
                     </Grid>
                 </Grid>
-            </ReportCardStyled>
+            </VerifCardStyled>
         </ThemeProvider>
     );
 }
@@ -257,7 +336,7 @@ const ReportCard = (props) => {
                         direction="row"
                         justify="center"
                         alignItems="center">
-                        <CardActions alignSelf="flex-end">
+                        <CardActions alignself="flex-end">
                             <div class="admin-cardBtn admin-stickBottom">
                                 <Button size="small">Ban</Button>
                                 <Button size="small">Ignore</Button>
