@@ -1,46 +1,153 @@
 
 import './AdminPage.css'
+import styles from '../styles.js'
+
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import { ThemeProvider, withStyles, makeStyles } from '@material-ui/styles';
+import Grid from '@material-ui/core/Grid';
+import { flexbox, sizing } from '@material-ui/system';
+
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+
+import "@fontsource/roboto";
+import theme from '../styles.js';
+import { Avatar } from '@material-ui/core';
+
+const styletheme = styles;
+
+const TabButton =  withStyles((theme) => ({
+    root: {
+        background: theme.palette.secondary.main,
+        borderRadius: 10,
+        border: 0,
+        color: 'black',
+        textAlign: 'center',
+        fontFamily: theme.typography.fontFamily,
+        fontWeight: 300,
+        paddingRight: 15,
+        paddingLeft: 15,
+        marginBottom: 3
+    },
+}))(Button);
 
 const AdminPage = () => {
     return (
-        <div>
-            <div class="page">
-                <div class="header">
-                    <h2>Administrator Page</h2>
-                <div class = "navButtons">
-                <button class="btn text-uppercase">View User List</button>
-                <button class="btn text-uppercase">View Banned Users</button>
-                <button class="btn text-uppercase">Return to Main View</button>
-                <button class="btn text-uppercase">Log Out</button>
-                </div>
-                </div>
+        <div class="admin-container">
+            <div class="admin-topbar">
+            <ThemeProvider theme={styletheme}>
+                <Grid container direction="row" spacing={24} justify="space-between" alignItems="center">
+                    <Grid item container direction="row" justify="flex-start" alignItems="center">
+                        <IconButton>
+                            <ArrowBackIcon/>
+                        </IconButton>
+                        <Typography style={{
+                            color: theme.palette.primary.main,
+                            fontWeight: 900,
+                            fontSize: 30,
+                        }}>
+                            Adminstrator page
+                        </Typography>
+                    </Grid>
+                    <Grid item>
+                        <Avatar>C</Avatar>
+                    </Grid>
+                </Grid>
+            </ThemeProvider>
             </div>
-            <div class="d-flex d-column">
-            <div class="pendingVerification">
-                        <PendingBoard/>
-                    </div>
-            <div class="reports">
-                <ReportBoard/>
+            <div class="admin-tabbuttons">
+                <Grid container direction="row" nowrap="false" justify="space-between" alignItems="center">
+                    <ThemeProvider theme={styletheme}>
+                        <TabButton>Pending board</TabButton>
+                        <TabButton>Pending verifications</TabButton>
+                        <TabButton>View user list</TabButton>
+                        <TabButton>View banned users</TabButton>
+                    </ThemeProvider>
+                    
+                </Grid>
             </div>
-                    </div>
-            
-                </div>
-
+            <PendingBoard/>
+        </div>
     );
 }
 
-
 const PendingBoard = () => {
     return (
-        <div>
-            <div class="pendingBoard card">
-                <h4>Pending Verification:</h4>
-                <a href = "Wcdonalds">Wcdonalds - Company</a>
-                <a href ="Musk Elon">Musk Elon - Investor</a>
-            </div> 
-        </div>
+        <Grid container>
+            <Grid item container direction="row" justify="space-between" alignItems="center">
+                <ReportCard reporter="REPORTER" reported="REPORTED" reason="REASON 1"/>
+                <ReportCard reporter="REPORTER" reported="REPORTED" reason="REASON 1"/>
+                <ReportCard reporter="REPORTER" reported="REPORTED" reason="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elementum accumsan purus vel sollicitudin. Ut eu nibh massa. In consequat sagittis enim, sed gravida lectus aliquet non. Nulla in eros sed quam tempor euismod. Curabitur libero dolor, hendrerit vel pharetra at, venenatis sed elit. Fusce venenatis dolor et lacinia..."/>
+            </Grid>
+        </Grid>
 
     )
+}
+
+const CustomizedCard =  withStyles((theme) => ({
+    root: {
+        width: '30%',
+        minWidth: 200,
+        minHeight: 300,
+        height: '100%',
+        background: theme.palette.secondaryBackground.main,
+        borderRadius: 20,
+        border: 0,
+        color: 'black',
+        fontFamily: theme.typography.fontFamily
+    },
+}))(Card);
+
+const CustomizedTypography = withStyles((theme) => ({
+    root: {
+        fontFamily: theme.typography.fontFamily,
+        fontSize: 50,
+    }
+}))
+
+const ReportCard = (props) => {
+    return(
+        <ThemeProvider theme={styles}>
+            <CustomizedCard variant="outlined">
+                <Grid
+                    container
+                    direction="column"
+                    justify="flex-start"
+                    alignItems="stretch">
+                    <Grid item xs zeroMinWidth wrap="nowrap">
+                        <div>
+                            <CardContent>
+                                <Typography style={{fontWeight: 700}}>
+                                    {props.reporter} to {props.reported}
+                                </Typography>
+                                <Typography noWrap>
+                                    {props.reason}
+                                </Typography>
+                            </CardContent>
+                        </div>
+                    </Grid>
+                    <Grid item
+                        container
+                        direction="row"
+                        justify="center"
+                        alignItems="center">
+                        <CardActions alignSelf="flex-end">
+                            <div class="admin-cardBtn admin-stickBottom">
+                                <Button size="small">Ban</Button>
+                                <Button size="small">Ignore</Button>
+                                <Button size="small">Details</Button>
+                            </div>
+                        </CardActions>
+                    </Grid>
+                </Grid>
+            </CustomizedCard>
+        </ThemeProvider>
+        
+    );
 }
 
 const ReportBoard = () => {
