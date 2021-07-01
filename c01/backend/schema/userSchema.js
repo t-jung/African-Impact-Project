@@ -16,11 +16,12 @@ const userSchema = new Schema({
         type: String
     },
     email: {
-        type: String, required: true
+        type: String, required: true, unique: true
     },
     password: {
         type: String, required: true
-    },
+    }
+    /*
     posts: {
         tags: [{
             type: String
@@ -31,7 +32,7 @@ const userSchema = new Schema({
             type: String
         }]
     }
-
+*/
 });
 
 const User = mongoose.model("User",userSchema);
