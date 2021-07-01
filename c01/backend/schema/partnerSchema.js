@@ -9,6 +9,10 @@ let PartnerSchema = mongoose.Schema({
         type: String,
         require: true
     },
+    company:{
+        type: String,
+        require: true
+    },
     phone_number:{
         type: String,
         require: true
