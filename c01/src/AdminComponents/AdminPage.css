@@ -38,6 +38,14 @@
     margin-bottom: 3vh;
 }
 
+.TabButton {
+    background: 'white';
+}
+
+.TabButton.selected {
+    background: #FFC0C0;
+}
+
 .btn{
     background-color: lightblue;
     margin-top: 1%;

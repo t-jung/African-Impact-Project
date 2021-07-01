@@ -72,7 +72,6 @@ const reportsList = [
 
 const TabButton =  withStyles((theme) => ({
     root: {
-        background: theme.palette.secondary.main,
         borderRadius: 10,
         border: 0,
         color: 'black',
@@ -81,9 +80,28 @@ const TabButton =  withStyles((theme) => ({
         fontWeight: 200,
         paddingRight: 15,
         paddingLeft: 15,
+        padding: 10,
+        marginBottom: 3,
+        background: 'white',
+        textTransform: 'none'
+    }
+}))(Button);
+
+const TabButtonSelected =  withStyles((theme) => ({
+    root: {
+        borderRadius: 10,
+        border: 0,
+        color: 'black',
+        textAlign: 'center',
+        fontFamily: theme.typography.fontFamily,
+        background: theme.palette.secondary.main,
+        fontWeight: 200,
+        paddingRight: 15,
+        paddingLeft: 15,
+        padding: 10,
         marginBottom: 3,
         textTransform: 'none'
-    },
+    }
 }))(Button);
 
 const AdminPage = () => {
@@ -155,10 +173,14 @@ const AdminPage = () => {
             <div class="admin-tabbuttons">
                 <Grid container direction="row" nowrap="false" justify="space-between" alignItems="center">
                     <ThemeProvider theme={styletheme}>
-                        <TabButton onClick={selectPendingBoard}>Pending reports</TabButton>
-                        <TabButton onClick={selectPendingVerif}>Pending verifications</TabButton>
-                        <TabButton onClick={selectViewUserList}>View user list</TabButton>
-                        <TabButton onClick={selectBannedUsers }>View banned users</TabButton>
+                        {displayPendingBoard ? <TabButtonSelected onClick={selectPendingBoard}>Pending reports</TabButtonSelected> :
+                                                <TabButton onClick={selectPendingBoard}>Pending reports</TabButton>}
+                        {displayPendingVerif ? <TabButtonSelected onClick={selectPendingVerif}>Pending verifications</TabButtonSelected> :
+                                                <TabButton onClick={selectPendingVerif}>Pending verifications</TabButton>}
+                        {displayViewUserList ? <TabButtonSelected onClick={selectViewUserList}>View user list</TabButtonSelected> :
+                                                <TabButton onClick={selectViewUserList}>View user list</TabButton>}
+                        {displayBannedUsers ? <TabButtonSelected onClick={selectBannedUsers}>View banned users</TabButtonSelected> :
+                                                <TabButton onClick={selectBannedUsers}>View banned users</TabButton>}
                     </ThemeProvider>
                     
                 </Grid>
