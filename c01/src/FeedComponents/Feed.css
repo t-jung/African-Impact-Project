@@ -1,0 +1,67 @@
+.container_feed{
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container_feed input{
+    margin-top: 20px;
+    width: 300px;
+    height: 40px;
+    font-size: 20px;
+}
+
+.profile_framing{
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+
+.feed_top{
+    margin-left:100px;
+    margin-right:100px;
+    margin-bottom: 50px;
+}
+
+.card {
+	margin-top: 60px;
+	background-color: #ffffff;
+	border-radius: 20px ;
+	padding: 40px;
+}
+
+.split {
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 100;
+    overflow-x: hidden;
+    padding-top: 100px;
+  }
+  
+
+  .left {
+    left: 0;
+    width: 80%;
+  }
+  
+
+  .right {
+    right: 0;
+    width: 20%;
+    background-color: #111;
+  }
+  
+.schedule{
+    color: #ffffff;
+    padding-left: 40px;
+}
+
+.card_feed {
+	margin-top: 60px;
+	background-color: #ffffff;
+	border-radius: 20px ;
+	padding: 40px;
+}
