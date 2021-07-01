@@ -33,6 +33,8 @@ connection.once('open', () => {
 
 app.use("/api/company",require("./route/companyRegistration"));
 
+app.use("/api/partner",require("./route/partnerRegistration"));
+
 // Starts the server: listens to the port
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
