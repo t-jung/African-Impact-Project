@@ -11,34 +11,42 @@ const authentication = require("../middleware/partnerAuthentication");
 exports.passwordValidator = () => {
     return [
         check('newPassword','New password should be 6 letters and below 12.').isLength({min:6,max:12})
-    ]
+    ];
 }
 
-exports.profileValidator = () => {
+exports.updateProfileValidator = () => {
     return [
         check('name').notEmpty().withMessage("Name is empty"),
         check('email').notEmpty().withMessage("Email is required").isEmail().withMessage("Invalid email"),
-        check('password','Password needs to contains 6 letters and less than 12 letters.').isLength({min:6,max:12}),
         check('company').notEmpty().withMessage("Company field is empty"),
-        check('phone_number').notEmpty.withMessage("Phone number is missing").isMobilePhone().withMessage("Invalid phone number")
-    ]
+        check('phone_number').notEmpty().withMessage("Phone number is missing").isMobilePhone().withMessage("Invalid phone number"),
+        check('address').notEmpty().withMessage("Address is empty"),
+        check('fax').optional(),
+        check('investing_area').optional()
+    ];
+}
+
+exports.profileValidator = () => {
+    let validator = this.updateProfileValidator().slice();
+    validator.push(check('password','Password needs to contains 6 letters and less than 12 letters.').isLength({min:6,max:12}));
+    return validator;
 }
 
 exports.loginByNameValidator = () => {
     return [
         check('name').notEmpty().withMessage("Name is empty"),
         check('password',"Incorrect password.").isLength({min:6,max:12})
-    ]
+    ];
 }
 
 exports.loginByEmailValidator = () => {
     return [
         check('email').notEmpty().withMessage("Email is required").isEmail().withMessage("Invalid email"),
         check('password',"Incorrect password.").isLength({min:6,max:12})
-    ]
+    ];
 }
 
-router.put("/change_partner_password", authentication, passwordValidator(), async(req,res) => {
+router.put("/change_partner_password", authentication, this.passwordValidator(), async(req,res) => {
     try {
         const {newPassword} = req.body;
 
@@ -57,7 +65,7 @@ router.put("/change_partner_password", authentication, passwordValidator(), asyn
     }
 });
 
-router.put("/change_partner_info", authentication, profileValidator(), async(req, res) => {
+router.put("/change_partner_info", authentication, this.updateProfileValidator(), async(req, res) => {
     try {
         let{name,email,address,company,phone_number,fax,investing_area} = req.body;
 
@@ -65,7 +73,7 @@ router.put("/change_partner_info", authentication, profileValidator(), async(req
         if(!errors.isEmpty()) return res.status(400).json({errors:errors.array()});
 
         // find partner
-        let partner = await partner.findById(req.partner.id).select('-password');
+        let partner = await Partner.findById(req.partner.id).select('-password');
         if(!partner) return res.status(404).json("partner not found.");
 
         // name or email is empty
@@ -124,7 +132,7 @@ router.put("/change_partner_info", authentication, profileValidator(), async(req
 router.get("/show_partner_info_id/:partner_id", async(req,res) => {
     try {
         let partnerID = req.params.partner_id;
-        let partner = await partner.findById(partnerID).select('-password');
+        let partner = await Partner.findById(partnerID).select('-password');
         res.json(partner);       
     } catch (error) {
         console.error(error);
@@ -135,7 +143,7 @@ router.get("/show_partner_info_id/:partner_id", async(req,res) => {
 router.get("/show_partner_info_name/:partner_name", async(req,res) => {
     try {
         let name = req.params.partner_name;
-        let partner = await partner.findOne({name:name}).select('-password');
+        let partner = await Partner.findOne({name:name}).select('-password');
         res.json(partner);
     } catch (error) {
         console.error(error);
@@ -145,7 +153,7 @@ router.get("/show_partner_info_name/:partner_name", async(req,res) => {
 
 router.get("/get_all_partner", async(req,res) => {
     try {
-        let partner = await partner.find();
+        let partner = await Partner.find();
         res.json(partner);
     } catch (error) {
         console.error(error);
@@ -153,7 +161,7 @@ router.get("/get_all_partner", async(req,res) => {
     }
 });
 
-router.post("/login/partner_name", loginByNameValidator(), async(req,res) => {
+router.post("/login/partner_name", this.loginByNameValidator(), async(req,res) => {
     try {
         let{name,password} = req.body
     
@@ -162,7 +170,7 @@ router.post("/login/partner_name", loginByNameValidator(), async(req,res) => {
             return res.status(400).json({errors: errors.array()});
    
         // find partner
-        let partner = await partner.findOne({name});
+        let partner = await Partner.findOne({name});
         if(!partner) return res.status(404).json("partner has not been created yet.");
 
         // check password
@@ -191,7 +199,7 @@ router.post("/login/partner_name", loginByNameValidator(), async(req,res) => {
     }    
 });
 
-router.post("/login/partner_email", loginByEmailValidator(), async(req,res) => {
+router.post("/login/partner_email", this.loginByEmailValidator(), async(req,res) => {
     try {
         let{email,password} = req.body
     
@@ -200,7 +208,7 @@ router.post("/login/partner_email", loginByEmailValidator(), async(req,res) => {
             return res.status(400).json({errors: errors.array()});
     
         // find partner
-        let partner = await partner.findOne({email});
+        let partner = await Partner.findOne({email});
         if(!partner) return res.status(404).json("partner has not been created yet.")
 
         //check password
@@ -229,7 +237,7 @@ router.post("/login/partner_email", loginByEmailValidator(), async(req,res) => {
     }    
 });
 
-router.post("/partner_register", profileValidator(), async(req,res) => {
+router.post("/partner_register", this.profileValidator(), async(req,res) => {
     try {
         let{name,email,password,address,company,phone_number,fax,investing_area} = req.body;
 
@@ -245,11 +253,11 @@ router.post("/partner_register", profileValidator(), async(req,res) => {
         if(fetchedpartnerNameFromDB===name)
             return res.status(401).json("partner name has already existed.");
 
-        let company = await Company.findOne({company}).select('-password');
-        if (!company)
+        let companyDB = await Company.findOne({name: company}).select('-password');
+        if (!companyDB)
             return res.status(401).json("Could not find company");
         
-        let newpartner = new partner({
+        let newPartner = new Partner({
             name,
             email,
             password,
@@ -263,13 +271,13 @@ router.post("/partner_register", profileValidator(), async(req,res) => {
         // hasd password
         const salt = await bcryptjs.genSalt(10);
         let hashedPassword = await bcryptjs.hash(password,salt);
-        newpartner.password = hashedPassword;
+        newPartner.password = hashedPassword;
 
-        await newpartner.save();
+        await newPartner.save();
 
         const payload = {
             partner:{
-                id: newpartner._id
+                id: newPartner._id
             }
         }
 
