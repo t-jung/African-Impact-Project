@@ -10,36 +10,137 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import { ThemeProvider, withStyles, makeStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
+import List from '@material-ui/core/List';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import { flexbox, sizing } from '@material-ui/system';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import "@fontsource/roboto";
 import theme from '../styles.js';
-import { Avatar } from '@material-ui/core';
+import { Avatar, ListItemAvatar } from '@material-ui/core';
 
 const styletheme = styles;
+const userList = [
+    {
+        name: 'John Doe',
+        icon: <Avatar>J</Avatar>
+    },
+    {
+        name: 'John1 Doe1',
+        icon: <Avatar>J1</Avatar>
+    },
+    {
+        name: 'John2 Doe2',
+        icon: <Avatar>J2</Avatar>
+    },
+];
+const bannedList = [
+    {
+        name: 'Tim Hortons',
+        icon: <Avatar>T</Avatar>
+    },
+    {
+        name: 'Tim1 Hortons1',
+        icon: <Avatar>T1</Avatar>
+    },
+    {
+        name: 'Tim2 Hortons2',
+        icon: <Avatar>T2</Avatar>
+    },
+];
+const reportsList = [
+    {
+        reporter: 'Tim Hortons',
+        reported: 'John Doe',
+        reason: "I DON'T LIKE THIS DUDE OKAY"
+    },
+    {
+        reporter: 'Tim2 Hortons2',
+        reported: 'John2 Doe2',
+        reason: "we are all just duplicates..."
+    },
+    {
+        reporter: 'Tim3 Hortons3',
+        reported: 'John3 Doe3',
+        reason: "we are all just numbers..."
+    },
+];
+
 
 const TabButton =  withStyles((theme) => ({
     root: {
-        background: theme.palette.secondary.main,
         borderRadius: 10,
         border: 0,
         color: 'black',
         textAlign: 'center',
         fontFamily: theme.typography.fontFamily,
-        fontWeight: 300,
+        fontWeight: 200,
         paddingRight: 15,
         paddingLeft: 15,
-        marginBottom: 3
-    },
+        padding: 10,
+        marginBottom: 3,
+        background: 'white',
+        textTransform: 'none'
+    }
+}))(Button);
+
+const TabButtonSelected =  withStyles((theme) => ({
+    root: {
+        borderRadius: 10,
+        border: 0,
+        color: 'black',
+        textAlign: 'center',
+        fontFamily: theme.typography.fontFamily,
+        background: theme.palette.secondary.main,
+        fontWeight: 200,
+        paddingRight: 15,
+        paddingLeft: 15,
+        padding: 10,
+        marginBottom: 3,
+        textTransform: 'none'
+    }
 }))(Button);
 
 const AdminPage = () => {
     const [displayPendingBoard, setPendingBoard] = React.useState(true);
     const [displayPendingVerif, setPendingVerif] = React.useState(false);
     const [displayViewUserList, setViewUserList] = React.useState(false);
-    const [displayV, setV] = React.useState(false);
+    const [displayBannedUsers , setBannedUsers ] = React.useState(false);
+
+    const selectPendingBoard = () => {
+        setPendingBoard(true);
+        setPendingVerif(false);
+        setViewUserList(false);
+        setBannedUsers(false);
+    };
+
+    const selectPendingVerif = () => {
+        setPendingBoard(false);
+        setPendingVerif(true);
+        setViewUserList(false);
+        setBannedUsers(false);
+    };
+
+    const selectViewUserList = () => {
+        setPendingBoard(false);
+        setPendingVerif(false);
+        setViewUserList(true);
+        setBannedUsers(false);
+    };
+
+    const selectBannedUsers = () => {
+        setPendingBoard(false);
+        setPendingVerif(false);
+        setViewUserList(false);
+        setBannedUsers(true);
+    };
+
+    useEffect(() => {
+
+    }, [displayPendingBoard, displayPendingVerif, displayBannedUsers, displayViewUserList])
 
     return (
         <div class="admin-container">
@@ -72,57 +173,169 @@ const AdminPage = () => {
             <div class="admin-tabbuttons">
                 <Grid container direction="row" nowrap="false" justify="space-between" alignItems="center">
                     <ThemeProvider theme={styletheme}>
-                        <TabButton>Pending board</TabButton>
-                        <TabButton>Pending verifications</TabButton>
-                        <TabButton>View user list</TabButton>
-                        <TabButton>View banned users</TabButton>
+                        {displayPendingBoard ? <TabButtonSelected onClick={selectPendingBoard}>Pending reports</TabButtonSelected> :
+                                                <TabButton onClick={selectPendingBoard}>Pending reports</TabButton>}
+                        {displayPendingVerif ? <TabButtonSelected onClick={selectPendingVerif}>Pending verifications</TabButtonSelected> :
+                                                <TabButton onClick={selectPendingVerif}>Pending verifications</TabButton>}
+                        {displayViewUserList ? <TabButtonSelected onClick={selectViewUserList}>View user list</TabButtonSelected> :
+                                                <TabButton onClick={selectViewUserList}>View user list</TabButton>}
+                        {displayBannedUsers ? <TabButtonSelected onClick={selectBannedUsers}>View banned users</TabButtonSelected> :
+                                                <TabButton onClick={selectBannedUsers}>View banned users</TabButton>}
                     </ThemeProvider>
                     
                 </Grid>
             </div>
-            <PendingBoard/>
+            <DisplayBoard
+                displayBannedUsers={displayBannedUsers}
+                displayPendingVerif={displayPendingVerif}
+                displayViewUserList={displayViewUserList}
+                displayPendingBoard={displayPendingBoard}/>
         </div>
     );
+}
+
+const DisplayBoard = (props) => {
+    if(props.displayBannedUsers) {
+        return(
+            <ViewUserList bannedUsers={true}/>
+        );
+    } else if (props.displayPendingVerif) {
+        return (
+           <VerifBoard/> 
+        );
+    } else if (props.displayViewUserList) {
+        return(
+            <ViewUserList bannedUsers={false}/>
+        );
+    } else {
+        return (
+            <PendingBoard/>
+        );
+    }
+}
+
+const ViewUserList = (props) => {
+    const list = (props.bannedUsers ? bannedList : userList);
+    return(
+        <List>
+            {list.map(item => (
+                <ListItem key={item.name}>
+                    <ListItemAvatar>{item.icon}</ListItemAvatar>
+                    <ListItemText primary={item.name}/>
+                </ListItem>
+            ))}
+        </List>
+    );
+    
 }
 
 const PendingBoard = () => {
     return (
         <Grid container>
-            <Grid item container direction="row" justify="space-between" alignItems="center">
-                <ReportCard reporter="REPORTER" reported="REPORTED" reason="REASON 1"/>
-                <ReportCard reporter="REPORTER" reported="REPORTED" reason="REASON 1"/>
-                <ReportCard reporter="REPORTER" reported="REPORTED" reason="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elementum accumsan purus vel sollicitudin. Ut eu nibh massa. In consequat sagittis enim, sed gravida lectus aliquet non. Nulla in eros sed quam tempor euismod. Curabitur libero dolor, hendrerit vel pharetra at, venenatis sed elit. Fusce venenatis dolor et lacinia..."/>
+            <Grid item container direction="row" justify="flex-start" alignItems="center">
+                {reportsList.map(item => (
+                    <ReportCard reporter={item.reporter} reported={item.reported} reason={item.reason}/>
+                ))}
             </Grid>
         </Grid>
-
     )
 }
 
-const CustomizedCard =  withStyles((theme) => ({
+const verifList = [
+    {
+        name: 'Some Company',
+        site: 'https://www.w3schools.com',
+    },
+    {
+        name: 'Another Company',
+        site: 'https://www.w3schools.com',
+    },
+];
+
+const VerifBoard = () => {
+    return (
+        <Grid container>
+            <Grid item container direction="row" justify="flex-start" alignItems="center">
+                {verifList.map(item => {
+                    <VerifCard companyName={item.name} link={item.site}/>
+                })}
+            </Grid>
+        </Grid>
+    )
+}
+
+const ReportCardStyled =  withStyles((theme) => ({
     root: {
-        width: '30%',
-        minWidth: 200,
-        minHeight: 300,
-        height: '100%',
         background: theme.palette.secondaryBackground.main,
+        width: '30%',
+        height: 180,
+        minWidth: 200,
         borderRadius: 20,
         border: 0,
         color: 'black',
-        fontFamily: theme.typography.fontFamily
+        fontFamily: theme.typography.fontFamily,
+        margin: 10
     },
 }))(Card);
 
-const CustomizedTypography = withStyles((theme) => ({
+const VerifCardStyled =  withStyles((theme) => ({
     root: {
+        background: theme.palette.verificationBackground.main,
+        width: '30%',
+        height: 180,
+        minWidth: 200,
+        borderRadius: 20,
+        border: 0,
+        color: 'black',
         fontFamily: theme.typography.fontFamily,
-        fontSize: 50,
-    }
-}))
+        margin: 10
+    },
+}))(Card);
+
+const VerifCard = (props) => {
+    return(
+        <ThemeProvider theme={styles}>
+            <VerifCardStyled variant="outlined">
+                <Grid
+                    container
+                    direction="column"
+                    justify="flex-start"
+                    alignItems="stretch">
+                    <Grid item xs zeroMinWidth wrap="nowrap">
+                        <div>
+                            <CardContent>
+                                <Typography style={{fontWeight: 700}}>
+                                    {props.companyName}
+                                </Typography>
+                                <Typography noWrap>
+                                    <a href={props.link}/>
+                                </Typography>
+                            </CardContent>
+                        </div>
+                    </Grid>
+                    <Grid item
+                        container
+                        direction="row"
+                        justify="center"
+                        alignItems="center">
+                        <CardActions alignself="flex-end">
+                            <div class="admin-cardBtn admin-stickBottom">
+                                <Button size="small">Approve</Button>
+                                <Button size="small">Disapprove</Button>
+                                <Button size="small">Details</Button>
+                            </div>
+                        </CardActions>
+                    </Grid>
+                </Grid>
+            </VerifCardStyled>
+        </ThemeProvider>
+    );
+}
 
 const ReportCard = (props) => {
     return(
         <ThemeProvider theme={styles}>
-            <CustomizedCard variant="outlined">
+            <ReportCardStyled variant="outlined">
                 <Grid
                     container
                     direction="column"
@@ -145,7 +358,7 @@ const ReportCard = (props) => {
                         direction="row"
                         justify="center"
                         alignItems="center">
-                        <CardActions alignSelf="flex-end">
+                        <CardActions alignself="flex-end">
                             <div class="admin-cardBtn admin-stickBottom">
                                 <Button size="small">Ban</Button>
                                 <Button size="small">Ignore</Button>
@@ -154,27 +367,10 @@ const ReportCard = (props) => {
                         </CardActions>
                     </Grid>
                 </Grid>
-            </CustomizedCard>
+            </ReportCardStyled>
         </ThemeProvider>
         
     );
 }
 
-const ReportBoard = () => {
-    return (
-        <div>
-            <div class = "ReportBoard card">
-                <h3>Pending Reports by User:</h3>
-                <dt>Report from Paul Logan#1 to Paul Jake#1</dt>
-                <dd>This guy is pretending to be my brother! Ban him!</dd>
-                <dt>Report from Manav Patel#1 to Manav Patel#125</dt>
-                <dd>I am the true manav. Please ban this person thank you sir.</dd>
-                <dt>Report from Lorem#22 to ipsum#33</dt>
-                <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elementum accumsan purus vel sollicitudin. Ut eu nibh massa. In consequat sagittis enim, sed gravida lectus aliquet non. Nulla in eros sed quam tempor euismod. Curabitur libero dolor, hendrerit vel pharetra at, venenatis sed elit. Fusce venenatis dolor et lacinia volutpat. Integer id nulla eget est ultrices porta. Ut fermentum ipsum efficitur tincidunt fringilla. Proin sollicitudin tristique nulla sit amet hendrerit. Nulla vel sem vitae enim placerat eleifend. Ut ac metus eu justo finibus posuere vel sed massa. Pellentesque ante magna, convallis vel dictum sed, dictum eget ipsum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Ut lacinia ut dui et ullamcorper. Donec a eros nibh. Integer vulputate tortor pellentesque, posuere nisl sit amet, eleifend ligula.</dd>
-                
-            </div>
-        </div>
-    )
-
-}
 export default AdminPage

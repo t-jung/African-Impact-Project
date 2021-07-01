@@ -22,6 +22,9 @@ const theme = createMuiTheme({
         },
         secondaryBackground: {
             main: '#FFDCC3'
+        },
+        verificationBackground: {
+            main: '#bfded6'
         }
     },
     typography: {
