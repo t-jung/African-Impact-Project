@@ -188,17 +188,242 @@
           "responses": {}
         }
       },
-      
-      "/change_partner_password": {
-         "get": {
-           "x-swagger-router-controller": "bar",
-           "operationId": "impossible",
-           "tags": ["/api/partner"],
-           "description": "",
-           "parameters": [],
-           "responses": {}
-         }
+      "/partner/change_partner_password": {
+        "put": {
+          "x-swagger-router-controller": "home",
+          "operationId": "1",
+          "tags": ["/api/partner"],
+          "description": "Changing the partner profile's password.",
+          "parameters": [
+            {
+            "name":"authentication-token", 
+            "in":"header", 
+            "required":true
+            },
+            {
+              "name":"request body", 
+              "in":"body", 
+              "schema":
+              {
+                "type":"object",
+                "properties":
+                {
+                  "newPassword":
+                  {
+                    "type":"string",
+                    "required":true
+                  }
+                }
+              }
+            }
+          ],
+            "responses": {}
+          }
        },
+       "/partner/change_partner_info": {
+         "put": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "2",
+            "tags": ["/api/partner"],
+            "description": "Updating partner's infomation.",
+            "parameters": [
+            {
+              "name":"authentication-token",
+              "in":"header",
+              "required":true
+            },
+            {
+              "name":"request body",
+              "in":"body",
+              "schema":
+              {
+                "type":"object",
+                "properties":
+                {
+                  "name": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "email": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "company": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "phone_number": {
+                    "type":"string",
+                    "required": true
+                  },
+                  "address": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "fax": {
+                    "type":"string"
+                  },
+                  "investing_area": {
+                    "type":"string"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/partner/show_partner_info_id/:partner_id": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "3",
+          "tags": ["/api/partner"],
+          "description": "Get the partner's infromation by ID.",
+          "parameters": [
+            {
+              "name": "partner_id",
+              "in": "path",
+              "required": true
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/partner/show_partner_info_name/:partner_name": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "4",
+          "tags": ["/api/partner"],
+          "description": "Get the partner's infromation by name.",
+          "parameters": [
+            {
+              "name": "partner_name",
+              "in": "path",
+              "required": true
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/partner/get_all_partner": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "5",
+          "tags": ["/api/partner"],
+          "description": "Get all partner information.",
+          "parameters": [],
+          "responses": {}
+        }
+      },
+      "/partner/login/partner_name": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "6",
+          "tags": ["/api/partner"],
+          "description": "Login to partner account by name.",
+          "parameters": [
+            {
+              "name":"request body",
+              "in":"body",
+              "schema":
+              {
+                "type":"object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "password": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/partner/login/partner_email": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "7",
+          "tags": ["/api/partner"],
+          "description": "",
+          "parameters": [
+            {
+              "name":"request body",
+              "in":"body",
+              "schema":
+              {
+                "type":"object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "password": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/partner/partner_register": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "8",
+          "tags": ["/api/partner"],
+          "description": "",
+          "parameters": [
+            {
+              "name":"request body",
+              "in":"body",
+              "schema":
+              {
+                "type":"object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "password": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "email": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "company": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "phone_number": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "address": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "fax": {
+                    "type": "string"
+                  },
+                  "investing_area": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {}
+        }
+      },
        "/changePassword": {
         "get": {
           "x-swagger-router-controller": "bar",
