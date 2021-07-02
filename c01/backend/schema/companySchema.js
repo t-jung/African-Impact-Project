@@ -25,6 +25,10 @@ let CompanySchema = mongoose.Schema({
     },
     description:{
         type: String
+    },
+    status:{
+        type: String,
+        require: true
     }
 })
 
