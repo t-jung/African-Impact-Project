@@ -32,7 +32,6 @@ async(req,res)=>{
 router.put("/updateInfo",
 authentication,
 [
-    check('name','Name is empty.').not().isEmpty(),
     check('email','E-mail is empty.').isEmail()
 ],
 async(req,res)=>{
@@ -65,13 +64,7 @@ async(req,res)=>{
         if(userEmailFromDB.length !== 0) return res.status(401).json("Email already in use.");
 
         // update
-        user.firstName = firstName.toString();
-        user.lastName = lastName.toString();
-        user.gender = gender.toString();
-        user.phoneNumber = phoneNumber.toString();
-        user.address = address.toString();
-        user.email = email.toString();   
-        await user.save();
+        await User.findOneAndUpdate(req.user.email, req.body, {new: true})
         res.json("Update successfully");        
     } catch (error) {
         console.error(error);
@@ -79,6 +72,18 @@ async(req,res)=>{
     }
 });
 
+
+router.get("/getUserByEmail/:email",
+async(req,res)=>{
+    try {
+        let email = req.params.email;
+        let user = await User.findOne({email:email}).select('-password');
+        res.json();
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("Server error.");
+    }
+})
 //fetches User by ID
 router.get("/getUserById/:id",
 async(req,res)=>{
