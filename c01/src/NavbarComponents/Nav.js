@@ -9,7 +9,7 @@ function Nav() {
 
   return (
     <nav>
-        <Link style={navStyle} to= "/">
+        <Link style={navStyle} to= "/feed">
         <h3>Home</h3>
         </Link>
 
