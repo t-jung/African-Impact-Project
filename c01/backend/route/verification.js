@@ -7,8 +7,8 @@ const jwt = require("jsonwebtoken");
 
 
 router.get("/",(req, res) => {
-    Report.find()
-    .then(reports => res.json(reports))
+    Verification.find()
+    .then(verifications => res.json(verifications))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
