@@ -7,7 +7,9 @@ const User = require("../schema/userSchema");
 const authentication = require("../middleware/userAuthentication");
 
 
-router.put("/changePassword",authentication,
+router.put("/changePassword",authentication,[
+    check('newPassword','New password should be 6 letters and below 12.').isLength({min:6,max:12})
+],
 async(req,res)=>{
     try {
         const {newPassword} = req.body;
