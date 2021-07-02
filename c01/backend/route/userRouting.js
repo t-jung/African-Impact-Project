@@ -61,11 +61,14 @@ async(req,res)=>{
             (userEmailExist) =>
             userEmailExist.email === user.email
         )
-        if(userEmailFromDB.length !== 0) return res.status(401).json("Email already in use.");
-
-        // update
-        await User.findOneAndUpdate(req.user.email, req.body, {new: true})
-        res.json("Update successfully");        
+        user.firstName = firstName.toString();
+        user.lastName = lastName.toString();
+        user.gender = gender.toString();
+        user.phoneNumber = phoneNumber.toString();
+        user.address = address.toString();
+        user.email = email.toString();
+        await user.save();
+        res.json("Update successfully");            
     } catch (error) {
         console.error(error);
         return res.status(500).json("Server error");        
