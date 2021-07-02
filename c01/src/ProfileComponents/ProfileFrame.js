@@ -2,25 +2,31 @@
 import './ProfileFrame.css'
 import React from 'react';
 
+const user = {
+    firstName: "User",
+    middleName: "Here",
+    lastName: "Name",
+    profilePic: "https://cdn.discordapp.com/attachments/829661320923447326/860355801931579422/unknown.png",
+    userEmail: "userName.cscc01@email.com",
+    userPhone: 123456789,
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    type: "Partner"
+}
+
 const ProfileFrame = ({userID}) => {
     // User userID to get the following details:
-    var userName = "User Name Here";
-    var profilePic = "https://i1.sndcdn.com/artworks-Z8AyljiXPrMSNaPb-ecOERw-t500x500.jpg";
-    var userEmail = "userName.cscc01@email.com";
-    var userPhone = "+1 000-0000-0000";
-    var description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     var show = true;
     return (
         <div class="bigContainer">                   
             <div><EditButton show={show}/></div>
             <div class="topContainer">
                 <div class="nameCard"><NameCard
-                    userName={userName}
-                    profilePic={profilePic}
-                    userEmail={userEmail}
-                    userPhone={userPhone}/></div>
+                    userName={user.firstName + ' ' + user.middleName + ' ' + user.lastName}
+                    profilePic={user.profilePic}
+                    userEmail={user.userEmail}
+                    userPhone={user.userPhone}/></div>
                 <div class="align-self-center flex-grow-1">
-                    <div><InfoCard info={description}/></div>
+                    <div><InfoCard info={user.description}/></div>
                 </div>
             </div>
             <div class="bottomContainer">

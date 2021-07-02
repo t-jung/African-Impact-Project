@@ -98,6 +98,9 @@ const SideBarProfile = (props) => {
                     classes={{ paper: classes.paper }}
                     variant="permanent">
                         <div class="barContainer">
+                            <img class="barProfilePic"
+                                src={props.imageSrc}
+                            />
                             <Button
                                 component={Link}
                                 to={'/feed'}
