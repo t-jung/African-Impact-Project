@@ -5,7 +5,8 @@ const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../schema/userSchema");
 const authentication = require("../middleware/userAuthentication");
-const { route } = require("./companyRegistration");
+// Used for testing - dar
+const mongoose = require('mongoose');
 
 
 router.put("/changePassword",authentication,[
@@ -249,6 +250,7 @@ router.post('/createPost', async(req, res) => {
 
         /* Update database */
         await poster.save();
+        res.json("Created post successfully.");
 
     } catch (error) {
         console.error(error);
