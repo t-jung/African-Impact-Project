@@ -40,9 +40,12 @@ async(req, res) =>{
     let type = req.body.reportedType;
     let id = req.body.id;
 
+    console.log(type);
+
     if (type === "company"){
         let company = Company.findById(id);
         if(!company) return res.status(404).json("Company does not exist");
+        console.log(id);
         company.status = "banned";
     } else if (type === "user") {
         let user = User.findById(id);
@@ -51,6 +54,7 @@ async(req, res) =>{
     } else if (type === "partner"){
         let partner = Partner.findById(id);
         if(!partner) return res.status(404).json("Partner does not exist");
+        console.log(partner);
         partner.status = 'banned';
     } else {
         return res.status(400).json("Incorrect user type");

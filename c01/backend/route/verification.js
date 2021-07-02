@@ -20,19 +20,41 @@ async(req, res) =>{
     if(!errors.isEmpty()) {
         return res.status(400).json({errors: errors.array()});
     }
-    var newReport = new Report();
-    newReport.reporter = req.body.reporter;
-    newReport.reported = req.body.reported;
-    newReport.reason = req.body.reason;
+    var newVerification = new Verification();
+    newVerification.id = req.body.id;
+    newVerification.type = req.body.type;
 
     console.log(req.body.reporter);
-    await newReport.save()
-    .then(() => res.json("report Added!"));
+    await newVerification.save()
+    .then(() => res.json("verification request Added!"));
+});
+
+router.post("/verifyUser",
+async(req, res) =>{
+    let type = req.body.reportedType;
+    let id = req.body.id;
+
+    if (type === "company"){
+        let company = Company.findById(id);
+        if(!company) return res.status(404).json("Company does not exist");
+        company.status = "verified";
+    } else if (type === "user") {
+        let user = User.findById(id);
+        if(!user) return res.status(404).json("User does not exist");
+        user.status = "verified";
+    } else if (type === "partner"){
+        let partner = Partner.findById(id);
+        if(!partner) return res.status(404).json("Partner does not exist");
+        partner.status = 'verified';
+    } else {
+        return res.status(400).json("Incorrect user type");
+    }
+    res.json("User is now verified");
 });
 
 router.delete('/delete/:id', 
 async(req, res) =>{
-    Report.findByIdAndDelete(req.params.id, function (err, docs) {
+    Verification.findByIdAndDelete(req.params.id, function (err, docs) {
         if (err){
             console.log(err)
         }
