@@ -21,8 +21,12 @@ const userSchema = new Schema({
     password: {
         type: String, required: true
     },
-    userPosts: {
-        post: [{
+    userPosts: [{
+        post: {
+            title: {
+                type: String
+            },
+            postId: Number,
             tags: [{
                 type: String
             }],
@@ -32,16 +36,16 @@ const userSchema = new Schema({
             },
             text: {
                 type: String,
-                required: true,
-                default: "Default Post Text."
+                default: "This post is empty!"
             },
             likes: [{
-                /* This should be the identifying piece of information for a user. */
-                type: String
+                /* ObjectId represents the liker. */
+                type: String,
+                required: true
             }],
             postComments: [{
+                /* ObjectId represents the commenter. */
                 commenter: {
-                    /* This should be the identifying piece of information for a user. */
                     type: String,
                     required: true
                 },
@@ -55,8 +59,8 @@ const userSchema = new Schema({
                     default: Date.now
                 }
             }],
-        }]
-    }
+        }
+    }]
     /*
     followers: {
         tags: [{

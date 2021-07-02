@@ -25,7 +25,7 @@ async(req,res)=>{
         res.json("Change password successfully.");
     } catch (error) {
         console.error(error);
-        res.status(500).json("Server error.")
+        res.status(500).json("/changePassword Server error.")
     }
 });
 
@@ -71,7 +71,7 @@ async(req,res)=>{
         res.json("Update successfully");            
     } catch (error) {
         console.error(error);
-        return res.status(500).json("Server error");        
+        return res.status(500).json("/updateInfo Server error");        
     }
 });
 
@@ -84,7 +84,7 @@ async(req,res)=>{
         res.json();
     } catch (error) {
         console.error(error);
-        return res.status(500).json("Server error.");
+        return res.status(500).json("/getUserByEmail/ Server error.");
     }
 })
 //fetches User by ID
@@ -107,7 +107,7 @@ async(req,res)=>{
         res.json(user);
     } catch (error) {
         console.error(error);
-        res.status(500).json("Server error.");
+        res.status(500).json("/admin/getAllUsers Server error.");
     }
 });
 
@@ -149,7 +149,7 @@ async(req,res)=>{
 
     } catch (error) {
         console.error(error);
-        res.status(500).json("Server error.");
+        res.status(500).json("/login Server error.");
     }    
 });
 
@@ -206,7 +206,7 @@ async(req,res)=>{
         
     } catch (error) {
         console.error(error);
-        return res.status(500).json("Server error.");
+        return res.status(500).json("/register Server error.");
     }
 });
 
@@ -227,27 +227,44 @@ router.delete('/delete/:id', (req, res) =>{
 // @route POST /createPost
 // @desc Creates a post object.
 // @access Public
-router.get('/createPost', (req, res) => {
+router.post('/createPost', async(req, res) => {
     try {
         // TODO: Should email be the identifying piece of information for a user?
         const {email, text} = req.body;
+        
+        console.log("1");
 
         /* Error Checking */
-        let erros = validationResult(req);
+        let errors = validationResult(req);
         if(!errors.isEmpty())
             return res.status(400).json({errors: errors.array()});
+
+        console.log("2");
 
         /* Find user to create Post object under. */
         let poster = await User.findOne({email : req.body.email}).select('-password');
         if(!poster)
             return res.status(401).json("This user is not registered.");
 
+        console.log("3");
+
         /* Create post object. */
+        console.log("\n\n>" + req.body.text + "<\n\n");
         var post = {text: req.body.text}; 
         poster.userPosts.push(post);
 
+        console.log("4");
+
         /* Update database */
         await poster.save();
+
+        console.log("5");
+
+        const payload = {
+            user:{
+                id: newUser._id
+            }
+        }
 
         /* Authorization stuff? */
         jwt.sign(
@@ -260,15 +277,71 @@ router.get('/createPost', (req, res) => {
             }
         )
 
+        console.log("5");
+
     } catch (error) {
         console.error(error);
-        return res.status(500).json("Server error.");
+        return res.status(500).json("/createPost Server error.");
     }
 })
 
 // @route POST /createComment
 // @desc Creates a comment object.
 // @access Public
+// router.get('/createComment', (req, res) => {
+//     try {
+//         // TODO: Should email be the identifying piece of information for a user?
+//         const {email, text} = req.body;
+
+//         /* Error Checking */
+//         let errors = validationResult(req);
+//         if(!errors.isEmpty())
+//             return res.status(400).json({errors: errors.array()});
+
+//         /* Find user to create Comment object under. */
+//         let poster = await User.findOne({email : req.body.email}).select('-password');
+//         if(!poster)
+//             return res.status(401).json("This user is not registered.");
+
+//         /* Create post object. */
+//         /*
+//         postComments: [{
+//                 ObjectId,
+//                 text: {
+//                     type: String,
+//                     required: true,
+//                     default: "Default Comment Text."
+//                 },
+//                 date: {
+//                     type: Date,
+//                     default: Date.now
+//                 }
+//             }],
+//         */
+//         var comment = {ObjectId: req.body.commenterId, text: req.body.text};
+//         await 
+//         poster.userPosts.find({id: commenterId})
+//         poster.userPosts.push(post);
+
+//         /* Update database */
+//         await poster.save();
+
+//         /* Authorization stuff? */
+//         jwt.sign(
+//             payload,
+//             process.env.JSONWEBTOKEN,
+//             {expiresIn: 3600},
+//             (err,token) =>{
+//                 if(err) throw err
+//                 res.json({token})
+//             }
+//         )
+
+//     } catch (error) {
+//         console.error(error);
+//         return res.status(500).json("Server error.");
+//     }
+// })
 
 // @route POST /getUserPosts
 // @desc Gets all posts for a user.
