@@ -1,6 +1,7 @@
 import './SideBar.css'
 
 import React from 'react';
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { ThemeProvider, makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -12,6 +13,7 @@ import theme from '../styles';
 import styles from '../styles.js';
 
 import CompanyEditForm from './CompanyEditForm.js';
+import Setting from './Setting.js'
 
 // from database
 const user = {
@@ -78,9 +80,8 @@ const tabUseStyles = makeStyles(() => ({
     }
 }));
 
-let selected = "Profile"
-
 const SideBarProfile = (props) => {
+
     const classes = useStyles();
     const btnClasses = tabUseStyles();
     const [profile, setProfile] = React.useState(true);
@@ -88,14 +89,13 @@ const SideBarProfile = (props) => {
     const [employee, setEmployee] = React.useState(false);
     const [workshop, setWorkshop] = React.useState(false);
     const [schedule, setSchedule] = React.useState(false);
-
+    
     const selectProfile = () => {
         setProfile(true);
         setSetting(false);
         setEmployee(false);
         setWorkshop(false);
         setSchedule(false);
-        selected = "Profile";
     }
 
     const selectSetting = () => {
@@ -104,7 +104,6 @@ const SideBarProfile = (props) => {
         setEmployee(false);
         setWorkshop(false);
         setSchedule(false);
-        selected = "Setting";
     }
 
     const selectEmployee = () => {
@@ -112,8 +111,7 @@ const SideBarProfile = (props) => {
         setSetting(false);
         setEmployee(true);
         setWorkshop(false);
-        setSchedule(false);
-        selected = "Employee";
+
     }
 
     const selectWorkshop = () => {
@@ -122,7 +120,6 @@ const SideBarProfile = (props) => {
         setEmployee(false);
         setWorkshop(true);
         setSchedule(false);
-        selected = "Workshop";
     }
 
     const selectSchedule = () => {
@@ -131,7 +128,6 @@ const SideBarProfile = (props) => {
         setEmployee(false);
         setWorkshop(false);
         setSchedule(true);
-        selected = "Schedule";
     }
 
     const UserSideBarElements = (type) => {
@@ -155,10 +151,37 @@ const SideBarProfile = (props) => {
                             Setting
                         </Typography>
                 </Button>
-                {(type.type !== "User") ? <CompanySideBarElements/> : null}
+                {(user.type !== "User") ? <CompanySideBarElements/> : <RegisterAccountElements/>}
             </div>
         )
     };
+
+    const RegisterAccountElements = () => {
+        return(
+            <div class="barContainer">
+                <Button
+                    component={Link}
+                    to={'/partner_register'}
+                    className={btnClasses.root}
+                    style={{justifyContent: "flex-start"}}
+                    paddingX={2}>
+                        <Typography className={btnClasses.typography}>
+                            Register as Parnter
+                        </Typography>
+                </Button>
+                <Button
+                    component={Link}
+                    to={'/company_register'}
+                    className={btnClasses.root}
+                    style={{justifyContent: "flex-start"}}
+                    paddingX={2}>
+                        <Typography className={btnClasses.typography}>
+                            Register as Company
+                        </Typography>
+                </Button>
+            </div>
+        );
+    }
     
     const CompanySideBarElements = () => {
         return(
@@ -194,7 +217,11 @@ const SideBarProfile = (props) => {
         );
     }
 
+    
+
     return (
+        <div class="profileEdit_container">
+        <div class="profileEdit_split profileEdit_left">
         <ThemeProvider theme={theme}>
             <div className={classes.drawerContainer}>
                 <Drawer
@@ -220,19 +247,15 @@ const SideBarProfile = (props) => {
                   </Drawer>
             </div>
       </ThemeProvider>
+        </div>
+        <div class="profileEdit_formContainer">
+            {profile === true ? 
+                (user.type === "User" ? <EditForm user={user}/> : (user.type === "User" ? <EditForm user={user}/> : null))
+                : null}
+            {setting === true ? <Setting/> : null}
+        </div>
+    </div>
     );
 };
 
-const ProfileManagementPage = () => {
-    return(
-    <div class="profileEdit_container">
-        <div class="profileEdit_split profileEdit_left">
-        <SideBarProfile theme={styles} type={user.type} imageSrc={user.profilePic}/></div>
-        <div class="profileEdit_formContainer">
-            {user.type === "User" ? <EditForm user={user}/> : null}
-            {user.type === "Company" ? <CompanyEditForm user={user}/> : null}
-        </div>
-    </div>);
-}
-
-export default ProfileManagementPage;
+export default SideBarProfile;

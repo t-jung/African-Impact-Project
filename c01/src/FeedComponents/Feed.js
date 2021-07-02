@@ -1,7 +1,5 @@
 import './Feed.css';
 import { useState } from 'react';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
 
 const user = [
     {
@@ -68,6 +66,9 @@ function Feed() {
     const GetSchedule = () => {
         return(
             <div class="schedule" >
+                <div>
+                    
+                </div>
                 "filler schedule text"
             </div>
         )
