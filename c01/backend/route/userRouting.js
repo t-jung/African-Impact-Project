@@ -5,6 +5,7 @@ const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../schema/userSchema");
 const authentication = require("../middleware/userAuthentication");
+const { route } = require("./companyRegistration");
 
 
 router.put("/changePassword",authentication,[
@@ -231,53 +232,23 @@ router.post('/createPost', async(req, res) => {
     try {
         // TODO: Should email be the identifying piece of information for a user?
         const {email, text} = req.body;
-        
-        console.log("1");
 
         /* Error Checking */
         let errors = validationResult(req);
         if(!errors.isEmpty())
             return res.status(400).json({errors: errors.array()});
 
-        console.log("2");
-
         /* Find user to create Post object under. */
         let poster = await User.findOne({email : req.body.email}).select('-password');
         if(!poster)
             return res.status(401).json("This user is not registered.");
 
-        console.log("3");
-
         /* Create post object. */
-        console.log("\n\n>" + req.body.text + "<\n\n");
         var post = {text: req.body.text}; 
-        poster.userPosts.push(post);
-
-        console.log("4");
+        poster.userPosts.unshift(post);
 
         /* Update database */
         await poster.save();
-
-        console.log("5");
-
-        const payload = {
-            user:{
-                id: newUser._id
-            }
-        }
-
-        /* Authorization stuff? */
-        jwt.sign(
-            payload,
-            process.env.JSONWEBTOKEN,
-            {expiresIn: 3600},
-            (err,token) =>{
-                if(err) throw err
-                res.json({token})
-            }
-        )
-
-        console.log("5");
 
     } catch (error) {
         console.error(error);
@@ -343,12 +314,70 @@ router.post('/createPost', async(req, res) => {
 //     }
 // })
 
+
+
 // @route POST /getUserPosts
 // @desc Gets all posts for a user.
 // @access Public
+router.get('/getUserPosts',
+[
+    check('email',"Email is empty").isEmail()
+],
+async(req,res)=>{
+    try {
+        let {email} = req.body;
+
+        let errors = validationResult(req);
+        if(!errors.isEmpty()) return res.status(400).json({errors:errors.array()});
+
+        let user = await User.findOne({email});
+        if(!user) return res.status(404).json("User could not found");
+
+        let userPost = user.userPosts;
+        return res.json(userPost);
+        
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json("Server error");        
+    }
+})
+
+router.put('/following',authentication,
+[
+    check('email',"Email is empty").isEmail()
+],
+async(req,res)=>{
+    try {
+        let {email} = req.body;
+
+        let errors = validationResult(req);
+        if(!errors.isEmpty()) return res.status(400).json({errors:errors.array()});
+        
+        let user = await User.findById(req.user.id);
+        if(!user) return res.status(404).json("User does not exist");
+
+        let following = await User.findOne({email});
+        if(!following) return res.status(404).json("User does not found");
+
+        let newFollowing = {
+            email
+        };
+
+        user.following.unshift(newFollowing);
+
+        user.save();
+
+        return res.json(user);
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json("Server error");
+    }
+});
+
+
 
 // @route POST /getFollowedPosts
 // @desc Creates a all posts for all posts a user follows.
 // @access Public
-
 module.exports = router;

@@ -22,7 +22,6 @@ const userSchema = new Schema({
         type: String, required: true
     },
     userPosts: [{
-        post: {
             title: {
                 type: String
             },
@@ -59,14 +58,23 @@ const userSchema = new Schema({
                     default: Date.now
                 }
             }],
+    }],
+    following:[
+        {
+            email:{
+                type: String,
+                require: true
+            }
         }
-    }]
-    /*
-    followers: {
-        tags: [{
-            type: String
-        }]
-    */
+    ],
+    follower:[
+        {
+            email:{
+                type: String,
+                require: true
+            }
+        }
+    ]
 });
 
 const User = mongoose.model("User",userSchema);
