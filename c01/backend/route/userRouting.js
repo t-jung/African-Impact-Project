@@ -108,7 +108,7 @@ async(req,res)=>{
     }
 });
 
-router.get("/login",
+router.post("/login",
 [
     check('email',"E-mail is empty.").isEmail(),
 ],
