@@ -214,7 +214,7 @@ router.delete('/delete/:id', (req, res) =>{
     User.findByIdAndRemove(req.params.id, (err, doc) =>
     {
         if(err){
-            res.status(404).json('Error: ' + err);
+            res.status(400).json('Error: ' + err);
             console.log('Error deleting user' + err);
         } else {
             res.send(doc); 
@@ -222,5 +222,60 @@ router.delete('/delete/:id', (req, res) =>{
       
     })
 })
+
+/* Post-Related Endpoints */
+// @route POST /createPost
+// @desc Creates a post object.
+// @access Public
+router.get('/createPost', (req, res) => {
+    try {
+        // TODO: Should email be the identifying piece of information for a user?
+        const {email, text} = req.body;
+
+        /* Error Checking */
+        let erros = validationResult(req);
+        if(!errors.isEmpty())
+            return res.status(400).json({errors: errors.array()});
+
+        /* Find user to create Post object under. */
+        let poster = await User.findOne({email : req.body.email}).select('-password');
+        if(!poster)
+            return res.status(401).json("This user is not registered.");
+
+        /* Create post object. */
+        var post = {text: req.body.text}; 
+        poster.userPosts.push(post);
+
+        /* Update database */
+        await poster.save();
+
+        /* Authorization stuff? */
+        jwt.sign(
+            payload,
+            process.env.JSONWEBTOKEN,
+            {expiresIn: 3600},
+            (err,token) =>{
+                if(err) throw err
+                res.json({token})
+            }
+        )
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("Server error.");
+    }
+})
+
+// @route POST /createComment
+// @desc Creates a comment object.
+// @access Public
+
+// @route POST /getUserPosts
+// @desc Gets all posts for a user.
+// @access Public
+
+// @route POST /getFollowedPosts
+// @desc Creates a all posts for all posts a user follows.
+// @access Public
 
 module.exports = router;

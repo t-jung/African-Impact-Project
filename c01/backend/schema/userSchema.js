@@ -20,19 +20,49 @@ const userSchema = new Schema({
     },
     password: {
         type: String, required: true
+    },
+    userPosts: {
+        post: [{
+            tags: [{
+                type: String
+            }],
+            date: {
+                type: Date,
+                default: Date.now
+            },
+            text: {
+                type: String,
+                required: true,
+                default: "Default Post Text."
+            },
+            likes: [{
+                /* This should be the identifying piece of information for a user. */
+                type: String
+            }],
+            postComments: [{
+                commenter: {
+                    /* This should be the identifying piece of information for a user. */
+                    type: String,
+                    required: true
+                },
+                text: {
+                    type: String,
+                    required: true,
+                    default: "Default Comment Text."
+                },
+                date: {
+                    type: Date,
+                    default: Date.now
+                }
+            }],
+        }]
     }
     /*
-    posts: {
-        tags: [{
-            type: String
-        }]
-    },
     followers: {
         tags: [{
             type: String
         }]
-    }
-*/
+    */
 });
 
 const User = mongoose.model("User",userSchema);
