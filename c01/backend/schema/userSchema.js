@@ -23,11 +23,9 @@ const userSchema = new Schema({
     },
     userPosts: [
         {
-       // post: {
             title: {
                 type: String
             },
-            postId: Number,
             tags: [{
                 type: String
             }],
@@ -60,7 +58,6 @@ const userSchema = new Schema({
                     default: Date.now
                 }
             }],
-      //  }
         }
     ]
     /*

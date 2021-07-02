@@ -261,63 +261,54 @@ router.post('/createPost', async(req, res) => {
 // @route POST /createComment
 // @desc Creates a comment object.
 // @access Public
-// router.get('/createComment', (req, res) => {
-//     try {
-//         // TODO: Should email be the identifying piece of information for a user?
-//         const {email, text} = req.body;
+router.post('/createComment', async(req, res) => {
+    try {
+        // TODO: Should email be the identifying piece of information for a user?
+        const {email, postId, text} = req.body;
 
-//         /* Error Checking */
-//         let errors = validationResult(req);
-//         if(!errors.isEmpty())
-//             return res.status(400).json({errors: errors.array()});
+        /* Error Checking */
+        let errors = validationResult(req);
+        if(!errors.isEmpty())
+            return res.status(400).json({errors: errors.array()});
 
-//         /* Find user to create Comment object under. */
-//         let poster = await User.findOne({email : req.body.email}).select('-password');
-//         if(!poster)
-//             return res.status(401).json("This user is not registered.");
+        /* Find user to create Comment object under. */
+        let poster = await User.findOne({email : req.body.email}).select('-password');
+        if(!poster)
+            return res.status(401).json("This user is not registered.");
+    
 
-//         /* Create post object. */
-//         /*
-//         postComments: [{
-//                 ObjectId,
-//                 text: {
-//                     type: String,
-//                     required: true,
-//                     default: "Default Comment Text."
-//                 },
-//                 date: {
-//                     type: Date,
-//                     default: Date.now
-//                 }
-//             }],
-//         */
-//         var comment = {ObjectId: req.body.commenterId, text: req.body.text};
-//         await 
-//         poster.userPosts.find({id: commenterId})
-//         poster.userPosts.push(post);
+        /* Finds the appropriate comment. */
+        let wantedPost = null;
+        for(const post of poster.userPosts){
+            let id = JSON.stringify(post._id);
+            console.log(postId);
+            if(id === '"' + postId + '"'){
+                wantedPost = post;
+                break;
+            }
+        }
+        
+        /* Add comment */
+        console.log(wantedPost);
+        var comment = {commenter: req.body.email, text: req.body.text};
+        wantedPost.postComments.unshift(comment);
 
-//         /* Update database */
-//         await poster.save();
+        /* Update database */
+        await poster.save();
+        res.json("Commented post successfully.");
 
-//         /* Authorization stuff? */
-//         jwt.sign(
-//             payload,
-//             process.env.JSONWEBTOKEN,
-//             {expiresIn: 3600},
-//             (err,token) =>{
-//                 if(err) throw err
-//                 res.json({token})
-//             }
-//         )
-
-//     } catch (error) {
-//         console.error(error);
-//         return res.status(500).json("Server error.");
-//     }
-// })
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("Server error.");
+    }
+})
 
 // @route POST /getUserPosts
 // @desc Gets all posts for a user.
+// @access Public
+
+// @route POST /getComments
+// @desc Gets all comments for a given post id.
 // @access Public
 
 // @route POST /getFollowedPosts
