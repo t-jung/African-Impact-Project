@@ -308,13 +308,10 @@ router.post('/createComment', async(req, res) => {
 // @route POST /getUserPosts
 // @desc Gets all posts for a user.
 // @access Public
-router.get('/getUserPosts',
-[
-    check('email',"Email is empty").isEmail()
-],
+router.get('/getUserPosts/:email',
 async(req,res)=>{
     try {
-        let {email} = req.body;
+        let {email} = req.params.email;
 
         let errors = validationResult(req);
         if(!errors.isEmpty()) return res.status(400).json({errors:errors.array()});
