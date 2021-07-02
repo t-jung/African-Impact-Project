@@ -68,9 +68,9 @@ const NameCard = ({userName, userPhone, profilePic, userEmail}) => {
             <div class="p-2 align-self-center">
                 <h4 class="userName">{userName}</h4>
                 <h5>{userEmail} | {userPhone}</h5>
-                <div class="d-flex">
-                    <button class="btn message text-uppercase btn-block">message</button>
-                    <button class="btn follow text-uppercase btn-block">follow</button>
+                <div class="d-flex" >
+                    <button class="btn btn_profile message text-uppercase ">message</button>
+                    <button class="btn btn_profile follow text-uppercase ">follow</button>
                 </div>
                 
             </div>

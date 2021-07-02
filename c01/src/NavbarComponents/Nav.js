@@ -48,14 +48,14 @@ function Nav() {
               </tr>
              </table>
             </li>
-            <Link style={navStyle} to='/'>
-            <li> &emsp;&emsp;Log out  &emsp; </li>
+            <Link class="nav_padding" style={navStyle} to='/'>
+            <li> Log out   </li>
             </Link>
-            <Link style={navStyle} to='/partner_register'>
-            <li> Register as a Partner &emsp; </li>
+            <Link class="nav_padding" style={navStyle} to='/partner_register'>
+            <li> Register as a Partner  </li>
             </Link>
-            <Link style={navStyle} to='/AdminPage'>
-            <li> Adminpage &emsp;</li>
+            <Link class="nav_padding" style={navStyle} to='/AdminPage'>
+            <li> Adminpage</li>
             </Link>
         </ul>
     </nav>

@@ -43,7 +43,7 @@ const RegisterForm = () => {
                                 <input type="password" placeholder="Enter Password" name="psw" required />  <br/>
                                 <label for="psw-repeat"><b>Re-type Password</b></label>  <br/>
                                 <input type="password" placeholder="Retype Password" name="psw-repeat" required />  <br/>
-                                <button type="submit" class="btn">Register</button>    
+                                <button type="submit" class="btn_REG">Register</button>    
 
                             </form>  
                         </div>
