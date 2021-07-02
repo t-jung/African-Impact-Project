@@ -8,25 +8,186 @@
     "produces": ["application/json"],
     "paths": {
       "/change_company_password": {
-        "post": {
+        "put": {
           "x-swagger-router-controller": "home",
-          "operationId": "index",
+          "operationId": "1",
           "tags": ["/api/company"],
-          "description": "[Login 123](https://www.google.com)",
-          "parameters": [{
-            "name": "test",
-            "in": "formData",
-            "type": "array",
-            "collectionFormat": "multi",
-            "items": {
-              "type": "integer"
-             }
-          },
-        { "name": "profileId", "in": "formData", "required": true, "type": "string" },
-        { "name": "file", "in": "formData", "type": "file", "required": "true" }],
+          "description": "Changing the company's password.",
+          "parameters": [
+            {"name":"authentication-token","in":"header","required":true},
+            {"name":"request body","in":"body","schema":{
+              "type":"object",
+              "properties":{
+                "newPassword":{
+                  "type":"string",
+                  "required":true
+                }
+              }
+            }}
+          ],
           "responses": {}
         }
       },
+      "/change_company_info": {
+        "put": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "2",
+          "tags": ["/api/company"],
+          "description": "Changing company's infomation.",
+          "parameters": [
+            {"name":"authentication-token","in":"header","required":true},
+            {"name":"request body","in":"body","schema":{
+              "type":"object",
+              "properties":{
+                "name":{
+                  "type":"string",
+                  "required":true
+                },
+                "email":{
+                  "type":"string",
+                  "required":true
+                },
+                "location":{
+                  "type":"string"
+                },
+                "industry":{
+                  "type":"string"
+                },
+                "website":{
+                  "type":"string"
+                },
+                "description":{
+                  "type":"string"
+                }
+              }
+            }}
+          ],
+          "responses": {}
+        }
+      },
+      "/show_company_info_id/{company_id}": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "3",
+          "tags": ["/api/company"],
+          "description": "Get the company's information by its ID.",
+          "parameters": [
+            {"name":"company_id","in":"path","required":true}
+          ],
+          "responses": {}
+        }
+      },
+      "/show_company_info_name/{company_name}": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "4",
+          "tags": ["/api/company"],
+          "description": "Get the company's information by its name",
+          "parameters": [
+            {"name":"company_name","in":"path","required":true}
+          ],
+          "responses": {}
+        }
+      },
+      "/get_all_company": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "5",
+          "tags": ["/api/company"],
+          "description": "Get all companies' information.",
+          "parameters": [],
+          "responses": {}
+        }
+      },
+      "/login/company_email": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "6",
+          "tags": ["/api/company"],
+          "description": "Login to company account by email",
+          "parameters": [
+            {"name":"request body","in":"body","schema":{
+              "type":"object",
+              "properties":{
+                "email":{
+                  "type":"string",
+                  "required":true
+                },
+                "password":{
+                  "type":"string",
+                  "required":true
+                }}
+              }
+            }            
+          ],
+          "responses": {}
+        }
+      },
+      "/login/company_name": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "6",
+          "tags": ["/api/company"],
+          "description": "Login to company account by name",
+          "parameters": [
+            {"name":"request body","in":"body","schema":{
+              "type":"object",
+              "properties":{
+                "name":{
+                  "type":"string",
+                  "required":true
+                },
+                "password":{
+                  "type":"string",
+                  "required":true
+                }
+              }}
+            }            
+          ],
+          "responses": {}
+        }
+      },
+      "/company_register": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "7",
+          "tags": ["/api/company"],
+          "description": "Company registration",
+          "parameters":[
+            {"name":"request body","in":"body","schema":{
+              "type":"object",
+              "properties":{
+                "name":{
+                  "type":"string",
+                  "required":true
+                },
+                "email":{
+                  "type":"string",
+                  "required":true
+                },
+                "password":{
+                  "type":"string",
+                  "required":true
+                },
+                "location":{
+                  "type":"string"
+                },
+                "industry":{
+                  "type":"string"
+                },
+                "website":{
+                  "type":"string"
+                },
+                "description":{
+                  "type":"string"
+                }
+              }}
+            } 
+          ],
+          "responses": {}
+        }
+      },
+      
       "/change_partner_password": {
          "get": {
            "x-swagger-router-controller": "bar",
