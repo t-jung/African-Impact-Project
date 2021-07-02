@@ -20,7 +20,7 @@ const user = {
 const ProfileEditForm = () => {
     return(
         <div class="profileEdit_container">
-            <div class="profileEdit_split profileEdit_left"><SideBarProfile theme={styles} imageSrc={user.profilePic}/></div>
+            <div class="profileEdit_split profileEdit_left"><SideBarProfile theme={styles} type={user.type} imageSrc={user.profilePic}/></div>
             <div class="profileEdit_formContainer">
                 <div class="formContainer card">
                 <h3>Editing {user.type} Profile Information:</h3>

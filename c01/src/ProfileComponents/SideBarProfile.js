@@ -12,8 +12,6 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import CheckIcon from '@material-ui/icons/Check';
 import theme from '../styles';
 
-
-
 const drawerWidth = 320;
 
 const useStyles = makeStyles((thene) => ({
@@ -76,7 +74,49 @@ const SideBarProfile = (props) => {
     const [workshop, setWorkshop] = React.useState(false);
     const [schedule, setSchedule] = React.useState(false);
 
-    const UserSideBarElements = () => {
+    const selectProfile = () => {
+        setProfile(true);
+        setSetting(false);
+        setEmployee(false);
+        setWorkshop(false);
+        setSchedule(false);
+    }
+
+    const selectSetting = () => {
+        setProfile(false);
+        setSetting(true);
+        setEmployee(false);
+        setWorkshop(false);
+        setSchedule(false);
+    }
+
+    const selectEmployee = () => {
+        setProfile(false);
+        setSetting(false);
+        setEmployee(true);
+        setWorkshop(false);
+        setSchedule(false);
+    }
+
+    const selectWorkshop = () => {
+        setProfile(false);
+        setSetting(false);
+        setEmployee(false);
+        setWorkshop(true);
+        setSchedule(false);
+    }
+
+    const selectSchedule = () => {
+        setProfile(false);
+        setSetting(false);
+        setEmployee(false);
+        setWorkshop(false);
+        setSchedule(true);
+    }
+
+
+
+    const UserSideBarElements = (type) => {
         return(
             <div class="barContainer">
                 <Button
@@ -97,29 +137,44 @@ const SideBarProfile = (props) => {
                             Setting
                         </Typography>
                 </Button>
+                {(type.type !== "User") ? <CompanySideBarElements/> : null}
             </div>
         )
     };
     
-    const companySideBarElements = [
-        {name: 'Employees'},
-        {name: 'Workshops'},
-        {name: 'Schedules'},
-    ]
-
-    const selectProfile = () => {
-        setProfile(true);
-        setSetting(false);
+    const CompanySideBarElements = () => {
+        return(
+            <div class="barContainer">
+                <Button
+                    className={btnClasses.root + ' ' + (employee ? btnClasses.Selected : btnClasses.notSelected)}
+                    onClick={selectEmployee}
+                    style={{justifyContent: "flex-start"}}
+                    paddingX={2}>
+                        <Typography className={btnClasses.typography}>
+                            Employee
+                        </Typography>
+                </Button>
+                <Button
+                    className={btnClasses.root + ' ' + (workshop ? btnClasses.Selected : btnClasses.notSelected)}
+                    onClick={selectWorkshop}
+                    style={{justifyContent: "flex-start"}}
+                    paddingX={2}>
+                        <Typography className={btnClasses.typography}>
+                            Workshop
+                        </Typography>
+                </Button>
+                <Button
+                    className={btnClasses.root + ' ' + (schedule ? btnClasses.Selected : btnClasses.notSelected)}
+                    onClick={selectSchedule}
+                    style={{justifyContent: "flex-start"}}
+                    paddingX={2}>
+                        <Typography className={btnClasses.typography}>
+                            Schedule
+                        </Typography>
+                </Button>
+            </div>
+        );
     }
-
-    const selectSetting = () => {
-        setProfile(false);
-        setSetting(true);
-    }
-
-    useEffect(() => {
-
-    }, [profile, setting]);
 
     return (
         <ThemeProvider theme={theme}>
@@ -128,7 +183,7 @@ const SideBarProfile = (props) => {
                     className={classes.drawer  + ' ' + classes.paper}
                     classes={{ paper: classes.paper }}
                     variant="permanent">
-                        <div class="barContainer">
+                        <div class="barContainer sidebarContainer">
                             <img class="barProfilePic"
                                 src={props.imageSrc}
                             />
@@ -142,7 +197,7 @@ const SideBarProfile = (props) => {
                                         Home
                                     </Typography>
                             </Button>
-                        <UserSideBarElements/>
+                        <UserSideBarElements type={props.type}/>
                         </div>
                         
                   </Drawer>

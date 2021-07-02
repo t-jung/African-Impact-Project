@@ -1,11 +1,14 @@
-.barContainer {
+.sidebarContainer{
     margin-top: 10vh;
+}
+
+.barContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .barProfilePic {
-    width: 80%;
-    border-radius: 40%;
+    width: 50%;
+    border-radius: 50%;
 }
