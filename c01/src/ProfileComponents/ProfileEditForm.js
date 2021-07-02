@@ -10,7 +10,7 @@ const user = {
     firstName: "User",
     middleName: "Here",
     lastName: "Name",
-    profilePic: "https://i1.sndcdn.com/artworks-Z8AyljiXPrMSNaPb-ecOERw-t500x500.jpg",
+    profilePic: "https://cdn.discordapp.com/attachments/829661320923447326/860355801931579422/unknown.png",
     userMeail: "userName.cscc01@email.com",
     userPhone: 123456789,
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -20,7 +20,7 @@ const user = {
 const ProfileEditForm = () => {
     return(
         <div class="profileEdit_container">
-            <div class="profileEdit_split profileEdit_left"><SideBarProfile theme={styles}/></div>
+            <div class="profileEdit_split profileEdit_left"><SideBarProfile theme={styles} imageSrc={user.profilePic}/></div>
             <div class="profileEdit_formContainer">
                 <div class="formContainer card">
                 <h3>Editing {user.type} Profile Information:</h3>
