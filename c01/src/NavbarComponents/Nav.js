@@ -22,11 +22,9 @@ function Nav() {
               <div class="fkreact">oi</div>
             <table>
               <tr>
-                <td>
-                  <a href="/profile"><img src="https://i1.sndcdn.com/artworks-Z8AyljiXPrMSNaPb-ecOERw-t500x500.jpg" className="profile_framing" /></a>
-                </td>
+
                 <td width="500">
-                  <input type="text" placeholder="I hope you're fucking happy Cheryl" 
+                  <input type="text" placeholder="  Search" 
                     onChange={event =>{
                       setSearchTerm(event.target.value)
                     }}
@@ -44,6 +42,11 @@ function Nav() {
                       <div class="user" key="key"></div>
                     );
                   })}
+                </td>
+                <td>
+                  <a href="/profile">
+                    <img src="https://cdn.discordapp.com/attachments/829661320923447326/860355801931579422/unknown.png" class="profilePic" />
+                  </a>
                 </td>
               </tr>
              </table>

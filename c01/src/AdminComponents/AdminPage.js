@@ -8,13 +8,11 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import { ThemeProvider, withStyles, makeStyles } from '@material-ui/styles';
+import { ThemeProvider, withStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import { flexbox, sizing } from '@material-ui/system';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
