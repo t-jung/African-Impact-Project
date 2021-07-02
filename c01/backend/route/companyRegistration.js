@@ -5,8 +5,6 @@ const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 let Company = require("../schema/companySchema");
 const authentication = require("../middleware/companyAuthentication");
-const companyAuthentication = require("../middleware/companyAuthentication");
-
 
 router.put("/change_company_password",
 authentication,
