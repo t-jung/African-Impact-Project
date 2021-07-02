@@ -26,7 +26,7 @@ function Nav() {
                   <a href="/profile"><img src="https://i1.sndcdn.com/artworks-Z8AyljiXPrMSNaPb-ecOERw-t500x500.jpg" className="profile_framing" /></a>
                 </td>
                 <td width="500">
-                  <input type="text" placeholder="Search" 
+                  <input type="text" placeholder="I hope you're fucking happy Cheryl" 
                     onChange={event =>{
                       setSearchTerm(event.target.value)
                     }}
