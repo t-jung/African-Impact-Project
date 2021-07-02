@@ -1,5 +1,4 @@
 import './Feed.css'
-import JSONDATA from './MOCKDATA.json'
 import { useState } from 'react'
 
 function Feed() {
@@ -39,30 +38,7 @@ function Feed() {
         
         <div class="conatiner_feed">
             <div class="split left">
-            <table class="feed_top"><tr><td>
-                <a href="/profile"><img src="https://i1.sndcdn.com/artworks-Z8AyljiXPrMSNaPb-ecOERw-t500x500.jpg" className="profile_framing" /></a></td><td width="9999">
-                    <input type="text" placeholder="Search" 
-                    onChange={event =>{
-                        setSearchTerm(event.target.value)
-                        }}
-                    />
-                    {JSONDATA.filter((val) => {
-                        if (searchTerm == "") {
-                            return val
-                        } else if (val.first_name.toLowerCase().includes(searchTerm.toLowerCase())) {
-                                return val
-                        } else if (val.last_name.toLowerCase().includes(searchTerm.toLowerCase())) {
-                                return val
-                        }
-                    }).map((val,key) => {
-                        return (
-                            <div class="user" key="key"> 
-                            </div>
-                        );
-                    })}</td>
-                </tr>
-             </table>
-                
+                     
            
             <div class="card">
                 <textarea rows="10" placeholder="Ayo Post something"></textarea>
