@@ -66,7 +66,7 @@ export const CompanyRegistrationForm = () => {
     }
 
     return (
-        <div className = 'container'>
+        <div className = 'container_login_company'>
             <div className = 'card'>
                 <div className = 'cardbody'>
                     <h1>Company Registration Form</h1>
