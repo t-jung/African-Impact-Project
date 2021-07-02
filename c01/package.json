@@ -23,6 +23,7 @@
     "react-pro-sidebar": "^0.6.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "swagger-ui-express": "^4.1.6",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
