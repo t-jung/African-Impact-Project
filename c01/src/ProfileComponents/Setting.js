@@ -14,7 +14,7 @@ export default function Setting () {
                     fontWeight: 900,
                     fontSize: 30,
                 }}>
-            Editing  Profile Information:
+            Settings:
          </Typography><br/>
 
     </div>
