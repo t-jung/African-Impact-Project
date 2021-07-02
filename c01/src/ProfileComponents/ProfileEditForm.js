@@ -19,75 +19,75 @@ const user = {
 
 const ProfileEditForm = () => {
     return(
-        <div>
-<SideBarProfile theme={styles}/>
-        <div>
-            <div class="formContainer card">
-            <h3>Editing {user.type} Profile Information:</h3>
-            <form>
-                <div class="d-flex inputContainer">
-                    <label class="title  align-self-center" for="fName">First name: </label>
-                    <input type="text"
-                        id="fNameID"
-                        class="form-control"
-                        placeholder="Edit first name"
-                        defaultValue={user.firstName}/>
-                </div>
-                <div class="d-flex inputContainer">
-                    <label class="title  align-self-center" for="fName">Middle name: </label>
-                    <input type="text"
-                        id="mNameID"
-                        class="form-control"
-                        placeholder="Edit middle name"
-                        defaultValue={user.middleName}/>
-                </div>
-                <div class="d-flex inputContainer">
-                    <label class="title  align-self-center" for="lName">Last name: </label>
-                    <input type="text"
-                        id="lNameID"
-                        class="form-control"
-                        placeholder="Edit last name"
-                        defaultValue={user.lastName}/>
-                </div>
-                <div class="d-flex inputContainer">
-                    <label class="title  align-self-center" for="email">Email: </label>
-                    <input type="text"
-                        id="emailID"
-                        class="form-control"
-                        placeholder="Edit email"
-                        defaultValue={user.serEmail}/>
-                </div>
-                <div class="d-flex inputContainer">
-                    <label class="title  align-self-center" for="email">Confirm email: </label>
-                    <input type="text"
-                        id="emailID"
-                        class="form-control"
-                        placeholder="Confirm email"/>
-                </div>
-                <div class="d-flex inputContainer">
-                    <label class="title  align-self-center" for="phone">Phone number: </label>
-                    <input type="number"
-                        id="phoneID"
-                        class="form-control"
-                        placeholder="Phone number"
-                        defaultValue={user.userPhone}/>
-                </div>
-                <div class="d-flex inputContainer">
-                    <label class="title  align-self-center" for="email">Description: </label>
-                    <textarea
-                        class="form-control multiText"
-                        name="body"
-                        defaultValue={user.description}/>
-                </div>
-                <div class="d-flex justify-content-center">
-                    <a href="/profile" button class="btn" type="submit" value="Save!">Edit</a>
-                </div>
-                
-                
-            </form>
+        <div class="profileEdit_container">
+            <div class="profileEdit_split profileEdit_left"><SideBarProfile theme={styles}/></div>
+            <div class="profileEdit_formContainer">
+                <div class="formContainer card">
+                <h3>Editing {user.type} Profile Information:</h3>
+                <form>
+                    <div class="d-flex inputContainer">
+                        <label class="title  align-self-center" for="fName">First name: </label>
+                        <input type="text"
+                            id="fNameID"
+                            class="form-control"
+                            placeholder="Edit first name"
+                            defaultValue={user.firstName}/>
+                    </div>
+                    <div class="d-flex inputContainer">
+                        <label class="title  align-self-center" for="fName">Middle name: </label>
+                        <input type="text"
+                            id="mNameID"
+                            class="form-control"
+                            placeholder="Edit middle name"
+                            defaultValue={user.middleName}/>
+                    </div>
+                    <div class="d-flex inputContainer">
+                        <label class="title  align-self-center" for="lName">Last name: </label>
+                        <input type="text"
+                            id="lNameID"
+                            class="form-control"
+                            placeholder="Edit last name"
+                            defaultValue={user.lastName}/>
+                    </div>
+                    <div class="d-flex inputContainer">
+                        <label class="title  align-self-center" for="email">Email: </label>
+                        <input type="text"
+                            id="emailID"
+                            class="form-control"
+                            placeholder="Edit email"
+                            defaultValue={user.serEmail}/>
+                    </div>
+                    <div class="d-flex inputContainer">
+                        <label class="title  align-self-center" for="email">Confirm email: </label>
+                        <input type="text"
+                            id="emailID"
+                            class="form-control"
+                            placeholder="Confirm email"/>
+                    </div>
+                    <div class="d-flex inputContainer">
+                        <label class="title  align-self-center" for="phone">Phone number: </label>
+                        <input type="number"
+                            id="phoneID"
+                            class="form-control"
+                            placeholder="Phone number"
+                            defaultValue={user.userPhone}/>
+                    </div>
+                    <div class="d-flex inputContainer">
+                        <label class="title  align-self-center" for="email">Description: </label>
+                        <textarea
+                            class="form-control multiText"
+                            name="body"
+                            defaultValue={user.description}/>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <a href="/profile" button class="btn" type="submit" value="Save!">Edit</a>
+                    </div>
+                    
+                    
+                </form>
 
+                </div>
             </div>
-        </div>
         </div>
         
     )

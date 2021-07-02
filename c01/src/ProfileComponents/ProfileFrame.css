@@ -1,3 +1,32 @@
+
+.profileEdit_container{
+    display: flex; 
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: row;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.profileEdit_split {
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 100;
+    overflow-x: hidden;
+    padding-top: 400px;
+  }
+  
+
+.profileEdit_left {
+    margin-top: 5vh;
+    left: 200px;
+}
+
+.profileEdit_formContainer {
+    width: 80%;
+    right: 100px;
+}
+
 .bigContainer{
     display: flex;
     flex-direction: column;

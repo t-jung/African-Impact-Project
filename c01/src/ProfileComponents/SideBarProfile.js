@@ -1,6 +1,7 @@
 import './SideBar.css'
 
 import React,{ useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { ThemeProvider, makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
@@ -59,6 +60,9 @@ const tabUseStyles = makeStyles(() => ({
     Selected: {
         background: '#FFB987',
     },
+    homeBtn: {
+        backgruond: theme.palette.verificationBackground.main,
+    },
     typography: {
         textAlign: 'left',
         fontFamily: theme.typography.fontFamily,
@@ -96,6 +100,16 @@ const SideBarProfile = (props) => {
                     classes={{ paper: classes.paper }}
                     variant="permanent">
                         <div class="barContainer">
+                            <Button
+                                component={Link}
+                                to={'/feed'}
+                                className={btnClasses.root + ' ' + btnClasses.homeBtn}
+                                style={{justifyContent: "flex-start"}}
+                                paddingX={2}>
+                                    <Typography className={btnClasses.typography}>
+                                        Home
+                                    </Typography>
+                            </Button>
                             
                             <Button
                                 className={btnClasses.root + ' ' + (profile ? btnClasses.Selected : btnClasses.notSelected)}
