@@ -21,8 +21,7 @@ const userSchema = new Schema({
     password: {
         type: String, required: true
     },
-    userPosts: [
-        {
+    userPosts: [{
             title: {
                 type: String
             },
@@ -58,14 +57,23 @@ const userSchema = new Schema({
                     default: Date.now
                 }
             }],
+    }],
+    following:[
+        {
+            email:{
+                type: String,
+                require: true
+            }
+        }
+    ],
+    follower:[
+        {
+            email:{
+                type: String,
+                require: true
+            }
         }
     ]
-    /*
-    followers: {
-        tags: [{
-            type: String
-        }]
-    */
 });
 
 const User = mongoose.model("User",userSchema);

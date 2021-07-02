@@ -245,8 +245,8 @@ router.post('/createPost', async(req, res) => {
             return res.status(401).json("This user is not registered.");
 
         /* Create post object. */
-        var post = {text: req.body.text, postId: 1}; 
-        poster.userPosts.unshift(post)
+        var post = {text: req.body.text}; 
+        poster.userPosts.unshift(post);
 
         /* Update database */
         await poster.save();
@@ -303,9 +303,68 @@ router.post('/createComment', async(req, res) => {
     }
 })
 
+
+
 // @route POST /getUserPosts
 // @desc Gets all posts for a user.
 // @access Public
+router.get('/getUserPosts',
+[
+    check('email',"Email is empty").isEmail()
+],
+async(req,res)=>{
+    try {
+        let {email} = req.body;
+
+        let errors = validationResult(req);
+        if(!errors.isEmpty()) return res.status(400).json({errors:errors.array()});
+
+        let user = await User.findOne({email});
+        if(!user) return res.status(404).json("User could not found");
+
+        let userPost = user.userPosts;
+        return res.json(userPost);
+        
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json("Server error");        
+    }
+})
+
+router.put('/following',authentication,
+[
+    check('email',"Email is empty").isEmail()
+],
+async(req,res)=>{
+    try {
+        let {email} = req.body;
+
+        let errors = validationResult(req);
+        if(!errors.isEmpty()) return res.status(400).json({errors:errors.array()});
+        
+        let user = await User.findById(req.user.id);
+        if(!user) return res.status(404).json("User does not exist");
+
+        let following = await User.findOne({email});
+        if(!following) return res.status(404).json("User does not found");
+
+        let newFollowing = {
+            email
+        };
+
+        user.following.unshift(newFollowing);
+
+        user.save();
+
+        return res.json(user);
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json("Server error");
+    }
+});
+
+
 
 // @route POST /getComments
 // @desc Gets all comments for a given post id.
@@ -314,5 +373,4 @@ router.post('/createComment', async(req, res) => {
 // @route POST /getFollowedPosts
 // @desc Creates a all posts for all posts a user follows.
 // @access Public
-
 module.exports = router;
