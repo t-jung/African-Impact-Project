@@ -62,6 +62,16 @@ function Feed() {
                     })}</td>
                 </tr>
              </table>
+                
+           
+            <div class="card " >
+                <textarea rows="10" placeholder="Ayo Post something"></textarea>
+                <button class="btn" >  POST  </button>
+            </div>
+
+
+
+
              <div class="feed_top">
                 <NewsFeed />
             </div>

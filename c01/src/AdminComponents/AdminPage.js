@@ -50,6 +50,10 @@ const bannedList = [
         name: 'Tim2 Hortons2',
         icon: <Avatar>T2</Avatar>
     },
+    {
+        name: 'Cheyrl Cheyrl ',
+        icon: <Avatar>CC</Avatar>
+    },
 ];
 const reportsList = [
     {
