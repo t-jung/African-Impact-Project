@@ -4,6 +4,7 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import "@fontsource/roboto";
 
 const theme = createMuiTheme({
+    spacing: [0, 2, 3, 5, 8],
     palette: {
         background : {
             main: '#E5E5E5',
