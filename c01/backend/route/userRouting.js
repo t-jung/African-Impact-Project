@@ -202,4 +202,17 @@ async(req,res)=>{
     }
 });
 
+router.delete('/delete/:id', (req, res) =>{
+    User.findByIdAndRemove(req.params.id, (err, doc) =>
+    {
+        if(err){
+            res.status(404).json('Error: ' + err);
+            console.log('Error deleting user' + err);
+        } else {
+            res.send(doc); 
+        }
+      
+    })
+})
+
 module.exports = router;
