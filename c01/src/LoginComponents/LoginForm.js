@@ -2,7 +2,7 @@ import './LoginForm.css'
 
 const LoginForm = () => {
     return (
-        <div class="container">
+        <div class="container_login">
             <div class="mx-auto col-sm-9 col-lg-5">
             <div class="card">
                 <div class="card-body">

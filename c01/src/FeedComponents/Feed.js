@@ -64,7 +64,7 @@ function Feed() {
              </table>
                 
            
-            <div class="card " >
+            <div class="card">
                 <textarea rows="10" placeholder="Ayo Post something"></textarea>
                 <button class="btn" >  POST  </button>
             </div>
