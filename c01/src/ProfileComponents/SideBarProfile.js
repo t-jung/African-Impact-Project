@@ -14,10 +14,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import CheckIcon from '@material-ui/icons/Check';
 import theme from '../styles';
 
-const userSideBarElements = [
-    'Profile',
-    'Setting',
-]
+
 
 const drawerWidth = 320;
 
@@ -77,6 +74,40 @@ const SideBarProfile = (props) => {
     const btnClasses = tabUseStyles();
     const [profile, setProfile] = React.useState(true);
     const [setting, setSetting] = React.useState(false);
+    const [employee, setEmployee] = React.useState(false);
+    const [workshop, setWorkshop] = React.useState(false);
+    const [schedule, setSchedule] = React.useState(false);
+
+    const UserSideBarElements = () => {
+        return(
+            <div class="barContainer">
+                <Button
+                    className={btnClasses.root + ' ' + (profile ? btnClasses.Selected : btnClasses.notSelected)}
+                    onClick={selectProfile}
+                    style={{justifyContent: "flex-start"}}
+                    paddingX={2}>
+                        <Typography className={btnClasses.typography}>
+                            Profile
+                        </Typography>
+                </Button>
+                <Button
+                    className={btnClasses.root + ' ' + (setting ? btnClasses.Selected : btnClasses.notSelected)}
+                    onClick={selectSetting}
+                    style={{justifyContent: "flex-start"}}
+                    paddingX={2}>
+                        <Typography className={btnClasses.typography}>
+                            Setting
+                        </Typography>
+                </Button>
+            </div>
+        )
+    };
+    
+    const companySideBarElements = [
+        {name: 'Employees'},
+        {name: 'Workshops'},
+        {name: 'Schedules'},
+    ]
 
     const selectProfile = () => {
         setProfile(true);
@@ -113,25 +144,7 @@ const SideBarProfile = (props) => {
                                         Home
                                     </Typography>
                             </Button>
-                            
-                            <Button
-                                className={btnClasses.root + ' ' + (profile ? btnClasses.Selected : btnClasses.notSelected)}
-                                onClick={selectProfile}
-                                style={{justifyContent: "flex-start"}}
-                                paddingX={2}>
-                                    <Typography className={btnClasses.typography}>
-                                        Profile
-                                    </Typography>
-                            </Button>
-                            <Button
-                                className={btnClasses.root + ' ' + (setting ? btnClasses.Selected : btnClasses.notSelected)}
-                                onClick={selectSetting}
-                                style={{justifyContent: "flex-start"}}
-                                paddingX={2}>
-                                    <Typography className={btnClasses.typography}>
-                                        Setting
-                                    </Typography>
-                            </Button>
+                        <UserSideBarElements/>
                         </div>
                         
                   </Drawer>
