@@ -317,20 +317,20 @@ async(req,res)=>{
         if(!errors.isEmpty()) return res.status(400).json({errors:errors.array()});
 
         let user = await User.findOne({email});
-        if(!user) return res.status(404).json("User could not found");
+        if(!user) return res.status(404).json("User could not found.");
 
         let userPost = user.userPosts;
         return res.json(userPost);
         
     } catch (error) {
         console.log(error);
-        return res.status(500).json("Server error");        
+        return res.status(500).json("Server error.");        
     }
 })
 
-router.put('/following',authentication,
+router.put('/unfollow', authentication,
 [
-    check('email',"Email is empty").isEmail()
+    check('email',"Email is empty.").isEmail()
 ],
 async(req,res)=>{
     try {
@@ -340,24 +340,66 @@ async(req,res)=>{
         if(!errors.isEmpty()) return res.status(400).json({errors:errors.array()});
         
         let user = await User.findById(req.user.id);
-        if(!user) return res.status(404).json("User does not exist");
+        if(!user) return res.status(404).json("User does not exist.");
+    
+        let follow = await User.findOne({email});
+        if(!follow) return res.status(404).json("User does not found.");
+    
+        let newfollowing = user.following.filter(
+            (following) => following.email !== email
+        );
+    
+        let newfollower = follow.follower.filter(
+            (follower) => follower.email !== req.user.email
+        );
 
-        let following = await User.findOne({email});
-        if(!following) return res.status(404).json("User does not found");
+        follow.follower = newfollower;
+        user.following = newfollowing;
+        follow.save();
+        user.save();
+        
+        res.json(user);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json("Server error.")
+    }        
+})
+
+router.put('/follow',authentication,
+[
+    check('email',"Email is empty.").isEmail()
+],
+async(req,res)=>{
+    try {
+        let {email} = req.body;
+
+        let errors = validationResult(req);
+        if(!errors.isEmpty()) return res.status(400).json({errors:errors.array()});
+        
+        let user = await User.findById(req.user.id);
+        if(!user) return res.status(404).json("User does not exist.");
+
+        let follow = await User.findOne({email});
+        if(!follow) return res.status(404).json("User does not found.");
 
         let newFollowing = {
             email
         };
 
-        user.following.unshift(newFollowing);
+        let newFollower = {
+            email:user.email
+        };
 
+        follow.follower.unshift(newFollower);
+        user.following.unshift(newFollowing);
+        follow.save();
         user.save();
 
         return res.json(user);
 
     } catch (error) {
         console.log(error);
-        return res.status(500).json("Server error");
+        return res.status(500).json("Server error.");
     }
 });
 
