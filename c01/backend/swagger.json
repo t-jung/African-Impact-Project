@@ -654,6 +654,145 @@
           "parameters": [],
           "responses": {}
         }
+      },
+      "/follow":{
+        "put": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "impossible",
+          "tags": ["/api/users"],
+          "description": "Follow a particular user by their email.",
+          "parameters": [
+            {"name":"authentication-token","in":"header","required":true},
+            {
+              "name":"request body",
+              "in":"body",
+              "schema":
+              {
+                "type":"object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/unfollow":{
+        "put": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "impossible",
+          "tags": ["/api/users"],
+          "description": "Unfollow a particular user by their email.",
+          "parameters": [
+            {"name":"authentication-token","in":"header","required":true},
+            {
+              "name":"request body",
+              "in":"body",
+              "schema":
+              {
+                "type":"object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {}
+        },
+        "/getUserPosts":{
+          "post": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "impossible",
+            "tags": ["/api/users"],
+            "description": "Get user all the posts from a user by their email.",
+            "parameters": [
+              {
+                "name":"request body",
+                "in":"body",
+                "schema":
+                {
+                  "type":"object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "required": true
+                    }
+                  }
+                }
+              }
+            ],
+            "responses": {}
+          }
+        },
+        "/createComment":{
+          "post": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "impossible",
+            "tags": ["/api/users"],
+            "description": "Create comment under a certain post.",
+            "parameters": [
+              {
+                "name":"request body",
+                "in":"body",
+                "schema":
+                {
+                  "type":"object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "required": true
+                    },
+                    "postId": {
+                      "type": "string",
+                      "required": true
+                    },
+                    "text": {
+                      "type": "string",
+                      "required": true
+                    }
+                  }
+                }
+              }
+            ],
+            "responses": {}
+          }
+        },
+        "/createPost":{
+          "post": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "impossible",
+            "tags": ["/api/users"],
+            "description": "Create a post.",
+            "parameters": [
+              {
+                "name":"request body",
+                "in":"body",
+                "schema":
+                {
+                  "type":"object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "required": true
+                    },
+                    "text": {
+                      "type": "string",
+                      "required": true
+                    }
+                  }
+                }
+              }
+            ],
+            "responses": {}
+          }
+        }
       }
     }
  }
