@@ -13,6 +13,6 @@ const verificationsSchema = new Schema({
     }
 });
 
-const Verification = mongoose.model('Report', verificationsSchema);
+const Verification = mongoose.model('Verification', verificationsSchema);
 
 module.exports = Verification;

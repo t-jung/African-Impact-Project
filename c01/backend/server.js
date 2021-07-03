@@ -33,6 +33,7 @@ connection.once('open', () => {
 
 
 app.use('/api/reports', require('./route/reports'));
+app.use('/api/verification', require("./route/verification"));
 app.use("/api/company",require("./route/companyRegistration"));
 app.use("/api/partner",require("./route/partnerRegistration"));
 app.use("/api/users", require("./route/userRouting"));

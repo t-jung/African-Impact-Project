@@ -1,10 +1,12 @@
 const router = require('express').Router();
-let Verification = require("../schema/verificationsSchema");
+let Report = require("../schema/reportsSchema");
 const {check,validationResult} = require("express-validator");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
-
+let Partner = require("../schema/partnerSchema");
+let Company = require("../schema/companySchema");
+let User = require("../schema/userSchema");
+let Verification = require("../schema/verificationsSchema");
 
 router.get("/",(req, res) => {
     Verification.find()
@@ -12,19 +14,22 @@ router.get("/",(req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.get("/:id",(req, res) => {
+    Verification.findById(req.params.id)
+    .then(verifications => res.json(verifications))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
 
 router.post("/add",
 async(req, res) =>{
-    console.log("hello world");
     let errors = validationResult(req);
     if(!errors.isEmpty()) {
         return res.status(400).json({errors: errors.array()});
     }
     var newVerification = new Verification();
     newVerification.id = req.body.id;
-    newVerification.type = req.body.type;
+    newVerification.userType = req.body.userType;
 
-    console.log(req.body.reporter);
     await newVerification.save()
     .then(() => res.json("verification request Added!"));
 });
@@ -35,15 +40,15 @@ async(req, res) =>{
     let id = req.body.id;
 
     if (type === "company"){
-        let company = Company.findById(id);
+        let company = await Company.findById(id);
         if(!company) return res.status(404).json("Company does not exist");
         company.status = "verified";
     } else if (type === "user") {
-        let user = User.findById(id);
+        let user = await User.findById(id);
         if(!user) return res.status(404).json("User does not exist");
         user.status = "verified";
     } else if (type === "partner"){
-        let partner = Partner.findById(id);
+        let partner = await Partner.findById(id);
         if(!partner) return res.status(404).json("Partner does not exist");
         partner.status = 'verified';
     } else {
@@ -60,7 +65,7 @@ async(req, res) =>{
         }
         else{
             console.log("Deleted : ", docs);
-            res.json("report deleted");
+            res.json("Verification request deleted");
         }
     });
 });
