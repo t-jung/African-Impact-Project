@@ -20,19 +20,53 @@ const userSchema = new Schema({
     },
     password: {
         type: String, required: true
-    }
-    /*
-    posts: {
-        tags: [{
-            type: String
-        }]
     },
+    userPosts: [{
+        post: {
+            title: {
+                type: String
+            },
+            postId: Number,
+            tags: [{
+                type: String
+            }],
+            date: {
+                type: Date,
+                default: Date.now
+            },
+            text: {
+                type: String,
+                default: "This post is empty!"
+            },
+            likes: [{
+                /* ObjectId represents the liker. */
+                type: String,
+                required: true
+            }],
+            postComments: [{
+                /* ObjectId represents the commenter. */
+                commenter: {
+                    type: String,
+                    required: true
+                },
+                text: {
+                    type: String,
+                    required: true,
+                    default: "Default Comment Text."
+                },
+                date: {
+                    type: Date,
+                    default: Date.now
+                }
+            }],
+        }
+    }]
+    /*
     followers: {
         tags: [{
             type: String
         }]
-    }
-*/
+    */
 });
 
 const User = mongoose.model("User",userSchema);
