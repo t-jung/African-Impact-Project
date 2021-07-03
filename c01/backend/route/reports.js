@@ -18,7 +18,6 @@ router.get("/",(req, res) => {
 
 router.post("/add",
 async(req, res) =>{
-    console.log("hello world");
     let errors = validationResult(req);
     if(!errors.isEmpty()) {
         return res.status(400).json({errors: errors.array()});
@@ -29,8 +28,6 @@ async(req, res) =>{
     newReport.reported = req.body.reported;
     newReport.reportedType = req.body.reported; 
     newReport.reason = req.body.reason;
-
-    console.log(req.body.reporter);
     await newReport.save()
     .then(() => res.json("report Added!"));
 });
@@ -40,12 +37,9 @@ async(req, res) =>{
     let type = req.body.reportedType;
     let id = req.body.id;
 
-    console.log(type);
-
     if (type === "company"){
         let company = await Company.findById(id);
         if(!company) return res.status(404).json("Company does not exist");
-        console.log(id);
         company.status = "banned";
         await company.save();
     } else if (type === "user") {
@@ -56,7 +50,6 @@ async(req, res) =>{
     } else if (type === "partner"){
         let partner = await Partner.findById(id);
         if(!partner) return res.status(404).json("Partner does not exist");
-        console.log(partner);
         partner.status = 'banned';
         await partner.save();
     } else {
@@ -71,12 +64,10 @@ async(req, res) =>{
     let type = req.body.reportedType;
     let id = req.body.id;
 
-    console.log(type);
 
     if (type === "company"){
         let company = await Company.findById(id);
         if(!company) return res.status(404).json("Company does not exist");
-        console.log(id);
         company.status = "verified";
         await company.save();
     } else if (type === "user") {
@@ -87,7 +78,6 @@ async(req, res) =>{
     } else if (type === "partner"){
         let partner = await Partner.findById(id);
         if(!partner) return res.status(404).json("Partner does not exist");
-        console.log(partner);
         partner.status = 'verified';
         await partner.save();
     } else {
