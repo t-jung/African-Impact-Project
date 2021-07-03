@@ -1,5 +1,6 @@
 import './Feed.css';
 import { useState } from 'react';
+import SingleFeed from '../FeedComponents/SingleFeed.js';
 
 const user = [
     {
@@ -56,9 +57,7 @@ function Feed() {
     const NewsFeed = () => {
         return(
             <div>
-                {feedList.map(item => (
-                    <GetFeed feed={item}/>
-                ))}
+
             </div>
         );
     }
@@ -85,7 +84,7 @@ function Feed() {
                     <button class="btn" >  POST  </button>
                 </div>
                 <div class="feed_top">
-                    <NewsFeed />
+                    <SingleFeed feedList={feedList}/>
                 </div>
                 </div>
                 

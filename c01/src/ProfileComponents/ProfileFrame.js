@@ -1,7 +1,6 @@
 
 import './ProfileFrame.css'
 import React from 'react';
-import Feeds from '../FeedComponents/SingleFeed.js'
 import SingleFeed from '../FeedComponents/SingleFeed.js';
 
 const user = {
@@ -19,22 +18,70 @@ const feedList = [
     {
         userName: "Gura",
         img: "https://cdn.discordapp.com/attachments/829661320923447326/860355801931579422/unknown.png",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        comment: [
+            {
+                userName: "Tim",
+                img: "",
+                content: "This is great to hear!"
+            },
+            {
+                userName: "Hortons",
+                img: "https://scontent-nrt1-1.xx.fbcdn.net/v/t1.6435-0/p526x296/205338742_520342779417948_4620301495797869681_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=730e14&_nc_ohc=kisa0E-JHmYAX-pf-oR&_nc_ht=scontent-nrt1-1.xx&tp=6&oh=817cceaebf4c157b71faea6c711f092b&oe=60E59340",
+                content: "Congratulations!!"
+            },
+        ]
     },
     {
         userName: "Gura",
         img: "https://cdn.discordapp.com/attachments/829661320923447326/860355801931579422/unknown.png",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        comment: [
+            {
+                userName: "Tim",
+                img: "",
+                content: "This is great to hear!"
+            },
+            {
+                userName: "Hortons",
+                img: "https://scontent-nrt1-1.xx.fbcdn.net/v/t1.6435-0/p526x296/205338742_520342779417948_4620301495797869681_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=730e14&_nc_ohc=kisa0E-JHmYAX-pf-oR&_nc_ht=scontent-nrt1-1.xx&tp=6&oh=817cceaebf4c157b71faea6c711f092b&oe=60E59340",
+                content: "Congratulations!!"
+            },
+        ]
     },
     {
         userName: "Gura",
         img: "https://cdn.discordapp.com/attachments/829661320923447326/860355801931579422/unknown.png",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        comment: [
+            {
+                userName: "Tim",
+                img: "",
+                content: "This is great to hear!"
+            },
+            {
+                userName: "Hortons",
+                img: "https://scontent-nrt1-1.xx.fbcdn.net/v/t1.6435-0/p526x296/205338742_520342779417948_4620301495797869681_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=730e14&_nc_ohc=kisa0E-JHmYAX-pf-oR&_nc_ht=scontent-nrt1-1.xx&tp=6&oh=817cceaebf4c157b71faea6c711f092b&oe=60E59340",
+                content: "Congratulations!!"
+            },
+        ]
     },
     {
         userName: "Gura",
         img: "https://cdn.discordapp.com/attachments/829661320923447326/860355801931579422/unknown.png",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        comment: [
+            {
+                userName: "Tim",
+                img: "",
+                content: "This is great to hear!"
+            },
+            {
+                userName: "Hortons",
+                img: "https://scontent-nrt1-1.xx.fbcdn.net/v/t1.6435-0/p526x296/205338742_520342779417948_4620301495797869681_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=730e14&_nc_ohc=kisa0E-JHmYAX-pf-oR&_nc_ht=scontent-nrt1-1.xx&tp=6&oh=817cceaebf4c157b71faea6c711f092b&oe=60E59340",
+                content: "Congratulations!!"
+            },
+        ]
     },
 ]
 
@@ -117,6 +164,7 @@ const InfoCard = ({info}) => {
 
 
 const PostBoard = () => {
+    console.log(feedList)
     return(
         <div>
             <SingleFeed feedList={feedList}/>

@@ -1,11 +1,10 @@
-import'../NavigationComponents/Sidebar';
 import './CompanyEditForm.css'
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import { ThemeProvider, withStyles } from '@material-ui/core/styles';
 
 import styles from '../styles'
-import { Typography } from '@material-ui/core';
+import { Typography, Button } from '@material-ui/core';
 
 const company = {
     companyName: "Some Company",
@@ -21,10 +20,20 @@ const StyledTextField = withStyles((theme) => ({
     root: {
         width: '90%',
         margin: 20,
+        marginTop: 5,
         fontFamily: theme.typography.fontFamily
 
     }
 }))(TextField);
+
+const StyledTypography = (withStyles({
+    root: {
+        color: styles.palette.primary.main,
+        fontWeight: 100,
+        fontSize: 18,
+        marginLeft: 20
+    },
+}))(Typography);
 
 const CompanyEditForm = () => {
     return (
@@ -34,14 +43,28 @@ const CompanyEditForm = () => {
                     color: styles.palette.primary.main,
                     fontWeight: 900,
                     fontSize: 30,
-                }}>Company form</Typography><br/>
-
-                <StyledTextField variant="outlined" size="small" required label="Company name" type="text" defaultValue={company.companyName}/>
-                <StyledTextField variant="outlined" size="small" autoComplete required label="Email" type="email" defaultValue={company.companyEmail}/>
-                <StyledTextField variant="outlined" size="small" autoComplete required label="Company phone" type="tel" defaultValue={company.companyPhone}/>
-                <StyledTextField variant="outlined" size="small" label="Company website" type="url" defaultValue={company.companyWebsite}/>
-                <StyledTextField variant="outlined" size="small" multiline rows={4} label="Description" defaultValue={company.companyDescription}/>
+                }}>Company profile edit</Typography><br/>
+                <StyledTypography>Company name</StyledTypography>
+                <StyledTextField variant="outlined" size="small" required type="text" defaultValue={company.companyName}/>
+                <StyledTypography>Company email</StyledTypography>
+                <StyledTextField variant="outlined" size="small" autoComplete required type="email" defaultValue={company.companyEmail}/>
+                <StyledTypography>Company phone number</StyledTypography>
+                <StyledTextField variant="outlined" size="small" autoComplete required type="tel" defaultValue={company.companyPhone}/>
+                <StyledTypography>Company website</StyledTypography>
+                <StyledTextField variant="outlined" size="small" type="url" defaultValue={company.companyWebsite}/>
+                <StyledTypography>Start up date</StyledTypography>
+                <StyledTextField variant="outlined" size="small" type="date"/>
+                <StyledTypography>Description</StyledTypography>
+                <StyledTextField variant="outlined" size="small" multiline rows={4} defaultValue={company.companyDescription}/> 
             </ThemeProvider>
+            <div class="d-flex justify-content-center">
+                <Button style={{
+                    background: styles.palette.secondary.main,
+                    borderRadius: 10,
+                    fontSize: 15,
+                }}>Submit</Button>
+            </div>
+            
         </div>
     );
 }

@@ -1,8 +1,6 @@
 import React from 'react'
 import './ProfileFrame.css'
 
-import { ThemeProvider } from '@material-ui/core/styles';
-
 import styles from '../styles'
 import { Typography } from '@material-ui/core';
 

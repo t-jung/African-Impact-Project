@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect } from 'react';
 import './AdminPage.css'
 import styles from '../styles.js'
 
@@ -17,7 +17,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import "@fontsource/roboto";
-import theme from '../styles.js';
 import { Avatar, ListItemAvatar } from '@material-ui/core';
 
 const styletheme = styles;
@@ -147,7 +146,7 @@ const AdminPage = () => {
     return (
         <div class="admin-container">
             <div class="admin-topbar">
-            <ThemeProvider theme={styletheme}>
+            <ThemeProvider theme={styles}>
                 <Grid container direction="row" justify="space-between" alignItems="center">
                     <Grid item direction="row">
                         <div class="admin-sidebyside">
@@ -155,7 +154,7 @@ const AdminPage = () => {
                                 <ArrowBackIcon/>
                             </IconButton>
                             <Typography style={{
-                                color: theme.palette.primary.main,
+                                color: styles.palette.primary.main,
                                 fontWeight: 900,
                                 fontSize: 30,
                             }}>
@@ -174,7 +173,7 @@ const AdminPage = () => {
             </div>
             <div class="admin-tabbuttons">
                 <Grid container direction="row" nowrap="false" justify="space-between" alignItems="center">
-                    <ThemeProvider theme={styletheme}>
+                    <ThemeProvider theme={styles}>
                         {displayPendingBoard ? <TabButtonSelected onClick={selectPendingBoard}>Pending reports</TabButtonSelected> :
                                                 <TabButton onClick={selectPendingBoard}>Pending reports</TabButton>}
                         {displayPendingVerif ? <TabButtonSelected onClick={selectPendingVerif}>Pending verifications</TabButtonSelected> :

@@ -4,6 +4,7 @@ import './CompanyRegistrationForm.css'
 export const CompanyRegistrationForm = () => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
+    const [number, setNumber] = useState('')
     const [pass, setPass] = useState('')
     const [confPass, setConfPass] = useState('')
     
@@ -21,6 +22,12 @@ export const CompanyRegistrationForm = () => {
         if(!email) {
             alert('A company email is required for registration.')
             setEmail('')
+            return
+        }
+
+        if(!number) {
+            alert('A company phone number is required for registration.')
+            setNumber('')
             return
         }
         
@@ -61,6 +68,7 @@ export const CompanyRegistrationForm = () => {
         setEmail('')
         setPass('')
         setConfPass('')
+        setNumber('')
 
         // TODO: After submission it should bring you to a different page.
     }
@@ -102,6 +110,18 @@ export const CompanyRegistrationForm = () => {
                             </div>
 
                             <div class="form-group">
+                            <label class='description'>Company Phone</label>
+                                <input 
+                                    type="number"
+                                    class="form-control"
+                                    id="number"
+                                    placeholder="Phone number"
+                                    value={number} 
+                                    onChange={(e) => setNumber(e.target.value)} 
+                                    />
+                            </div>
+
+                            <div class="form-group">
                             <label class='description'>Password</label>
                                 <input
                                     type="pass"
@@ -138,6 +158,10 @@ export const CompanyRegistrationForm = () => {
                             <div className='form-group'>
                                 <label class='description'>Industry</label>
                                 <input type='text' class="form-control" placeholder='Whats industry is your company a part of?' />
+                            </div>
+                            <div className='form-group'>
+                                <label class='description'>Start up date</label>
+                                <input type='date' class="form-control" />
                             </div>
                             <div className='form-group'>
                                 <label class='description'>Company Website</label>

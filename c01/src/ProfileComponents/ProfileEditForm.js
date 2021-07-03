@@ -1,10 +1,7 @@
-import'../NavigationComponents/Sidebar';
 import './ProfileFrame.css'
 import React from 'react';
 import styles from '../styles.js';
 import { Typography } from '@material-ui/core';
-
-import CompanyEditForm from './CompanyEditForm.js';
 
 const EditForm = (props) => {
     const user = props.user;

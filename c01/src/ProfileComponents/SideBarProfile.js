@@ -1,7 +1,6 @@
 import './SideBar.css'
 
 import React from 'react';
-import { useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { ThemeProvider, makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -10,8 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import EditForm from './ProfileEditForm';
 
 import theme from '../styles';
-import styles from '../styles.js';
 
+import CompanyEmployee from './CompanyEmployee.js';
 import CompanyEditForm from './CompanyEditForm.js';
 import Setting from './Setting.js'
 
@@ -24,7 +23,7 @@ const user = {
     userMeail: "userName.cscc01@email.com",
     userPhone: 123456789,
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    type: "User"
+    type: "Company"
 }
 
 const drawerWidth = 320;
@@ -221,38 +220,39 @@ const SideBarProfile = (props) => {
 
     return (
         <div class="profileEdit_container">
-        <div class="profileEdit_split profileEdit_left">
-        <ThemeProvider theme={theme}>
-            <div className={classes.drawerContainer}>
-                <Drawer
-                    className={classes.drawer  + ' ' + classes.paper}
-                    classes={{ paper: classes.paper }}
-                    variant="permanent">
-                        <div class="barContainer sidebarContainer">
-                            <img class="barProfilePic"
-                                src={props.imageSrc}
-                            />
-                            <Button
-                                component={Link}
-                                to={'/feed'}
-                                className={btnClasses.root + ' ' + btnClasses.homeBtn}
-                                style={{justifyContent: "flex-start"}}
-                                paddingX={2}>
-                                    <Typography className={btnClasses.typography}>
-                                        Home
-                                    </Typography>
-                            </Button>
-                        <UserSideBarElements type={props.type}/>
-                        </div>
-                  </Drawer>
-            </div>
-      </ThemeProvider>
+            <div>
+            <ThemeProvider theme={theme}>
+                <div className={classes.drawerContainer}>
+                    <Drawer
+                        className={classes.drawer  + ' ' + classes.paper}
+                        classes={{ paper: classes.paper }}
+                        variant="permanent">
+                            <div class="barContainer sidebarContainer">
+                                <img class="barProfilePic"
+                                    src={user.profilePic}
+                                />
+                                <Button
+                                    component={Link}
+                                    to={'/feed'}
+                                    className={btnClasses.root + ' ' + btnClasses.homeBtn}
+                                    style={{justifyContent: "flex-start"}}
+                                    paddingX={2}>
+                                        <Typography className={btnClasses.typography}>
+                                            Home
+                                        </Typography>
+                                </Button>
+                            <UserSideBarElements type={props.type}/>
+                            </div>
+                    </Drawer>
+                </div>
+        </ThemeProvider>
         </div>
         <div class="profileEdit_formContainer">
             {profile === true ? 
-                (user.type === "User" ? <EditForm user={user}/> : (user.type === "User" ? <EditForm user={user}/> : null))
+                (user.type === "User" ? <EditForm user={user}/> : (user.type === "Company" ? <CompanyEditForm user={user}/> : null))
                 : null}
             {setting === true ? <Setting/> : null}
+            {employee === true ? <CompanyEmployee/> : null}
         </div>
     </div>
     );

@@ -1,0 +1,11 @@
+.singleEmployee {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem;
+}
+
+.employeeList {
+    display:flex;
+    flex-direction: row;
+}
