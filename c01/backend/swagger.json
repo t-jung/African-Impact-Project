@@ -188,6 +188,227 @@
           "responses": {}
         }
       },
+      "/users/changePassword": {
+        "put": {
+          "x-swagger-router-controller": "home",
+          "operationId": "1",
+          "tags": ["/api/users"],
+          "description": "Changing the user profile's password.",
+          "parameters": [
+            {
+            "name":"authentication-token", 
+            "in":"header", 
+            "required":true
+            },
+            {
+              "name":"request body", 
+              "in":"body", 
+              "schema":
+              {
+                "type":"object",
+                "properties":
+                {
+                  "newPassword":
+                  {
+                    "type":"string",
+                    "required":true
+                  }
+                }
+              }
+            }
+          ],
+            "responses": {}
+          }
+      },
+      "/users/updateInfo": {
+        "put": {
+           "x-swagger-router-controller": "bar",
+           "operationId": "2",
+           "tags": ["/api/users"],
+           "description": "Updating user's infomation, excluding password",
+           "parameters": [
+           {
+             "name":"authentication-token",
+             "in":"header",
+             "required":true
+           },
+           {
+             "name":"request body",
+             "in":"body",
+             "schema":
+             {
+               "type":"object",
+               "properties":
+               {
+                 "firstName": {
+                   "type": "string",
+                   "required": true,
+                   "trim": true
+                 },
+                 "lastName": {
+                   "type": "string",
+                   "required": true,
+                    "trim" :true
+                 },
+                 "gender": {
+                   "type": "string"
+                 },
+                 "phoneNumber": {
+                   "type": "string"
+                 },
+                 "address": {
+                   "type":"string"
+                 },
+                 "email": {
+                   "type": "string",
+                   "required": true, 
+                   "unique": true
+                 },
+                 "password": {
+                   "type":"string",
+                   "required": true
+                 }
+               }
+             }
+           }
+         ],
+         "responses": {}
+       },
+       "/users/getUserByEmail/:email": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "3",
+          "tags": ["/api/users"],
+          "description": "Get the user's infromation by email.",
+          "parameters": [
+            {
+              "email": "user.email",
+              "in": "path",
+              "required": true
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/users/getUserById/:id": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "4",
+          "tags": ["/api/users"],
+          "description": "Get the user's infromation by ID.",
+          "parameters": [
+            {
+              "id": "user_id",
+              "in": "path",
+              "required": true
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/users/admin/getAllUsers": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "5",
+          "tags": ["/api/users"],
+          "description": "Gets user information of all users.",
+          "parameters": [],
+          "responses": {}
+        }
+      },
+      "/users/login": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "6",
+          "tags": ["/api/users"],
+          "description": "Lets users log in based on email and password credentials.",
+          "parameters": [
+            {
+              "name":"request body",
+              "in":"body",
+              "schema":
+              {
+                "type":"object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "password": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/users/register": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "7",
+          "tags": ["/api/users"],
+          "description": "Lets users create an account based on inputted information. Name, email, and password are mandatory.",
+          "parameters": [
+            {
+              "name":"request body",
+              "in":"body",
+              "schema":
+              {
+                "type":"object",
+                "properties": {
+                  "firstName": {
+                    "type": "string",
+                    "required": true,
+                    "trim": true
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "required":true,
+                    "trim": true
+                  },
+                  "gender": {
+                    "type": "string"
+                  },
+                  "phoneNumber": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string",
+                    "required": true,
+                    "unique": true
+                  },
+                  "password": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/users/delete/:id": {
+        "delete": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "8",
+          "tags": ["/api/users"],
+          "description": "Deletes user specified from ID in database.",
+          "parameters": [
+            {
+              "id": "user_id",
+              "in": "path",
+              "required": true
+            }
+          ],
+          "responses": {}
+        },
       "/partner/change_partner_password": {
         "put": {
           "x-swagger-router-controller": "home",
@@ -436,3 +657,5 @@
       }
     }
  }
+}
+}
