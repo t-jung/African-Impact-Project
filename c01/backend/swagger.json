@@ -646,6 +646,231 @@
           ],
           "responses": {}
         }
+      },
+      "/reports/": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "1",
+          "tags": ["/api/reports"],
+          "description": "Lets admin views all the reports made from one user to another.",
+          "parameters": [],
+          "responses": {}
+        }
+      },
+      "/reports/add": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "2",
+          "tags": ["/api/reports"],
+          "description": "Creates a report and adds it to database.",
+          "parameters": [
+            {
+              "name":"request body",
+              "in":"body",
+              "schema":
+              {
+                "type":"object",
+                "properties": {
+                  "reporter": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "reporterType": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "reported": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "reportedType": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "reason": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/reports/ban": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "3",
+          "tags": ["/api/reports"],
+          "description": "Bans a specific user.",
+          "parameters": [
+            {
+              "name":"request body",
+              "in":"body",
+              "schema":
+              {
+                "type":"object",
+                "properties": {
+                  "reportedType": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "id": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/reports/unban": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "4",
+          "tags": ["/api/reports"],
+          "description": "Unbans a specific user.",
+          "parameters": [
+            {
+              "name":"request body",
+              "in":"body",
+              "schema":
+              {
+                "type":"object",
+                "properties": {
+                  "reportedType": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "id": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/reports/:id": {
+        "delete": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "5",
+          "tags": ["/api/reports"],
+          "description": "Deletes a report.",
+          "parameters": [
+            {
+              "id": "id",
+              "in": "path",
+              "required": true
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/verification/": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "1",
+          "tags": ["/api/verification"],
+          "description": "Looks at all verification requests.",
+          "parameters": [],
+          "responses": {}
+        }
+      },
+      "/verification/:id": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "2",
+          "tags": ["/api/verification"],
+          "description": "Looks at a specific verification request.",
+          "parameters": [
+            {
+              "id": "id",
+              "in": "path",
+              "required": true
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/verification/add": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "3",
+          "tags": ["/api/verification"],
+          "description": "Adds verification request to database.",
+          "parameters": [
+            {
+              "name":"request body",
+              "in":"body",
+              "schema":
+              {
+                "type":"object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "userType": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/verification/verifyUser": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "4",
+          "tags": ["/api/verification"],
+          "description": "Verifies a user.",
+          "parameters": [
+            {
+              "name":"request body",
+              "in":"body",
+              "schema":
+              {
+                "type":"object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "reportedType": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/verification/delete/:id": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "5",
+          "tags": ["/api/verification"],
+          "description": "Deletes a verification request.",
+          "parameters": [
+            {
+              "id": "id",
+              "in": "path",
+              "required": true
+            }
+          ],
+          "responses": {}
+        }
       }
     }
   }
