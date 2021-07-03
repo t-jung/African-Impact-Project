@@ -5,6 +5,8 @@ const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../schema/userSchema");
 const authentication = require("../middleware/userAuthentication");
+// Used for testing - dar
+const mongoose = require('mongoose');
 
 
 router.put("/changePassword",authentication,[
@@ -25,7 +27,7 @@ async(req,res)=>{
         res.json("Change password successfully.");
     } catch (error) {
         console.error(error);
-        res.status(500).json("Server error.")
+        res.status(500).json("/changePassword Server error.")
     }
 });
 
@@ -71,7 +73,7 @@ async(req,res)=>{
         res.json("Update successfully");            
     } catch (error) {
         console.error(error);
-        return res.status(500).json("Server error");        
+        return res.status(500).json("/updateInfo Server error");        
     }
 });
 
@@ -84,7 +86,7 @@ async(req,res)=>{
         res.json();
     } catch (error) {
         console.error(error);
-        return res.status(500).json("Server error.");
+        return res.status(500).json("/getUserByEmail/ Server error.");
     }
 })
 //fetches User by ID
@@ -107,7 +109,7 @@ async(req,res)=>{
         res.json(user);
     } catch (error) {
         console.error(error);
-        res.status(500).json("Server error.");
+        res.status(500).json("/admin/getAllUsers Server error.");
     }
 });
 
@@ -149,7 +151,7 @@ async(req,res)=>{
 
     } catch (error) {
         console.error(error);
-        res.status(500).json("Server error.");
+        res.status(500).json("/login Server error.");
     }    
 });
 
@@ -206,7 +208,7 @@ async(req,res)=>{
         
     } catch (error) {
         console.error(error);
-        return res.status(500).json("Server error.");
+        return res.status(500).json("/register Server error.");
     }
 });
 
@@ -214,7 +216,7 @@ router.delete('/delete/:id', (req, res) =>{
     User.findByIdAndRemove(req.params.id, (err, doc) =>
     {
         if(err){
-            res.status(404).json('Error: ' + err);
+            res.status(400).json('Error: ' + err);
             console.log('Error deleting user' + err);
         } else {
             res.send(doc); 
@@ -223,4 +225,191 @@ router.delete('/delete/:id', (req, res) =>{
     })
 })
 
+/* Post-Related Endpoints */
+// @route POST /createPost
+// @desc Creates a post object.
+// @access Public
+router.post('/createPost', async(req, res) => {
+    try {
+        // TODO: Should email be the identifying piece of information for a user?
+        const {email, text} = req.body;
+
+        /* Error Checking */
+        let errors = validationResult(req);
+        if(!errors.isEmpty())
+            return res.status(400).json({errors: errors.array()});
+
+        /* Find user to create Post object under. */
+        let poster = await User.findOne({email : req.body.email}).select('-password');
+        if(!poster)
+            return res.status(401).json("This user is not registered.");
+
+        /* Create post object. */
+        var post = {text: req.body.text}; 
+        poster.userPosts.unshift(post);
+
+        /* Update database */
+        await poster.save();
+        res.json("Created post successfully.");
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("/createPost Server error.");
+    }
+})
+
+// @route POST /createComment
+// @desc Creates a comment object.
+// @access Public
+router.post('/createComment', async(req, res) => {
+    try {
+        // TODO: Should email be the identifying piece of information for a user?
+        const {email, postId, text} = req.body;
+
+        /* Error Checking */
+        let errors = validationResult(req);
+        if(!errors.isEmpty())
+            return res.status(400).json({errors: errors.array()});
+
+        /* Find user to create Comment object under. */
+        let poster = await User.findOne({email : req.body.email}).select('-password');
+        if(!poster)
+            return res.status(401).json("This user is not registered.");
+    
+
+        /* Finds the appropriate comment. */
+        let wantedPost = null;
+        for(const post of poster.userPosts){
+            let id = JSON.stringify(post._id);
+            console.log(postId);
+            if(id === '"' + postId + '"'){
+                wantedPost = post;
+                break;
+            }
+        }
+        
+        /* Add comment */
+        console.log(wantedPost);
+        var comment = {commenter: req.body.email, text: req.body.text};
+        wantedPost.postComments.unshift(comment);
+
+        /* Update database */
+        await poster.save();
+        res.json("Commented post successfully.");
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("Server error.");
+    }
+})
+
+
+
+// @route POST /getUserPosts
+// @desc Gets all posts for a user.
+// @access Public
+router.get('/getUserPosts/:email',
+async(req,res)=>{
+    try {
+        let {email} = req.params.email;
+
+        let errors = validationResult(req);
+        if(!errors.isEmpty()) return res.status(400).json({errors:errors.array()});
+
+        let user = await User.findOne({email});
+        if(!user) return res.status(404).json("User could not found.");
+
+        let userPost = user.userPosts;
+        return res.json(userPost);
+        
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json("Server error.");        
+    }
+})
+
+router.put('/unfollow', authentication,
+[
+    check('email',"Email is empty.").isEmail()
+],
+async(req,res)=>{
+    try {
+        let {email} = req.body;
+
+        let errors = validationResult(req);
+        if(!errors.isEmpty()) return res.status(400).json({errors:errors.array()});
+        
+        let user = await User.findById(req.user.id);
+        if(!user) return res.status(404).json("User does not exist.");
+    
+        let follow = await User.findOne({email});
+        if(!follow) return res.status(404).json("User does not found.");
+    
+        let newfollowing = user.following.filter(
+            (following) => following.email !== email
+        );
+    
+        let newfollower = follow.follower.filter(
+            (follower) => follower.email !== req.user.email
+        );
+
+        follow.follower = newfollower;
+        user.following = newfollowing;
+        follow.save();
+        user.save();
+        
+        res.json(user);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json("Server error.")
+    }        
+})
+
+router.put('/follow',authentication,
+[
+    check('email',"Email is empty.").isEmail()
+],
+async(req,res)=>{
+    try {
+        let {email} = req.body;
+
+        let errors = validationResult(req);
+        if(!errors.isEmpty()) return res.status(400).json({errors:errors.array()});
+        
+        let user = await User.findById(req.user.id);
+        if(!user) return res.status(404).json("User does not exist.");
+
+        let follow = await User.findOne({email});
+        if(!follow) return res.status(404).json("User does not found.");
+
+        let newFollowing = {
+            email
+        };
+
+        let newFollower = {
+            email:user.email
+        };
+
+        follow.follower.unshift(newFollower);
+        user.following.unshift(newFollowing);
+        follow.save();
+        user.save();
+
+        return res.json(user);
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json("Server error.");
+    }
+});
+
+
+
+// @route POST /getComments
+// @desc Gets all comments for a given post id.
+// @access Public
+
+// @route POST /getFollowedPosts
+// @desc Creates a all posts for all posts a user follows.
+// @access Public
 module.exports = router;
