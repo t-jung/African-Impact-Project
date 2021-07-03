@@ -650,7 +650,7 @@
       "/user/follow":{
         "put": {
           "x-swagger-router-controller": "bar",
-          "operationId": "impossible",
+          "operationId": "9",
           "tags": ["/api/users"],
           "description": "Follow a particular user by their email.",
           "parameters": [
@@ -676,7 +676,7 @@
       "/user/unfollow":{
         "put": {
           "x-swagger-router-controller": "bar",
-          "operationId": "impossible",
+          "operationId": "10",
           "tags": ["/api/users"],
           "description": "Unfollow a particular user by their email.",
           "parameters": [
@@ -697,14 +697,16 @@
             }
           ],
           "responses": {}
-        },
-        "/user/getUserPosts":{
+        }
+      },
+       "/user/getUserPosts/{email}":{
           "post": {
             "x-swagger-router-controller": "bar",
-            "operationId": "impossible",
+            "operationId": "11",
             "tags": ["/api/users"],
             "description": "Get user all the posts from a user by their email.",
             "parameters": [
+              {"name":"email","in":"path","required":true},
               {
                 "name":"request body",
                 "in":"body",
@@ -723,10 +725,23 @@
             "responses": {}
           }
         },
+        "/user/getCommentByPost/{post}":{
+          "post": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "12",
+            "tags": ["/api/users"],
+            "description": "Get comments for a particular post.",
+            "parameters": [
+              {"name":"post","in":"path","required":true},
+              
+            ],
+            "responses": {}
+          }
+        },
         "/user/createComment":{
           "post": {
             "x-swagger-router-controller": "bar",
-            "operationId": "impossible",
+            "operationId": "13",
             "tags": ["/api/users"],
             "description": "Create comment under a certain post.",
             "parameters": [
@@ -759,7 +774,7 @@
         "/user/createPost":{
           "post": {
             "x-swagger-router-controller": "bar",
-            "operationId": "impossible",
+            "operationId": "14",
             "tags": ["/api/users"],
             "description": "Create a post.",
             "parameters": [
@@ -787,4 +802,3 @@
         }
       }
     }
-  }
