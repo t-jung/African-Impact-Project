@@ -273,7 +273,8 @@
            }
          ],
          "responses": {}
-       },
+       }
+      },
        "/users/getUserByEmail/:email": {
         "get": {
           "x-swagger-router-controller": "bar",
@@ -282,7 +283,7 @@
           "description": "Get the user's infromation by email.",
           "parameters": [
             {
-              "email": "user.email",
+              "": "user.email",
               "in": "path",
               "required": true
             }
@@ -402,13 +403,14 @@
           "description": "Deletes user specified from ID in database.",
           "parameters": [
             {
-              "id": "user_id",
+              "name": "user_id",
               "in": "path",
               "required": true
             }
           ],
           "responses": {}
-        },
+        }
+      },
       "/partner/change_partner_password": {
         "put": {
           "x-swagger-router-controller": "home",
@@ -570,7 +572,7 @@
           "x-swagger-router-controller": "bar",
           "operationId": "7",
           "tags": ["/api/partner"],
-          "description": "",
+          "description": "Lets partner log in using email.",
           "parameters": [
             {
               "name":"request body",
@@ -599,7 +601,7 @@
           "x-swagger-router-controller": "bar",
           "operationId": "8",
           "tags": ["/api/partner"],
-          "description": "",
+          "description": "Lets partner create an account.",
           "parameters": [
             {
               "name":"request body",
@@ -645,17 +647,7 @@
           "responses": {}
         }
       },
-       "/changePassword": {
-        "get": {
-          "x-swagger-router-controller": "bar",
-          "operationId": "impossible",
-          "tags": ["/api/users"],
-          "description": "",
-          "parameters": [],
-          "responses": {}
-        }
-      },
-      "/follow":{
+      "/user/follow":{
         "put": {
           "x-swagger-router-controller": "bar",
           "operationId": "impossible",
@@ -681,7 +673,7 @@
           "responses": {}
         }
       },
-      "/unfollow":{
+      "/user/unfollow":{
         "put": {
           "x-swagger-router-controller": "bar",
           "operationId": "impossible",
@@ -706,7 +698,7 @@
           ],
           "responses": {}
         },
-        "/getUserPosts":{
+        "/user/getUserPosts":{
           "post": {
             "x-swagger-router-controller": "bar",
             "operationId": "impossible",
@@ -731,7 +723,7 @@
             "responses": {}
           }
         },
-        "/createComment":{
+        "/user/createComment":{
           "post": {
             "x-swagger-router-controller": "bar",
             "operationId": "impossible",
@@ -764,7 +756,7 @@
             "responses": {}
           }
         },
-        "/createPost":{
+        "/user/createPost":{
           "post": {
             "x-swagger-router-controller": "bar",
             "operationId": "impossible",
@@ -795,6 +787,4 @@
         }
       }
     }
- }
-}
-}
+  }
