@@ -795,7 +795,8 @@
           "parameters": [
             {"name":"authentication-token","in":"header","required":true}
           ]
-      }
+        }
+      },
       "/reports/": {
         "get": {
           "x-swagger-router-controller": "bar",
@@ -820,9 +821,6 @@
               {
                 "type":"object",
                 "properties": {
-<<<<<<< HEAD
-                  "email": {
-=======
                   "reporter": {
                     "type": "string",
                     "required": true
@@ -840,7 +838,6 @@
                     "required": true
                   },
                   "reason": {
->>>>>>> f997ee9f6648d0b7c74ed8f7188b8a270f750e50
                     "type": "string",
                     "required": true
                   }
@@ -858,7 +855,12 @@
           "tags": ["/api/users"],
           "description": "Unfollow a particular user by their email.",
           "parameters": [
-            {"name":"authentication-token","in":"header","required":true},
+            {"name":"authentication-token","in":"header","required":true}
+          ]
+        }
+      },
+
+
       "/reports/ban": {
         "post": {
           "x-swagger-router-controller": "bar",
@@ -885,7 +887,7 @@
                 }
               }
             }
-          ],
+          }],
           "responses": {}
         }
       },
@@ -960,6 +962,7 @@
             "responses": {}
           }
         },
+
         "/user/createPost":{
           "post": {
             "x-swagger-router-controller": "bar",
@@ -988,6 +991,7 @@
             ],
             "responses": {}
           }
+        },
       "/reports/unban": {
         "post": {
           "x-swagger-router-controller": "bar",
@@ -1134,4 +1138,5 @@
         }
       }
     }
+}
 
