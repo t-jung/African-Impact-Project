@@ -256,6 +256,8 @@ router.post("/partner_register", this.profileValidator(), async(req,res) => {
         let companyDB = await Company.findOne({name: company}).select('-password');
         if (!companyDB)
             return res.status(401).json("Could not find company");
+
+        let status = "unverified";
         
         let newPartner = new Partner({
             name,
@@ -265,7 +267,8 @@ router.post("/partner_register", this.profileValidator(), async(req,res) => {
             company,
             phone_number,
             fax,
-            investing_area
+            investing_area,
+            status
         });
 
         // hasd password

@@ -4,8 +4,7 @@ const {check,validationResult} = require("express-validator");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../schema/userSchema");
-const authentication = require("../middleware/userAuthentication");
-
+const authentication = require("../middleware/userAuthentication");x
 
 router.put("/changePassword",authentication,[
     check('newPassword','New password should be 6 letters and below 12.').isLength({min:6,max:12})
@@ -81,7 +80,7 @@ async(req,res)=>{
     try {
         let email = req.params.email;
         let user = await User.findOne({email:email}).select('-password');
-        res.json();
+        res.json(user);
     } catch (error) {
         console.error(error);
         return res.status(500).json("/getUserByEmail/ Server error.");
@@ -175,6 +174,7 @@ async(req,res)=>{
         newUser.address = req.body.address;
         newUser.email = req.body.email;
         newUser.password = req.body.password;
+        newUser.status = "verified";
         
         // check if user already exists based on email
         let checkUser = await User.findOne({email : newUser.email}).select('-password');
@@ -231,53 +231,24 @@ router.post('/createPost', async(req, res) => {
     try {
         // TODO: Should email be the identifying piece of information for a user?
         const {email, text} = req.body;
-        
-        console.log("1");
 
         /* Error Checking */
         let errors = validationResult(req);
         if(!errors.isEmpty())
             return res.status(400).json({errors: errors.array()});
 
-        console.log("2");
-
         /* Find user to create Post object under. */
         let poster = await User.findOne({email : req.body.email}).select('-password');
         if(!poster)
             return res.status(401).json("This user is not registered.");
 
-        console.log("3");
-
         /* Create post object. */
-        console.log("\n\n>" + req.body.text + "<\n\n");
         var post = {text: req.body.text}; 
-        poster.userPosts.push(post);
-
-        console.log("4");
+        poster.userPosts.unshift(post);
 
         /* Update database */
         await poster.save();
-
-        console.log("5");
-
-        const payload = {
-            user:{
-                id: newUser._id
-            }
-        }
-
-        /* Authorization stuff? */
-        jwt.sign(
-            payload,
-            process.env.JSONWEBTOKEN,
-            {expiresIn: 3600},
-            (err,token) =>{
-                if(err) throw err
-                res.json({token})
-            }
-        )
-
-        console.log("5");
+        res.json("Created post successfully.");
 
     } catch (error) {
         console.error(error);
@@ -288,67 +259,170 @@ router.post('/createPost', async(req, res) => {
 // @route POST /createComment
 // @desc Creates a comment object.
 // @access Public
-// router.get('/createComment', (req, res) => {
-//     try {
-//         // TODO: Should email be the identifying piece of information for a user?
-//         const {email, text} = req.body;
+router.post('/createComment', async(req, res) => {
+    try {
+        // TODO: Should email be the identifying piece of information for a user?
+        const {email, postId, text} = req.body;
 
-//         /* Error Checking */
-//         let errors = validationResult(req);
-//         if(!errors.isEmpty())
-//             return res.status(400).json({errors: errors.array()});
+        /* Error Checking */
+        let errors = validationResult(req);
+        if(!errors.isEmpty())
+            return res.status(400).json({errors: errors.array()});
 
-//         /* Find user to create Comment object under. */
-//         let poster = await User.findOne({email : req.body.email}).select('-password');
-//         if(!poster)
-//             return res.status(401).json("This user is not registered.");
+        /* Find user to create Comment object under. */
+        let poster = await User.findOne({email : req.body.email}).select('-password');
+        if(!poster)
+            return res.status(401).json("This user is not registered.");
+    
 
-//         /* Create post object. */
-//         /*
-//         postComments: [{
-//                 ObjectId,
-//                 text: {
-//                     type: String,
-//                     required: true,
-//                     default: "Default Comment Text."
-//                 },
-//                 date: {
-//                     type: Date,
-//                     default: Date.now
-//                 }
-//             }],
-//         */
-//         var comment = {ObjectId: req.body.commenterId, text: req.body.text};
-//         await 
-//         poster.userPosts.find({id: commenterId})
-//         poster.userPosts.push(post);
+        /* Finds the appropriate comment. */
+        let wantedPost = null;
+        for(const post of poster.userPosts) {
+            let id = JSON.stringify(post._id);
+            if(id === '"' + postId + '"'){
+                wantedPost = post;
+                break;
+            }
+        }
+        
+        /* Add comment */
+        var comment = {commenter: req.body.email, text: req.body.text};
+        wantedPost.postComments.unshift(comment);
 
-//         /* Update database */
-//         await poster.save();
+        /* Update database */
+        await poster.save();
+        res.json("Commented post successfully.");
 
-//         /* Authorization stuff? */
-//         jwt.sign(
-//             payload,
-//             process.env.JSONWEBTOKEN,
-//             {expiresIn: 3600},
-//             (err,token) =>{
-//                 if(err) throw err
-//                 res.json({token})
-//             }
-//         )
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("Server error.");
+    }
+})
 
-//     } catch (error) {
-//         console.error(error);
-//         return res.status(500).json("Server error.");
-//     }
-// })
+// @route POST /getCommentByPost/:post
+// @desc Gets all comments for a given post id.
+// @access Public
+// TODO: Might have weird async bugs.
+router.get('/getCommentByPost/:post',
+async(req, res) => {
+    try{
+        let postId = req.params.post;
+        User.find({}, (error, users) => {
+            if(error) {
+                return res.status(400).json("/getUserByEmail/ Server error.");
+            }
+            users.map(user => {
+                for(const post of user.userPosts) {
+                    let id = JSON.stringify(post._id);
+                    if(id === '"' + postId + '"'){
+                        return res.json(post.postComments);
+                    }
+                }
+            })
+        })
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("/getUserByEmail/ Server error.");
+    }
+})
 
 // @route POST /getUserPosts
 // @desc Gets all posts for a user.
 // @access Public
+router.get('/getUserPosts/:email',
+async(req,res)=>{
+    try {
+        let {email} = req.params.email;
 
-// @route POST /getFollowedPosts
-// @desc Creates a all posts for all posts a user follows.
-// @access Public
+        let errors = validationResult(req);
+        if(!errors.isEmpty()) return res.status(400).json({errors:errors.array()});
+
+        let user = await User.findOne({email});
+        if(!user) return res.status(404).json("User could not found.");
+
+        let userPost = user.userPosts;
+        return res.json(userPost);
+        
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json("Server error.");        
+    }
+})
+
+router.put('/unfollow', authentication,
+[
+    check('email',"Email is empty.").isEmail()
+],
+async(req,res)=>{
+    try {
+        let {email} = req.body;
+
+        let errors = validationResult(req);
+        if(!errors.isEmpty()) return res.status(400).json({errors:errors.array()});
+        
+        let user = await User.findById(req.user.id);
+        if(!user) return res.status(404).json("User does not exist.");
+    
+        let follow = await User.findOne({email});
+        if(!follow) return res.status(404).json("User does not found.");
+    
+        let newfollowing = user.following.filter(
+            (following) => following.email !== email
+        );
+    
+        let newfollower = follow.follower.filter(
+            (follower) => follower.email !== req.user.email
+        );
+
+        follow.follower = newfollower;
+        user.following = newfollowing;
+        follow.save();
+        user.save();
+        
+        res.json(user);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json("Server error.")
+    }        
+})
+
+router.put('/follow',authentication,
+[
+    check('email',"Email is empty.").isEmail()
+],
+async(req,res)=>{
+    try {
+        let {email} = req.body;
+
+        let errors = validationResult(req);
+        if(!errors.isEmpty()) return res.status(400).json({errors:errors.array()});
+        
+        let user = await User.findById(req.user.id);
+        if(!user) return res.status(404).json("User does not exist.");
+
+        let follow = await User.findOne({email});
+        if(!follow) return res.status(404).json("User does not found.");
+
+        let newFollowing = {
+            email
+        };
+
+        let newFollower = {
+            email:user.email
+        };
+
+        follow.follower.unshift(newFollower);
+        user.following.unshift(newFollowing);
+        follow.save();
+        user.save();
+
+        return res.json(user);
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json("Server error.");
+    }
+});
 
 module.exports = router;
