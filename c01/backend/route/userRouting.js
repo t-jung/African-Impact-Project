@@ -4,7 +4,7 @@ const {check,validationResult} = require("express-validator");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../schema/userSchema");
-const authentication = require("../middleware/userAuthentication");x
+const authentication = require("../middleware/userAuthentication");
 
 router.put("/changePassword",authentication,[
     check('newPassword','New password should be 6 letters and below 12.').isLength({min:6,max:12})

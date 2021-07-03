@@ -6,6 +6,11 @@ const cors = require('cors');
 // Connect to mongodb database
 const mongoose = require('mongoose');
 
+// Swagger ui
+const swaggerUi = require('swagger-ui-express');
+
+// Swagger ui document
+const swaggerDocument = require('./swagger.json');
 
 // Configures the environment so we can have it in the .env file
 require('dotenv').config();
@@ -31,6 +36,7 @@ connection.once('open', () => {
   console.log("MongoDB database connection established successfully");
 })
 
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use('/api/reports', require('./route/reports'));
 app.use('/api/verification', require("./route/verification"));
