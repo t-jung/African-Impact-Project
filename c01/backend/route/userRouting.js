@@ -285,7 +285,6 @@ router.post('/createComment', async(req, res) => {
         }
         
         /* Add comment */
-        console.log(wantedPost);
         var comment = {commenter: req.body.email, text: req.body.text};
         wantedPost.postComments.unshift(comment);
 
