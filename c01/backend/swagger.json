@@ -127,7 +127,7 @@
       "/company/login/company_name": {
         "post": {
           "x-swagger-router-controller": "bar",
-          "operationId": "6",
+          "operationId": "7",
           "tags": ["/api/company"],
           "description": "Login to company account by name",
           "parameters": [
@@ -151,7 +151,7 @@
       "/company/company_register": {
         "post": {
           "x-swagger-router-controller": "bar",
-          "operationId": "7",
+          "operationId": "8",
           "tags": ["/api/company"],
           "description": "Company registration",
           "parameters":[
@@ -275,7 +275,7 @@
          "responses": {}
        }
       },
-       "/users/getUserByEmail/:email": {
+       "/users/getUserByEmail/{email}": {
         "get": {
           "x-swagger-router-controller": "bar",
           "operationId": "3",
@@ -283,7 +283,7 @@
           "description": "Get the user's infromation by email.",
           "parameters": [
             {
-              "": "user.email",
+              "email": "user_email",
               "in": "path",
               "required": true
             }
@@ -291,7 +291,7 @@
           "responses": {}
         }
       },
-      "/users/getUserById/:id": {
+      "/users/getUserById/{id}": {
         "get": {
           "x-swagger-router-controller": "bar",
           "operationId": "4",
@@ -395,7 +395,7 @@
           "responses": {}
         }
       },
-      "/users/delete/:id": {
+      "/users/delete/{id}": {
         "delete": {
           "x-swagger-router-controller": "bar",
           "operationId": "8",
@@ -463,7 +463,7 @@
           "responses": {}
         }
       },
-        "/users/getUserPosts":{
+        "/users/getUserPosts/{email}":{
           "post": {
             "x-swagger-router-controller": "bar",
             "operationId": "11",
@@ -546,6 +546,18 @@
                   }
                 }
               }
+            ],
+            "responses": {}
+          }
+        },
+        "/users/getCommentByPost/{post}":{
+          "post": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "14",
+            "tags": ["/api/users"],
+            "description": "Get comments for a particular post.",
+            "parameters": [
+              {"name":"post","in":"path","required":true}      
             ],
             "responses": {}
           }
@@ -635,7 +647,7 @@
           "responses": {}
         }
       },
-      "/partner/show_partner_info_id/:partner_id": {
+      "/partner/show_partner_info_id/{partner_id}": {
         "get": {
           "x-swagger-router-controller": "bar",
           "operationId": "3",
@@ -651,7 +663,7 @@
           "responses": {}
         }
       },
-      "/partner/show_partner_info_name/:partner_name": {
+      "/partner/show_partner_info_name/{partner_name}": {
         "get": {
           "x-swagger-router-controller": "bar",
           "operationId": "4",
@@ -786,17 +798,6 @@
           "responses": {}
         }
       },
-      "/user/follow":{
-        "put": {
-          "x-swagger-router-controller": "bar",
-          "operationId": "9",
-          "tags": ["/api/users"],
-          "description": "Follow a particular user by their email.",
-          "parameters": [
-            {"name":"authentication-token","in":"header","required":true}
-          ]
-        }
-      },
       "/reports/": {
         "get": {
           "x-swagger-router-controller": "bar",
@@ -848,19 +849,6 @@
           "responses": {}
         }
       },
-      "/user/unfollow":{
-        "put": {
-          "x-swagger-router-controller": "bar",
-          "operationId": "10",
-          "tags": ["/api/users"],
-          "description": "Unfollow a particular user by their email.",
-          "parameters": [
-            {"name":"authentication-token","in":"header","required":true}
-          ]
-        }
-      },
-
-
       "/reports/ban": {
         "post": {
           "x-swagger-router-controller": "bar",
@@ -891,107 +879,6 @@
           "responses": {}
         }
       },
-       "/user/getUserPosts/{email}":{
-          "post": {
-            "x-swagger-router-controller": "bar",
-            "operationId": "11",
-            "tags": ["/api/users"],
-            "description": "Get user all the posts from a user by their email.",
-            "parameters": [
-              {"name":"email","in":"path","required":true},
-              {
-                "name":"request body",
-                "in":"body",
-                "schema":
-                {
-                  "type":"object",
-                  "properties": {
-                    "email": {
-                      "type": "string",
-                      "required": true
-                    }
-                  }
-                }
-              }
-            ],
-            "responses": {}
-          }
-        },
-        "/user/getCommentByPost/{post}":{
-          "post": {
-            "x-swagger-router-controller": "bar",
-            "operationId": "12",
-            "tags": ["/api/users"],
-            "description": "Get comments for a particular post.",
-            "parameters": [
-              {"name":"post","in":"path","required":true}      
-            ],
-            "responses": {}
-          }
-        },
-        "/user/createComment":{
-          "post": {
-            "x-swagger-router-controller": "bar",
-            "operationId": "13",
-            "tags": ["/api/users"],
-            "description": "Create comment under a certain post.",
-            "parameters": [
-              {
-                "name":"request body",
-                "in":"body",
-                "schema":
-                {
-                  "type":"object",
-                  "properties": {
-                    "email": {
-                      "type": "string",
-                      "required": true
-                    },
-                    "postId": {
-                      "type": "string",
-                      "required": true
-                    },
-                    "text": {
-                      "type": "string",
-                      "required": true
-                    }
-                  }
-                }
-              }
-            ],
-            "responses": {}
-          }
-        },
-
-        "/user/createPost":{
-          "post": {
-            "x-swagger-router-controller": "bar",
-            "operationId": "14",
-            "tags": ["/api/users"],
-            "description": "Create a post.",
-            "parameters": [
-              {
-                "name":"request body",
-                "in":"body",
-                "schema":
-                {
-                  "type":"object",
-                  "properties": {
-                    "email": {
-                      "type": "string",
-                      "required": true
-                    },
-                    "text": {
-                      "type": "string",
-                      "required": true
-                    }
-                  }
-                }
-              }
-            ],
-            "responses": {}
-          }
-        },
       "/reports/unban": {
         "post": {
           "x-swagger-router-controller": "bar",
@@ -1021,7 +908,7 @@
           "responses": {}
         }
       },
-      "/reports/:id": {
+      "/reports/{id}": {
         "delete": {
           "x-swagger-router-controller": "bar",
           "operationId": "5",
@@ -1047,7 +934,7 @@
           "responses": {}
         }
       },
-      "/verification/:id": {
+      "/verification/{id}": {
         "get": {
           "x-swagger-router-controller": "bar",
           "operationId": "2",
@@ -1121,7 +1008,7 @@
           "responses": {}
         }
       },
-      "/verification/delete/:id": {
+      "/verification/delete/{id}": {
         "post": {
           "x-swagger-router-controller": "bar",
           "operationId": "5",

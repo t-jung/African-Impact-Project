@@ -24,7 +24,7 @@ const userSchema = new Schema({
     status:{
         type: String,
         require: true
-    }
+    },
     userPosts: [{
             title: {
                 type: String
