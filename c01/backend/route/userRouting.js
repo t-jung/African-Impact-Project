@@ -4,10 +4,7 @@ const {check,validationResult} = require("express-validator");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../schema/userSchema");
-const authentication = require("../middleware/userAuthentication");
-// Used for testing - dar
-const mongoose = require('mongoose');
-
+const authentication = require("../middleware/userAuthentication");x
 
 router.put("/changePassword",authentication,[
     check('newPassword','New password should be 6 letters and below 12.').isLength({min:6,max:12})
@@ -83,7 +80,7 @@ async(req,res)=>{
     try {
         let email = req.params.email;
         let user = await User.findOne({email:email}).select('-password');
-        res.json();
+        res.json(user);
     } catch (error) {
         console.error(error);
         return res.status(500).json("/getUserByEmail/ Server error.");
@@ -279,9 +276,8 @@ router.post('/createComment', async(req, res) => {
 
         /* Finds the appropriate comment. */
         let wantedPost = null;
-        for(const post of poster.userPosts){
+        for(const post of poster.userPosts) {
             let id = JSON.stringify(post._id);
-            console.log(postId);
             if(id === '"' + postId + '"'){
                 wantedPost = post;
                 break;
@@ -289,7 +285,6 @@ router.post('/createComment', async(req, res) => {
         }
         
         /* Add comment */
-        console.log(wantedPost);
         var comment = {commenter: req.body.email, text: req.body.text};
         wantedPost.postComments.unshift(comment);
 
@@ -303,7 +298,33 @@ router.post('/createComment', async(req, res) => {
     }
 })
 
+// @route POST /getCommentByPost/:post
+// @desc Gets all comments for a given post id.
+// @access Public
+// TODO: Might have weird async bugs.
+router.get('/getCommentByPost/:post',
+async(req, res) => {
+    try{
+        let postId = req.params.post;
+        User.find({}, (error, users) => {
+            if(error) {
+                return res.status(400).json("/getUserByEmail/ Server error.");
+            }
+            users.map(user => {
+                for(const post of user.userPosts) {
+                    let id = JSON.stringify(post._id);
+                    if(id === '"' + postId + '"'){
+                        return res.json(post.postComments);
+                    }
+                }
+            })
+        })
 
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("/getUserByEmail/ Server error.");
+    }
+})
 
 // @route POST /getUserPosts
 // @desc Gets all posts for a user.
@@ -403,13 +424,4 @@ async(req,res)=>{
     }
 });
 
-
-
-// @route POST /getComments
-// @desc Gets all comments for a given post id.
-// @access Public
-
-// @route POST /getFollowedPosts
-// @desc Creates a all posts for all posts a user follows.
-// @access Public
 module.exports = router;
