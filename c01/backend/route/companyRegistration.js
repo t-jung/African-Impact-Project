@@ -228,6 +228,8 @@ async(req,res)=>{
         let fetchedCompanyNameFromDB = await Company.findOne({name}).select('-password');
         if(fetchedCompanyNameFromDB===name)
             return res.status(401).json("Company name has already existed.");
+
+        let status = "unverified";
         
         let newCompany = new Company({
             name,
@@ -236,7 +238,8 @@ async(req,res)=>{
             location,
             industry,
             website,
-            description
+            description,
+            status
         });
 
         // hasd password

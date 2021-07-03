@@ -21,6 +21,10 @@ const userSchema = new Schema({
     password: {
         type: String, required: true
     },
+    status:{
+        type: String,
+        require: true
+    }
     userPosts: [{
             title: {
                 type: String
