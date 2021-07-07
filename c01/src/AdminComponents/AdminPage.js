@@ -144,6 +144,7 @@ const AdminPage = () => {
     }, [displayPendingBoard, displayPendingVerif, displayBannedUsers, displayViewUserList])
 
     return (
+        //<<<<<<< jungyeon/CSCCPROJ-83-finalizing-front-end
         <div class="admin-container">
             <div class="admin-topbar">
             <ThemeProvider theme={styles}>
@@ -170,6 +171,19 @@ const AdminPage = () => {
                     </Grid>
                 </Grid>
             </ThemeProvider>
+       // =======
+       // <div>
+       //     <div class="page">
+       //         <div class="header">
+       //             <h2>Administrator Page</h2>
+       //         <div class = "navButtons">
+       //         <button class="btn text-uppercase adminbtn">View User List</button>
+       //        <button class="btn text-uppercase adminbtn">View Banned Users</button>
+       //         <button class="btn text-uppercase adminbtn">Return to Main View</button>
+       //         <button class="btn text-uppercase adminbtn">Log Out</button>
+       //         </div>
+       //         </div>
+       // >>>>>>> development
             </div>
             <div class="admin-tabbuttons">
                 <Grid container direction="row" nowrap="false" justify="space-between" alignItems="center">
