@@ -31,6 +31,10 @@ let PartnerSchema = mongoose.Schema({
     },
     investing_area:{
         type: String,
+    },
+    status:{
+        type:String,
+        require: true
     }
 })
 

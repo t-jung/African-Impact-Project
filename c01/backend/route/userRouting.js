@@ -174,6 +174,7 @@ async(req,res)=>{
         newUser.address = req.body.address;
         newUser.email = req.body.email;
         newUser.password = req.body.password;
+        newUser.status = "verified";
         
         // check if user already exists based on email
         let checkUser = await User.findOne({email : newUser.email}).select('-password');
@@ -408,14 +409,14 @@ async(req,res)=>{
     
         let follow = await User.findOne({email});
         if(!follow) return res.status(404).json("User does not found.");
-    
+
         let newfollowing = user.following.filter(
             (following) => following.email !== email
         );
     
         let newfollower = follow.follower.filter(
-            (follower) => follower.email !== req.user.email
-        );
+            (follower) => follower.email !== user.email
+        )
 
         follow.follower = newfollower;
         user.following = newfollowing;
@@ -445,6 +446,12 @@ async(req,res)=>{
 
         let follow = await User.findOne({email});
         if(!follow) return res.status(404).json("User does not found.");
+        
+        for(const following_person of user.following){
+            if(email === following_person.email){
+                return res.status(400).json("User has already followed this person");
+            }
+        }
 
         let newFollowing = {
             email
