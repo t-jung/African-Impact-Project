@@ -4,7 +4,7 @@ const {check,validationResult} = require("express-validator");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../schema/userSchema");
-const authentication = require("../middleware/userAuthentication");x
+const authentication = require("../middleware/userAuthentication");
 
 router.put("/changePassword",authentication,[
     check('newPassword','New password should be 6 letters and below 12.').isLength({min:6,max:12})
@@ -226,7 +226,12 @@ router.delete('/delete/:id', (req, res) =>{
 // @route POST /createPost
 // @desc Creates a post object.
 // @access Public
-router.post('/createPost', async(req, res) => {
+router.post('/createPost', 
+[
+    check('text',' text is empty.').not().isEmpty(),
+    check('email','E-mail is empty.').isEmail()
+],
+async(req, res) => {
     try {
         // TODO: Should email be the identifying piece of information for a user?
         const {email, text} = req.body;
@@ -258,7 +263,13 @@ router.post('/createPost', async(req, res) => {
 // @route POST /createComment
 // @desc Creates a comment object.
 // @access Public
-router.post('/createComment', async(req, res) => {
+router.post('/createComment',
+[
+    check('text',' text is empty.').not().isEmpty(),
+    check('postId','postId is empty.').not().isEmpty(),
+    check('email','E-mail is empty.').isEmail()
+],
+async(req, res) => {
     try {
         // TODO: Should email be the identifying piece of information for a user?
         const {email, postId, text} = req.body;
@@ -346,6 +357,38 @@ async(req,res)=>{
     } catch (error) {
         console.log(error);
         return res.status(500).json("Server error.");        
+    }
+})
+
+// @route POST /getFollowedPosts
+// @desc Creates a all posts for all posts a user follows.
+// @access Public
+router.get('/getFollowedPosts/:email',
+async(req, res) => {
+    try{
+        console.log("1");
+        let email = req.params.email;
+        User.find({}, (error, users) => {
+            if(error) {
+                return res.status(400).json("/getFollowedPosts/ Server error.");
+            }
+            console.log("2");
+            users.map(user => {
+                console.log("3");
+                for(const f of user.following) {
+                    console.log("4");
+                    if (f === email) {
+                        console.log("5");
+                        return res.json(user.userPosts);
+                    }
+                }
+            })
+        })
+        // TODO: What to return when its empty? probably an empty list.
+        return res.status(400).json("/getFollowedPosts/ user not found.");
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("/getFollowedPosts/ Server error.");
     }
 })
 
