@@ -1,5 +1,5 @@
 import './CompanyEditForm.css'
-import React from 'react';
+import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { ThemeProvider, withStyles } from '@material-ui/core/styles';
 
@@ -36,6 +36,39 @@ const StyledTypography = (withStyles({
 }))(Typography);
 
 const CompanyEditForm = () => {
+    const [name, setName] = useState(company.companyName);
+    const [email, setEmail] = useState(company.companyEmail);
+    const [phone, setPhone] = useState(company.companyPhone);
+    const [website, setWebsite] = useState(company.companyWebsite);
+    const [description, setDescription] = useState(company.companyDescription);
+
+    const onSubmit = (e) => {
+        e.preventDefault()
+        
+        if(!name) {
+            alert('A company name is required.')
+            setName('')
+            return
+        }
+        
+        
+        if(!email) {
+            alert('A company email is required for registration.')
+            setEmail('')
+            return
+        }
+
+        if(!phone) {
+            alert('A company phone number is required for registration.')
+            setPhone('')
+            return
+        }
+
+        console.log('Successful Company Registration.')        
+        console.log(`Company Name: ${name}`)
+        console.log(`Email: ${email}`)
+    }
+
     return (
         <div class="formContainer">
             <ThemeProvider theme={styles}>
@@ -45,24 +78,34 @@ const CompanyEditForm = () => {
                     fontSize: 30,
                 }}>Company profile edit</Typography><br/>
                 <StyledTypography>Company name</StyledTypography>
-                <StyledTextField variant="outlined" size="small" required type="text" defaultValue={company.companyName}/>
+                <StyledTextField variant="outlined" size="small" required type="text"
+                    onChange={(e) => setName(e.target.value)} defaultValue={company.companyName}/>
                 <StyledTypography>Company email</StyledTypography>
-                <StyledTextField variant="outlined" size="small" autoComplete required type="email" defaultValue={company.companyEmail}/>
+                <StyledTextField variant="outlined" size="small" autoComplete required type="email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    defaultValue={company.companyEmail}/>
                 <StyledTypography>Company phone number</StyledTypography>
-                <StyledTextField variant="outlined" size="small" autoComplete required type="tel" defaultValue={company.companyPhone}/>
+                <StyledTextField variant="outlined" size="small" autoComplete required type="tel"
+                    onChange={(e) => setPhone(e.target.value)}
+                    defaultValue={company.companyPhone}/>
                 <StyledTypography>Company website</StyledTypography>
-                <StyledTextField variant="outlined" size="small" type="url" defaultValue={company.companyWebsite}/>
+                <StyledTextField variant="outlined" size="small" type="url"
+                    onChange={(e) => setWebsite(e.target.value)}
+                    defaultValue={company.companyWebsite}/>
                 <StyledTypography>Start up date</StyledTypography>
-                <StyledTextField variant="outlined" size="small" type="date"/>
+                <StyledTextField variant="outlined" size="small" type="date" />
                 <StyledTypography>Description</StyledTypography>
-                <StyledTextField variant="outlined" size="small" multiline rows={4} defaultValue={company.companyDescription}/> 
+                <StyledTextField variant="outlined" size="small" multiline rows={4} 
+                    onChange={(e) => setDescription(e.target.value)}
+                    defaultValue={company.companyDescription}/> 
             </ThemeProvider>
             <div class="d-flex justify-content-center">
                 <Button style={{
                     background: styles.palette.secondary.main,
                     borderRadius: 10,
                     fontSize: 15,
-                }}>Submit</Button>
+                }}
+                onClick={onSubmit}>Submit</Button>
             </div>
             
         </div>
