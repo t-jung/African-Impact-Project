@@ -6,6 +6,46 @@
     margin: 1% 1%;
 }
 
+.admin-topbar{
+}
+
+.admin-sidebyside{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.admin-container{
+    margin-right: 10vh;
+    margin-left: 10vh;
+}
+
+.admin-cardBtns{
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    flex-direction: row;
+}
+
+.admin-stickBottom{
+    position:sticky;
+    bottom: 3px;
+}
+
+.admin-tabbuttons {
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+}
+
+.TabButton {
+    background: 'white';
+}
+
+.TabButton.selected {
+    background: #FFC0C0;
+}
+
 .btn{
     margin-top: 1%;
 }
