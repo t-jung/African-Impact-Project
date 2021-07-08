@@ -17,7 +17,7 @@ const LoginForm = () => {
 
                                 <div class="form-group">
                                     <label for="pass"></label>
-                                    <input type="pass" class="form-control" id="pass" placeholder="Password" />
+                                    <input type="password" class="form-control" id="pass" placeholder="Password" />
                                 </div>
                                 <div class="form-group form-check">
                                     <input type="checkbox" class="form-check-input" id="check" />
@@ -26,9 +26,9 @@ const LoginForm = () => {
                                 <a href="/feed" class="btn btn-primary text-uppercase btn-block">sign in</a>
                                 <a href="/register" button class="btn btn-secondary text-uppercase btn-block">register</a>
                                 <hr />
-                                <button class="btn gbtn text-uppercase btn-block">sign in with google</button>
+                                <a href="/feed"  class="btn gbtn text-uppercase btn-block">sign in with google</a>
                                 <br />
-                                <button class="btn fbbtn text-uppercase btn-block">sign in with facebook</button>
+                                <a href="/feed" class="btn fbbtn text-uppercase btn-block">sign in with facebook</a>
                             </form>
                         </div>
                     </div>

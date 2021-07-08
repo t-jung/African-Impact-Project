@@ -21,7 +21,7 @@ const feedList = [
         content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     },
     {
-        userName: "Tims",
+        userName: "Gura",
         img: "https://cdn.discordapp.com/attachments/829661320923447326/860355801931579422/unknown.png",
         content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     },
@@ -42,7 +42,7 @@ function Feed() {
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex">
-                        <img src={feed.img} className="barProfilePic" />
+                    <img src={feed.img} className="barProfilePic" />
                         <div>
                             <h5>{feed.userName}</h5>
                             {feed.content}
@@ -54,21 +54,13 @@ function Feed() {
         )
     }
 
-    const NewsFeed = () => {
-        return(
-            <div>
-
-            </div>
-        );
-    }
-
     const GetSchedule = () => {
         return(
             <div class="schedule" >
-                <div>
-                    
+                <div className="schedule_text"> 
+                <p className="makevisible">TODO:<br/><br/>0800: Attend lecture 1 <br/> 13:00 Attending Meeting 3</p>
                 </div>
-                "filler schedule text"
+                
             </div>
         )
     }
@@ -77,9 +69,9 @@ function Feed() {
             <div class="split left">
                 <div class="feedSection">
                 <div class="postBox">
-                        <img class="barProfilePic"
+                        <a href="/profile"><img class="barProfilePic"
                             src="https://cdn.discordapp.com/attachments/829661320923447326/860355801931579422/unknown.png"
-                        />
+                        /></a>
                     <textarea rows="2" cols="100" placeholder="Post something!"></textarea>
                     <button class="btn btn_post_blog" >  POST  </button>
                 </div>
