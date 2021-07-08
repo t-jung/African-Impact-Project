@@ -81,7 +81,7 @@ function Feed() {
                             src="https://cdn.discordapp.com/attachments/829661320923447326/860355801931579422/unknown.png"
                         />
                     <textarea rows="2" cols="100" placeholder="Post something!"></textarea>
-                    <button class="btn" >  POST  </button>
+                    <button class="btn btn_post_blog" >  POST  </button>
                 </div>
                 <div class="feed_top">
                     <SingleFeed feedList={feedList}/>
