@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 let CompanySchema = mongoose.Schema({
+    user_setup:{
+        type: String,
+        require: true
+    },
     name:{
         type: String,
         require: true
@@ -29,6 +33,10 @@ let CompanySchema = mongoose.Schema({
     status:{
         type: String,
         require: true
+    },
+    profile_type:{
+        type: String,
+        default: "company"
     }
 })
 

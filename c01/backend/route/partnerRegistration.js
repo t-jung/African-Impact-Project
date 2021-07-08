@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 let Partner = require("../schema/partnerSchema");
 let Company = require("../schema/companySchema");
 const authentication = require("../middleware/partnerAuthentication");
-
+const user_authentication = require("../middleware/userAuthentication");
 
 exports.passwordValidator = () => {
     return [
@@ -173,6 +173,10 @@ router.post("/login/partner_name", this.loginByNameValidator(), async(req,res) =
         let partner = await Partner.findOne({name});
         if(!partner) return res.status(404).json("partner has not been created yet.");
 
+        // verified
+        if(partner.status === "unverified")
+        return res.status(403).json("Partner hasn't been verified");
+
         // check password
         let match = await bcryptjs.compare(password,partner.password);
         if(!match) return res.status(401).json("Incorrect password.");
@@ -211,6 +215,10 @@ router.post("/login/partner_email", this.loginByEmailValidator(), async(req,res)
         let partner = await Partner.findOne({email});
         if(!partner) return res.status(404).json("partner has not been created yet.")
 
+        // verified
+        if(partner.status === "unverified")
+        return res.status(403).json("Partner hasn't been verified");
+
         //check password
         let match = await bcryptjs.compare(password,partner.password);
         if(!match) return res.status(401).json("Incorrect password.");
@@ -237,7 +245,7 @@ router.post("/login/partner_email", this.loginByEmailValidator(), async(req,res)
     }    
 });
 
-router.post("/partner_register", this.profileValidator(), async(req,res) => {
+router.post("/partner_register", this.profileValidator(), user_authentication, async(req,res) => {
     try {
         let{name,email,password,address,company,phone_number,fax,investing_area} = req.body;
 
@@ -261,6 +269,7 @@ router.post("/partner_register", this.profileValidator(), async(req,res) => {
         
         let newPartner = new Partner({
             name,
+            user_setup: req.user.id,
             email,
             password,
             address,
