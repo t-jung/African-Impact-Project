@@ -367,26 +367,24 @@ async(req,res)=>{
 router.get('/getFollowedPosts/:email',
 async(req, res) => {
     try{
-        console.log("1");
+        let ret = [];
         let email = req.params.email;
-        User.find({}, (error, users) => {
+        await User.find({}, async(error, users) => {
             if(error) {
                 return res.status(400).json("/getFollowedPosts/ Server error.");
             }
-            console.log("2");
-            users.map(user => {
-                console.log("3");
-                for(const f of user.following) {
-                    console.log("4");
-                    if (f === email) {
-                        console.log("5");
-                        return res.json(user.userPosts);
+            await users.map(user => {
+                for(const f of user.follower) {
+                    if (f.email === email) {
+                        uPosts = user.userPosts;
+                        ret = uPosts;
+                        return;
                     }
                 }
             })
         })
-        // TODO: What to return when its empty? probably an empty list.
-        return res.status(400).json("/getFollowedPosts/ user not found.");
+
+        return res.json(ret);
     } catch (error) {
         console.error(error);
         return res.status(500).json("/getFollowedPosts/ Server error.");
