@@ -1,26 +1,104 @@
 
 import './ProfileFrame.css'
 import React from 'react';
+import SingleFeed from '../FeedComponents/SingleFeed.js';
+
+const user = {
+    firstName: "User",
+    middleName: "Here",
+    lastName: "Name",
+    profilePic: "https://cdn.discordapp.com/attachments/829661320923447326/860355801931579422/unknown.png",
+    userEmail: "userName.cscc01@email.com",
+    userPhone: 123456789,
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    type: "Partner"
+}
+
+const feedList = [
+    {
+        userName: "Gura",
+        img: "https://cdn.discordapp.com/attachments/829661320923447326/860355801931579422/unknown.png",
+        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        comment: [
+            {
+                userName: "Tim",
+                img: "",
+                content: "This is great to hear!"
+            },
+            {
+                userName: "Hortons",
+                img: "https://scontent-nrt1-1.xx.fbcdn.net/v/t1.6435-0/p526x296/205338742_520342779417948_4620301495797869681_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=730e14&_nc_ohc=kisa0E-JHmYAX-pf-oR&_nc_ht=scontent-nrt1-1.xx&tp=6&oh=817cceaebf4c157b71faea6c711f092b&oe=60E59340",
+                content: "Congratulations!!"
+            },
+        ]
+    },
+    {
+        userName: "Gura",
+        img: "https://cdn.discordapp.com/attachments/829661320923447326/860355801931579422/unknown.png",
+        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        comment: [
+            {
+                userName: "Tim",
+                img: "",
+                content: "This is great to hear!"
+            },
+            {
+                userName: "Hortons",
+                img: "https://scontent-nrt1-1.xx.fbcdn.net/v/t1.6435-0/p526x296/205338742_520342779417948_4620301495797869681_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=730e14&_nc_ohc=kisa0E-JHmYAX-pf-oR&_nc_ht=scontent-nrt1-1.xx&tp=6&oh=817cceaebf4c157b71faea6c711f092b&oe=60E59340",
+                content: "Congratulations!!"
+            },
+        ]
+    },
+    {
+        userName: "Gura",
+        img: "https://cdn.discordapp.com/attachments/829661320923447326/860355801931579422/unknown.png",
+        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        comment: [
+            {
+                userName: "Tim",
+                img: "",
+                content: "This is great to hear!"
+            },
+            {
+                userName: "Hortons",
+                img: "https://scontent-nrt1-1.xx.fbcdn.net/v/t1.6435-0/p526x296/205338742_520342779417948_4620301495797869681_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=730e14&_nc_ohc=kisa0E-JHmYAX-pf-oR&_nc_ht=scontent-nrt1-1.xx&tp=6&oh=817cceaebf4c157b71faea6c711f092b&oe=60E59340",
+                content: "Congratulations!!"
+            },
+        ]
+    },
+    {
+        userName: "Gura",
+        img: "https://cdn.discordapp.com/attachments/829661320923447326/860355801931579422/unknown.png",
+        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        comment: [
+            {
+                userName: "Tim",
+                img: "",
+                content: "This is great to hear!"
+            },
+            {
+                userName: "Hortons",
+                img: "https://scontent-nrt1-1.xx.fbcdn.net/v/t1.6435-0/p526x296/205338742_520342779417948_4620301495797869681_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=730e14&_nc_ohc=kisa0E-JHmYAX-pf-oR&_nc_ht=scontent-nrt1-1.xx&tp=6&oh=817cceaebf4c157b71faea6c711f092b&oe=60E59340",
+                content: "Congratulations!!"
+            },
+        ]
+    },
+]
 
 const ProfileFrame = ({userID}) => {
     // User userID to get the following details:
-    var userName = "User Name Here";
-    var profilePic = "https://i1.sndcdn.com/artworks-Z8AyljiXPrMSNaPb-ecOERw-t500x500.jpg";
-    var userEmail = "userName.cscc01@email.com";
-    var userPhone = "+1 000-0000-0000";
-    var description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     var show = true;
     return (
         <div class="bigContainer">                   
             <div><EditButton show={show}/></div>
             <div class="topContainer">
                 <div class="nameCard"><NameCard
-                    userName={userName}
-                    profilePic={profilePic}
-                    userEmail={userEmail}
-                    userPhone={userPhone}/></div>
+                    userName={user.firstName + ' ' + user.middleName + ' ' + user.lastName}
+                    profilePic={user.profilePic}
+                    userEmail={user.userEmail}
+                    userPhone={user.userPhone}/></div>
                 <div class="align-self-center flex-grow-1">
-                    <div><InfoCard info={description}/></div>
+                    <div><InfoCard info={user.description}/></div>
                 </div>
             </div>
             <div class="bottomContainer">
@@ -42,7 +120,7 @@ const EditButton = ({show}) => {
     if(show === true) {
         return (
             <div >
-                <button class="btn">Edit</button>
+                <a href="/profile_edit" button class="btn">Edit</a>
             </div>
         )
     } else {
@@ -62,9 +140,9 @@ const NameCard = ({userName, userPhone, profilePic, userEmail}) => {
             <div class="p-2 align-self-center">
                 <h4 class="userName">{userName}</h4>
                 <h5>{userEmail} | {userPhone}</h5>
-                <div class="d-flex">
-                    <button class="btn message text-uppercase btn-block">message</button>
-                    <button class="btn follow text-uppercase btn-block">follow</button>
+                <div class="d-flex" >
+                    <button class="btn btn_profile message text-uppercase ">message</button>
+                    <button class="btn btn_profile follow text-uppercase ">follow</button>
                 </div>
                 
             </div>
@@ -86,24 +164,14 @@ const InfoCard = ({info}) => {
 
 
 const PostBoard = () => {
+    console.log(feedList)
     return(
         <div>
-            <BlogPost/>
-            <BlogPost/>
-            <BlogPost/>
+            <SingleFeed feedList={feedList}/>
         </div>
 
     )
 }
-
-const BlogPost = () => {
-    return (
-       <div class="card">
-           <h5>Personal blogs. "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</h5>
-       </div> 
-    )
-}
-
 
 const LessonBoard = () => {
     var courses = ["Course 1", "Course 2"];

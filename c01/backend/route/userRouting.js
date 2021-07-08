@@ -231,7 +231,12 @@ router.delete('/delete/:id', (req, res) =>{
 // @route POST /createPost
 // @desc Creates a post object.
 // @access Public
-router.post('/createPost', async(req, res) => {
+router.post('/createPost', 
+[
+    check('text',' text is empty.').not().isEmpty(),
+    check('email','E-mail is empty.').isEmail()
+],
+async(req, res) => {
     try {
         // TODO: Should email be the identifying piece of information for a user?
         const {email, text} = req.body;
@@ -263,7 +268,13 @@ router.post('/createPost', async(req, res) => {
 // @route POST /createComment
 // @desc Creates a comment object.
 // @access Public
-router.post('/createComment', async(req, res) => {
+router.post('/createComment',
+[
+    check('text',' text is empty.').not().isEmpty(),
+    check('postId','postId is empty.').not().isEmpty(),
+    check('email','E-mail is empty.').isEmail()
+],
+async(req, res) => {
     try {
         // TODO: Should email be the identifying piece of information for a user?
         const {email, postId, text} = req.body;
@@ -354,6 +365,36 @@ async(req,res)=>{
     }
 })
 
+// @route POST /getFollowedPosts
+// @desc Creates a all posts for all posts a user follows.
+// @access Public
+router.get('/getFollowedPosts/:email',
+async(req, res) => {
+    try{
+        let ret = [];
+        let email = req.params.email;
+        await User.find({}, async(error, users) => {
+            if(error) {
+                return res.status(400).json("/getFollowedPosts/ Server error.");
+            }
+            await users.map(user => {
+                for(const f of user.follower) {
+                    if (f.email === email) {
+                        uPosts = user.userPosts;
+                        ret = uPosts;
+                        return;
+                    }
+                }
+            })
+        })
+
+        return res.json(ret);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("/getFollowedPosts/ Server error.");
+    }
+})
+
 router.put('/unfollow', authentication,
 [
     check('email',"Email is empty.").isEmail()
@@ -370,14 +411,14 @@ async(req,res)=>{
     
         let follow = await User.findOne({email});
         if(!follow) return res.status(404).json("User does not found.");
-    
+
         let newfollowing = user.following.filter(
             (following) => following.email !== email
         );
     
         let newfollower = follow.follower.filter(
-            (follower) => follower.email !== req.user.email
-        );
+            (follower) => follower.email !== user.email
+        )
 
         follow.follower = newfollower;
         user.following = newfollowing;
@@ -407,6 +448,12 @@ async(req,res)=>{
 
         let follow = await User.findOne({email});
         if(!follow) return res.status(404).json("User does not found.");
+        
+        for(const following_person of user.following){
+            if(email === following_person.email){
+                return res.status(400).json("User has already followed this person");
+            }
+        }
 
         let newFollowing = {
             email
