@@ -14,6 +14,9 @@ let CompanySchema = mongoose.Schema({
         require: true,
         unique: true
     },
+    phone_number: {
+        type: String
+    },
     password:{
         type: String,
         require: true
