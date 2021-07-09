@@ -65,17 +65,18 @@ class CompanyEditForm extends Component {
                     description: response.data.description,
                     status: response.data.status
                 });
-                console.log(this.state)
             })
             .catch(error => console.log("error", error))
     }
+
+    onSubmit(e) {
+        e.preventDefault();
+        company = this.state;
+        console.log(company);
+    }
+
     render () {
-        console.log(this.state);
-        function onSubmit() {
-            console.log(this.state.name);
-        }
         return (
-            
             <div class="formContainer">
                 <ThemeProvider theme={styles}>
                     <Typography style={{
@@ -84,25 +85,26 @@ class CompanyEditForm extends Component {
                         fontSize: 30,
                     }}>Company profile edit</Typography><br/>
                     <StyledTypography>Company name</StyledTypography>
-                    <StyledTextField variant="outlined" size="small" required type="text"
-                        onChange={(e) => {this.state.name = (e.target.value)}} defaultValue={this.state.name}/>
+                    <StyledTextField variant="outlined" size="small" required
+                        onChange={(e) => {this.setState({name: e.target.value})}}
+                        value={this.state.name}/>
                     <StyledTypography>Company email</StyledTypography>
                     <StyledTextField variant="outlined" size="small"required type="email"
-                        onChange={(e) => {this.state.email = (e.target.value)}}
-                        defaultValue={this.state.email}/>
+                        onChange={(e) => {this.setState({email: e.target.value})}}
+                        value={this.state.email}/>
                     <StyledTypography>Company phone number</StyledTypography>
                     <StyledTextField variant="outlined" size="small"  required type="tel"
 
                         defaultValue={123456789}/>
                     <StyledTypography>Company website</StyledTypography>
                     <StyledTextField variant="outlined" size="small" type="url"
-                        onChange={(e) => {this.state.website = (e.target.value)}}
-                        defaultValue={this.state.website}/>
+                        onChange={(e) => {this.setState({website: e.target.value})}}
+                        value={this.state.website}/>
                     <StyledTypography>Start up date</StyledTypography>
                     <StyledTextField variant="outlined" size="small" type="date" />
                     <StyledTypography>Description</StyledTypography>
                     <StyledTextField variant="outlined" size="small" multiline rows={4} 
-                        onChange={(e) => {this.state.description = (e.target.value)}}
+                        onChange={(e) => {this.setState({description: e.target.value})}}
                         defaultValue={this.state.description}/> 
                 </ThemeProvider>
                 <div class="d-flex justify-content-center">
@@ -111,7 +113,7 @@ class CompanyEditForm extends Component {
                         borderRadius: 10,
                         fontSize: 15,
                     }}
-                    onClick={onSubmit}>Submit</Button>
+                    onClick={this.onSubmit}>Submit</Button>
                 </div>
             </div>
         )
