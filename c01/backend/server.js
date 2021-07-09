@@ -44,6 +44,7 @@ app.use("/api/company",require("./route/companyRegistration"));
 app.use("/api/partner",require("./route/partnerRegistration"));
 app.use("/api/users", require("./route/userRouting"));
 
+
 // Starts the server: listens to the port
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
