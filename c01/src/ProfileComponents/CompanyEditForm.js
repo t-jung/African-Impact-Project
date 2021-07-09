@@ -104,7 +104,8 @@ class CompanyEditForm extends Component {
                         value={this.state.email}/>
                     <StyledTypography>Company phone number</StyledTypography>
                     <StyledTextField variant="outlined" size="small"  required type="tel"
-
+                        onChange={(e) => {this.setState({phone_number: e.target.value})}}
+                        value={this.state.phone_number}
                         defaultValue={123456789}/>
                     <StyledTypography>Company website</StyledTypography>
                     <StyledTextField variant="outlined" size="small" type="url"
