@@ -52,7 +52,7 @@ class CompanyEditForm extends Component {
 
         let config = {
             headers: {
-                'authentication-token-company': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb21wYW55Ijp7ImlkIjoiNjBlNjNkYTllYWQxYTEyODQwN2Q0YjBhIn0sImlhdCI6MTYyNTgwMzk3MiwiZXhwIjoxNjI1ODA3NTcyfQ.UnZffSWltg3Fb2EftFKihIAwCBrx8GqLJ-TP0jMWpP8',
+                'authentication-token-company': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb21wYW55Ijp7ImlkIjoiNjBlNjNjM2RjODNhOGUwOTE0MzRhYzYxIn0sImlhdCI6MTYyNTgwNzMzMiwiZXhwIjoxNjI1ODEwOTMyfQ.W5DSEBZtDzPqm3SFPV-3HrwpuX-9K7ve22fIwKGYDfE',
             }
         }
 
