@@ -174,7 +174,7 @@ async(req,res)=>{
         }
         var newUser = new User();
         newUser.firstName = req.body.firstName;
-        newUser.middleName = rq.body.middleName;
+        newUser.middleName = req.body.middleName;
         newUser.lastName = req.body.lastName;
         newUser.gender = req.body.gender;
         newUser.phoneNumber = req.body.phoneNumber;
