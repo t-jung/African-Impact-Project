@@ -76,3 +76,11 @@
     max-width:100vh;
     min-width:100vh;
 }
+
+.btn_admin_logout{
+    background-color: slateblue
+}
+
+.backArrowButton{
+    color: black;
+}

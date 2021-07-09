@@ -17,31 +17,29 @@ export default class Login extends Component {
     handleStateChange = (event) => {
         
         console.log("Clicked")
-
-        const {name: fieldName, value} = event.target
-
-        this.setState({
-            [fieldName]: value
-        })
         console.log(this.state)
-
-        axios.post('http://localhost5000/api/company/change_company_info/', this.state)
+        axios.post('http://localhost:5000/api/user/login', this.state)
         .then(res => console.log(res));
+        
     }
 
     onSubmit(e) {
         e.preventDefault();
+        console.log("hello")
 
+        /*
         const userInfo = {
             email:this.state.email,
             password: this.state.password,
         };
 
-        axios.post('http://localhost:5000/api/login', userInfo)
+        
+        axios.post('http://localhost:5000/api/user/login', userInfo)
             .then(res => console.log(res.data))
             .catch(e => console.log(e));
+            */
 
-    }
+    } 
 
     render(){
         return (
@@ -52,7 +50,7 @@ export default class Login extends Component {
                         <h5 class="text-center" >Sign In</h5>
                         <div class="d-flex justify-content-center">
                             <div class="d-flex justify-content-center">
-                                <form>
+                                <form onSubmit={this.onSubmit}>
                                     <div class="form-group">
                                         <label for="email"></label>
                                         <input type="email" class="form-control" id="email" placeholder="Email address" onChange={(e) => {this.setState({email: e.target.value})}}/>

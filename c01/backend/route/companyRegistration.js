@@ -64,12 +64,14 @@ async(req,res)=>{
             (companyEmailExist) =>
             companyEmailExist.email === company.email
         )
+
         if(companyEmailFromDB.length !== 0) return res.status(401).json("Company name has already been used.");
 
         let companyNameFromDB = await companyOther.filter(
             (companyNameExist) =>
             companyNameExist.name === company.name
         )
+        
         if(companyNameFromDB.length !== 0) return res.status(401).json("Company email has already been used.");
 
         // update
@@ -141,11 +143,11 @@ async(req,res)=>{
         
         // verified
         if(company.status === "unverified")
-        return res.status(400).json("Company hasn't been verified");
+        return res.status(403).json("Company hasn't been verified");
 
         // check password
         let match = await bcryptjs.compare(password,company.password);
-        if(!match) return res.status(401).json("Incorre password.");
+        if(!match) return res.status(401).json("Incorrect password.");
         
         const payload = {
             company: {
@@ -192,7 +194,7 @@ async(req,res)=>{
 
         //check password
         let match = await bcryptjs.compare(password,company.password);
-        if(!match) return res.status(401).json("Incorre password.");
+        if(!match) return res.status(401).json("Incorrect password.");
 
         const payload = {
             company: {

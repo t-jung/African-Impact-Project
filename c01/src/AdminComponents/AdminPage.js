@@ -144,7 +144,6 @@ const AdminPage = () => {
     }, [displayPendingBoard, displayPendingVerif, displayBannedUsers, displayViewUserList])
 
     return (
-        //<<<<<<< jungyeon/CSCCPROJ-83-finalizing-front-end
         <div class="admin-container">
             <div class="admin-topbar">
             <ThemeProvider theme={styles}>
@@ -152,7 +151,7 @@ const AdminPage = () => {
                     <Grid item direction="row">
                         <div class="admin-sidebyside">
                             <IconButton>
-                                <ArrowBackIcon/>
+                            <a href="/feed" className="backArrowButton"><ArrowBackIcon/></a>
                             </IconButton>
                             <Typography style={{
                                 color: styles.palette.primary.main,
@@ -165,8 +164,8 @@ const AdminPage = () => {
                     </Grid>
                     <Grid item direction="row" alignItems="center">
                         <div class="admin-sidebyside">
-                           <Avatar>C</Avatar>
-                        <a href="/" button class="btn text-uppercase">Log Out</a> 
+                        <a href="/profile"> <Avatar>C</Avatar></a>
+                        <a href="/" button class="btn btn_admin_logout text-uppercase">Log Out</a> 
                         </div>
                     </Grid>
                 </Grid>
