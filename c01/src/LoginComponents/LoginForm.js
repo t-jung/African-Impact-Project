@@ -1,6 +1,23 @@
+import axios from 'axios';
+import React, { useState } from 'react';
 import './LoginForm.css'
 
 const LoginForm = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const onSubmit = (e) => {
+
+        console.log("clicked")
+
+        const userInfo = {
+            email: email,
+            password: password
+        };
+        axios.post('http://localhost:5000/api/login', userInfo)
+        .then(res => console.log(res.data));
+    }
+
     return (
         <div class="container_login">
             <div class="mx-auto col-sm-9 col-lg-5">
@@ -9,22 +26,22 @@ const LoginForm = () => {
                     <h5 class="text-center" >Sign In</h5>
                     <div class="d-flex justify-content-center">
                         <div class="d-flex justify-content-center">
-                            <form>
+                            <form onSubmit={onSubmit}>
                                 <div class="form-group">
                                     <label for="email"></label>
-                                    <input type="email" class="form-control" id="email" placeholder="Email address" />
+                                    <input type="email" class="form-control" id="email" placeholder="Email address" onChange={e => setEmail(e.target.value)}/>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="pass"></label>
-                                    <input type="pass" class="form-control" id="pass" placeholder="Password" />
+                                    <input type="pass" class="form-control" id="pass" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
                                 </div>
                                 <div class="form-group form-check">
                                     <input type="checkbox" class="form-check-input" id="check" />
                                     <label for="check" class="form-check-label">Remember password</label>
                                 </div>
-                                <a href="/feed" class="btn btn-primary text-uppercase btn-block">sign in</a>
-                                <a href="/register" button class="btn btn-secondary text-uppercase btn-block">register</a>
+                                <button onClick={onSubmit} class="btn btn-primary text-uppercase btn-block">sign in</button>
+                                <a href="/register" button={true} class="btn btn-secondary text-uppercase btn-block">register</a>
                                 <hr />
                                 <button class="btn gbtn text-uppercase btn-block">sign in with google</button>
                                 <br />
