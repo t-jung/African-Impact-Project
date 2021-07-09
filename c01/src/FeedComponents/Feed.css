@@ -106,3 +106,21 @@ border-color: transparent;
   margin-right: 100px;
 }
 
+.btn_post_blog{
+  background: cornflowerblue;
+  margin-left: 20px;
+  margin-bottom:13px;
+}
+
+.schedule_text{
+  margin: 30px;
+}
+
+.makevisible{
+  color: black;
+}
+
+.barProfilePic{
+    height: 75px;
+    border-radius: 140px;
+}
