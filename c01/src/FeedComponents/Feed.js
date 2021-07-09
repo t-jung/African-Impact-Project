@@ -3,7 +3,8 @@ import { useState } from 'react';
 import SingleFeed from '../FeedComponents/SingleFeed.js';
 
 const user = [
-    {
+    {   
+        
         userName: "Gura",
         img: "https://media.discordapp.net/attachments/696740477533421618/860358985038299136/1624125391049.png",
     },
@@ -33,7 +34,8 @@ const feedList = [
 ]
 
 function Feed() {
-
+    let authentication = sessionStorage.getItem('token');
+    console.log(authentication);
     const [searchTerm, setSearchTerm] = useState('')
 
     const GetFeed = (props) => {

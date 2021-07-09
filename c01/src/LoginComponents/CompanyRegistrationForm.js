@@ -1,13 +1,21 @@
 import { useState } from 'react'
+import axios from 'axios'
 import './CompanyRegistrationForm.css'
 
 export const CompanyRegistrationForm = () => {
+    let authentication = sessionStorage.getItem('token');
+    console.log(authentication);
+    let config = {
+        headers: {
+            'authentication-token-company': authentication
+        }
+    }
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [number, setNumber] = useState('')
     const [pass, setPass] = useState('')
     const [confPass, setConfPass] = useState('')
-    
+    const myJSON = {name:'', email: '', phone_number: '', password: ''}
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -63,7 +71,13 @@ export const CompanyRegistrationForm = () => {
         console.log(`Company Name: ${name}`)
         console.log(`Email: ${email}`)
         console.log(`Password: ${pass}`)
-
+        myJSON.name = name;
+        myJSON.email = email;
+        myJSON.phone_number = number;
+        myJSON.password = pass;
+        console.log(config);
+        axios.post('http://localhost:5000/api/company/company_register', myJSON, config).then(res => console.log(res))
+        .catch(e => console.log(e));
         setName('')
         setEmail('')
         setPass('')
