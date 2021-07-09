@@ -5,6 +5,7 @@ const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 let Company = require("../schema/companySchema");
 const authentication = require("../middleware/companyAuthentication");
+const user_authentication = require("../middleware/userAuthentication");
 
 router.put("/change_company_password",
 authentication,
@@ -137,10 +138,14 @@ async(req,res)=>{
         // find company
         let company = await Company.findOne({name});
         if(!company) return res.status(404).json("Company has not been created yet.");
+        
+        // verified
+        if(company.status === "unverified")
+        return res.status(403).json("Company hasn't been verified");
 
         // check password
         let match = await bcryptjs.compare(password,company.password);
-        if(!match) return res.status(401).json("Incorre password.");
+        if(!match) return res.status(401).json("Incorrect password.");
         
         const payload = {
             company: {
@@ -179,12 +184,16 @@ async(req,res)=>{
     
         // find company
         let company = await Company.findOne({email});
-        if(!company) return res.status(404).json("Company has not been created yet.")
+        if(!company) return res.status(404).json("Company has not been created yet.");
+
+        // verified
+        if(company.status === "unverified")
+        return res.status(403).json("Company hasn't been verified");
 
         //check password
         let match = await bcryptjs.compare(password,company.password);
-        if(!match) return res.status(401).json("Incorre password.");
-        
+        if(!match) return res.status(401).json("Incorrect password.");
+
         const payload = {
             company: {
                 id: company._id
@@ -208,6 +217,7 @@ async(req,res)=>{
 });
 
 router.post("/company_register", 
+user_authentication,
 [
     check('name','Company name is empty.').not().isEmpty(),
     check('email','E-mail is empty.').isEmail(),
@@ -224,7 +234,7 @@ async(req,res)=>{
         // check email and name are unique
         let company = await Company.findOne({email}).select('-password');
         if(company)
-            return res.status(401).json("Company has already been created.");
+            return res.status(403).json("Company has already been created.");
         let fetchedCompanyNameFromDB = await Company.findOne({name}).select('-password');
         if(fetchedCompanyNameFromDB===name)
             return res.status(401).json("Company name has already existed.");
@@ -233,6 +243,7 @@ async(req,res)=>{
         
         let newCompany = new Company({
             name,
+            user_setup: req.user.id,
             email,
             password,
             location,

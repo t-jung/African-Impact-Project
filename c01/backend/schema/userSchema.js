@@ -25,6 +25,10 @@ const userSchema = new Schema({
         type: String,
         require: true
     },
+    profile_type:{
+      type: String,
+      default: "user"
+    },
     userPosts: [{
             title: {
                 type: String

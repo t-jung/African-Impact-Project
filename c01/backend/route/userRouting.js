@@ -124,7 +124,11 @@ async(req,res)=>{
     
         // find user by email
         let user = await User.findOne({email});
-        if(!user) return res.status(404).json("User does not exist.")
+        if(!user) return res.status(404).json("User does not exist.");
+
+        // verified
+        if(user.status === "unverified")
+        return res.status(403).json("User hasn't been verified");
 
         //check password
         let match = await bcryptjs.compare(password,user.password);
