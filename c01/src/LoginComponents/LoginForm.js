@@ -28,7 +28,8 @@ export default class Login extends Component {
             axios.post('http://localhost:5000/api/users/login', userInfo)
             .then(res => {
                 console.log(res)
-                // window.location = '/feed'
+                sessionStorage.setItem('token', res.data.token)
+                window.location = '/feed'
             })
             .catch(err => {
                 console.log(err)
@@ -47,6 +48,7 @@ export default class Login extends Component {
         } else if (this.state.userType === "Company") {
             axios.post('http://localhost:5000/api/company/login/company_email', userInfo)
             .then(res => console.log(res))
+            sessionStorage.setItem('token', res.data.token)
             .catch(err =>{
                  console.log(err)
                  console.log(err.response.data);
@@ -66,6 +68,7 @@ export default class Login extends Component {
         } else {
             axios.post('http://localhost:5000/api/login/partner_email', userInfo)
             .then(res => console.log(res))
+            sessionStorage.setItem('token', res.data.token)
             .catch(err =>{
                  console.log(err)
                  if(err.response.status === 401) {
