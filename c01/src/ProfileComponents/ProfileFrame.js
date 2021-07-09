@@ -1,18 +1,8 @@
 
 import './ProfileFrame.css'
-import React from 'react';
+import React, { Component } from 'react';
 import SingleFeed from '../FeedComponents/SingleFeed.js';
-
-const user = {
-    firstName: "User",
-    middleName: "Here",
-    lastName: "Name",
-    profilePic: "https://cdn.discordapp.com/attachments/829661320923447326/860355801931579422/unknown.png",
-    userEmail: "userName.cscc01@email.com",
-    userPhone: 123456789,
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    type: "Partner"
-}
+import axios from 'axios';
 
 const feedList = [
     {
@@ -85,9 +75,57 @@ const feedList = [
     },
 ]
 
-const ProfileFrame = ({userID}) => {
+class ProfileFrame extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            firstName: '',
+            lastName: '',
+            gender: '',
+            phoneNumber: '',
+            address: '',
+            email: '',
+            password: '',
+            status: '',
+            profile_type: '',
+            userPosts: '',
+            following: '',
+            follower: ''
+        }
+    }
+
+    componentDidMount() {
+        axios.get('http://localhost:5000/api/users/getUserById/60df09d4075e2e0ed5c56e4e')
+            .then(response=> {
+                console.log(response.data);
+                if(response.data.profile_type === 'user') {
+                    this.setState(response.data)
+                    console.log(this.state);
+                } else if (response.data.profile_type === 'company') {
+
+                } else {
+
+                }
+            })
+            .catch((err) => console.log(err))
+    }
+
+    render(){
+        return (
+            <ProfileUserFrame user={this.state}/>
+        )
+    }
+}
+
+const ProfileUserFrame = (info) => {
     // User userID to get the following details:
     var show = true;
+    console.log("Profile");
+    console.log(info);
+    const user = JSON.parse(info);
+    console.log(user)
+    console.log(user['firstName'])
     return (
         <div class="bigContainer">                   
             <div><EditButton show={show}/></div>
@@ -95,8 +133,8 @@ const ProfileFrame = ({userID}) => {
                 <div class="nameCard"><NameCard
                     userName={user.firstName + ' ' + user.middleName + ' ' + user.lastName}
                     profilePic={user.profilePic}
-                    userEmail={user.userEmail}
-                    userPhone={user.userPhone}/></div>
+                    userEmail={user.email}
+                    userPhone={user.phoneNumber}/></div>
                 <div class="align-self-center flex-grow-1">
                     <div><InfoCard info={user.description}/></div>
                 </div>
@@ -129,7 +167,7 @@ const EditButton = ({show}) => {
 }
 
 const NameCard = ({userName, userPhone, profilePic, userEmail}) => {
-
+    console.log(userName);
     return (
         <div class="nameCard">
             <div class="p-2 align-self-center">
@@ -189,13 +227,5 @@ const LessonBoard = () => {
     )
 }
 
-const CompanyMembers = () => {
-    return(
-        <div class="d-flex flex-row">
-            
-
-        </div>
-    )
-}
 
 export default ProfileFrame

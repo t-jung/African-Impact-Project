@@ -35,7 +35,7 @@ authentication,
 ],
 async(req,res)=>{
     try {
-        let{firstName, lastName, gender, phoneNumber, address, email} = req.body;
+        let{firstName,middleName, lastName, gender, phoneNumber, address, email, description} = req.body;
 
         let errors = validationResult(req);
         if(!errors.isEmpty()) return res.status(400).json({errors:errors.array()});
@@ -61,11 +61,13 @@ async(req,res)=>{
             userEmailExist.email === user.email
         )
         user.firstName = firstName.toString();
+        user.middleName = middleName.toString();
         user.lastName = lastName.toString();
         user.gender = gender.toString();
         user.phoneNumber = phoneNumber.toString();
         user.address = address.toString();
         user.email = email.toString();
+        user.description = description.toString();
         await user.save();
         res.json("Update successfully");            
     } catch (error) {
@@ -172,10 +174,12 @@ async(req,res)=>{
         }
         var newUser = new User();
         newUser.firstName = req.body.firstName;
+        newUser.middleName = req.body.middleName;
         newUser.lastName = req.body.lastName;
         newUser.gender = req.body.gender;
         newUser.phoneNumber = req.body.phoneNumber;
         newUser.address = req.body.address;
+        newUser.description = req.body.description;
         newUser.email = req.body.email;
         newUser.password = req.body.password;
         newUser.status = "verified";

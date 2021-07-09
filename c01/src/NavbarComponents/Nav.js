@@ -32,11 +32,10 @@ function Nav() {
                     {JSONDATA.filter((val) => {
                       if (searchTerm == "") {
                         return val
-                          } else if (val.first_name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                          } else if (val.first_name.toLowerCase().includes(searchTerm.toLowerCase())
+                                      || val.last_name.toLowerCase().includes(searchTerm.toLowerCase())) {
                             return val
-                          } else if (val.last_name.toLowerCase().includes(searchTerm.toLowerCase())) {
-                            return val
-                          }
+                          } 
                     }).map((val,key) => {
                       return (
                         <div class="user" key="key"></div>

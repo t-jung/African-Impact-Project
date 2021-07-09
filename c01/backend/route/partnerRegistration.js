@@ -67,7 +67,7 @@ router.put("/change_partner_password", authentication, this.passwordValidator(),
 
 router.put("/change_partner_info", authentication, this.updateProfileValidator(), async(req, res) => {
     try {
-        let{name,email,address,company,phone_number,fax,investing_area} = req.body;
+        let{name,email,address,company,phone_number,fax, description, investing_area} = req.body;
 
         let errors = validationResult(req);
         if(!errors.isEmpty()) return res.status(400).json({errors:errors.array()});
@@ -120,6 +120,7 @@ router.put("/change_partner_info", authentication, this.updateProfileValidator()
         partner.company = company.toString();
         partner.phone_number = phone_number.toString();
         partner.fax = fax.toString();
+        partner.description = description.toString();
         partner.investing_area = investing_area.toString();
         await partner.save();
         res.json("Update successfully");        
@@ -276,6 +277,7 @@ router.post("/partner_register", this.profileValidator(), user_authentication, a
             company,
             phone_number,
             fax,
+            description,
             investing_area,
             status
         });

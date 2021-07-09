@@ -69,7 +69,7 @@ class CompanyEditForm extends Component {
 
 
     componentDidMount() {
-        axios.get('http://localhost:5000/api/company/show_company_info_id/60df9e288951562fc884b3aa')
+        axios.get('http://localhost:5000/api/company/show_company_info_id/60e63c3dc83a8e091434ac61')
             .then(response => {
                 this.setState({
                     name:response.data.name,
@@ -104,7 +104,8 @@ class CompanyEditForm extends Component {
                         value={this.state.email}/>
                     <StyledTypography>Company phone number</StyledTypography>
                     <StyledTextField variant="outlined" size="small"  required type="tel"
-
+                        onChange={(e) => {this.setState({phone_number: e.target.value})}}
+                        value={this.state.phone_number}
                         defaultValue={123456789}/>
                     <StyledTypography>Company website</StyledTypography>
                     <StyledTextField variant="outlined" size="small" type="url"
