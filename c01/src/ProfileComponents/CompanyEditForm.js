@@ -39,19 +39,34 @@ const StyledTypography = (withStyles({
 }))(Typography);
 
 class CompanyEditForm extends Component {
+
+    state ={ 
+        name: '', 
+        email: '', 
+        password: '',
+        location: '',
+        industry: '',
+        website: '',
+        description: '',
+        status: 'unverified'
+    }
+
     constructor(props) {
         super(props);
-        this.state = {
-            name: '',
-            email: '',
-            password: '',
-            location: '',
-            industry: '',
-            website: '',
-            description: '',
-            status: 'unverified'
-        }
+        this.state = this.handleStateChange.bind(this)
+    }  
+
+    handleStateChange = (event) => {
+        const {name: fieldName, value} = event.target
+
+        this.setState({
+            [fieldName]: value
+        })
+        console.log(this.state)
     }
+
+
+
     componentDidMount() {
         axios.get('http://localhost:5000/api/company/show_company_info_id/60df9e288951562fc884b3aa')
             .then(response => {
@@ -67,12 +82,6 @@ class CompanyEditForm extends Component {
                 });
             })
             .catch(error => console.log("error", error))
-    }
-
-    onSubmit(e) {
-        e.preventDefault();
-        company = this.state;
-        console.log(company);
     }
 
     render () {
@@ -113,7 +122,7 @@ class CompanyEditForm extends Component {
                         borderRadius: 10,
                         fontSize: 15,
                     }}
-                    onClick={this.onSubmit}>Submit</Button>
+                    onClick={this.handleStateChange}>Submit</Button>
                 </div>
             </div>
         )
