@@ -141,11 +141,11 @@ async(req,res)=>{
         
         // verified
         if(company.status === "unverified")
-        return res.status(400).json("Company hasn't been verified");
+        return res.status(403).json("Company hasn't been verified");
 
         // check password
         let match = await bcryptjs.compare(password,company.password);
-        if(!match) return res.status(401).json("Incorre password.");
+        if(!match) return res.status(401).json("Incorrect password.");
         
         const payload = {
             company: {
@@ -192,7 +192,7 @@ async(req,res)=>{
 
         //check password
         let match = await bcryptjs.compare(password,company.password);
-        if(!match) return res.status(401).json("Incorre password.");
+        if(!match) return res.status(401).json("Incorrect password.");
 
         const payload = {
             company: {
