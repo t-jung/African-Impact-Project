@@ -8,17 +8,6 @@ import axios from 'axios';
 import styles from '../styles'
 import { Typography, Button } from '@material-ui/core';
 
-let company = {
-    name: '',
-    email: '',
-    password: '',
-    location: '',
-    industry: '',
-    website: '',
-    description: '',
-    status: 'unverified'
-}
-
 const StyledTextField = withStyles((theme) => ({
     root: {
         width: '90%',
@@ -39,19 +28,46 @@ const StyledTypography = (withStyles({
 }))(Typography);
 
 class CompanyEditForm extends Component {
+
+    state ={ 
+        name: '', 
+        email: '', 
+        password: '',
+        location: '',
+        industry: '',
+        website: '',
+        description: '',
+        status: 'unverified'
+    }
+
     constructor(props) {
         super(props);
-        this.state = {
-            name: '',
-            email: '',
-            password: '',
-            location: '',
-            industry: '',
-            website: '',
-            description: '',
-            status: 'unverified'
+        this.state = this.handleStateChange.bind(this)
+    }  
+
+    handleStateChange = (event) => {
+        console.log("Clicked")
+
+        const {name: fieldName, value} = event.target
+
+        let config = {
+            headers: {
+                'authentication-token-company': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb21wYW55Ijp7ImlkIjoiNjBlNjNkYTllYWQxYTEyODQwN2Q0YjBhIn0sImlhdCI6MTYyNTgwMzk3MiwiZXhwIjoxNjI1ODA3NTcyfQ.UnZffSWltg3Fb2EftFKihIAwCBrx8GqLJ-TP0jMWpP8',
+            }
         }
+
+        this.setState({
+            [fieldName]: value
+        })
+        console.log(this.state)
+
+        axios.put('http://localhost:5000/api/company/change_company_info/', this.state, config)
+        .then(res => console.log(res))
+        .catch(e => console.log(e));
     }
+
+
+
     componentDidMount() {
         axios.get('http://localhost:5000/api/company/show_company_info_id/60df9e288951562fc884b3aa')
             .then(response => {
@@ -67,12 +83,6 @@ class CompanyEditForm extends Component {
                 });
             })
             .catch(error => console.log("error", error))
-    }
-
-    onSubmit(e) {
-        e.preventDefault();
-        company = this.state;
-        console.log(company);
     }
 
     render () {
@@ -113,7 +123,7 @@ class CompanyEditForm extends Component {
                         borderRadius: 10,
                         fontSize: 15,
                     }}
-                    onClick={this.onSubmit}>Submit</Button>
+                    onClick={this.handleStateChange}>Submit</Button>
                 </div>
             </div>
         )
