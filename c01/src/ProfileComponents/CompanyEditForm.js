@@ -8,17 +8,6 @@ import axios from 'axios';
 import styles from '../styles'
 import { Typography, Button } from '@material-ui/core';
 
-let company = {
-    name: '',
-    email: '',
-    password: '',
-    location: '',
-    industry: '',
-    website: '',
-    description: '',
-    status: 'unverified'
-}
-
 const StyledTextField = withStyles((theme) => ({
     root: {
         width: '90%',
@@ -57,12 +46,24 @@ class CompanyEditForm extends Component {
     }  
 
     handleStateChange = (event) => {
+        console.log("Clicked")
+
         const {name: fieldName, value} = event.target
+
+        let config = {
+            headers: {
+                'authentication-token-company': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb21wYW55Ijp7ImlkIjoiNjBlNjNkYTllYWQxYTEyODQwN2Q0YjBhIn0sImlhdCI6MTYyNTgwMzk3MiwiZXhwIjoxNjI1ODA3NTcyfQ.UnZffSWltg3Fb2EftFKihIAwCBrx8GqLJ-TP0jMWpP8',
+            }
+        }
 
         this.setState({
             [fieldName]: value
         })
         console.log(this.state)
+
+        axios.put('http://localhost:5000/api/company/change_company_info/', this.state, config)
+        .then(res => console.log(res))
+        .catch(e => console.log(e));
     }
 
 
