@@ -92,7 +92,7 @@ async(req,res)=>{
     try {
         let companyID = req.params.company_id;
         let company = await Company.findById(companyID).select('-password');
-        res.json(company);       
+        return res.json(company);       
     } catch (error) {
         console.error(error);
         return res.status(500).json("Server error.");
@@ -104,7 +104,7 @@ async(req,res)=>{
     try {
         let name = req.params.company_name;
         let company = await Company.findOne({name:name}).select('-password');
-        res.json(company);
+        return res.json(company);
     } catch (error) {
         console.error(error);
         return res.status(500).json("Server error.");
