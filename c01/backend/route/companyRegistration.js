@@ -64,12 +64,14 @@ async(req,res)=>{
             (companyEmailExist) =>
             companyEmailExist.email === company.email
         )
+
         if(companyEmailFromDB.length !== 0) return res.status(401).json("Company name has already been used.");
 
         let companyNameFromDB = await companyOther.filter(
             (companyNameExist) =>
             companyNameExist.name === company.name
         )
+        
         if(companyNameFromDB.length !== 0) return res.status(401).json("Company email has already been used.");
 
         // update
