@@ -4,6 +4,15 @@ import React from 'react';
 
 const PartnerRegistrationForm = () => {
 
+    const types = [
+        'Agriculture',
+        'Automotive Products & Services',
+        'Aviation',
+        'Biotechnology & Life Sciences',
+        'Building Services & Products',
+        'Education & Training',
+    ]
+
     return (
         <div class="container">
             Investor and Service Provider Form are the same (just changing some title)
