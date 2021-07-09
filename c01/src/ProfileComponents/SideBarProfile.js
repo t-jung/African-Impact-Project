@@ -23,7 +23,7 @@ const user = {
     userMeail: "userName.cscc01@email.com",
     userPhone: 123456789,
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    type: "User"
+    type: "Company"
 }
 
 const drawerWidth = 320;
@@ -249,7 +249,7 @@ const SideBarProfile = (props) => {
         </div>
         <div class="profileEdit_formContainer">
             {profile === true ? 
-                (user.type === "User" ? <EditForm user={user}/> : (user.type === "Company" ? <CompanyEditForm user={user}/> : null))
+                (user.type === "User" ? <EditForm user={user}/> : (user.type === "Company" ? <CompanyEditForm id='60df98e767241827e07e5c46' user={user}/> : null))
                 : null}
             {setting === true ? <Setting/> : null}
             {employee === true ? <CompanyEmployee/> : null}
