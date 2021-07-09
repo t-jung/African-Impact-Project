@@ -123,15 +123,13 @@ const ProfileUserFrame = (info) => {
     var show = true;
     console.log("Profile");
     console.log(info);
-    const user = JSON.parse(info);
-    console.log(user)
-    console.log(user['firstName'])
+    const user = info.user;
     return (
         <div class="bigContainer">                   
             <div><EditButton show={show}/></div>
             <div class="topContainer">
                 <div class="nameCard"><NameCard
-                    userName={user.firstName + ' ' + user.middleName + ' ' + user.lastName}
+                    userName={user.firstName + user.lastName}
                     profilePic={user.profilePic}
                     userEmail={user.email}
                     userPhone={user.phoneNumber}/></div>
