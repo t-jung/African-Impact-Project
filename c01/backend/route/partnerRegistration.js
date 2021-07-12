@@ -250,7 +250,7 @@ router.post("/login/partner_email", this.loginByEmailValidator(), async(req,res)
 router.post("/partner_register",user_authentication, this.profileValidator(),  async(req,res) => {
     try {
         
-        let{name,email,password,address,phone_number,fax,investing_area} = req.body;
+        let{name,email,password,address,phone_number,fax,description, investing_area} = req.body;
         let errors = validationResult(req);
         if(!errors.isEmpty()){
             return res.status(400).json({errors: errors.array()});
