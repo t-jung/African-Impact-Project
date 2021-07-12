@@ -2,20 +2,21 @@ import { useState } from 'react'
 import axios from 'axios'
 import './CompanyRegistrationForm.css'
 
-export const CompanyRegistrationForm = () => {
-    let authentication = sessionStorage.getItem('token');
-    console.log(authentication);
-    
+export const CompanyRegistrationForm = () => {    
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [number, setNumber] = useState('')
     const [pass, setPass] = useState('')
     const [confPass, setConfPass] = useState('')
-    const myJSON = {name:'', email: '', phone_number: '', password: ''}
+    const [location, setLocation] = useState('')
+    const [industry, setIndustry] = useState('')
+    const [website, setWebsite] = useState('')
+    const [description, setDescription] = useState('')
+    const myJSON = {name:'', email: '', phone_number: '', password: '', location: '', industry: '', website: '', description: ''}
 
     const onSubmit = (e) => {
         e.preventDefault()
-        
+        let authentication = sessionStorage.getItem('token');
         if(!name) {
             alert('A company name is required.')
             setName('')
@@ -71,6 +72,10 @@ export const CompanyRegistrationForm = () => {
         myJSON.email = email;
         myJSON.phone_number = number;
         myJSON.password = pass;
+        myJSON.location = location;
+        myJSON.industry = industry;
+        myJSON.website = website;
+        myJSON.description =description;
         let config = {
             headers: {
                 'authentication-token-user': authentication
@@ -84,6 +89,10 @@ export const CompanyRegistrationForm = () => {
         setPass('')
         setConfPass('')
         setNumber('')
+        setLocation('')
+        setIndustry('')
+        setWebsite('')
+        setDescription('')
 
         // TODO: After submission it should bring you to a different page.
     }
@@ -168,11 +177,13 @@ export const CompanyRegistrationForm = () => {
                             <p>These fields are optional.</p>
                             <div className='form-group'>
                                 <label class='description'>Location</label>
-                                <input type='text' class="form-control" placeholder='Where is your company based?' />
+                                <input type='text' class="form-control" placeholder='Where is your company based?' value={location}
+                                    onChange={(e) => setLocation(e.target.value)} />
                             </div>
                             <div className='form-group'>
                                 <label class='description'>Industry</label>
-                                <input type='text' class="form-control" placeholder='Whats industry is your company a part of?' />
+                                <input type='text' class="form-control" placeholder='Whats industry is your company a part of?' value={industry}
+                                    onChange={(e) => setIndustry(e.target.value)} />
                             </div>
                             <div className='form-group'>
                                 <label class='description'>Start up date</label>
@@ -180,11 +191,13 @@ export const CompanyRegistrationForm = () => {
                             </div>
                             <div className='form-group'>
                                 <label class='description'>Company Website</label>
-                                <input type='text' class="form-control" placeholder='Got a link to your companies website?' />
+                                <input type='text' class="form-control" placeholder='Got a link to your companies website?' value={website}
+                                    onChange={(e) => setWebsite(e.target.value)}/>
                             </div>
                             <div className='form-group'>
                                 <label class='description'>Company Description</label>   
-                                <textarea className="form-control multiText" placeholder='Tell us a little about your company.'/>
+                                <textarea className="form-control multiText" placeholder='Tell us a little about your company.' value={description}
+                                    onChange={(e) => setDescription(e.target.value)}/>
                             </div> 
                             
                         </div>
