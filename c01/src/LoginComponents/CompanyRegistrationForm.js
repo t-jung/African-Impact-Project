@@ -5,11 +5,7 @@ import './CompanyRegistrationForm.css'
 export const CompanyRegistrationForm = () => {
     let authentication = sessionStorage.getItem('token');
     console.log(authentication);
-    let config = {
-        headers: {
-            'authentication-token-company': authentication
-        }
-    }
+    
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [number, setNumber] = useState('')
@@ -75,6 +71,11 @@ export const CompanyRegistrationForm = () => {
         myJSON.email = email;
         myJSON.phone_number = number;
         myJSON.password = pass;
+        let config = {
+            headers: {
+                'authentication-token-user': authentication
+            }
+        }
         console.log(config);
         axios.post('http://localhost:5000/api/company/company_register', myJSON, config).then(res => console.log(res))
         .catch(e => console.log(e));
@@ -138,7 +139,7 @@ export const CompanyRegistrationForm = () => {
                             <div class="form-group">
                             <label class='description'>Password</label>
                                 <input
-                                    type="pass"
+                                    type="password"
                                     class="form-control"
                                     id="pass"
                                     placeholder="Password"
@@ -150,7 +151,7 @@ export const CompanyRegistrationForm = () => {
                             <div class="form-group">
                             <label class='description'>Confirm Password</label>
                                 <input
-                                    type="pass"
+                                    type="password"
                                     class="form-control"
                                     id="pass"
                                     placeholder="Confirm your Password"

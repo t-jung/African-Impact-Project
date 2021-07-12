@@ -58,6 +58,9 @@ function Nav() {
             <Link class="nav_padding" style={navStyle} to='/AdminPage'>
             <li> Adminpage</li>
             </Link>
+            <Link class="nav_padding" style={navStyle} to='/Profile_Edit'>
+            <li> Edit Profile</li>
+            </Link>
         </ul>
     </nav>
   );

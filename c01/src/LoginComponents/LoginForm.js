@@ -123,7 +123,7 @@ export default class Login extends Component {
     
                                     <div class="form-group">
                                         <label for="pass"></label>
-                                        <input type="pass" class="form-control" id="pass" placeholder="Password" onChange={(e) => {this.setState({password: e.target.value})}}/>
+                                        <input type="password" class="form-control" id="pass" placeholder="Password" onChange={(e) => {this.setState({password: e.target.value})}}/>
                                     </div>
                                     <div class="form-group form-check">
                                         <input type="checkbox" class="form-check-input" id="check" />

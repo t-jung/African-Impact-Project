@@ -28,7 +28,7 @@ const StyledTypography = (withStyles({
 }))(Typography);
 
 class CompanyEditForm extends Component {
-
+    
     state ={ 
         name: '', 
         email: '', 
@@ -47,12 +47,12 @@ class CompanyEditForm extends Component {
 
     handleStateChange = (event) => {
         console.log("Clicked")
-
+        let authentication = sessionStorage.getItem('token');
         const {name: fieldName, value} = event.target
 
         let config = {
             headers: {
-                'authentication-token-company': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb21wYW55Ijp7ImlkIjoiNjBlNjNjM2RjODNhOGUwOTE0MzRhYzYxIn0sImlhdCI6MTYyNTgwNzMzMiwiZXhwIjoxNjI1ODEwOTMyfQ.W5DSEBZtDzPqm3SFPV-3HrwpuX-9K7ve22fIwKGYDfE',
+                'authentication-token-company': authentication,
             }
         }
 
