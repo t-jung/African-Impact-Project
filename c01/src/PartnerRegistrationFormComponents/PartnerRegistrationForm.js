@@ -66,10 +66,6 @@ export const PartnerRegistrationForm = () =>{
             return
         }
 
-        console.log('Successful investor Registration.')        
-        console.log(`Company Name: ${name}`)
-        console.log(`Email: ${email}`)
-        console.log(`Password: ${pass}`)
         myJSON.name = name;
         myJSON.email = email;
         myJSON.address = address;
