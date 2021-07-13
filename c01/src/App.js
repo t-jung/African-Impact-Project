@@ -13,12 +13,19 @@ import NewVideo from './CourseUploadComponents/NewUpload/NewUploadComponent'
 import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 function App() {
   return (
+
+
     <Router>
     <div className="App">
-    <Nav/>
+    
+     
+
+      { /* https://medium.com/@mcurena24/add-direct-messaging-to-your-app-using-react-redux-socket-io-4953ad53944d THIS SEEMS USEFUL */}
+      <Route path={/\(?^.{2,}$\d{3}\/(?!register)\)/} component={ Nav } />
       <Switch>
         <Route path="/" exact component={LoginForm} />
         <Route path="/register" component={RegisterForm} />
@@ -37,14 +44,3 @@ function App() {
 }
 
 export default App;
-
-/*
-      <LoginForm /><br/><br/><br/><br/>
-      <CompanyForm /><br/><br/><br/><br/>
-      <RegisterForm /><br/><br/><br/><br/>
-      <ProfileFrame /> <br/><br/><br/><br/>
-      <ProfileEditForm /> <br/><br/><br/><br/>
-      <AdminPage /> <br/><br/><br/><br/>
-      <PartnerRegistrationForm/> <br/><br/><br/><br/>
-
-*/
