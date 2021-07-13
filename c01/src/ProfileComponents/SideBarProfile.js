@@ -7,6 +7,7 @@ import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import EditForm from './ProfileEditForm';
+import CompanyCourses from '../CourseUploadComponents/CourseUploadComponent'
 
 import theme from '../styles';
 
@@ -230,6 +231,7 @@ const SideBarProfile = (props) => {
                             <div class="barContainer sidebarContainer">
                                 <img class="barProfilePic"
                                     src={user.profilePic}
+                                    alt={user.firstName}
                                 />
                                 <Button
                                     component={Link}
@@ -253,6 +255,7 @@ const SideBarProfile = (props) => {
                 : null}
             {setting === true ? <Setting/> : null}
             {employee === true ? <CompanyEmployee/> : null}
+            {workshop === true ? <CompanyCourses/> : null}
         </div>
     </div>
     );

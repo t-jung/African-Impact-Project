@@ -171,6 +171,7 @@ const NameCard = ({userName, userPhone, profilePic, userEmail}) => {
             <div class="p-2 align-self-center">
                 <img class="profilePicture"
                     src={profilePic}
+                    alt={userName}
             />
             </div>
             <div class="p-2 align-self-center">

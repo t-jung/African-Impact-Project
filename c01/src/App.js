@@ -8,6 +8,7 @@ import CompanyForm from './LoginComponents/CompanyRegistrationForm'
 import ProfileEditForm from './ProfileComponents/SideBarProfile'
 import Nav from './NavbarComponents/Nav'
 import Feed from './FeedComponents/Feed';
+import NewVideo from './CourseUploadComponents/NewUpload/NewUploadComponent'
 // import Messenger from './MessengerComponents/Messenger'
 import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
@@ -27,6 +28,7 @@ function App() {
         <Route path="/adminpage" component={AdminPage} />
         <Route path="/partner_register" component={PartnerRegistrationForm} />
         <Route path="/company_register" component={CompanyForm} />
+        <Route path="/new_upload_video" component={NewVideo}/>
       </Switch>
     </div>
 
