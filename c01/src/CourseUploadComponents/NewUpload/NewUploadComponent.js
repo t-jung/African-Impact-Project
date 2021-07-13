@@ -32,7 +32,7 @@ const NewCourseForm = (props) => {
     const [videoLink, setLink] = React.useState('no link');
 
     const handleChange = (event) => {
-      setChecked(event.target.checked);
+      setChecked(!checked);
     };
 
     function handSubmit(event) {
@@ -91,15 +91,6 @@ class NewUpload extends Component {
         this.state = this.handleStateChange.bind(this)
     }
 
-    componentDidMount() {
-        this.setState({
-            videoTitle: 'hi',
-            videoLink: '',
-            isAssignment: false,
-            tags: []
-        })
-    }
-
     handleSetState = (e) => {
         console.log(e.target.value);
         console.log(this.state.videoTitle);
@@ -107,8 +98,14 @@ class NewUpload extends Component {
         console.log(this.state.videoTitle);
     }
 
-    handleStateChange = (state) => {
-        this.setState(state);
+    handleStateChange = (data) => {
+        console.log(data);
+        this.setState({
+            videoTitle: data.videoTitle,
+            videoLink: data.videoLink,
+            isAssignment: data.isAssignment,
+            tags: data.tags
+        }, () => {console.log("current: "); console.log(this.state);});
 
         let config = {
             headers: {
