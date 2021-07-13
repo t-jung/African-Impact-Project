@@ -12,9 +12,6 @@ import NewVideo from './CourseUploadComponents/NewUpload/NewUploadComponent'
 // import Messenger from './MessengerComponents/Messenger'
 import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-
 function App() {
   return (
 
