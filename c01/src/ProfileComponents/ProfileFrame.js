@@ -27,20 +27,7 @@ export default class ProfileFrame extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            firstName: '',
-            lastName: '',
-            gender: '',
-            phoneNumber: '',
-            address: '',
-            email: '',
-            password: '',
-            status: '',
-            profile_type: '',
-            userPosts: [],
-            following: '',
-            follower: ''
-        }
+        this.state = 0
     }
 
     componentDidMount() {
@@ -55,14 +42,14 @@ export default class ProfileFrame extends Component {
                 
         } else if (type === 'Company') {
             console.log("Is company")
-            axios.get('http://localhost:5000/api/company/show_company_id/' + jwt_decode(token).company.id)
+            axios.get('http://localhost:5000/api/company/show_company_info_id/' + jwt_decode(token).company.id)
                 .then(response=> {
                     console.log(response.data);
                     this.setState(response.data)
                 })
                 .catch((err) => console.log(err))
         } else {
-            axios.get('http://localhost:5000/api/partner/show_partner_id/' + jwt_decode(token).partner.id)
+            axios.get('http://localhost:5000/api/partner/show_partner_info_id/' + jwt_decode(token).partner.id)
             .then(response=> {
                 console.log(response.data);
                 this.setState(response.data)
@@ -83,23 +70,28 @@ export default class ProfileFrame extends Component {
 const ProfileUserFrame = (info) => {
     // User userID to get the following details:
     console.log("Profile");
-    console.log(info);
-    let user = type === 'User' ? info.user : (type === 'Company' ? info.company : info.partner)
+    console.log(info.user);
+        
     let name = ''
     let profilePic = ''
     let email = ''
     let phone = ''
     let description = ''
-    if(type === 'User') {
-        name = user.firstName + ' ' + user.lastName
-        profilePic = user.profilePic
-        email = user.email
-        phone = user.phoneNumber
-    } else {
-        name =user.name
-        email = user.email
-        phone = user.phone_number
-    } 
+    
+    if(info === 0) {
+        let user = info.user
+        if(type === 'User') {
+            name = user.firstName + ' ' + user.lastName
+            profilePic = user.profilePic
+            email = user.email
+            phone = user.phoneNumber
+        } else {
+            name =user.name
+            email = user.email
+            phone = user.phone_number
+        } 
+    }
+
     var show = true;
 
     return (
@@ -121,9 +113,9 @@ const ProfileUserFrame = (info) => {
                 </div>
                 <div class="postBoard">
                     <h2>Posts:</h2>
-                    <PostBoard feedList={user.userPosts}
-                        userName={user.firstName  + ' ' + user.lastName}
-                        profilePic={user.profilePic}/>
+                    <PostBoard feedList={info.userPosts}
+                        userName=" "
+                        profilePic={info.profilePic}/>
                 </div>
                 
             </div>
@@ -178,7 +170,11 @@ const InfoCard = ({info}) => {
 
 
 const PostBoard = (props) => {
-
+    if(typeof props.feedList === 'undefined') {
+        return(
+            <div></div>
+        )
+    }
     let feeds = props.feedList.map(item => {
         const feed = 
             {
