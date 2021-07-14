@@ -22,24 +22,7 @@ let CompanySchema = mongoose.Schema({
     },
     tags:
         [{type: String
-        }],
-    
-    comments: [{
-        /* ObjectId represents the commenter. */
-        commenter: {
-            type: String,
-            required: true
-        },
-        text: {
-            type: String,
-            required: true,
-            default: "Default Comment Text."
-        },
-        date: {
-            type: Date,
-            default: Date.now
-        }
-    }]
+        }]
 
 })
 
