@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-let CompanySchema = mongoose.Schema({
+let videoSchema = mongoose.Schema({
     link:{
         type: String,
         require: true

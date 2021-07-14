@@ -9,7 +9,7 @@ async(req,res)=>{
         let{description} = req.body;
 
         // find video
-        let video = await Video.findOne(req.video.id);
+        let video = await Video.findById(req.params.id);
         if(!video) return res.status(404).json("Video does not exist in DB.")
 
         video.description = description.toString();
@@ -27,7 +27,7 @@ async(req,res)=>{
         let{tags} = req.body;
 
         // find video
-        let video = await Video.findOne(req.video.id);
+        let video = await Video.findById(req.params.id);
         if(!video) return res.status(404).json("Video does not exist in DB.")
 
         video.tags = tags.toString();
@@ -43,7 +43,7 @@ router.put("/likeVideo/:id",
 async(req,res)=> {
     try {
         // find video
-        let video = await Video.findOne(req.video.id);
+        let video = await Video.findById(req.params.id);
         if(!video) return res.status(404).json("Video does not exist in DB.")
 
         video.likes = video.likes + 1;
