@@ -15,6 +15,8 @@ import CompanyEmployee from './CompanyEmployee.js';
 import CompanyEditForm from './CompanyEditForm.js';
 import Setting from './Setting.js'
 
+let userType = sessionStorage.getItem('type')
+
 // from database
 const user = {
     firstName: "User",
@@ -151,7 +153,7 @@ const SideBarProfile = (props) => {
                             Setting
                         </Typography>
                 </Button>
-                {(user.type !== "User") ? <CompanySideBarElements/> : <RegisterAccountElements/>}
+                {(userType !== "User") ? <CompanySideBarElements/> : <RegisterAccountElements/>}
             </div>
         )
     };
@@ -217,7 +219,7 @@ const SideBarProfile = (props) => {
         );
     }
 
-    
+    console.log(userType)
 
     return (
         <div class="profileEdit_container">
@@ -251,7 +253,7 @@ const SideBarProfile = (props) => {
         </div>
         <div class="profileEdit_formContainer">
             {profile === true ? 
-                (user.type === "User" ? <EditForm user={user}/> : (user.type === "Company" ? <CompanyEditForm id='60df98e767241827e07e5c46' user={user}/> : null))
+                (userType === "User" ? <EditForm user={user}/> : (userType === "Company" ? <CompanyEditForm id='60df98e767241827e07e5c46' user={user}/> : null))
                 : null}
             {setting === true ? <Setting/> : null}
             {employee === true ? <CompanyEmployee/> : null}

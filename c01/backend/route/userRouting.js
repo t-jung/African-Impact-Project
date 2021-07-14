@@ -60,6 +60,9 @@ async(req,res)=>{
             (userEmailExist) =>
             userEmailExist.email === user.email
         )
+
+        if(userEmailFromDB.length !== 0) return res.status(401).json("User email has already been used.");
+
         user.firstName = firstName.toString();
         user.middleName = middleName.toString();
         user.lastName = lastName.toString();

@@ -1,14 +1,9 @@
 import './Feed.css';
 import { useState } from 'react';
 import SingleFeed from '../FeedComponents/SingleFeed.js';
+import jwt_decode from "jwt-decode";
 
-const user = [
-    {   
-        
-        userName: "Gura",
-        img: "https://media.discordapp.net/attachments/696740477533421618/860358985038299136/1624125391049.png",
-    },
-];
+let userToken = sessionStorage.getItem('token');
 
 const feedList = [
     {
@@ -37,6 +32,8 @@ function Feed() {
     let authentication = sessionStorage.getItem('token');
     console.log(authentication);
     const [searchTerm, setSearchTerm] = useState('')
+    let data = sessionStorage.getItem('token');
+    console.log(data);
 
     const GetFeed = (props) => {
         let feed = props.feed;

@@ -91,6 +91,7 @@
 }
 
 .postBoard{
+    width: 100vw;
     margin-right: 1%;
     margin-left: 5%;
 }

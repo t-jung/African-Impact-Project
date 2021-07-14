@@ -8,6 +8,10 @@ import axios from 'axios';
 import styles from '../styles'
 import { Typography, Button } from '@material-ui/core';
 
+import jwt_decode from "jwt-decode";
+
+let token = sessionStorage.getItem('token')
+
 const StyledTextField = withStyles((theme) => ({
     root: {
         width: '90%',
@@ -69,7 +73,8 @@ class CompanyEditForm extends Component {
 
 
     componentDidMount() {
-        axios.get('http://localhost:5000/api/company/show_company_info_id/60e63c3dc83a8e091434ac61')
+        console.log(jwt_decode(token));
+        axios.get('http://localhost:5000/api/company/show_company_info_id/')
             .then(response => {
                 this.setState({
                     name:response.data.name,

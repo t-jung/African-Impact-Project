@@ -1,5 +1,10 @@
 import axios from 'axios';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import React, { Component } from 'react';
+
+import jwt_decode from "jwt-decode";
 
 import './LoginForm.css'
 
@@ -7,7 +12,8 @@ export default class Login extends Component {
 
     state = {
         email: '',
-        password: ''
+        password: '',
+        userType: 'User'
     }
 
     constructor(props) {
@@ -16,8 +22,6 @@ export default class Login extends Component {
     }  
 
     handleStateChange = (event) => {
-        
-        console.log("Clicked")
         console.log(this.state)
         const userInfo = {
             email: this.state.email,
@@ -26,8 +30,8 @@ export default class Login extends Component {
         if(this.state.userType === "User") {
             axios.post('http://localhost:5000/api/users/login', userInfo)
             .then(res => {
-                console.log(res)
                 sessionStorage.setItem('token', res.data.token)
+                sessionStorage.setItem('type', 'User')
                 window.location = '/feed'
             })
             .catch(err => {
@@ -49,6 +53,7 @@ export default class Login extends Component {
             .then(res => {
                 console.log(res)
             sessionStorage.setItem('token', res.data.token)
+            sessionStorage.setItem('type', 'Company')
             window.location = '/feed'
         }
             )
@@ -72,6 +77,7 @@ export default class Login extends Component {
             axios.post('http://localhost:5000/api/login/partner_email', userInfo)
             .then(res => { console.log(res)
             sessionStorage.setItem('token', res.data.token)
+            sessionStorage.setItem('type', 'Partner')
                 window.location("feed");
             })
             .catch(err =>{
@@ -120,6 +126,15 @@ export default class Login extends Component {
                         <div class="d-flex justify-content-center">
                             <div class="d-flex justify-content-center">
                                 <form onSubmit={this.onSubmit}>
+                                <InputLabel>User type</InputLabel>
+                                    <Select
+                                        autoWidth={true}
+                                        value={this.state.userType}
+                                        onChange={(e) => {this.setState({userType: e.target.value})}}>
+                                            <MenuItem value="User">User</MenuItem>
+                                            <MenuItem value="Company">Company</MenuItem>
+                                            <MenuItem value="Partner">Parnter</MenuItem>
+                                        </Select>
                                     <div class="form-group">
                                         <label for="email"></label>
                                         <input type="email" class="form-control" id="email" placeholder="Email address" onChange={(e) => {this.setState({email: e.target.value})}}/>

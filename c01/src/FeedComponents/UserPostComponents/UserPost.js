@@ -18,6 +18,7 @@ import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: '100%',
+    minWidth: '100%'
   },
   media: {
     height: 0,
@@ -51,6 +52,7 @@ const CommentList = (props) => {
 const SingleComment = (props) => {
     const classes = useStyles();
     let comment = props.comment;
+    console.log(comment)
     if(comment !== null) {
         return(
             <Card className={classes.root}>
@@ -104,7 +106,7 @@ export default function UserPost(props) {
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar} src={feed.img}>
-            R
+            {feed.userName[0]}
           </Avatar>
         }
         action={

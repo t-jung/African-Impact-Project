@@ -1,56 +1,124 @@
 import './ProfileFrame.css'
-import React, { useState } from 'react';
+import React, { useState, Component, useEffect } from 'react';
 import styles from '../styles.js';
 import { Typography } from '@material-ui/core';
+import jwt_decode from "jwt-decode";
+import axios from 'axios';
 
-const EditForm = (props) => {
-    const user = props.user;
+let token = sessionStorage.getItem('token');
 
-    const [firstName, setFirstName] = useState(user.firstName);
-    const [middleName, setMiddleName] = useState(user.middleName);
-    const [lastName, setLastName] = useState(user.lastName);
-    const [email, setEmail] = useState(user.serEmail);
-    const [confirmEmail, setConfirmEmail] = useState(user.serEmail);
-    const [phone, setPhone] = useState(user.userPhone);
-    const [description, setDescription] = useState(user.description);
+class EditForm extends Component {
+
+    state = {
+        firstName: '',
+        middleName: '',
+        lastName: '',
+        phoneNumber: '',
+        email: '',
+        description: ''
+    }
+
+    constructor(props) {
+        super(props)
+        this.state = this.handleStateChange.bind(this)
+    }
+
+    handleSetState = (e) => {
+        console.log(this.state);
+    }
+
+    handleStateChange = (data) => {
+        console.log(data);
+        this.setState({
+            firstName: data.firstName,
+            middleName: data.middleName,
+            lastName: data.lastName,
+            phoneNumber: data.phoneNumber,
+            email: data.email,
+            description: data.description
+        }, () => {
+            console.log(this.state)
+            console.log(token);
+            let config = {
+                headers: {
+                    'authentication-token-user': token,
+                }
+            }
+
+            axios.put('http://localhost:5000/api/users/updateInfo', this.state, config)
+                .then(res => console.log(res))
+                .catch(e => console.log(e));
+        });
+    }
+
+    componentDidMount() {
+        axios.get('http://localhost:5000/api/users/getUserById/' + jwt_decode(token).user.id)
+            .then(response => {
+                console.log(response.data)
+                this.setState(response.data)
+            })
+            .catch((err) => console.log(err))
+    }
+
+    render() {
+        return(
+            <Form handle={this.handleStateChange} state={this.state}/>
+        )
+    }
+}
+
+const Form = (props) => {
+
+    const [firstName, setFirstName] = useState('');
+    useEffect(() => {setFirstName(props.state.firstName)}, [props.state.firstName])
+
+    const [middleName, setMiddleName] = useState('');
+    useEffect(() => {setMiddleName(props.state.middleName)}, [props.state.middleName])
+
+    const [lastName, setLastName] = useState('');
+    useEffect(() => {setLastName(props.state.lastName)}, [props.state.lastName])
+
+    const [phone, setPhone] = useState('');
+    useEffect(() => {setPhone(props.state.phoneNumber)}, [props.state.phoneNumber])
+
+    const [description, setDescription] = useState('');
+    useEffect(() => {setDescription(props.state.description)}, [props.state.description])
 
     const onSubmit = (e) => {
         e.preventDefault()
         
-        if(!firstName) {
+        if(firstName === '') {
             alert('A first name is required.')
-            setFirstName('')
             return
         }
 
-        if(!lastName) {
+        if(lastName === '') {
             alert('A last name is required.')
-            setLastName('')
             return
         }
         
-        
-        if(!email) {
-            alert('An email is required.')
-            setEmail('')
+
+        if(phone === '') {
+            alert('A phone number is required for registration.')
             return
         }
 
-        if(!phone) {
-            alert('A company phone number is required for registration.')
-            setPhone('')
-            return
-        }
-
-        if(email !== confirmEmail) {
-            alert('Confirmation email and email don\'t match')
-            setConfirmEmail('');
-            return
-        }
 
         console.log('Successful.')        
         console.log(`Name: ${firstName}`)
-        console.log(`Email: ${email}`)
+
+        let data = {
+            firstName: firstName,
+            middleName: middleName,
+            lastName: lastName,
+            phoneNumber: phone,
+            email: props.state.email,
+            description: description
+        }
+
+        console.log(data)
+
+        props.handle(data);
     }
 
     return(
@@ -60,7 +128,7 @@ const EditForm = (props) => {
                     fontWeight: 900,
                     fontSize: 30,
                 }}>
-            Editing {user.type} Profile Information:
+            Editing User Profile Information:
          </Typography><br/>
         <form>
             <div class="d-flex inputContainer">
@@ -69,7 +137,7 @@ const EditForm = (props) => {
                     id="fNameID"
                     class="form-control"
                     placeholder="Edit first name"
-                    defaultValue={user.firstName}
+                    value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}/>
             </div>
             <div class="d-flex inputContainer">
@@ -78,7 +146,7 @@ const EditForm = (props) => {
                     id="mNameID"
                     class="form-control"
                     placeholder="Edit middle name"
-                    defaultValue={user.middleName}
+                    value={middleName}
                     onChange={(e) => setMiddleName(e.target.value)}/>
             </div>
             <div class="d-flex inputContainer">
@@ -87,33 +155,17 @@ const EditForm = (props) => {
                     id="lNameID"
                     class="form-control"
                     placeholder="Edit last name"
-                    defaultValue={user.lastName}
+                    value={lastName}
                     onChange={(e) => setLastName(e.target.value)}/>
             </div>
-            <div class="d-flex inputContainer">
-                <label class="title  align-self-center" for="email">Email: </label>
-                <input type="text"
-                    id="emailID"
-                    class="form-control"
-                    placeholder="Edit email"
-                    defaultValue={user.serEmail}
-                    onChange={(e) => setEmail(e.target.value)}/>
-            </div>
-            <div class="d-flex inputContainer">
-                <label class="title  align-self-center" for="email">Confirm email: </label>
-                <input type="text"
-                    id="emailID"
-                    class="form-control"
-                    placeholder="Confirm email"
-                    onChange={(e) => setConfirmEmail(e.target.value)}/>
-            </div>
+
             <div class="d-flex inputContainer">
                 <label class="title  align-self-center" for="phone">Phone number: </label>
                 <input type="number"
                     id="phoneID"
                     class="form-control"
                     placeholder="Phone number"
-                    defaultValue={user.userPhone}
+                    value={phone}
                     onChange={(e) => setPhone(e.target.value)}/>
             </div>
             <div class="d-flex inputContainer">
@@ -122,7 +174,7 @@ const EditForm = (props) => {
                     rows={4}
                     class="form-control multiText"
                     name="body"
-                    defaultValue={user.description}
+                    value={description}
                     onChange={(e) => setDescription(e.target.value)}/>
             </div>
             <div class="d-flex justify-content-center">
