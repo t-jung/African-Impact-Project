@@ -1,0 +1,13 @@
+.sidebarRow{
+    display: flex;
+    align-items: center;
+    font-size:20px;
+    font-weight: 700;
+    margin-left:50px;
+}
+
+.sidebarRow:hover {
+    background-color: lightgrey;
+    cursor:pointer;
+}
+
