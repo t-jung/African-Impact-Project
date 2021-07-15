@@ -69,7 +69,6 @@ async(req,res)=>{
         user.gender = gender.toString();
         user.phoneNumber = phoneNumber.toString();
         user.address = address.toString();
-        user.email = email.toString();
         user.description = description.toString();
         await user.save();
         res.json("Update successfully");            

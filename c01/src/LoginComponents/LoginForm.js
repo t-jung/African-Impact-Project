@@ -31,6 +31,7 @@ export default class Login extends Component {
             axios.post('http://localhost:5000/api/users/login', userInfo)
             .then(res => {
                 sessionStorage.setItem('token', res.data.token)
+                sessionStorage.setItem('email', this.state.email)
                 sessionStorage.setItem('type', 'User')
                 window.location = '/feed'
             })
@@ -53,6 +54,7 @@ export default class Login extends Component {
             .then(res => {
                 console.log(res)
             sessionStorage.setItem('token', res.data.token)
+            sessionStorage.setItem('email', this.state.email)
             sessionStorage.setItem('type', 'Company')
             window.location = '/feed'
         }
@@ -78,6 +80,7 @@ export default class Login extends Component {
             .then(res => { console.log(res)
             sessionStorage.setItem('token', res.data.token)
             sessionStorage.setItem('type', 'Partner')
+            sessionStorage.setItem('email', this.state.email)
                 window.location("feed");
             })
             .catch(err =>{

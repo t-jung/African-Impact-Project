@@ -2,8 +2,10 @@ import './Feed.css';
 import { useState } from 'react';
 import SingleFeed from '../FeedComponents/SingleFeed.js';
 import jwt_decode from "jwt-decode";
+import axios from 'axios';
 
-let userToken = sessionStorage.getItem('token');
+let token = sessionStorage.getItem('token');
+let email = sessionStorage.getItem('email');
 
 const feedList = [
     {
@@ -32,6 +34,7 @@ function Feed() {
     let authentication = sessionStorage.getItem('token');
     console.log(authentication);
     const [searchTerm, setSearchTerm] = useState('')
+    const [postItem, setPostItem] = useState('')
     let data = sessionStorage.getItem('token');
     console.log(data);
 
@@ -53,6 +56,30 @@ function Feed() {
         )
     }
 
+    const submitPost = (e) => {
+        console.log(email)
+        if(postItem.length != 0) {
+            console.log(postItem)
+            let config = {
+                headers: {
+                    'authentication-token-user': token,
+                }
+            }
+
+            let data = {
+                email: email,
+                text: postItem
+            }
+
+            axios.post('http://localhost:5000/api/users/createPost', data, config)
+                .then(res => console.log(res))
+                .catch(e => console.log(e));
+        } else {
+            alert("Cannot post empty blog!");
+        }
+        
+    }
+
     const GetSchedule = () => {
         return(
             <div class="schedule" >
@@ -71,8 +98,8 @@ function Feed() {
                         <a href="/profile"><img class="barProfilePic"
                             src="https://cdn.discordapp.com/attachments/829661320923447326/860355801931579422/unknown.png"
                         /></a>
-                    <textarea rows="2" cols="100" placeholder="Post something!"></textarea>
-                    <button class="btn btn_post_blog" >  POST  </button>
+                    <textarea id="userPOst" rows="2" cols="100" placeholder="Post something!" onChange={e => setPostItem(e.target.value)}></textarea>
+                    <button class="btn btn_post_blog" onClick={submitPost}>  POST  </button>
                 </div>
                 <div class="feed_top">
                     <SingleFeed feedList={feedList}/>

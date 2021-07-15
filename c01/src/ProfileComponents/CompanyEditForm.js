@@ -74,7 +74,7 @@ class CompanyEditForm extends Component {
 
     componentDidMount() {
         console.log(jwt_decode(token));
-        axios.get('http://localhost:5000/api/company/show_company_info_id/')
+        axios.get('http://localhost:5000/api/company/show_company_info_id/' + jwt_decode(token).company.id)
             .then(response => {
                 this.setState({
                     name:response.data.name,

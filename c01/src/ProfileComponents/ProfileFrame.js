@@ -27,10 +27,26 @@ export default class ProfileFrame extends Component {
 
     constructor(props) {
         super(props);
-        this.state = 0
+        this.state = {
+            name:'',
+            phone_number:'',
+            firstName: '',
+            lastName: '',
+            gender: '',
+            phoneNumber: '',
+            address: '',
+            email: '',
+            password: '',
+            status: '',
+            profile_type: '',
+            userPosts: [],
+            following: '',
+            follower: ''
+        }
+        
     }
 
-    componentDidMount() {
+    componentWillMount() {
         console.log(sessionStorage.getItem('type'))
         if(type === 'User') {
             axios.get('http://localhost:5000/api/users/getUserById/' + jwt_decode(token).user.id)
@@ -45,6 +61,7 @@ export default class ProfileFrame extends Component {
             axios.get('http://localhost:5000/api/company/show_company_info_id/' + jwt_decode(token).company.id)
                 .then(response=> {
                     console.log(response.data);
+                    response.data.profile_type = "User"
                     this.setState(response.data)
                 })
                 .catch((err) => console.log(err))
@@ -70,28 +87,23 @@ export default class ProfileFrame extends Component {
 const ProfileUserFrame = (info) => {
     // User userID to get the following details:
     console.log("Profile");
-    console.log(info.user);
-        
+    console.log(info);
+    let user = info.user
     let name = ''
     let profilePic = ''
     let email = ''
     let phone = ''
     let description = ''
-    
-    if(info === 0) {
-        let user = info.user
-        if(type === 'User') {
-            name = user.firstName + ' ' + user.lastName
-            profilePic = user.profilePic
-            email = user.email
-            phone = user.phoneNumber
-        } else {
-            name =user.name
-            email = user.email
-            phone = user.phone_number
-        } 
-    }
-
+    if(type === 'User') {
+        name = user.firstName + ' ' + user.lastName
+        profilePic = user.profilePic
+        email = user.email
+        phone = user.phoneNumber
+    } else {
+        name = user.name
+        email = user.email
+        phone = user.phone_number
+    } 
     var show = true;
 
     return (
@@ -102,7 +114,8 @@ const ProfileUserFrame = (info) => {
                     userName={name}
                     profilePic={profilePic}
                     userEmail={email}
-                    userPhone={phone}/></div>
+                    userPhone={phone}
+                    info={user}/></div>
                 <div class="align-self-center flex-grow-1">
                     <div><InfoCard info={description}/></div>
                 </div>
@@ -113,9 +126,9 @@ const ProfileUserFrame = (info) => {
                 </div>
                 <div class="postBoard">
                     <h2>Posts:</h2>
-                    <PostBoard feedList={info.userPosts}
-                        userName=" "
-                        profilePic={info.profilePic}/>
+                    <PostBoard feedList={user.userPosts}
+                        userName={user.firstName  + ' ' + user.lastName}
+                        profilePic={user.profilePic}/>
                 </div>
                 
             </div>
@@ -136,7 +149,17 @@ const EditButton = ({show}) => {
     }
 }
 
-const NameCard = ({userName, userPhone, profilePic, userEmail}) => {
+const CompanyInfo = (props) => {
+    return(
+        <div>
+            { typeof props.info.location !== 'undefined' ? <h5>Location: {props.info.location}</h5> : null }
+            { typeof props.info.industry !== 'undefined' ? <h5>Industry: {props.info.industry}</h5> : null }
+            { typeof props.info.website !== 'undefined' ? <h5>Website: {props.info.website}</h5> : null }
+        </div>
+    )
+}
+
+const NameCard = ({userName, userPhone, profilePic, userEmail, info}) => {
     const classes = useStyles();
     console.log(userName);
     return (
@@ -147,6 +170,7 @@ const NameCard = ({userName, userPhone, profilePic, userEmail}) => {
             <div class="p-2 align-self-center">
                 <h4 class="userName">{userName}</h4>
                 <h5>{userEmail} | {userPhone}</h5>
+                { type === 'Company' ? <CompanyInfo info={info}/> : null}
                 <div class="d-flex" >
                     <button class="btn btn_profile message text-uppercase ">message</button>
                     <button class="btn btn_profile follow text-uppercase ">follow</button>
@@ -170,11 +194,7 @@ const InfoCard = ({info}) => {
 
 
 const PostBoard = (props) => {
-    if(typeof props.feedList === 'undefined') {
-        return(
-            <div></div>
-        )
-    }
+
     let feeds = props.feedList.map(item => {
         const feed = 
             {

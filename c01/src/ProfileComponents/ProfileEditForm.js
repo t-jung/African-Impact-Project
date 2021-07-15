@@ -33,12 +33,13 @@ class EditForm extends Component {
             firstName: data.firstName,
             middleName: data.middleName,
             lastName: data.lastName,
+            email: sessionStorage.getItem('email'),
             phoneNumber: data.phoneNumber,
-            email: data.email,
             description: data.description
         }, () => {
             console.log(this.state)
             console.log(token);
+
             let config = {
                 headers: {
                     'authentication-token-user': token,
@@ -68,6 +69,9 @@ class EditForm extends Component {
 }
 
 const Form = (props) => {
+
+    console.log(jwt_decode(token).user.id)
+    console.log(sessionStorage.getItem('email'))
 
     const [firstName, setFirstName] = useState('');
     useEffect(() => {setFirstName(props.state.firstName)}, [props.state.firstName])
