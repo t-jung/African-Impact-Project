@@ -100,14 +100,17 @@ export default function UserPost(props) {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
+  console.log(feed.posterEmail)
   return (
+
     <Card className={classes.root}>
       <CardHeader
         avatar={
-          <Avatar aria-label="recipe" className={classes.avatar} src={feed.img}>
-            {feed.userName[0]}
-          </Avatar>
+          <a href="/profile" onclick={ sessionStorage.setItem('loadUserEmail', feed.poster) }>
+            <Avatar aria-label="recipe" className={classes.avatar} src={feed.img}>
+              {feed.userName}
+            </Avatar>
+          </a>
         }
         action={
           <IconButton aria-label="report">
