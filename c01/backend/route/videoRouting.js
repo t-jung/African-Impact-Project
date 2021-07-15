@@ -82,6 +82,7 @@ async(req,res)=>{
 });
 
 router.post("/uploadVideo", [
+    check('title', 'No title to video provided.').not().isEmpty(),
     check('link',' Link to video is empty.').not().isEmpty(),
     check('uploader','Uploader not provided.').not().isEmpty(),
 ],
@@ -94,6 +95,7 @@ async(req,res)=>{
              return res.status(400).json({errors: errors.array()});
 
              var newVideo = new Video();
+        newVideo.title = req.body.title;
         newVideo.link = req.body.link;
         newVideo.description = req.body.description;
         newVideo.likes = 0;
@@ -108,7 +110,7 @@ async(req,res)=>{
 
 
         await newVideo.save();
-        res.status(200).json("Video uploaded to database successfully.");
+        res.status(200).json("Video uploaded to database successfully. Video ID:" + newVideo.id) ;
         
     } catch (error) {
         console.error(error);

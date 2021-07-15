@@ -1142,6 +1142,11 @@
             "type":"object",
             "properties":
             {
+              "title":
+              {
+                "type": "string",
+                "require": true
+              },
               "link":
               {
                 "type": "string",
