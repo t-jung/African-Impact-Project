@@ -246,21 +246,17 @@ async(req, res) => {
     try {
         // TODO: Should email be the identifying piece of information for a user?
         const {email, text} = req.body;
-
         /* Error Checking */
         let errors = validationResult(req);
         if(!errors.isEmpty())
             return res.status(400).json({errors: errors.array()});
-
         /* Find user to create Post object under. */
         let poster = await User.findOne({email : req.body.email}).select('-password');
         if(!poster)
             return res.status(401).json("This user is not registered.");
-
         /* Create post object. */
-        var post = {text: req.body.text}; 
+        var post = {text: req.body.text, posterEmail: req.body.email}; 
         poster.userPosts.unshift(post);
-
         /* Update database */
         await poster.save();
         res.json("Created post successfully.");
@@ -282,7 +278,6 @@ router.post('/createComment',
 ],
 async(req, res) => {
     try {
-        // TODO: Should email be the identifying piece of information for a user?
         const {email, postId, text} = req.body;
 
         /* Error Checking */
