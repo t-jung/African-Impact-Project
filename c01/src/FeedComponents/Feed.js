@@ -31,22 +31,25 @@ class FeedPage extends Component {
             })
             .then(() => {
                 console.log('getting names')
+                let feeds = []
                 for(const item of this.state.feedList){
                     axios.get('http://localhost:5000/api/users/getUserByEmail/' + item.posterEmail)
                         .then(response => {
                             console.log(response.data)
-                            this.state.feedFormatted.push({
-                                userName: item.userName,
+                            console.log(item)
+                            feeds.push({
+                                userName: response.data.firstName + ' ' + response.data.lastName,
                                 img: item.profilePic,
                                 content: item.text,
                                 likes: item.likes,
                                 comments: item.postComments,
                                 poster: item.posterEmail,
-                                posterName: response.data.firstName + ' ' + response.data.lastName,
                             })
                         })
                         .catch(err => console.log(err))
                 }
+                console.log(feeds)
+                this.setState({feedFormatted: feeds})
                 console.log(this.state.feedFormatted)
             }
 
@@ -62,6 +65,7 @@ class FeedPage extends Component {
     }
 
     render() {
+        console.log(this.state.feedFormatted)
         return(
             <Feed feedList={this.state.feedFormatted} user={this.state.user}/>
         )
@@ -69,8 +73,7 @@ class FeedPage extends Component {
 }
 
 function Feed(props) {
-    console.log(props.feedList);
-    let authentication = sessionStorage.getItem('token');
+    console.log(props.feedFormatted);
     const [searchTerm, setSearchTerm] = useState('')
     const [postItem, setPostItem] = useState('')
     let data = sessionStorage.getItem('token');
@@ -111,10 +114,6 @@ function Feed(props) {
         )
     }
 
-    let feeds = props.feedFormatted
-
-    console.log(feeds)
-
     return (
         <div class="conatiner_feed">
             <div class="split left">
@@ -125,12 +124,11 @@ function Feed(props) {
                         <Avatar>C</Avatar>
                     </a>
 
-                        
                     <textarea id="userPOst" rows="2" cols="100" placeholder="Post something!" onChange={e => setPostItem(e.target.value)}></textarea>
                     <button class="btn btn_post_blog" onClick={submitPost}>  POST  </button>
                 </div>
                 <div class="feed_top">
-                    {typeof feeds !== 'undefined' ? <SingleFeed feedList={feeds}/> : null}
+                    {typeof props.feedFormatted !== 'undefined' ? <SingleFeed feedList={props.feedFormatted}/> : null}
                     
                 </div>
                 </div>
@@ -139,9 +137,7 @@ function Feed(props) {
             <div class="split right">
                 <GetSchedule />
             </div>
-            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossOrigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossOrigin="anonymous"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossOrigin="anonymous"></script>
+
         </div>
     )
 
