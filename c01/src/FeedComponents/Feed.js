@@ -129,7 +129,6 @@ function Feed(props) {
                 </div>
                 <div class="feed_top">
                     {typeof props.feedList !== 'undefined' ? <SingleFeed feedList={props.feedList}/> : <h5>No posts!</h5>}
-                    
                 </div>
                 </div>
                 

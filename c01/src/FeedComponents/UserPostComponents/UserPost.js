@@ -118,7 +118,7 @@ export default function UserPost(props) {
         avatar={
           <a href="/profile" onclick={ sessionStorage.setItem('loadUserEmail', feed.poster) }>
             <Avatar aria-label="recipe" className={classes.avatar} src={feed.img}>
-              {feed.userName}
+              {feed.userName[0]}
             </Avatar>
           </a>
         }
