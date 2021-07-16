@@ -482,4 +482,117 @@ async(req,res)=>{
     }
 });
 
+// @route POST /likePost
+// @desc The currently logged in user likes a post. Takes in postId, and an email (the liker).
+// @access Public
+router.post('/likePost',
+[
+    check('postId','postId is empty.').not().isEmpty(),
+    check('email',"Email is empty.").isEmail()
+],
+async(req, res) => {
+    try{
+        let postId = req.body.postId;
+        await User.find({}, async(error, users) => {
+            if(error) {
+                return res.status(400).json("/likePost 400 Server error.");
+            }
+            await users.map(async user => {
+                for(const post of user.userPosts) {
+                    let id = JSON.stringify(post._id);
+                    if(id === '"' + postId + '"'){
+                        
+                        // Make sure you can't like the same thing.
+                        for(const index in post.likes){
+                            if(post.likes[index] == req.body.email){
+                                return res.json("This has already been liked.");
+                            }
+                        }
+
+                        post.likes.unshift(req.body.email);
+                        await user.save();
+                        return res.json("Like added successfully.");
+                    }
+                }
+            })
+        })
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("/likePost 500 Server error.");
+    }
+})
+
+// @route POST /unlikePost
+// @desc The currently logged in user unlikes a post. If the user didn't like it in the first place,
+//       do nothing. Takes in postId, and an email (the liker).
+// @access Public
+router.post('/unlikePost',
+[
+    check('postId','postId is empty.').not().isEmpty(),
+    check('email',"Email is empty.").isEmail()
+],
+async(req, res) => {
+    try{
+        let postId = req.body.postId;
+        await User.find({}, async(error, users) => {
+            if(error) {
+                return res.status(400).json("/likePost 400 Server error.");
+            }
+            await users.map(async user => {
+                for(const post of user.userPosts) {
+                    let id = JSON.stringify(post._id);
+                    if(id === '"' + postId + '"'){
+                        for(const index in post.likes) {
+                            let liker = post.likes[index]
+                            if(liker === req.body.email){
+                                post.likes.pull("dar.liu@mail.utoronto.ca");
+                                await user.save();
+                                return;
+                            }
+                        }
+                    }
+                }
+            })
+        })
+        return res.json("/unlikePost 200.");
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("/likePost 500 Server error.");
+    }
+})
+
+// @route POST /getLikes
+// @desc Returns a list of people who have liked a post given a postId.
+// @access Public
+router.get('/getLikes/:postId',
+async(req, res) => {
+    try{
+        let postId = req.params.postId;
+        await User.find({}, async(error, users) => {
+            if(error) {
+                return res.status(400).json("/getLikes Server error.");
+            }
+            await users.map(user => {
+                for(const post of user.userPosts) {
+                    let id = JSON.stringify(post._id);
+                    if(id === '"' + postId + '"'){
+                        return res.json(post.likes);
+                    }
+                }
+            })
+        })
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("/getLikes Server error.");
+    }
+})
+
+
+
+
+
+
 module.exports = router;

@@ -619,6 +619,80 @@
             "responses": {}
           }
         },
+        "/users/likePost":{
+          "post": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "1",
+            "tags": ["/api/users"],
+            "description": "Likes a post. PostId is the MongoDB id for the post object. Email is the email of the account which is liking the post. Liking a liked post already will return 200.",
+            "parameters": [
+              {
+                "name":"request body",
+                "in":"body",
+                "schema":
+                {
+                  "type":"object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "required": true
+                    },
+                    "postId": {
+                      "type": "string",
+                      "required": true
+                    }
+                  }
+                }
+              }
+            ],
+            "responses": {}
+          }
+        },
+        "/users/unlikePost":{
+          "post": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "2",
+            "tags": ["/api/users"],
+            "description": "Unlikes a post. PostId is the MongoDB id for the post object. Email is the email of the account which is unliking the post. Unliking a post which the user did not like will simply do nothing.",
+            "parameters": [
+              {
+                "name":"request body",
+                "in":"body",
+                "schema":
+                {
+                  "type":"object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "required": true
+                    },
+                    "postId": {
+                      "type": "string",
+                      "required": true
+                    }
+                  }
+                }
+              }
+            ],
+            "responses": {}
+          }
+        },
+        "/users/getPost": {
+          "get": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "3",
+            "tags": ["/api/users"],
+            "description": "Get all the users who liked a post.",
+            "parameters": [
+              {
+                "name": "postId",
+                "in": "path",
+                "required": true
+              }
+            ],
+            "responses": {}
+          }
+        },
       "/partner/change_partner_password": {
         "put": {
           "x-swagger-router-controller": "home",
