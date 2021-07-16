@@ -1096,7 +1096,179 @@
           ],
           "responses": {}
         }
+      },
+      "/videos/updateDescription/{id}": {
+        "put": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "1",
+          "tags": ["/api/videos"],
+          "description": "Allows admin to update the description of a video.",
+          "parameters": [
+            {
+              "id": "id",
+              "in": "path",
+              "required": true
+            },
+            {
+              "name":"request body", 
+              "in":"body", 
+              "schema":
+              {
+                "type":"object",
+                "properties":
+                {
+                  "description":
+                  {
+                    "type":"string"
+                  }
+                }
+              }
+            }
+          ],
+            "responses": {}
+          }
+    },
+    "/videos/updateTags/{id}": {
+      "put": {
+        "x-swagger-router-controller": "bar",
+        "operationId": "2",
+        "tags": ["/api/videos"],
+        "description": "Allows admin to update the tags of a video.",
+        "parameters": [
+          {
+            "id": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name":"request body", 
+            "in":"body", 
+            "schema":
+            {
+              "type":"object",
+              "properties":
+              {
+                "tags":
+                {
+                  "type":["string"]
+                }
+              }
+            }
+          }
+        ],
+          "responses": {}
+        }
+      },
+        "/videos/likeVideo/{id}": {
+          "put": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "3",
+            "tags": ["/api/videos"],
+            "description": "Allows user to like a video, increasing its like count.",
+            "parameters": [
+              {
+                "id": "id",
+                "in": "path",
+                "required": true
+              }
+            ],
+              "responses": {}
+            }
+      },
+      "/videos/getVideoById/{id}": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "4",
+          "tags": ["/api/videos"],
+          "description": "Gets the video specified in URL.",
+          "parameters": [
+            {
+              "id": "id",
+              "in": "path",
+              "required": true
+            }
+          ],
+            "responses": {}
+          }
+    },
+    "/videos/admin/getAllVideos/": {
+      "get": {
+        "x-swagger-router-controller": "bar",
+        "operationId": "5",
+        "tags": ["/api/videos"],
+        "description": "Allows admin to get all videos in DB.",
+          "responses": {}
+        }
+  },
+  "/videos/uploadVideo/": {
+    "post": {
+      "x-swagger-router-controller": "bar",
+      "operationId": "6",
+      "tags": ["/api/videos"],
+      "description": "Allows admin to upload a video to the database.",
+      "parameters": [
+        {
+          "name":"request body", 
+          "in":"body", 
+          "schema":
+          {
+            "type":"object",
+            "properties":
+            {
+              "title":
+              {
+                "type": "string",
+                "require": true
+              },
+              "link":
+              {
+                "type": "string",
+                "require": true
+
+              },
+              "description":
+              {
+                "type":"string"
+              },
+              "uploader":
+              {
+                "type": "string",
+                "require": true
+              },
+              "uploadDate":
+              {
+                "type": "date"
+              },
+              "tags":
+              {
+                "type": ["string"]
+              }
+            }
+          }
+        }
+      ],
+        "responses": {}
       }
+},
+"/videos/delete/{id}": {
+  "delete": {
+    "x-swagger-router-controller": "bar",
+    "operationId": "7",
+    "tags": ["/api/videos"],
+    "description": "Allows admin to delete a video.",
+    "parameters": [
+      {
+        "id": "id",
+        "in": "path",
+        "required": true
+      }
+    ],
+      "responses": {}
     }
 }
+      
+  }
+    
+}
+
 

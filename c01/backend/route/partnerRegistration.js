@@ -18,8 +18,7 @@ exports.updateProfileValidator = () => {
     return [
         check('name').notEmpty().withMessage("Name is empty"),
         check('email').notEmpty().withMessage("Email is required").isEmail().withMessage("Invalid email"),
-        check('company').notEmpty().withMessage("Company field is empty"),
-        check('phone_number').notEmpty().withMessage("Phone number is missing").isMobilePhone().withMessage("Invalid phone number"),
+        check('phone_number').notEmpty().withMessage("Phone number is missing"),
         check('address').notEmpty().withMessage("Address is empty"),
         check('fax').optional(),
         check('investing_area').optional()
@@ -27,10 +26,11 @@ exports.updateProfileValidator = () => {
 }
 
 exports.profileValidator = () => {
+    
     let validator = this.updateProfileValidator().slice();
     validator.push(check('password','Password needs to contains 6 letters and less than 12 letters.').isLength({min:6,max:12}));
     return validator;
-}
+    }
 
 exports.loginByNameValidator = () => {
     return [
@@ -67,7 +67,7 @@ router.put("/change_partner_password", authentication, this.passwordValidator(),
 
 router.put("/change_partner_info", authentication, this.updateProfileValidator(), async(req, res) => {
     try {
-        let{name,email,address,company,phone_number,fax,investing_area} = req.body;
+        let{name,email,address,phone_number,fax, description, investing_area} = req.body;
 
         let errors = validationResult(req);
         if(!errors.isEmpty()) return res.status(400).json({errors:errors.array()});
@@ -101,6 +101,7 @@ router.put("/change_partner_info", authentication, this.updateProfileValidator()
         if(partnerNameFromDB.length !== 0) return res.status(401).json("partner name has already been used.");
 
         // find other company
+        /*
         let companyAll = await Company.find().select('-password');
         let companyOther = companyAll.filter(
             (companyDB) =>
@@ -112,14 +113,15 @@ router.put("/change_partner_info", authentication, this.updateProfileValidator()
             companyNameExist.name = partner.company
         )
         if (findCompany.length === 0) return res.status(401).json("Company name could not be found");
-
+            */
         // update
         partner.name = name.toString();
         partner.email = email.toString();
         partner.address = address.toString();
-        partner.company = company.toString();
+        //partner.company = company.toString();
         partner.phone_number = phone_number.toString();
         partner.fax = fax.toString();
+        partner.description = description.toString();
         partner.investing_area = investing_area.toString();
         await partner.save();
         res.json("Update successfully");        
@@ -257,14 +259,14 @@ router.post("/login/partner_email", this.loginByEmailValidator(), async(req,res)
     }    
 });
 
-router.post("/partner_register", this.profileValidator(), user_authentication, async(req,res) => {
+router.post("/partner_register",user_authentication, this.profileValidator(),  async(req,res) => {
     try {
-        let{name,email,password,address,company,phone_number,fax,investing_area} = req.body;
-
-        let errors = validationResult(req);
-        if(!errors.isEmpty()) 
-            return res.status(400).json({errors: errors.array()});
         
+        let{name,email,password,address,phone_number,fax,description, investing_area} = req.body;
+        let errors = validationResult(req);
+        if(!errors.isEmpty()){
+            return res.status(400).json({errors: errors.array()});
+        }
         // check email and name are unique
         let partner = await Partner.findOne({email}).select('-password');
         if(partner)
@@ -272,22 +274,21 @@ router.post("/partner_register", this.profileValidator(), user_authentication, a
         let fetchedpartnerNameFromDB = await Partner.findOne({name}).select('-password');
         if(fetchedpartnerNameFromDB===name)
             return res.status(401).json("partner name has already existed.");
-
+        /*
         let companyDB = await Company.findOne({name: company}).select('-password');
         if (!companyDB)
             return res.status(401).json("Could not find company");
-
+        */
         let status = "unverified";
-        
         let newPartner = new Partner({
             name,
             user_setup: req.user.id,
             email,
             password,
             address,
-            company,
             phone_number,
             fax,
+            description,
             investing_area,
             status
         });

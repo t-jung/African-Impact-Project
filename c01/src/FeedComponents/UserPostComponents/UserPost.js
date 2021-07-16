@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
@@ -13,13 +12,13 @@ import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: '100%',
+    minWidth: '100%'
   },
   media: {
     height: 0,
@@ -53,6 +52,7 @@ const CommentList = (props) => {
 const SingleComment = (props) => {
     const classes = useStyles();
     let comment = props.comment;
+    console.log(comment)
     if(comment !== null) {
         return(
             <Card className={classes.root}>
@@ -100,14 +100,17 @@ export default function UserPost(props) {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
+  console.log(feed.posterEmail)
   return (
+
     <Card className={classes.root}>
       <CardHeader
         avatar={
-          <Avatar aria-label="recipe" className={classes.avatar} src={feed.img}>
-            R
-          </Avatar>
+          <a href="/profile" onclick={ sessionStorage.setItem('loadUserEmail', feed.poster) }>
+            <Avatar aria-label="recipe" className={classes.avatar} src={feed.img}>
+              {feed.userName}
+            </Avatar>
+          </a>
         }
         action={
           <IconButton aria-label="report">

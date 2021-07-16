@@ -62,5 +62,4 @@ let CompanySchema = mongoose.Schema({
     }
 })
 
-
-module.exports = CompanySchemas = mongoose.model("company",CompanySchema);
+module.exports = CompanySchema = mongoose.model("company",CompanySchema);

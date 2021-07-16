@@ -7,12 +7,15 @@ import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import EditForm from './ProfileEditForm';
+import CompanyCourses from '../CourseUploadComponents/CourseUploadComponent'
 
 import theme from '../styles';
 
 import CompanyEmployee from './CompanyEmployee.js';
 import CompanyEditForm from './CompanyEditForm.js';
 import Setting from './Setting.js'
+
+let userType = sessionStorage.getItem('type')
 
 // from database
 const user = {
@@ -23,7 +26,7 @@ const user = {
     userMeail: "userName.cscc01@email.com",
     userPhone: 123456789,
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    type: "User"
+    type: "Company"
 }
 
 const drawerWidth = 320;
@@ -150,7 +153,7 @@ const SideBarProfile = (props) => {
                             Setting
                         </Typography>
                 </Button>
-                {(user.type !== "User") ? <CompanySideBarElements/> : <RegisterAccountElements/>}
+                {(userType !== "User") ? <CompanySideBarElements/> : <RegisterAccountElements/>}
             </div>
         )
     };
@@ -216,7 +219,7 @@ const SideBarProfile = (props) => {
         );
     }
 
-    
+    console.log(userType)
 
     return (
         <div class="profileEdit_container">
@@ -230,6 +233,7 @@ const SideBarProfile = (props) => {
                             <div class="barContainer sidebarContainer">
                                 <img class="barProfilePic"
                                     src={user.profilePic}
+                                    alt={user.firstName}
                                 />
                                 <Button
                                     component={Link}
@@ -249,10 +253,11 @@ const SideBarProfile = (props) => {
         </div>
         <div class="profileEdit_formContainer">
             {profile === true ? 
-                (user.type === "User" ? <EditForm user={user}/> : (user.type === "Company" ? <CompanyEditForm user={user}/> : null))
+                (userType === "User" ? <EditForm user={user}/> : (userType === "Company" ? <CompanyEditForm id='60df98e767241827e07e5c46' user={user}/> : null))
                 : null}
             {setting === true ? <Setting/> : null}
             {employee === true ? <CompanyEmployee/> : null}
+            {workshop === true ? <CompanyCourses/> : null}
         </div>
     </div>
     );
