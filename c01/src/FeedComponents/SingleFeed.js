@@ -3,7 +3,7 @@ import UserPost from './UserPostComponents/UserPost.js'
 
 export default function SingleFeed (props) {
     let feedList = props.feedList
-    console.log(feedList)
+    console.log("hii")
     return(
         <div>
             {feedList.map(item => (

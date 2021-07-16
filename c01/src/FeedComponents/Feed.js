@@ -1,6 +1,7 @@
 import './Feed.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SingleFeed from '../FeedComponents/SingleFeed.js';
+import UserPost from '../FeedComponents/UserPostComponents/UserPost'
 import jwt_decode from "jwt-decode";
 import axios from 'axios';
 import React, { Component } from 'react';
@@ -10,29 +11,21 @@ let token = sessionStorage.getItem('token');
 let email = sessionStorage.getItem('email');
 
 class FeedPage extends Component {
-
-    state = {
-        feedList: [],
-        feedFormatted: [],
-        user: {}
-    }
-
     constructor(props) {
         super(props)
-
+        this.state = {
+            feedList: [],
+            feedFormatted: [],
+            user: {}
+        }
     }
 
     componentDidMount() {
         axios.get('http://localhost:5000/api/users/getFollowedPosts/' + email)
-            .then(response => {
-                console.log(email)
-                console.log(response.data)
-                this.setState({feedList: response.data})
-            })
-            .then(() => {
+            .then(res => {
                 console.log('getting names')
                 let feeds = []
-                for(const item of this.state.feedList){
+                for(const item of res.data){
                     axios.get('http://localhost:5000/api/users/getUserByEmail/' + item.posterEmail)
                         .then(response => {
                             console.log(response.data)
@@ -128,6 +121,14 @@ function Feed(props) {
                     <button class="btn btn_post_blog" onClick={submitPost}>  POST  </button>
                 </div>
                 <div class="feed_top">
+                    {props.feedList.map(item => (
+                        <UserPost feed={item}/>
+                    ))}
+                    {useEffect (() => {
+                        console.log("Re-rendering")
+                        return(
+                        <SingleFeed feedList={props.feedList}/>)
+                    }, [props.feedList])}
                     {typeof props.feedList !== 'undefined' ? <SingleFeed feedList={props.feedList}/> : <h5>No posts!</h5>}
                 </div>
                 </div>
@@ -138,11 +139,7 @@ function Feed(props) {
             </div>
 
         </div>
-    )
-
-    
-
-    
+    )    
 }
 
 export default FeedPage
