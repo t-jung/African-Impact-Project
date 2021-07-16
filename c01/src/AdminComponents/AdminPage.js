@@ -164,7 +164,7 @@ const AdminPage = () => {
                     </Grid>
                     <Grid item direction="row" alignItems="center">
                         <div class="admin-sidebyside">
-                        <a href="/profile"> <Avatar>C</Avatar></a>
+                                <a href="/profile"> <Avatar class="admin-avatar">C</Avatar></a>
                         <a href="/" button class="btn btn_admin_logout text-uppercase">Log Out</a> 
                         </div>
                     </Grid>

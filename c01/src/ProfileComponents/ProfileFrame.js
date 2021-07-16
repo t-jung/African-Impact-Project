@@ -1,113 +1,141 @@
 
 import './ProfileFrame.css'
-import React from 'react';
+import React, { Component } from 'react';
 import SingleFeed from '../FeedComponents/SingleFeed.js';
+import axios from 'axios';
+import jwt_decode from "jwt-decode";
+import { Avatar } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-const user = {
-    firstName: "User",
-    middleName: "Here",
-    lastName: "Name",
-    profilePic: "https://cdn.discordapp.com/attachments/829661320923447326/860355801931579422/unknown.png",
-    userEmail: "userName.cscc01@email.com",
-    userPhone: 123456789,
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    type: "Partner"
+let token = sessionStorage.getItem('token')
+let type = sessionStorage.getItem('type')
+let loadUser = sessionStorage.getItem('loadUserEmail')
+let userEmail = sessionStorage.getItem('email')
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+  large: {
+    width: 280,
+    height: 280,
+  },
+}));
+
+export default class ProfileFrame extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            name:'',
+            phone_number:'',
+            firstName: '',
+            lastName: '',
+            gender: '',
+            phoneNumber: '',
+            address: '',
+            email: '',
+            password: '',
+            status: '',
+            profile_type: '',
+            userPosts: [],
+            following: '',
+            follower: ''
+        }
+        
+    }
+
+
+
+    componentWillMount() {
+        let email = loadUser;
+        console.log(loadUser)
+        console.log(userEmail)
+        if(type === 'User') {
+            axios.get('http://localhost:5000/api/users/getUserByEmail/' + email)
+                .then(response=> {
+                    console.log(response.data);
+                    this.setState(response.data)
+                })
+                .catch((err) => console.log(err))
+                
+        } else if (type === 'Company') {
+            console.log("Is company")
+            axios.get('http://localhost:5000/api/company/show_company_info_email/' + email)
+                .then(response=> {
+                    console.log(response.data);
+                    response.data.profile_type = "User"
+                    this.setState(response.data)
+                })
+                .catch((err) => console.log(err))
+        } else {
+            axios.get('http://localhost:5000/api/partner/show_partner_info_email/' + email)
+            .then(response=> {
+                console.log(response.data);
+                this.setState(response.data)
+            })
+            .catch((err) => console.log(err))
+
+        }
+    }
+
+    render(){
+        console.log(this.state)
+        return (
+            <ProfileUserFrame user={this.state}/>
+        )
+    }
 }
 
-const feedList = [
-    {
-        userName: "Gura",
-        img: "https://cdn.discordapp.com/attachments/829661320923447326/860355801931579422/unknown.png",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        comment: [
-            {
-                userName: "Tim",
-                img: "",
-                content: "This is great to hear!"
-            },
-            {
-                userName: "Hortons",
-                img: "https://scontent-nrt1-1.xx.fbcdn.net/v/t1.6435-0/p526x296/205338742_520342779417948_4620301495797869681_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=730e14&_nc_ohc=kisa0E-JHmYAX-pf-oR&_nc_ht=scontent-nrt1-1.xx&tp=6&oh=817cceaebf4c157b71faea6c711f092b&oe=60E59340",
-                content: "Congratulations!!"
-            },
-        ]
-    },
-    {
-        userName: "Gura",
-        img: "https://cdn.discordapp.com/attachments/829661320923447326/860355801931579422/unknown.png",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        comment: [
-            {
-                userName: "Tim",
-                img: "",
-                content: "This is great to hear!"
-            },
-            {
-                userName: "Hortons",
-                img: "https://scontent-nrt1-1.xx.fbcdn.net/v/t1.6435-0/p526x296/205338742_520342779417948_4620301495797869681_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=730e14&_nc_ohc=kisa0E-JHmYAX-pf-oR&_nc_ht=scontent-nrt1-1.xx&tp=6&oh=817cceaebf4c157b71faea6c711f092b&oe=60E59340",
-                content: "Congratulations!!"
-            },
-        ]
-    },
-    {
-        userName: "Gura",
-        img: "https://cdn.discordapp.com/attachments/829661320923447326/860355801931579422/unknown.png",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        comment: [
-            {
-                userName: "Tim",
-                img: "",
-                content: "This is great to hear!"
-            },
-            {
-                userName: "Hortons",
-                img: "https://scontent-nrt1-1.xx.fbcdn.net/v/t1.6435-0/p526x296/205338742_520342779417948_4620301495797869681_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=730e14&_nc_ohc=kisa0E-JHmYAX-pf-oR&_nc_ht=scontent-nrt1-1.xx&tp=6&oh=817cceaebf4c157b71faea6c711f092b&oe=60E59340",
-                content: "Congratulations!!"
-            },
-        ]
-    },
-    {
-        userName: "Gura",
-        img: "https://cdn.discordapp.com/attachments/829661320923447326/860355801931579422/unknown.png",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        comment: [
-            {
-                userName: "Tim",
-                img: "",
-                content: "This is great to hear!"
-            },
-            {
-                userName: "Hortons",
-                img: "https://scontent-nrt1-1.xx.fbcdn.net/v/t1.6435-0/p526x296/205338742_520342779417948_4620301495797869681_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=730e14&_nc_ohc=kisa0E-JHmYAX-pf-oR&_nc_ht=scontent-nrt1-1.xx&tp=6&oh=817cceaebf4c157b71faea6c711f092b&oe=60E59340",
-                content: "Congratulations!!"
-            },
-        ]
-    },
-]
-
-const ProfileFrame = ({userID}) => {
+const ProfileUserFrame = (info) => {
     // User userID to get the following details:
-    var show = true;
+    console.log("Profile");
+    console.log(info);
+    let user = info.user
+    let name = ''
+    let profilePic = ''
+    let email = ''
+    let phone = ''
+    let description = ''
+    if(type === 'User') {
+        name = user.firstName + ' ' + user.lastName
+        profilePic = user.profilePic
+        email = user.email
+        phone = user.phoneNumber
+    } else {
+        name = user.name
+        email = user.email
+        phone = user.phone_number
+    } 
+    var show = loadUser === userEmail ? true : false;
+
     return (
         <div class="bigContainer">                   
             <div><EditButton show={show}/></div>
             <div class="topContainer">
                 <div class="nameCard"><NameCard
-                    userName={user.firstName + ' ' + user.middleName + ' ' + user.lastName}
-                    profilePic={user.profilePic}
-                    userEmail={user.userEmail}
-                    userPhone={user.userPhone}/></div>
+                    userName={name}
+                    profilePic={profilePic}
+                    userEmail={email}
+                    userPhone={phone}
+                    info={user}
+                    show={show}/></div>
                 <div class="align-self-center flex-grow-1">
-                    <div><InfoCard info={user.description}/></div>
+                    <div><InfoCard info={description}/></div>
                 </div>
             </div>
             <div class="bottomContainer">
                 <div class="lessonMargin">
-                    <LessonBoard/>
+
                 </div>
                 <div class="postBoard">
                     <h2>Posts:</h2>
-                    <PostBoard/>
+                    <PostBoard feedList={user.userPosts}
+                        userName={user.firstName  + ' ' + user.lastName}
+                        profilePic={user.profilePic}/>
                 </div>
                 
             </div>
@@ -128,27 +156,57 @@ const EditButton = ({show}) => {
     }
 }
 
-const NameCard = ({userName, userPhone, profilePic, userEmail}) => {
+const CompanyInfo = (props) => {
+    return(
+        <div>
+            { typeof props.info.location !== 'undefined' ? <h5>Location: {props.info.location}</h5> : null }
+            { typeof props.info.industry !== 'undefined' ? <h5>Industry: {props.info.industry}</h5> : null }
+            { typeof props.info.website !== 'undefined' ? <h5>Website: {props.info.website}</h5> : null }
+        </div>
+    )
+}
 
+
+
+const NameCard = ({userName, userPhone, profilePic, userEmail, info, show}) => {
+
+    function followAction() {
+        console.log("clicked")
+
+        let config = {
+            headers: {
+                'authentication-token-user': token,
+            }
+        }
+
+        axios.put('http://localhost:5000/api/users/follow', loadUser, config)
+            .then(res => {
+                console.log(res.data)
+                alert("Followed!")
+            })
+            .catch(err => console.log(err))
+    }
+
+    const classes = useStyles();
+    console.log(userName);
     return (
         <div class="nameCard">
             <div class="p-2 align-self-center">
-                <img class="profilePicture"
-                    src={profilePic}
-            />
+                <Avatar className={classes.large} alt={userName} src={profilePic}>{userName[0]}</Avatar>
             </div>
             <div class="p-2 align-self-center">
                 <h4 class="userName">{userName}</h4>
                 <h5>{userEmail} | {userPhone}</h5>
-                <div class="d-flex" >
-                    <button class="btn btn_profile message text-uppercase ">message</button>
-                    <button class="btn btn_profile follow text-uppercase ">follow</button>
-                </div>
-                
+                { type === 'Company' ? <CompanyInfo info={info}/> : null}
+                { show === false ? (
+                    <div class="d-flex" >
+                        <button class="btn btn_profile message text-uppercase ">message</button>
+                        <button class="btn btn_profile follow text-uppercase " onClick={followAction} >follow</button>
+                    </div>
+                ) : null }
             </div>
         </div>
     )
-
 }
 
 const InfoCard = ({info}) => {
@@ -163,11 +221,26 @@ const InfoCard = ({info}) => {
 }
 
 
-const PostBoard = () => {
-    console.log(feedList)
+const PostBoard = (props) => {
+
+    let feeds = props.feedList.map(item => {
+        return (
+            {
+                userName: props.userName,
+                img: props.profilePic,
+                content: item.text,
+                likes: item.likes,
+                comments: item.postComments,
+                poster: item.posterEmail
+            })
+    })
+
+    console.log(feeds);
+
+    console.log(props.feedList)
     return(
         <div>
-            <SingleFeed feedList={feedList}/>
+            <SingleFeed feedList={feeds}/>
         </div>
 
     )
@@ -188,14 +261,3 @@ const LessonBoard = () => {
 
     )
 }
-
-const CompanyMembers = () => {
-    return(
-        <div class="d-flex flex-row">
-            
-
-        </div>
-    )
-}
-
-export default ProfileFrame
