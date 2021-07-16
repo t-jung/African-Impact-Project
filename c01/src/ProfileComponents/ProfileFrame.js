@@ -124,7 +124,7 @@ const ProfileUserFrame = (info) => {
                     <a type="button" href="/feed">
                         <ArrowBackIcon/>
                     </a>
-                </IconButton>
+                </IconButton><br/>
                 <ThemeProvider theme={styles}>
                     <EditButton show={show}/>
                 </ThemeProvider>
