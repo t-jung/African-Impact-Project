@@ -73,7 +73,7 @@ class FeedPage extends Component {
 }
 
 function Feed(props) {
-    console.log(props.feedFormatted);
+    console.log(props.feedList);
     const [searchTerm, setSearchTerm] = useState('')
     const [postItem, setPostItem] = useState('')
     let data = sessionStorage.getItem('token');
@@ -128,7 +128,7 @@ function Feed(props) {
                     <button class="btn btn_post_blog" onClick={submitPost}>  POST  </button>
                 </div>
                 <div class="feed_top">
-                    {typeof props.feedFormatted !== 'undefined' ? <SingleFeed feedList={props.feedFormatted}/> : null}
+                    {typeof props.feedList !== 'undefined' ? <SingleFeed feedList={props.feedList}/> : <h5>No posts!</h5>}
                     
                 </div>
                 </div>
