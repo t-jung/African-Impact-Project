@@ -27,27 +27,27 @@ class FeedPage extends Component {
                 console.log(email)
                 console.log('getting names')
                 console.log(res.data)
-                this.setState({feedFormatted:                
-                [{
-                    postId: '60efabcfea59db3d684e25d6',
-                    userName: 'Yuanyuan Li',
-                    img: '',
-                    content: 'hi testing',
-                    likes: [],
-                    comments: [],
-                    poster: "Yuanyuan@mail.com",
-                },
-                {
-                    postId: '60e6398bd713d01d53259b7f',
-                    userName: 'Yuanyuan Li',
-                    img: '',
-                    content: 'Another post',
-                    likes: [],
-                    comments: [],
-                    poster: "Yuanyuan@mail.com",
-                }]})
+                let postInfo = [];
+                for(const post of res.data) {
+                    axios.get('http://localhost:5000/api/users/getUserByEmail/' + post.posterEmail)
+                    .then( resource => (
+                        postInfo.push(
+                            {
+                                userName: resource.data.firstName + ' ' + resource.data.lastName,
+                                img: resource.data.profilePic,
+                                content: post.text,
+                                likes: post.likes,
+                                comments: post.postComments,
+                                poster: post.posterEmail,
+                                postId: post._id
+                            })
+                        )
+                    )
+                    .then(() => this.setState({feedFormatted: postInfo}))
+                }
+                console.log(this.state.feedFormatted)
             })
-            .catch((err) => console.log(err))
+            .catch((err) => console.log(err)) 
 
         axios.get('http://localhost:5000/api/users/getUserByEmail/' + email)
         .then(response => {
@@ -115,7 +115,7 @@ function Feed(props) {
                 <div class="feedSection">
                 <div class="postBox">
 
-                    <a href="/profile" onclick={ sessionStorage.setItem('loadUser', email)  }>
+                    <a href="/profile" type="button" onClick={() => {sessionStorage.setItem('loadUser', email) ; console.log(email) }}>
                         <Avatar>{typeof props.user.firstName !== 'undefined' ? props.user.firstName[0] : 'U'}</Avatar>
                     </a>
 

@@ -8,18 +8,28 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import { ThemeProvider, withStyles } from '@material-ui/styles';
+import { ThemeProvider, withStyles, makeStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
+import UploadNewVideo from '../CourseUploadComponents/NewUpload/NewUploadComponent.js'
+
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import "@fontsource/roboto";
 import { Avatar, ListItemAvatar } from '@material-ui/core';
+import theme from '../styles.js';
 
-const styletheme = styles;
+let email = sessionStorage.getItem('email')
+
+const useStyles = makeStyles(() => ({
+    root:{
+        margin: 5
+    }
+}))
+
 const userList = [
     {
         name: 'John Doe',
@@ -110,12 +120,14 @@ const AdminPage = () => {
     const [displayPendingVerif, setPendingVerif] = React.useState(false);
     const [displayViewUserList, setViewUserList] = React.useState(false);
     const [displayBannedUsers , setBannedUsers ] = React.useState(false);
+    const [displayUploadVideo , setUploadVideo ] = React.useState(false);
 
     const selectPendingBoard = () => {
         setPendingBoard(true);
         setPendingVerif(false);
         setViewUserList(false);
         setBannedUsers(false);
+        setUploadVideo(false);
     };
 
     const selectPendingVerif = () => {
@@ -123,6 +135,7 @@ const AdminPage = () => {
         setPendingVerif(true);
         setViewUserList(false);
         setBannedUsers(false);
+        setUploadVideo(false);
     };
 
     const selectViewUserList = () => {
@@ -130,6 +143,7 @@ const AdminPage = () => {
         setPendingVerif(false);
         setViewUserList(true);
         setBannedUsers(false);
+        setUploadVideo(false);
     };
 
     const selectBannedUsers = () => {
@@ -137,12 +151,22 @@ const AdminPage = () => {
         setPendingVerif(false);
         setViewUserList(false);
         setBannedUsers(true);
+        setUploadVideo(false);
+    };
+
+    const selectUploadVideo = () => {
+        setPendingBoard(false);
+        setPendingVerif(false);
+        setViewUserList(false);
+        setBannedUsers(false);
+        setUploadVideo(true);
     };
 
     useEffect(() => {
 
     }, [displayPendingBoard, displayPendingVerif, displayBannedUsers, displayViewUserList])
 
+    const classes = useStyles();
     return (
         <div class="admin-container">
             <div class="admin-topbar">
@@ -164,7 +188,10 @@ const AdminPage = () => {
                     </Grid>
                     <Grid item direction="row" alignItems="center">
                         <div class="admin-sidebyside">
-                                <a href="/profile"> <Avatar class="admin-avatar">C</Avatar></a>
+                            <a href="/profile" type="button" onClick={() => {sessionStorage.setItem('loadUser', email) ; console.log(email) }}>
+                                <Avatar className={classes.root}>C</Avatar>
+                            </a>
+                        <br/>
                         <a href="/" button class="btn btn_admin_logout text-uppercase">Log Out</a> 
                         </div>
                     </Grid>
@@ -183,6 +210,8 @@ const AdminPage = () => {
                                                 <TabButton onClick={selectViewUserList}>View user list</TabButton>}
                         {displayBannedUsers ? <TabButtonSelected onClick={selectBannedUsers}>View banned users</TabButtonSelected> :
                                                 <TabButton onClick={selectBannedUsers}>View banned users</TabButton>}
+                        {displayUploadVideo ? <TabButtonSelected onClick={selectUploadVideo}>Upload new video</TabButtonSelected> :
+                                                <TabButton onClick={selectUploadVideo}>Upload new video</TabButton>}
                     </ThemeProvider>
                     
                 </Grid>
@@ -191,7 +220,8 @@ const AdminPage = () => {
                 displayBannedUsers={displayBannedUsers}
                 displayPendingVerif={displayPendingVerif}
                 displayViewUserList={displayViewUserList}
-                displayPendingBoard={displayPendingBoard}/>
+                displayPendingBoard={displayPendingBoard}
+                uploadNewVideo={displayUploadVideo}/>
         </div>
     );
 }
@@ -209,6 +239,10 @@ const DisplayBoard = (props) => {
         return(
             <ViewUserList bannedUsers={false}/>
         );
+    } else if (props.uploadNewVideo) {
+        return(
+            <UploadNewVideo/>
+        )
     } else {
         return (
             <PendingBoard/>
