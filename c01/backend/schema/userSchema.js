@@ -28,7 +28,7 @@ const userSchema = new Schema({
     status:{
         type: String,
         // TODO: PLEASE FIX THIS NEEDS TO BE `REQUIRED` not `REQUIRE`
-        require: true
+        required: true
     },
     profile_type:{
       type: String,
@@ -36,8 +36,8 @@ const userSchema = new Schema({
     },
     userPosts: [{
             posterEmail: {
-              type: String//,
-             // TODO: required: true
+              type: String,
+              required: true
             },
             title: {
                 type: String
