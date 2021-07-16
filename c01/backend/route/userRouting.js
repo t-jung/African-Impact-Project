@@ -277,44 +277,31 @@ router.post('/createComment',
     check('email','E-mail is empty.').isEmail()
 ],
 async(req, res) => {
-    try {
-        const {email, postId, text} = req.body;
-
-        /* Error Checking */
-        let errors = validationResult(req);
-        if(!errors.isEmpty())
-            return res.status(400).json({errors: errors.array()});
-
-        /* Find user to create Comment object under. */
-        let poster = await User.findOne({email : req.body.email}).select('-password');
-        if(!poster)
-            return res.status(401).json("This user is not registered.");
-    
-
-        /* Finds the appropriate comment. */
-        let wantedPost = null;
-        for(const post of poster.userPosts) {
-            let id = JSON.stringify(post._id);
-            if(id === '"' + postId + '"'){
-                wantedPost = post;
-                break;
+    try{
+        let postId = req.body.postId;
+        await User.find({}, async(error, users) => {
+            if(error) {
+                return res.status(400).json("/createComment 400 Server error.");
             }
-        }
-        
-        /* Add comment */
-        var comment = {commenter: req.body.email, text: req.body.text};
-        wantedPost.postComments.unshift(comment);
-
-        /* Update database */
-        await poster.save();
-        res.json("Commented post successfully.");
+            await users.map(async user => {
+                for(const post of user.userPosts) {
+                    let id = JSON.stringify(post._id);
+                    if(id === '"' + postId + '"'){
+                        var comment = {commenter: req.body.email,
+                                       text: req.body.text}
+                        post.postComments.unshift(comment);
+                        await user.save();
+                        return res.json("Comment added successfully.");
+                    }
+                }
+            })
+        })
 
     } catch (error) {
         console.error(error);
-        return res.status(500).json("Server error.");
+        return res.status(500).json("/createComment 500 Server error.");
     }
 })
-
 // @route POST /getCommentByPost/:post
 // @desc Gets all comments for a given post id.
 // @access Public

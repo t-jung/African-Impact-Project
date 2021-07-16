@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 let token = sessionStorage.getItem('token')
 let type = sessionStorage.getItem('type')
-let loadUser = sessionStorage.getItem('loadUserEmail')
+let loadUser = sessionStorage.getItem('loadUser')
 let userEmail = sessionStorage.getItem('email')
 
 const useStyles = makeStyles((theme) => ({
@@ -47,8 +47,6 @@ export default class ProfileFrame extends Component {
         }
         
     }
-
-
 
     componentWillMount() {
         let email = loadUser;
@@ -111,6 +109,8 @@ const ProfileUserFrame = (info) => {
         phone = user.phone_number
     } 
     var show = loadUser === userEmail ? true : false;
+
+
 
     return (
         <div class="bigContainer">                   
@@ -222,7 +222,7 @@ const InfoCard = ({info}) => {
 
 
 const PostBoard = (props) => {
-
+    console.log(props.feedList)
     let feeds = props.feedList.map(item => {
         return (
             {
@@ -231,7 +231,8 @@ const PostBoard = (props) => {
                 content: item.text,
                 likes: item.likes,
                 comments: item.postComments,
-                poster: item.posterEmail
+                poster: item.posterEmail,
+                postId: item._id
             })
     })
 
