@@ -302,7 +302,6 @@ async(req, res) => {
         return res.status(500).json("/createComment 500 Server error.");
     }
 })
-
 // @route POST /getCommentByPost/:post
 // @desc Gets all comments for a given post id.
 // @access Public
