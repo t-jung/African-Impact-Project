@@ -4,8 +4,10 @@ const {check,validationResult} = require("express-validator");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 let Company = require("../schema/companySchema");
+let Partner = require("../schema/partnerSchema");
 const authentication = require("../middleware/companyAuthentication");
 const user_authentication = require("../middleware/userAuthentication");
+const partner_authentication = require("../middleware/partnerAuthentication");
 
 router.put("/change_company_password",
 authentication,
@@ -39,7 +41,7 @@ authentication,
 ],
 async(req,res)=>{
     try {
-        let{name,email,location,industry,website,description} = req.body;
+        let{name,email,location,industry,website,description,startUpDate,pitch_decks,financials,MCs,founding_team} = req.body;
 
         let errors = validationResult(req);
         if(!errors.isEmpty()) return res.status(400).json({errors:errors.array()});
@@ -50,7 +52,7 @@ async(req,res)=>{
 
         // name or email is empty
         if(name === '' || name === null || email === '' || email === null)
-            return res.status(401).json("Company name or email is empty");
+            return res.status(401).json("Company name or email is empty.");
 
         // find other company
         let companyAll = await Company.find().select('-password');
@@ -78,12 +80,51 @@ async(req,res)=>{
         company.location = location.toString();
         company.industry = industry.toString();
         company.website = website.toString();
+        company.startUpDate = startUpDate.toString();
         company.description = description.toString();
+        company.pitch_decks = pitch_decks.toString();
+        company.financials = financials.toString();
+        company.MCs = MCs.toString();
+        company.founding_team = founding_team.toString();
         await company.save();
-        res.json("Update successfully");        
+        res.json("Update successfully.");        
     } catch (error) {
         console.error(error);
-        return res.status(500).json("Server error");        
+        return res.status(500).json("Server error.");        
+    }
+});
+
+router.get("/partner_view_id/:company_id",
+partner_authentication,
+async(req,res)=>{
+    try{
+        let partnerID = req.partner.id;
+        let partner = await Partner.findById(partnerID);
+        if(!partner) return res.status(404).json("Partner can not find.")
+        let companyID = req.params.company_id;
+        let company = await Company.findById(companyID).select(['pitch_decks','financials','MCs','founding_team']);
+        if(!company) return res.status(404).json("Company info can not find.");
+        return res.json(company);        
+    }catch (error) {
+        console.error(error);
+        return res.status(500).json("Server error.");
+    }
+});
+
+router.get("/partner_view_name/:company_name",
+partner_authentication,
+async(req,res)=>{
+    try{
+        let partnerID = req.partner.id;
+        let partner = await Partner.findById(partnerID);
+        if(!partner) return res.status(404).json("Partner can not find.")
+        let name = req.params.company_name;
+        let company = await Company.findOne({name:name}).select(['pitch_decks','financials','MCs','founding_team']);
+        if(!company) return res.status(404).json("Company info can not find.");
+        return res.json(company);        
+    }catch (error) {
+        console.error(error);
+        return res.status(500).json("Server error.");
     }
 });
 
@@ -91,7 +132,7 @@ router.get("/show_company_info_id/:company_id",
 async(req,res)=>{
     try {
         let companyID = req.params.company_id;
-        let company = await Company.findById(companyID).select('-password');
+        let company = await Company.findById(companyID).select(['-password','-pitch_decks','-financials','-MCs','-founding_team']);
         res.json(company);       
     } catch (error) {
         console.error(error);
@@ -103,13 +144,25 @@ router.get("/show_company_info_name/:company_name",
 async(req,res)=>{
     try {
         let name = req.params.company_name;
-        let company = await Company.findOne({name:name}).select('-password');
+        let company = await Company.findOne({name:name}).select(['-password','-pitch_decks','-financials','-MCs','-founding_team']);
         res.json(company);
     } catch (error) {
         console.error(error);
         return res.status(500).json("Server error.");
     }
-})
+});
+
+router.get("/show_company_info_email/:company_email",
+async(req,res)=>{
+    try {
+        let email = req.params.company_email;
+        let company = await Company.findOne({email:email}).select(['-password','-pitch_decks','-financials','-MCs','-founding_team']);
+        res.json(company);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("Server error.");
+    }
+});
 
 router.get("/get_all_company",
 async(req,res)=>{
@@ -225,7 +278,7 @@ user_authentication,
 ],
 async(req,res)=>{
     try {
-        let{name,email,password,location,industry,website,description} = req.body;
+        let{name,email,password,location,industry,website,description,startUpDate} = req.body;
 
         let errors = validationResult(req);
         if(!errors.isEmpty()) 
@@ -249,8 +302,9 @@ async(req,res)=>{
             location,
             industry,
             website,
+            startUpDate,
             description,
-            status
+            status,
         });
 
         // hasd password

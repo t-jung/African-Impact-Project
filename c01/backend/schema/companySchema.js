@@ -30,6 +30,9 @@ let CompanySchema = mongoose.Schema({
     website:{
         type: String
     },
+    startUpDate: {
+        type: String
+    },
     description:{
         type: String
     },
@@ -40,7 +43,24 @@ let CompanySchema = mongoose.Schema({
     profile_type:{
         type: String,
         default: "company"
+    },
+    pitch_decks:{
+        type: String,
+        default: ""
+    },
+    financials:{
+        type: String,
+        default: ""
+    },
+    MCs:{
+        type: String,
+        default: ""
+    },
+    founding_team:{
+        type: String,
+        default: ""
     }
 })
+
 
 module.exports = CompanySchemas = mongoose.model("company",CompanySchema);

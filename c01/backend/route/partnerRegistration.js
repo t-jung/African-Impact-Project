@@ -149,7 +149,19 @@ router.get("/show_partner_info_name/:partner_name", async(req,res) => {
         console.error(error);
         return res.status(500).json("Server error.");
     }
-})
+});
+
+router.get("/show_partner_info_email/:partner_email",
+async(req,res)=>{
+    try {
+        let email = req.params.partner_email;
+        let partner = await Partner.findOne({email:email}).select('-password');
+        res.json(partner);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("Server error.");
+    }
+});
 
 router.get("/get_all_partner", async(req,res) => {
     try {
