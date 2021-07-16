@@ -152,6 +152,18 @@ async(req,res)=>{
     }
 });
 
+router.get("/show_company_info_email/:company_email",
+async(req,res)=>{
+    try {
+        let email = req.params.company_email;
+        let company = await Company.findOne({email:email}).select(['-password','-pitch_decks','-financials','-MCs','-founding_team']);
+        res.json(company);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("Server error.");
+    }
+});
+
 router.get("/get_all_company",
 async(req,res)=>{
     try {
