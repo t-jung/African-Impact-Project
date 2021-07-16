@@ -13,6 +13,7 @@ class FeedPage extends Component {
 
     state = {
         feedList: [],
+        feedFormatted: [],
         user: {}
     }
 
@@ -28,7 +29,30 @@ class FeedPage extends Component {
                 console.log(response.data)
                 this.setState({feedList: response.data})
             })
+            .then(() => {
+                console.log('getting names')
+                for(const item of this.state.feedList){
+                    axios.get('http://localhost:5000/api/users/getUserByEmail/' + item.posterEmail)
+                        .then(response => {
+                            console.log(response.data)
+                            this.state.feedFormatted.push({
+                                userName: item.userName,
+                                img: item.profilePic,
+                                content: item.text,
+                                likes: item.likes,
+                                comments: item.postComments,
+                                poster: item.posterEmail,
+                                posterName: response.data.firstName + ' ' + response.data.lastName,
+                            })
+                        })
+                        .catch(err => console.log(err))
+                }
+                console.log(this.state.feedFormatted)
+            }
+
+            )
             .catch((err) => console.log(err))
+
         axios.get('http://localhost:5000/api/users/getUserByEmail/' + email)
         .then(response => {
             console.log(response.data)
@@ -39,7 +63,7 @@ class FeedPage extends Component {
 
     render() {
         return(
-            <Feed feedList={this.state.feedList} user={this.state.user}/>
+            <Feed feedList={this.state.feedFormatted} user={this.state.user}/>
         )
     }
 }
@@ -87,17 +111,7 @@ function Feed(props) {
         )
     }
 
-    let feeds = props.feedList.map(item => {
-        return (
-            {
-                userName: props.userName,
-                img: props.profilePic,
-                content: item.text,
-                likes: item.likes,
-                comments: item.postComments,
-                poster: item.posterEmail
-            })
-    })
+    let feeds = props.feedFormatted
 
     console.log(feeds)
 
@@ -116,7 +130,7 @@ function Feed(props) {
                     <button class="btn btn_post_blog" onClick={submitPost}>  POST  </button>
                 </div>
                 <div class="feed_top">
-                    {feeds.length != 0 ? <SingleFeed feedList={feeds}/> : null}
+                    {typeof feeds !== 'undefined' ? <SingleFeed feedList={feeds}/> : null}
                     
                 </div>
                 </div>

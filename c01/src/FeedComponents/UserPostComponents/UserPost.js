@@ -15,6 +15,9 @@ import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 
+let token = sessionStorage.getItem('token')
+let email = sessionStorage.getItem('email')
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: '100%',
@@ -96,11 +99,18 @@ export default function UserPost(props) {
 
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  const [comment, setComment] = React.useState('');
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
   console.log(feed.posterEmail)
+
+  const submitComment = () => {
+    console.log("Adding comment:")
+    console.log(comment)
+  }
+
   return (
 
     <Card className={classes.root}>
@@ -145,10 +155,12 @@ export default function UserPost(props) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
+            <textarea id="userComment" rows="2" cols="100" placeholder="Post something!" onChange={e => setComment(e.target.value)}></textarea>
+            <button class="btn btn_post_blog" onClick={submitComment}>  POST  </button>
             {feed.hasOwnProperty("comment") ? <CommentList comment={feed.comment}/> : null}
             
         </CardContent>
       </Collapse>
     </Card>
   );
-}
+} 

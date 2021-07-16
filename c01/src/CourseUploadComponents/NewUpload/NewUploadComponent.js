@@ -15,13 +15,12 @@ const tagsCategories = [
 const TagsDisplay = () => {
     return(
         <div>
-            {tagsCategories.map(item => {
+            {tagsCategories.map(item => ( 
                 <div class="tagContainer">
-                    <Typography>Testing </Typography>
                     <input type="checkbox" id={item} name={item}/>
                     <label for={item}>{item}</label>
                 </div>
-            })}
+            ))}
         </div>
     )
 }
