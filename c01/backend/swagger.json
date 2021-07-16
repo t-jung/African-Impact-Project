@@ -8,6 +8,27 @@
     "basePath":"/api",
     "produces": ["application/json"],
     "paths": {
+      "/search/all_result":{
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "sprint3-4",
+          "tags": ["/api/search"],
+          "description": "Get all the users, companys, partners.",
+          "responses": {}
+        }
+      },
+      "/search/{search_key}":{
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "sprint3-5",
+          "tags": ["/api/search"],
+          "description": "Get the users, companys, partners by the corresponding search key.",
+          "parameters": [
+            {"name":"search_key","in":"path","required":true}
+          ],
+          "responses": {}
+        }
+      },
       "/company/change_company_password": {
         "put": {
           "x-swagger-router-controller": "home",
@@ -62,6 +83,42 @@
                 }
               }
             }}
+          ],
+          "responses": {}
+        }
+      },
+      "/company/partner_view_id/{company_id}": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "sprint3-1",
+          "tags": ["/api/company"],
+          "description": "Partner could get the company's more information by its ID.",
+          "parameters": [
+            {"name":"company_id","in":"path","required":true}
+          ],
+          "responses": {}
+        }
+      },
+      "/company/partner_view_name/{company_name}": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "sprint3-2",
+          "tags": ["/api/company"],
+          "description": "Partner could get the company's more information by its name.",
+          "parameters": [
+            {"name":"company_name","in":"path","required":true}
+          ],
+          "responses": {}
+        }
+      },
+      "/company/show_company_info_email/{company_email}": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "sprint3-3",
+          "tags": ["/api/company"],
+          "description": "Get the company's information by its email.",
+          "parameters": [
+            {"name":"company_email","in":"path","required":true}
           ],
           "responses": {}
         }
@@ -642,6 +699,22 @@
                   }
                 }
               }
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/partner/show_partner_info_id/{partner_email}": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "sprint3-6",
+          "tags": ["/api/partner"],
+          "description": "Get the partner's infromation by email.",
+          "parameters": [
+            {
+              "name": "partner_email",
+              "in": "path",
+              "required": true
             }
           ],
           "responses": {}

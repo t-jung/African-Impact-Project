@@ -24,7 +24,7 @@ async(req,res)=>{
         console.error(error);
         res.status(500).json("Server error.");        
     }
-})
+});
 
 router.get("/:search_key",
 async(req,res)=>{
@@ -59,6 +59,6 @@ async(req,res)=>{
         console.error(error);
         res.status(500).json("Server error.");        
     }
-})
+});
 
 module.exports = router;

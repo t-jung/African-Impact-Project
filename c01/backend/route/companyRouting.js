@@ -112,12 +112,12 @@ async(req,res)=>{
 });
 
 router.get("/partner_view_name/:company_name",
-//partner_authentication,
+partner_authentication,
 async(req,res)=>{
     try{
-        //let partnerID = req.partner.id;
-        //let partner = await Partner.findById(partnerID);
-        //if(!partner) return res.status(404).json("Partner can not find.")
+        let partnerID = req.partner.id;
+        let partner = await Partner.findById(partnerID);
+        if(!partner) return res.status(404).json("Partner can not find.")
         let name = req.params.company_name;
         let company = await Company.findOne({name:name}).select(['pitch_decks','financials','MCs','founding_team']);
         if(!company) return res.status(404).json("Company info can not find.");
