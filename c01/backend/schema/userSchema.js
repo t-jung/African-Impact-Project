@@ -27,7 +27,6 @@ const userSchema = new Schema({
     },
     status:{
         type: String,
-        // TODO: PLEASE FIX THIS NEEDS TO BE `REQUIRED` not `REQUIRE`
         required: true
     },
     profile_type:{
