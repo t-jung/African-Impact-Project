@@ -78,9 +78,13 @@
 }
 
 .btn_admin_logout{
-    background-color: slateblue
+    background-color: slateblue;
 }
 
 .backArrowButton{
     color: black;
+}
+
+.admin-avatar{
+
 }

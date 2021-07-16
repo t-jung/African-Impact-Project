@@ -3,58 +3,78 @@ import { useState } from 'react';
 import SingleFeed from '../FeedComponents/SingleFeed.js';
 import jwt_decode from "jwt-decode";
 import axios from 'axios';
+import React, { Component } from 'react';
+import { Avatar } from '@material-ui/core';
 
 let token = sessionStorage.getItem('token');
 let email = sessionStorage.getItem('email');
 
-const feedList = [
-    {
-        userName: "Tims",
-        img: "https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322868_1100-1100x628.jpg",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-    },
-    {
-        userName: "Hopes",
-        img: "https://media.discordapp.net/attachments/696740477533421618/860358985038299136/1624125391049.png",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-    },
-    {
-        userName: "Gura",
-        img: "https://cdn.discordapp.com/attachments/829661320923447326/860355801931579422/unknown.png",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-    },
-    {
-        userName: "Hopes",
-        img: "https://media.discordapp.net/attachments/696740477533421618/860358985038299136/1624125391049.png",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-    },
-]
+class FeedPage extends Component {
 
-function Feed() {
+    state = {
+        feedList: [],
+        feedFormatted: [],
+        user: {}
+    }
+
+    constructor(props) {
+        super(props)
+
+    }
+
+    componentDidMount() {
+        axios.get('http://localhost:5000/api/users/getFollowedPosts/' + email)
+            .then(response => {
+                console.log(email)
+                console.log(response.data)
+                this.setState({feedList: response.data})
+            })
+            .then(() => {
+                console.log('getting names')
+                for(const item of this.state.feedList){
+                    axios.get('http://localhost:5000/api/users/getUserByEmail/' + item.posterEmail)
+                        .then(response => {
+                            console.log(response.data)
+                            this.state.feedFormatted.push({
+                                userName: item.userName,
+                                img: item.profilePic,
+                                content: item.text,
+                                likes: item.likes,
+                                comments: item.postComments,
+                                poster: item.posterEmail,
+                                posterName: response.data.firstName + ' ' + response.data.lastName,
+                            })
+                        })
+                        .catch(err => console.log(err))
+                }
+                console.log(this.state.feedFormatted)
+            }
+
+            )
+            .catch((err) => console.log(err))
+
+        axios.get('http://localhost:5000/api/users/getUserByEmail/' + email)
+        .then(response => {
+            console.log(response.data)
+            this.setState({user: response.data})
+        })
+        .catch((err) => console.log(err))
+    }
+
+    render() {
+        return(
+            <Feed feedList={this.state.feedFormatted} user={this.state.user}/>
+        )
+    }
+}
+
+function Feed(props) {
+    console.log(props.feedList);
     let authentication = sessionStorage.getItem('token');
-    console.log(authentication);
     const [searchTerm, setSearchTerm] = useState('')
     const [postItem, setPostItem] = useState('')
     let data = sessionStorage.getItem('token');
     console.log(data);
-
-    const GetFeed = (props) => {
-        let feed = props.feed;
-        return (
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex">
-                    <img src={feed.img} className="barProfilePic" />
-                        <div>
-                            <h5>{feed.userName}</h5>
-                            {feed.content}
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-        )
-    }
 
     const submitPost = (e) => {
         console.log(email)
@@ -90,19 +110,28 @@ function Feed() {
             </div>
         )
     }
+
+    let feeds = props.feedFormatted
+
+    console.log(feeds)
+
     return (
         <div class="conatiner_feed">
             <div class="split left">
                 <div class="feedSection">
                 <div class="postBox">
-                        <a href="/profile"><img class="barProfilePic"
-                            src="https://cdn.discordapp.com/attachments/829661320923447326/860355801931579422/unknown.png"
-                        /></a>
+
+                    <a href="/profile" onclick={ sessionStorage.setItem('loadUserEmail', email) }>
+                        <Avatar>C</Avatar>
+                    </a>
+
+                        
                     <textarea id="userPOst" rows="2" cols="100" placeholder="Post something!" onChange={e => setPostItem(e.target.value)}></textarea>
                     <button class="btn btn_post_blog" onClick={submitPost}>  POST  </button>
                 </div>
                 <div class="feed_top">
-                    <SingleFeed feedList={feedList}/>
+                    {typeof feeds !== 'undefined' ? <SingleFeed feedList={feeds}/> : null}
+                    
                 </div>
                 </div>
                 
@@ -110,9 +139,9 @@ function Feed() {
             <div class="split right">
                 <GetSchedule />
             </div>
-            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossOrigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossOrigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossOrigin="anonymous"></script>
         </div>
     )
 
@@ -121,4 +150,4 @@ function Feed() {
     
 }
 
-export default Feed
+export default FeedPage

@@ -9,6 +9,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 let token = sessionStorage.getItem('token')
 let type = sessionStorage.getItem('type')
+let loadUser = sessionStorage.getItem('loadUserEmail')
+let userEmail = sessionStorage.getItem('email')
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,10 +48,14 @@ export default class ProfileFrame extends Component {
         
     }
 
+
+
     componentWillMount() {
-        console.log(sessionStorage.getItem('type'))
+        let email = loadUser;
+        console.log(loadUser)
+        console.log(userEmail)
         if(type === 'User') {
-            axios.get('http://localhost:5000/api/users/getUserById/' + jwt_decode(token).user.id)
+            axios.get('http://localhost:5000/api/users/getUserByEmail/' + email)
                 .then(response=> {
                     console.log(response.data);
                     this.setState(response.data)
@@ -58,7 +64,7 @@ export default class ProfileFrame extends Component {
                 
         } else if (type === 'Company') {
             console.log("Is company")
-            axios.get('http://localhost:5000/api/company/show_company_info_id/' + jwt_decode(token).company.id)
+            axios.get('http://localhost:5000/api/company/show_company_info_email/' + email)
                 .then(response=> {
                     console.log(response.data);
                     response.data.profile_type = "User"
@@ -66,7 +72,7 @@ export default class ProfileFrame extends Component {
                 })
                 .catch((err) => console.log(err))
         } else {
-            axios.get('http://localhost:5000/api/partner/show_partner_info_id/' + jwt_decode(token).partner.id)
+            axios.get('http://localhost:5000/api/partner/show_partner_info_email/' + email)
             .then(response=> {
                 console.log(response.data);
                 this.setState(response.data)
@@ -104,7 +110,7 @@ const ProfileUserFrame = (info) => {
         email = user.email
         phone = user.phone_number
     } 
-    var show = true;
+    var show = loadUser === userEmail ? true : false;
 
     return (
         <div class="bigContainer">                   
@@ -115,7 +121,8 @@ const ProfileUserFrame = (info) => {
                     profilePic={profilePic}
                     userEmail={email}
                     userPhone={phone}
-                    info={user}/></div>
+                    info={user}
+                    show={show}/></div>
                 <div class="align-self-center flex-grow-1">
                     <div><InfoCard info={description}/></div>
                 </div>
@@ -159,7 +166,27 @@ const CompanyInfo = (props) => {
     )
 }
 
-const NameCard = ({userName, userPhone, profilePic, userEmail, info}) => {
+
+
+const NameCard = ({userName, userPhone, profilePic, userEmail, info, show}) => {
+
+    function followAction() {
+        console.log("clicked")
+
+        let config = {
+            headers: {
+                'authentication-token-user': token,
+            }
+        }
+
+        axios.put('http://localhost:5000/api/users/follow', loadUser, config)
+            .then(res => {
+                console.log(res.data)
+                alert("Followed!")
+            })
+            .catch(err => console.log(err))
+    }
+
     const classes = useStyles();
     console.log(userName);
     return (
@@ -171,11 +198,12 @@ const NameCard = ({userName, userPhone, profilePic, userEmail, info}) => {
                 <h4 class="userName">{userName}</h4>
                 <h5>{userEmail} | {userPhone}</h5>
                 { type === 'Company' ? <CompanyInfo info={info}/> : null}
-                <div class="d-flex" >
-                    <button class="btn btn_profile message text-uppercase ">message</button>
-                    <button class="btn btn_profile follow text-uppercase ">follow</button>
-                </div>
-                
+                { show === false ? (
+                    <div class="d-flex" >
+                        <button class="btn btn_profile message text-uppercase ">message</button>
+                        <button class="btn btn_profile follow text-uppercase " onClick={followAction} >follow</button>
+                    </div>
+                ) : null }
             </div>
         </div>
     )
@@ -196,16 +224,15 @@ const InfoCard = ({info}) => {
 const PostBoard = (props) => {
 
     let feeds = props.feedList.map(item => {
-        const feed = 
+        return (
             {
                 userName: props.userName,
                 img: props.profilePic,
                 content: item.text,
                 likes: item.likes,
                 comments: item.postComments,
-            }
-        
-        return feed
+                poster: item.posterEmail
+            })
     })
 
     console.log(feeds);

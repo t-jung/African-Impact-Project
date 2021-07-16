@@ -29,7 +29,11 @@ class RegisterForm extends React.Component {
         console.log(this.state)
 
         axios.post('http://localhost:5000/api/users/register', this.state)
-        .then(res => console.log(res))
+        .then(res => {
+            console.log(res)
+            sessionStorage.put('token', res.data.token) 
+            window.location ='/feed' 
+        })
         .catch(e => console.log(e));
     }
     render(){
