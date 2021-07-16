@@ -131,6 +131,51 @@ router.delete('/delete/:id', (req, res) =>{
     })
 })
 
+router.post('/createComment/:id',
+[
+    check('text',' text is empty.').not().isEmpty(),
+    check('commenter','Commenter not provided.').not().isEmpty(),
+],
+async(req, res) => {
+    try {
+
+        /* Error Checking */
+        let errors = validationResult(req);
+        if(!errors.isEmpty())
+            return res.status(400).json({errors: errors.array()});
+
+        /* Find user to create Comment object under. */
+        let video = await Video.findById(req.params.id)
+        if(!video) return res.status(404).json("Video does not exist in DB.")
+        
+        var comment = {commenter: req.body.commenter, date: req.body.date, text: req.body.text}; 
+        video.comments.unshift(comment);
+    
+        /* Update database */
+        await video.save();
+        res.json("Comment successful.");
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("Server error.");
+    }
+})
+
+
+router.get('/getAllComments/:id',
+async(req, res) => {
+    try{
+        let video = await Video.findById(req.params.id);
+        if(!video) return res.status(404).json("Video does not exist in DB.")
+        return res.status(200).json(video.comments);
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("/getUserByEmail/ Server error.");
+    }
+})
+
+
 
 
 
