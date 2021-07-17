@@ -1,15 +1,14 @@
 import React, { Component } from 'react'
 import styles from '../../styles.js'
 import './NewUploadComponent.css'
-
 import './NewUploadComponent.css'
-
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import { Checkbox, FormControlLabel, InputLabel } from '@material-ui/core';
 import { ThemeProvider, withStyles } from '@material-ui/styles';
+import axios from 'axios'
 
 const tagsCategories = [
     "Start up", "Investing", "Management", "Interpersonal", "Education", "Electronics"
@@ -156,16 +155,21 @@ class NewUpload extends Component {
             uploadDate: date.toLocaleString('en-US', { timeZone: 'America/Toronto' }),
             tags: data.tags
 
-        }, () => {console.log("current: "); console.log(this.state);});
+        }, () => {console.log("current: "); console.log(this.state);
+        axios.post('http://localhost:5000/api/videos/uploadVideo/', this.state)
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
+        });
 
+        /*
         let config = {
             headers: {
                 'authentication-token-company': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb21wYW55Ijp7ImlkIjoiNjBlNjNjM2RjODNhOGUwOTE0MzRhYzYxIn0sImlhdCI6MTYyNTgwNzMzMiwiZXhwIjoxNjI1ODEwOTMyfQ.W5DSEBZtDzPqm3SFPV-3HrwpuX-9K7ve22fIwKGYDfE',
             }
         }
-
+        */
         console.log(this.state)
-
+        
     }
 
     render() {

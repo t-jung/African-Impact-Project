@@ -33,6 +33,9 @@ const userSchema = new Schema({
       type: String,
       default: "user"
     },
+    tags: {
+        type: [String]
+    },
     userPosts: [{
             posterEmail: {
               type: String,
