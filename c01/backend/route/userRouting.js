@@ -35,7 +35,7 @@ authentication,
 ],
 async(req,res)=>{
     try {
-        let{firstName,middleName, lastName, gender, phoneNumber, address, email, description} = req.body;
+        let{firstName,middleName, lastName, gender, phoneNumber, address, email, description, tags} = req.body;
 
         let errors = validationResult(req);
         if(!errors.isEmpty()) return res.status(400).json({errors:errors.array()});
@@ -70,6 +70,7 @@ async(req,res)=>{
         user.phoneNumber = phoneNumber.toString();
         user.address = address.toString();
         user.description = description.toString();
+        user.tags = tags.toString();
         await user.save();
         res.json("Update successfully");            
     } catch (error) {
