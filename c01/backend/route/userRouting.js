@@ -70,7 +70,7 @@ async(req,res)=>{
         user.phoneNumber = phoneNumber.toString();
         user.address = address.toString();
         user.description = description.toString();
-        user.tags = tags
+        user.tags = tags.toString();
         await user.save();
         res.json("Update successfully");            
     } catch (error) {
