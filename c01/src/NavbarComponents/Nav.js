@@ -2,21 +2,21 @@ import './Nav.css';
 import { Link }from 'react-router-dom'
 import JSONDATA from './MOCKDATA.json'
 import { useState } from 'react'
+import { Avatar } from '@material-ui/core';
 
-function Nav() {
+
+let email = sessionStorage.getItem('email')
+
+function Nav(props) {
 
   const [searchTerm, setSearchTerm] = useState('')
 
   const navStyle={
-    color:'white'
+    color:'black'
   }
 
   return (
     <nav>
-        <Link style={navStyle} to= "/feed">
-        <h3>Home</h3>
-        </Link>
-
         <ul className="nav-links">   
 
             <li>
@@ -43,8 +43,10 @@ function Nav() {
                     })}
                   </td>
                   <td>
-                    <a href="/profile">
-                      <img src="https://cdn.discordapp.com/attachments/829661320923447326/860355801931579422/unknown.png" class="profilePic" />
+                    <a href="/profile" onClick={() => {sessionStorage.setItem('loadUser', email) }}>
+                      <Avatar>
+                        {typeof props.user.firstName !== 'undefined' ? props.user.firstName[0] : 'U'}
+                      </Avatar>
                     </a>
                   </td>
                 </tr>
@@ -52,14 +54,12 @@ function Nav() {
               </div>
             
             </li>
+
             <Link class="nav_padding" style={navStyle} to='/'>
             <li> Log out   </li>
             </Link>
             <Link class="nav_padding" style={navStyle} to='/AdminPage'>
             <li> Adminpage</li>
-            </Link>
-            <Link class="nav_padding" style={navStyle} to='/Profile_Edit'>
-            <li> Edit Profile</li>
             </Link>
         </ul>
     </nav>

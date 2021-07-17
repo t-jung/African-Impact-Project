@@ -246,21 +246,17 @@ async(req, res) => {
     try {
         // TODO: Should email be the identifying piece of information for a user?
         const {email, text} = req.body;
-
         /* Error Checking */
         let errors = validationResult(req);
         if(!errors.isEmpty())
             return res.status(400).json({errors: errors.array()});
-
         /* Find user to create Post object under. */
         let poster = await User.findOne({email : req.body.email}).select('-password');
         if(!poster)
             return res.status(401).json("This user is not registered.");
-
         /* Create post object. */
-        var post = {text: req.body.text}; 
+        var post = {text: req.body.text, posterEmail: req.body.email}; 
         poster.userPosts.unshift(post);
-
         /* Update database */
         await poster.save();
         res.json("Created post successfully.");
@@ -281,45 +277,31 @@ router.post('/createComment',
     check('email','E-mail is empty.').isEmail()
 ],
 async(req, res) => {
-    try {
-        // TODO: Should email be the identifying piece of information for a user?
-        const {email, postId, text} = req.body;
-
-        /* Error Checking */
-        let errors = validationResult(req);
-        if(!errors.isEmpty())
-            return res.status(400).json({errors: errors.array()});
-
-        /* Find user to create Comment object under. */
-        let poster = await User.findOne({email : req.body.email}).select('-password');
-        if(!poster)
-            return res.status(401).json("This user is not registered.");
-    
-
-        /* Finds the appropriate comment. */
-        let wantedPost = null;
-        for(const post of poster.userPosts) {
-            let id = JSON.stringify(post._id);
-            if(id === '"' + postId + '"'){
-                wantedPost = post;
-                break;
+    try{
+        let postId = req.body.postId;
+        await User.find({}, async(error, users) => {
+            if(error) {
+                return res.status(400).json("/createComment 400 Server error.");
             }
-        }
-        
-        /* Add comment */
-        var comment = {commenter: req.body.email, text: req.body.text};
-        wantedPost.postComments.unshift(comment);
-
-        /* Update database */
-        await poster.save();
-        res.json("Commented post successfully.");
+            await users.map(async user => {
+                for(const post of user.userPosts) {
+                    let id = JSON.stringify(post._id);
+                    if(id === '"' + postId + '"'){
+                        var comment = {commenter: req.body.email,
+                                       text: req.body.text}
+                        post.postComments.unshift(comment);
+                        await user.save();
+                        return res.json("Comment added successfully.");
+                    }
+                }
+            })
+        })
 
     } catch (error) {
         console.error(error);
-        return res.status(500).json("Server error.");
+        return res.status(500).json("/createComment 500 Server error.");
     }
 })
-
 // @route POST /getCommentByPost/:post
 // @desc Gets all comments for a given post id.
 // @access Public
@@ -377,27 +359,28 @@ async(req,res)=>{
 router.get('/getFollowedPosts/:email',
 async(req, res) => {
     try{
-        let ret = [];
         let email = req.params.email;
         await User.find({}, async(error, users) => {
-            if(error) {
-                return res.status(400).json("/getFollowedPosts/ Server error.");
-            }
-            await users.map(user => {
-                for(const f of user.follower) {
-                    if (f.email === email) {
-                        uPosts = user.userPosts;
-                        ret = uPosts;
-                        return;
+            if (!error) {
+                let foo = await users.map(async user => {
+                    for(const f of user.follower) {
+                        if (f.email === email) {
+                            return user.userPosts;
+                        }
                     }
-                }
-            })
-        })
+                })
+                Promise.all(foo).then((values) => {
+                    return res.status(200).json(values[0]);
+                })
 
-        return res.json(ret);
+            } else {
+                return res.status(400).json("/getFollowedPosts Server Error.");
+            }
+        })
+        
     } catch (error) {
         console.error(error);
-        return res.status(500).json("/getFollowedPosts/ Server error.");
+        return res.status(500).json("/getFollowedPost Server Error.");
     }
 })
 

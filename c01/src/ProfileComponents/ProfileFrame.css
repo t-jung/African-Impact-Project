@@ -176,3 +176,9 @@ label.title{
     margin-right: 5rem;
     margin-left: 5rem;
 }
+
+.profile-editBtn{
+    color: #E5E5E5;
+    background-color: #0b3142;
+    margin: 1%;
+}

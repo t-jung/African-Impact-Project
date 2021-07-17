@@ -15,6 +15,11 @@ import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 
+import axios from 'axios';
+
+let token = sessionStorage.getItem('token')
+let email = sessionStorage.getItem('email')
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: '100%',
@@ -49,66 +54,118 @@ const CommentList = (props) => {
     )
 }
 
+
+
 const SingleComment = (props) => {
+    const [commentedUser, setCommenter] = React.useState(null);
     const classes = useStyles();
-    let comment = props.comment;
-    console.log(comment)
-    if(comment !== null) {
-        return(
-            <Card className={classes.root}>
-                <CardHeader
-                    avatar={
-                        <Avatar aria-label={comment.userName} className={classes.avatar} src={comment.src}>
-                            {comment.userName[0]}
-                        </Avatar>
-                    }
-                    action={
-                        <IconButton aria-label="report">
-                          <MoreVertIcon />
-                        </IconButton>
-                    }
-                    title={comment.userName}
-                />
-                <CardContent>
-                    <Typography variant="body2"component="p">
-                        {comment.content}
-                    </Typography>
-                </CardContent>
-                <CardActions disableSpacing>
-                    <IconButton aria-label="like">
-                    <FavoriteIcon />
-                    </IconButton>
-                    <IconButton aria-label="share">
-                    <ShareIcon />
-                    </IconButton>
-                </CardActions>
-            </Card>
-        );
+
+    React.useEffect(() => {
+      axios.get('http://localhost:5000/api/users/getUserByEmail/' + props.comment.commenter)
+      .then(res => {
+        setCommenter(res.data)
+      })
+      .catch(err => console.log(err))
+    }, [props])
+
+    if(!commentedUser) {
+      console.log("Didn't get user")
+      return(
+        <h5>No comments</h5>
+      )
     } else {
-        return null;
+          return(
+              <Card className={classes.root}>
+                  <CardHeader
+                      avatar={
+                        <a href='/profile' onClick={ sessionStorage.setItem('loadUser', commentedUser.email)} >
+                          <Avatar className={classes.avatar}>
+                              {commentedUser.firstName[0]}
+                          </Avatar>
+                        </a>
+
+                      }
+                      action={
+                          <IconButton aria-label="report">
+                            <MoreVertIcon />
+                          </IconButton>
+                      }
+                      title={commentedUser.firstName + ' ' + commentedUser.lastName}
+                  />
+                  <CardContent>
+                      <Typography variant="body2"component="p">
+                          {props.comment.text}
+                      </Typography>
+                  </CardContent>
+                  <CardActions disableSpacing>
+                      <IconButton aria-label="like">
+                      <FavoriteIcon />
+                      </IconButton>
+                      <IconButton aria-label="share">
+                      <ShareIcon />
+                      </IconButton>
+                  </CardActions>
+              </Card>
+          );
     }
+
+    
 }
 
 export default function UserPost(props) {
     let feed = props.feed;
+    console.log(props.feed)
     console.log(feed.userName);
-    console.log(feed.comment);
+    console.log(feed.comments);
 
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  const [comment, setComment] = React.useState('');
+  const [commentList, setCommentList] = React.useState(feed.comments);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
   console.log(feed.posterEmail)
+
+  const submitComment = () => {
+    console.log(props)
+    let data = {
+      email: email,
+      text: comment,
+      postId: props.feed.postId
+    }
+
+    console.log(data)
+
+    let config = {
+        headers: {
+            'authentication-token-user': token,
+        }
+    }
+
+    axios.post('http://localhost:5000/api/users/createComment', data, config)
+      .then(res => {
+        console.log(res.data)
+        setComment('')
+        axios.get('http://localhost:5000/api/users/getCommentByPost/' + data.postId)
+          .then(response => {
+            console.log(response.data)
+            setCommentList(response.data)
+          })
+          .catch(error => console.log(error))
+      })
+      .catch(e => console.log(e));
+  }
+
   return (
 
     <Card className={classes.root}>
       <CardHeader
         avatar={
-          <a href="/profile" onclick={ sessionStorage.setItem('loadUserEmail', feed.poster) }>
+          <a href="/profile" onClick={ sessionStorage.setItem('loadUser', feed.poster) }>
             <Avatar aria-label="recipe" className={classes.avatar} src={feed.img}>
-              {feed.userName}
+              {feed.userName[0]}
             </Avatar>
           </a>
         }
@@ -145,10 +202,12 @@ export default function UserPost(props) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-            {feed.hasOwnProperty("comment") ? <CommentList comment={feed.comment}/> : null}
+            <textarea id="userComment" rows="2" cols="100" placeholder="Post something!" value={comment} onChange={e => setComment(e.target.value)}></textarea>
+            <button class="btn btn_post_blog" onClick={submitComment}>  POST  </button>
+            {feed.hasOwnProperty("comments") ? <CommentList comment={commentList}/> : <h5>No comments</h5>}
             
         </CardContent>
       </Collapse>
     </Card>
   );
-}
+} 

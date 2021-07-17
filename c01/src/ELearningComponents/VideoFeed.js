@@ -1,7 +1,32 @@
 import './VideoFeed.css'
 import Video from './Video'
+import axios from 'axios';
+import { Component } from 'react'
 
-const VideoFeed = () => {
+class VideoFeed extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            videos: [],
+        }
+    }
+
+    componentDidMount(){
+        axios.get()
+        .then(res => {
+            console.log(res.data)
+            this.setState(res.data)
+        })
+    }
+
+    render() {
+        return(
+            <Videos videos={this.state.videos}/>
+        )
+    }
+}
+
+const Videos = ({videos}) => {
     return (
         <div className="videoFeed">
             <h2>Videos</h2>

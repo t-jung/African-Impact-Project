@@ -1,15 +1,19 @@
-
 import './ProfileFrame.css'
 import React, { Component } from 'react';
 import SingleFeed from '../FeedComponents/SingleFeed.js';
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
-import { Avatar } from '@material-ui/core';
+import { Avatar, ThemeProvider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import IconButton from '@material-ui/core/IconButton';
+
+import styles from '../styles'
 
 let token = sessionStorage.getItem('token')
 let type = sessionStorage.getItem('type')
-let loadUser = sessionStorage.getItem('loadUserEmail')
+let loadUser = sessionStorage.getItem('loadUser')
+sessionStorage.removeItem('loadUser');
 let userEmail = sessionStorage.getItem('email')
 
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   large: {
     width: 280,
     height: 280,
-  },
+  }
 }));
 
 export default class ProfileFrame extends Component {
@@ -47,8 +51,6 @@ export default class ProfileFrame extends Component {
         }
         
     }
-
-
 
     componentWillMount() {
         let email = loadUser;
@@ -105,6 +107,7 @@ const ProfileUserFrame = (info) => {
         profilePic = user.profilePic
         email = user.email
         phone = user.phoneNumber
+        description = user.description
     } else {
         name = user.name
         email = user.email
@@ -112,9 +115,20 @@ const ProfileUserFrame = (info) => {
     } 
     var show = loadUser === userEmail ? true : false;
 
+    const classes = useStyles();
+
     return (
         <div class="bigContainer">                   
-            <div><EditButton show={show}/></div>
+            <div class="d-flex align-item-center">
+                <IconButton>
+                    <a type="button" href="/feed">
+                        <ArrowBackIcon/>
+                    </a>
+                </IconButton><br/>
+                <ThemeProvider theme={styles}>
+                    <EditButton show={show}/>
+                </ThemeProvider>
+            </div>
             <div class="topContainer">
                 <div class="nameCard"><NameCard
                     userName={name}
@@ -148,7 +162,7 @@ const EditButton = ({show}) => {
     if(show === true) {
         return (
             <div >
-                <a href="/profile_edit" button class="btn">Edit</a>
+                <a href="/profile_edit" button class="btn profile-editBtn">Edit</a>
             </div>
         )
     } else {
@@ -222,7 +236,7 @@ const InfoCard = ({info}) => {
 
 
 const PostBoard = (props) => {
-
+    console.log(props.feedList)
     let feeds = props.feedList.map(item => {
         return (
             {
@@ -231,8 +245,10 @@ const PostBoard = (props) => {
                 content: item.text,
                 likes: item.likes,
                 comments: item.postComments,
-                poster: item.posterEmail
-            })
+                poster: item.posterEmail,
+                postId: item._id
+            }
+        )
     })
 
     console.log(feeds);

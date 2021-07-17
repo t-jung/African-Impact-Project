@@ -9,6 +9,7 @@ import ProfileEditForm from './ProfileComponents/SideBarProfile'
 import Nav from './NavbarComponents/Nav'
 import Feed from './FeedComponents/Feed';
 import NewVideo from './CourseUploadComponents/NewUpload/NewUploadComponent'
+import Elearning from './ELearningComponents/ELearning.js'
 // import Messenger from './MessengerComponents/Messenger'
 import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
@@ -33,6 +34,7 @@ function App() {
         <Route path="/partner_register" component={PartnerRegistrationForm} />
         <Route path="/company_register" component={CompanyForm} />
         <Route path="/new_upload_video" component={NewVideo}/>
+        <Route path="/elearning" component={Elearning}/>
       </Switch>
     </div>
 
