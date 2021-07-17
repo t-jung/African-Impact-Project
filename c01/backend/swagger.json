@@ -1339,6 +1339,61 @@
     ],
       "responses": {}
     }
+},
+"/videos/createComment/{id}": {
+  "post": {
+    "x-swagger-router-controller": "bar",
+    "operationId": "8",
+    "tags": ["/api/videos"],
+    "description": "Allows users to create a comment on a video.",
+    "parameters": [
+      {
+        "id": "id",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name":"request body", 
+        "in":"body", 
+        "schema":
+      {
+        "type": "object",
+        "properties": {
+        "commenter":
+              {
+                "type": "string",
+                "require": true
+              },
+        "date":
+              {
+                "type": "date"
+              },
+              "text":
+              {
+                "type": "string"
+              }
+            }
+          }
+        }
+    ],
+      "responses": {}
+    }
+},
+"/videos/getAllComments/:id": {
+  "get": {
+    "x-swagger-router-controller": "bar",
+    "operationId": "9",
+    "tags": ["/api/videos"],
+    "description": "Gets all comments on a video.",
+    "parameters": [
+      {
+        "id": "id",
+        "in": "path",
+        "required": true
+      }
+    ],
+      "responses": {}
+    }
 }
       
   }

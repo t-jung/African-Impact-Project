@@ -24,10 +24,24 @@ let videoSchema = mongoose.Schema({
         default: Date.now
 
     },
-    tags:
+    tags: 
         [{type: String
-        }]
-
+        }],
+    comments: [{
+            commenter: {
+                type: String,
+                required: true
+            },
+            date: {
+                type: Date,
+                default: Date.now
+            },
+            text: {
+                type: String,
+                required: true,
+                default: "This comment is empty!"
+            },
+            }]
 })
 
 module.exports = video = mongoose.model("Video",videoSchema);
