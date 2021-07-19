@@ -10,6 +10,7 @@ import Nav from '../NavbarComponents/Nav.js'
 
 let token = sessionStorage.getItem('token');
 let email = sessionStorage.getItem('email');
+let type = sessionStorage.getItem('type')
 
 class FeedPage extends Component {
     constructor(props) {
@@ -48,13 +49,26 @@ class FeedPage extends Component {
                 console.log(this.state.feedFormatted)
             })
             .catch((err) => console.log(err)) 
-
-        axios.get('http://localhost:5000/api/users/getUserByEmail/' + email)
-        .then(response => {
-            console.log(response.data)
-            this.setState({user: response.data})
-        })
-        .catch((err) => console.log(err))
+        
+        if(type === 'User') {
+            axios.get('http://localhost:5000/api/users/getUserByEmail/' + email)
+            .then(response => {
+                console.log(response.data)
+                this.setState({user: {
+                    name: response.data.firstName + ' ' + response.data.lastName
+                }})
+            })
+            .catch((err) => console.log(err))
+        } else {
+            axios.get('http://localhost:5000/api/company/show_company_info_email/' + email)
+            .then(response => {
+                console.log(response.data)
+                this.setState({user: {
+                    name: response.data.name
+                }})
+            })
+            .catch((err) => console.log(err))
+        }
     }
 
     render() {
@@ -116,7 +130,7 @@ function Feed(props) {
                 <div class="postBox">
 
                     <a href="/profile" type="button" onClick={() => {sessionStorage.setItem('loadUser', email) ; console.log(email) }}>
-                        <Avatar>{typeof props.user.firstName !== 'undefined' ? props.user.firstName[0] : 'U'}</Avatar>
+                        <Avatar>{typeof props.user.name !== 'undefined' ? props.user.name[0] : 'U'}</Avatar>
                     </a>
 
                     <textarea id="userPOst" rows="2" cols="100" placeholder="Post something!" onChange={e => setPostItem(e.target.value)}></textarea>
