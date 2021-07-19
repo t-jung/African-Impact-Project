@@ -59,8 +59,17 @@ class FeedPage extends Component {
                 }})
             })
             .catch((err) => console.log(err))
-        } else {
+        } else if (type === "Company") {
             axios.get('http://localhost:5000/api/company/show_company_info_email/' + email)
+            .then(response => {
+                console.log(response.data)
+                this.setState({user: {
+                    name: response.data.name
+                }})
+            })
+            .catch((err) => console.log(err))
+        } else {
+            axios.get('http://localhost:5000/api/partner/show_partner_info_email/' + email)
             .then(response => {
                 console.log(response.data)
                 this.setState({user: {
