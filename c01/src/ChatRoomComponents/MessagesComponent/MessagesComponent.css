@@ -1,14 +1,14 @@
-.message {
+.messages {
     display: flex;
     flex-direction: column;
     margin-top: 20px;
 }
 
-.messageTop {
+.messagesTop {
     display: flex;
 }
 
-.messageImg {
+.messagesImg {
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -16,7 +16,7 @@
     margin-right: 10px;
 }
 
-.messageText {
+.messagesText {
     padding: 10px;
     border-radius: 20px;
     background-color: #1877f2;
@@ -24,16 +24,16 @@
     max-width: 300px;
 }
 
-.messageBottom {
+.messagesBottom {
     font-size: 12px;
     margin-top: 10px;
 }
 
-.message.own {
+.messages.own {
     align-items: flex-end;
 }
 
-.message.own .messageText {
+.messages.own .messagesText {
     background-color: rgb(245, 241, 241);
     color: black;
 }
