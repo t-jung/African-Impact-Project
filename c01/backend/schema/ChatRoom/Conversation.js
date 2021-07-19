@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 let ConversationSchema = new mongoose.Schema(
     {
         users: {
-            type: Array
+            type: Array,
+            require: true
         }
     },
     { timestamps: true }  
