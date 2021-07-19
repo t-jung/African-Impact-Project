@@ -2,7 +2,6 @@ const router = require("express").Router();
 const Message = require("../../schema/ChatRoom/Message");
 
 // add
-
 router.post("/", async (req, res) => {
     const newMessage = new Message(req.body);
 
