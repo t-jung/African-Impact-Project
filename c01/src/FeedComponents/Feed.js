@@ -131,20 +131,24 @@ function Feed(props) {
         )
     }
 
+    const PostBox = () => {
+        return (
+            <div class="postBox">
+                <a href="/profile" type="button" onClick={() => {sessionStorage.setItem('loadUser', email) ; console.log(email) }}>
+                    <Avatar>{typeof props.user.name !== 'undefined' ? props.user.name[0] : 'U'}</Avatar>
+                </a>
+                <textarea id="userPOst" rows="2" cols="100" placeholder="Post something!" onChange={e => setPostItem(e.target.value)}></textarea>
+                <button class="btn btn_post_blog" onClick={submitPost}>  POST  </button>
+            </div>
+        )
+    }
+
     return (
         <div class="conatiner_feed">
             <div class="split left">
                 <Nav user={props.user}/>
                 <div class="feedSection">
-                <div class="postBox">
-
-                    <a href="/profile" type="button" onClick={() => {sessionStorage.setItem('loadUser', email) ; console.log(email) }}>
-                        <Avatar>{typeof props.user.name !== 'undefined' ? props.user.name[0] : 'U'}</Avatar>
-                    </a>
-
-                    <textarea id="userPOst" rows="2" cols="100" placeholder="Post something!" onChange={e => setPostItem(e.target.value)}></textarea>
-                    <button class="btn btn_post_blog" onClick={submitPost}>  POST  </button>
-                </div>
+                {type === 'User' ? <PostBox/> : null}
                 <div class="feed_top">
                     {typeof props.feedList !== 'undefined' ? <SingleFeed feedList={props.feedList}/> : <h5>No posts!</h5>}
                 </div>
