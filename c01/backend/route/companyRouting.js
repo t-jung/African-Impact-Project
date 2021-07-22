@@ -182,7 +182,20 @@ async(req,res)=>{
         let email = req.params.company_email;
         let company = await Company.findOne({email:email}).select(['-password','-pitch_decks','-financials','-MCs','-founding_team']);
         similar_company = await recommendation(company.tags);
-        res.json(company);
+        console.log(similar_company);
+        let result = {
+            "name":company.name,
+            "email":company.email,
+            "phone_number":company.phone_number,
+            "location":company.location,
+            "industry":company.industry,
+            "website":company.website,
+            "startUpDate":company.startUpDate,
+            "discription":company.discription,
+            "tags":company.tags,
+            "recommendation":similar_company
+        }
+        res.json(result);
     } catch (error) {
         console.error(error);
         return res.status(500).json("Server error.");
@@ -217,8 +230,6 @@ async function recommendation(tags) {
         }
         // take out the largest elem
         reco_company = [];
-        console.log(company_email);
-        console.log(k_nearest);
         let number = tags.length;
         
         for(let i = number; i >=0; i --){
@@ -228,7 +239,6 @@ async function recommendation(tags) {
                     return reco_company;
             }
         }
-        console.log(reco_company);
         return reco_company;
     } catch (error) {
         console.error(error);
