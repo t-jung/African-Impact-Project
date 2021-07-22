@@ -41,7 +41,7 @@ authentication,
 ],
 async(req,res)=>{
     try {
-        let{name,email,location,industry,website,description,startUpDate,pitch_decks,financials,MCs,founding_team} = req.body;
+        let{name,email,location,industry,website,description,startUpDate,pitch_decks,financials,MCs,founding_team,tags} = req.body;
 
         let errors = validationResult(req);
         if(!errors.isEmpty()) return res.status(400).json({errors:errors.array()});
@@ -60,21 +60,21 @@ async(req,res)=>{
             (companyDB) =>
             companyDB.email !== company.email,
         );
-    
+
         // check name and email are unique
         let companyEmailFromDB = await companyOther.filter(
             (companyEmailExist) =>
-            companyEmailExist.email === company.email
+            companyEmailExist.email === email
         )
 
-        if(companyEmailFromDB.length !== 0) return res.status(401).json("Company name has already been used.");
+        if(companyEmailFromDB.length !== 0) return res.status(401).json("Company email has already been used.");
 
         let companyNameFromDB = await companyOther.filter(
             (companyNameExist) =>
-            companyNameExist.name === company.name
+            companyNameExist.name === name
         )
         
-        if(companyNameFromDB.length !== 0) return res.status(401).json("Company email has already been used.");
+        if(companyNameFromDB.length !== 0) return res.status(401).json("Company name has already been used.");
 
         // update
         company.name = name.toString();
@@ -88,6 +88,10 @@ async(req,res)=>{
         company.financials = financials.toString();
         company.MCs = MCs.toString();
         company.founding_team = founding_team.toString();
+        company.tags = []
+        for(let tag of tags){
+            company.tags.push(tag);
+        }
         await company.save();
         res.json("Update successfully.");        
     } catch (error) {
@@ -130,6 +134,23 @@ async(req,res)=>{
     }
 });
 
+router.get("/partner_view_name/:company_email",
+partner_authentication,
+async(req,res)=>{
+    try{
+        let partnerID = req.partner.id;
+        let partner = await Partner.findById(partnerID);
+        if(!partner) return res.status(404).json("Partner can not find.")
+        let email = req.params.company_email;
+        let company = await Company.findOne({email:email}).select(['pitch_decks','financials','MCs','founding_team']);
+        if(!company) return res.status(404).json("Company info can not find.");
+        return res.json(company);        
+    }catch (error) {
+        console.error(error);
+        return res.status(500).json("Server error.");
+    }
+});
+
 router.get("/show_company_info_id/:company_id",
 async(req,res)=>{
     try {
@@ -148,6 +169,7 @@ async(req,res)=>{
         let name = req.params.company_name;
         let company = await Company.findOne({name:name}).select(['-password','-pitch_decks','-financials','-MCs','-founding_team']);
         res.json(company);
+        
     } catch (error) {
         console.error(error);
         return res.status(500).json("Server error.");
@@ -159,17 +181,66 @@ async(req,res)=>{
     try {
         let email = req.params.company_email;
         let company = await Company.findOne({email:email}).select(['-password','-pitch_decks','-financials','-MCs','-founding_team']);
-        res.json(company);
+        similar_company = await recommendation(company.tags);
+        let reco = {"recommendation":similar_company};
+        let result = Object.assign(company,reco);
+        res.json(result);
     } catch (error) {
         console.error(error);
         return res.status(500).json("Server error.");
     }
 });
 
+// KNN algorithm
+async function recommendation(tags) {
+    try {
+        let companies = await Company.find().select("-password");
+        let k_nearest = [];
+        let company_email = [];
+        for(const company of companies){
+            k_nearest.push(0);
+            company_email.push(company.email);
+        }
+        if(company_email.lenght<=3){
+            return company_email;
+        }
+
+        // compute similarity
+        for(const tag of tags){
+            let index = 0
+            for(const company of companies){
+                let company_tags = company.tags;
+                if(company_tags.indexOf(tag)>-1){
+                    k_nearest[index] = k_nearest[index] + 1;
+                }
+                index++;
+            }
+        }
+        // take out the largest elem
+        reco_company = [];
+        console.log(company_email);
+        console.log(k_nearest);
+        let number = tags.length;
+        
+        for(let i = number; i >=0; i --){
+            for(let j = 0; j < k_nearest.length - 1; j++){
+                if(k_nearest[j]==i) reco_company.push(company_email[j]);
+                if(reco_company.lenght>=5)
+                    return reco_company;
+            }
+        }
+        console.log(reco_company);
+        return reco_company;
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("Server error.");
+    }
+}
+
 router.get("/get_all_company",
 async(req,res)=>{
     try {
-        let company = await Company.find();
+        let company = await Company.find().select("-password");
         res.json(company);
     } catch (error) {
         console.error(error);
