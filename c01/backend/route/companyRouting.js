@@ -182,14 +182,13 @@ async(req,res)=>{
         let email = req.params.company_email;
         let company = await Company.findOne({email:email}).select(['-password','-pitch_decks','-financials','-MCs','-founding_team']);
         similar_company = await recommendation(company.tags);
-        let reco = {"recommendation":similar_company};
-        let result = Object.assign(company,reco);
-        res.json(result);
+        res.json(company);
     } catch (error) {
         console.error(error);
         return res.status(500).json("Server error.");
     }
 });
+
 
 // KNN algorithm
 async function recommendation(tags) {
