@@ -360,18 +360,25 @@ async(req,res)=>{
 router.get('/getFollowedPosts/:email',
 async(req, res) => {
     try{
+        console.log("1");
         let email = req.params.email;
         await User.find({}, async(error, users) => {
             if (!error) {
+                console.log("2");
                 let foo = await users.map(async user => {
+                    console.log("3 " +  user.email);
                     for(const f of user.follower) {
                         if (f.email === email) {
+                            console.log(user.userPosts);
                             return user.userPosts;
                         }
                     }
                 })
                 Promise.all(foo).then((values) => {
-                    return res.status(200).json(values[0]);
+                    var filtered = values.filter(function(x) {
+                        return x !== undefined;
+                    })
+                    return res.status(200).json(filtered);
                 })
 
             } else {
