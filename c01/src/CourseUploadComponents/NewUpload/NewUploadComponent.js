@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
 import styles from '../../styles.js'
 import './NewUploadComponent.css'
-import axios from 'axios'
 import './NewUploadComponent.css'
-
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import { Checkbox, FormControlLabel, InputLabel } from '@material-ui/core';
 import { ThemeProvider, withStyles } from '@material-ui/styles';
+import axios from 'axios'
 
-import tagsCategories from '../../tagCategories'
+const tagsCategories = [
+    "Start up", "Investing", "Management", "Interpersonal", "Education", "Electronics"
+]
 
 const TagsDisplay = (props) => {
     return(
@@ -56,6 +57,10 @@ const NewCourseForm = (props) => {
         trackTagged[event.target.id] = !trackTagged[event.target.id];
     }
 
+    const handleChange = (event) => {
+      setChecked(!checked);
+    };
+
     function handSubmit(event) {
         event.preventDefault();
 
@@ -78,8 +83,8 @@ const NewCourseForm = (props) => {
             tags: []
         }
 
-        for(const [index, check] of trackTagged.entries()) {
-            if(check) data.tags.push(tagsCategories[index])
+        for(const [index, checked] of trackTagged.entries()) {
+            if(checked) data.tags.push(tagsCategories[index])
         }
 
         props.handle(data);
@@ -156,8 +161,15 @@ class NewUpload extends Component {
             .catch(err => console.log(err));
         });
 
+        /*
+        let config = {
+            headers: {
+                'authentication-token-company': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb21wYW55Ijp7ImlkIjoiNjBlNjNjM2RjODNhOGUwOTE0MzRhYzYxIn0sImlhdCI6MTYyNTgwNzMzMiwiZXhwIjoxNjI1ODEwOTMyfQ.W5DSEBZtDzPqm3SFPV-3HrwpuX-9K7ve22fIwKGYDfE',
+            }
+        }
+        */
         console.log(this.state)
-
+        
     }
 
     render() {
