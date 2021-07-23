@@ -63,6 +63,8 @@ const CourseCard = (props) => {
             <CardActions disableSpacing>
                 <IconButton
                     className={classes.expand}
+                    href="/view_uploaded_assignments"
+                    onClick={ sessionStorage.setItem('videoTitle', videoInfo.title) }
                 >
                     <AssessmentIcon/>
                 </IconButton>
@@ -124,7 +126,8 @@ class CourseUpload extends Component {
                 return {
                     title: item.title,
                     image: imgId,
-                    link: item.link
+                    link: item.link,
+                    id: item._id
                 }
             })
         })

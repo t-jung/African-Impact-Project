@@ -1,5 +1,5 @@
 import './ProfileFrame.css'
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import SingleFeed from '../FeedComponents/SingleFeed.js';
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
@@ -31,42 +31,54 @@ const useStyles = makeStyles((theme) => ({
 
 export default class ProfileFrame extends Component {
 
+    state = {
+        name:'',
+        phone_number:'',
+        firstName: '',
+        lastName: '',
+        gender: '',
+        phoneNumber: '',
+        address: '',
+        email: '',
+        password: '',
+        status: '',
+        profile_type: '',
+        userPosts: [],
+        following: '',
+        follower: '',
+        followed: false,
+    }
+
     constructor(props) {
         super(props);
-        this.state = {
-            name:'',
-            phone_number:'',
-            firstName: '',
-            lastName: '',
-            gender: '',
-            phoneNumber: '',
-            address: '',
-            email: '',
-            password: '',
-            status: '',
-            profile_type: '',
-            userPosts: [],
-            following: '',
-            follower: ''
-        }
-        
+        this.state = this.handleStateChange.bind(this)
     }
 
     componentWillMount() {
-        let email = loadUser;
         console.log(loadUser)
         console.log(userEmail)
         if(type === 'User') {
-            axios.get('http://localhost:5000/api/users/getUserByEmail/' + email)
+            axios.get('http://localhost:5000/api/users/getUserByEmail/' + loadUser)
                 .then(response=> {
                     console.log(response.data);
                     this.setState(response.data)
+                }).then(res => {
+                    for(let indiv of this.state.follower) {
+                        console.log(indiv)
+                        console.log(indiv.email)
+                        console.log(userEmail)
+                        if(indiv.email === userEmail) {
+                            console.log(indiv.email)
+                            this.setState({followed: true})
+                            break;
+                        }
+                    }
                 })
                 .catch((err) => console.log(err))
                 
         } else if (type === 'Company') {
             console.log("Is company")
-            axios.get('http://localhost:5000/api/company/show_company_info_email/' + email)
+            axios.get('http://localhost:5000/api/company/show_company_info_email/' + loadUser)
                 .then(response=> {
                     console.log(response.data);
                     response.data.profile_type = "User"
@@ -74,7 +86,7 @@ export default class ProfileFrame extends Component {
                 })
                 .catch((err) => console.log(err))
         } else {
-            axios.get('http://localhost:5000/api/partner/show_partner_info_email/' + email)
+            axios.get('http://localhost:5000/api/partner/show_partner_info_email/' + loadUser)
             .then(response=> {
                 console.log(response.data);
                 this.setState(response.data)
@@ -84,10 +96,18 @@ export default class ProfileFrame extends Component {
         }
     }
 
+    handleStateChange = (value) => {
+        console.log("CLICKEDDDD")
+        let followed = this.state.followed
+        console.log(this.state.followed)
+        this.setState({followed: value})
+        console.log(this.state.followed)
+    }
+
     render(){
         console.log(this.state)
         return (
-            <ProfileUserFrame user={this.state}/>
+            <ProfileUserFrame user={this.state} handle={this.handleStateChange}/>
         )
     }
 }
@@ -95,13 +115,14 @@ export default class ProfileFrame extends Component {
 const ProfileUserFrame = (info) => {
     // User userID to get the following details:
     console.log("Profile");
-    console.log(info);
+    console.log(info.handle);
     let user = info.user
     let name = ''
     let profilePic = ''
     let email = ''
     let phone = ''
     let description = ''
+    let follower = user.follower
     if(type === 'User') {
         name = user.firstName + ' ' + user.lastName
         profilePic = user.profilePic
@@ -133,10 +154,14 @@ const ProfileUserFrame = (info) => {
                 <div class="nameCard"><NameCard
                     userName={name}
                     profilePic={profilePic}
-                    userEmail={email}
+                    email={email}
                     userPhone={phone}
                     info={user}
-                    show={show}/></div>
+                    show={show}
+                    follower={follower}
+                    followed={user.followed}
+                    handle={info.handle}/>
+                    </div>
                 <div class="align-self-center flex-grow-1">
                     <div><InfoCard info={description}/></div>
                 </div>
@@ -182,40 +207,69 @@ const CompanyInfo = (props) => {
 
 
 
-const NameCard = ({userName, userPhone, profilePic, userEmail, info, show}) => {
+const NameCard = (props) => {
 
     function followAction() {
-        console.log("clicked")
-
+        console.log(props.handle)
+        
         let config = {
             headers: {
                 'authentication-token-user': token,
             }
         }
-
-        axios.put('http://localhost:5000/api/users/follow', loadUser, config)
+        let infoEmail = {
+            email: loadUser
+        }
+        axios.put('http://localhost:5000/api/users/follow', infoEmail, config)
             .then(res => {
                 console.log(res.data)
                 alert("Followed!")
+                props.handle(true)
+            })
+            .catch(err => {
+                console.log(err.response.data);
+                 console.log(err.response.headers);
+                 alert(err.response.data)
+            })
+    }
+
+    function unfollowAction() {
+        let config = {
+            headers: {
+                'authentication-token-user': token,
+            }
+        }
+        let infoEmail = {
+            email: loadUser
+        }
+
+        axios.put('http://localhost:5000/api/users/unfollow', infoEmail, config)
+            .then(res => {
+                console.log(res.data)
+                alert("Unfollowed!")
+                props.handle(false)
             })
             .catch(err => console.log(err))
     }
 
     const classes = useStyles();
-    console.log(userName);
+    console.log(props.userName);
+
     return (
         <div class="nameCard">
             <div class="p-2 align-self-center">
-                <Avatar className={classes.large} alt={userName} src={profilePic}>{userName[0]}</Avatar>
+                <Avatar className={classes.large} alt={props.userName} src={props.profilePic}>{props.userName[0]}</Avatar>
             </div>
             <div class="p-2 align-self-center">
-                <h4 class="userName">{userName}</h4>
-                <h5>{userEmail} | {userPhone}</h5>
-                { type === 'Company' ? <CompanyInfo info={info}/> : null}
-                { show === false ? (
+                <h4 class="userName">{props.userName}</h4>
+                <h5>{props.email} | {props.userPhone}</h5>
+                { type === 'Company' ? <CompanyInfo info={props.info}/> : null}
+                { props.show === false ? (
                     <div class="d-flex" >
                         <button class="btn btn_profile message text-uppercase ">message</button>
-                        <button class="btn btn_profile follow text-uppercase " onClick={followAction} >follow</button>
+                        {props.followed === true ? <button class="btn btn_profile follow text-uppercase " onClick={unfollowAction} >unfollow</button> : 
+                        <button class="btn btn_profile follow text-uppercase " onClick={followAction} >follow</button>}
+                        
                     </div>
                 ) : null }
             </div>
@@ -237,19 +291,22 @@ const InfoCard = ({info}) => {
 
 const PostBoard = (props) => {
     console.log(props.feedList)
-    let feeds = props.feedList.map(item => {
-        return (
-            {
-                userName: props.userName,
-                img: props.profilePic,
-                content: item.text,
-                likes: item.likes,
-                comments: item.postComments,
-                poster: item.posterEmail,
-                postId: item._id
-            }
-        )
-    })
+    let feeds = []
+    if(typeof props.feedList !== 'undefined'){
+        feeds = props.feedList.map(item => {
+            return (
+                {
+                    userName: props.userName,
+                    img: props.profilePic,
+                    content: item.text,
+                    likes: item.likes,
+                    comments: item.postComments,
+                    poster: item.posterEmail,
+                    postId: item._id
+                }
+            )
+        })
+    }
 
     console.log(feeds);
 
