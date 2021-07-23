@@ -537,7 +537,7 @@ async(req, res) => {
                         for(const index in post.likes) {
                             let liker = post.likes[index]
                             if(liker === req.body.email){
-                                post.likes.pull("dar.liu@mail.utoronto.ca");
+                                post.likes.pull(req.body.email);
                                 await user.save();
                                 return;
                             }
