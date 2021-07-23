@@ -27,6 +27,7 @@ function App() {
       { /* https://medium.com/@mcurena24/add-direct-messaging-to-your-app-using-react-redux-socket-io-4953ad53944d THIS SEEMS USEFUL */}
       <Route path={/\(?^.{2,}$\d{3}\/(?!register)\)/} component={ Nav } />
       <Switch>
+        
         <Route path="/" exact component={LoginForm} />
         <Route path="/register" component={RegisterForm} />
         <Route path="/profile" component={ProfileFrame} />
