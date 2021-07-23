@@ -97,6 +97,7 @@ function Feed(props) {
     console.log(data);
 
     const submitPost = (e) => {
+        e.preventDefault()
         console.log(email)
         if(postItem.length != 0) {
             console.log(postItem)
@@ -112,7 +113,10 @@ function Feed(props) {
             }
 
             axios.post('http://localhost:5000/api/users/createPost', data, config)
-                .then(res => console.log(res))
+                .then(() => {
+                    setPostItem('')
+                    alert("Posted!")
+                })
                 .catch(e => console.log(e));
         } else {
             alert("Cannot post empty blog!");
