@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styles from '../../styles.js'
 import './NewUploadComponent.css'
-
+import axios from 'axios'
 import './NewUploadComponent.css'
 
 import Typography from '@material-ui/core/Typography';
@@ -150,13 +150,11 @@ class NewUpload extends Component {
             uploadDate: date.toLocaleString('en-US', { timeZone: 'America/Toronto' }),
             tags: data.tags
 
-        }, () => {console.log("current: "); console.log(this.state);});
-
-        let config = {
-            headers: {
-                'authentication-token-company': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb21wYW55Ijp7ImlkIjoiNjBlNjNjM2RjODNhOGUwOTE0MzRhYzYxIn0sImlhdCI6MTYyNTgwNzMzMiwiZXhwIjoxNjI1ODEwOTMyfQ.W5DSEBZtDzPqm3SFPV-3HrwpuX-9K7ve22fIwKGYDfE',
-            }
-        }
+        }, () => {console.log("current: "); console.log(this.state);
+        axios.post('http://localhost:5000/api/videos/uploadVideo/', this.state)
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
+        });
 
         console.log(this.state)
 
