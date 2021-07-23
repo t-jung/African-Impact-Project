@@ -8,65 +8,117 @@ import axios from 'axios'
 class ELearning extends React.Component {
 
     state = {
-        videos: []
+        videos: [
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader..."
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader..."
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader..."
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader..."
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader..."
+            }
+        ]
     }
-    /*
+
+
     componentDidMount() {
         axios.get(`http://localhost:5000/api/videos/admin/getAllVideos`)
         .then(res => {
+            
+            // Cheryl's magic mushroom
             this.setState({videos:res.data});
+            return res.data.map(item =>{ 
+                let linkYT = ''
+                let take = false
+                for(let char of item.link){
+                    if(char === '=') {
+                        take = true
+                    } else if (char === '&') {
+                        break;
+                    } else if (take) {
+                        linkYT = linkYT + char
+                    }
+                }
+                console.log(item.linkYT)
+                return {
+                    title: item.title,
+                    link: linkYT,
+                    uploader: item.uploader
+                }
+                
+            })
+        })
+        .then(res => (
+            this.setState({state: res})
+        )).then(res => console.log(this.state))
+        .catch(err => {
+            console.log(err);
+            this.setState([]);
         })
     }
-        {this.state.videos.map(video => {video.id})}
-        {this.state.videos.map(video => {video.title})}
-        {this.state.videos.map(video => {video.uploader})}
-    */
-
-
-    dummyVideo = {
-        title: "How To Setup a Business Legally",
-        id: "hPTqHt3IV08",
-        uploader: "Hawthorn Law"
-    };
-
-
+    
     videoOnReady (event) {
+        // pauses video on load
         event.target.pauseVideo()
         console.log(event.target)
     }
 
     render() {
-
-        const { title, id, uploader } = this.dummyVideo;
-        console.log(this.dummyVideo)
-
+        // video parameters
         const opts ={
             height: '600',
             width: '900',
             playerVars:{
-                autoplay: 1,
+                autoplay: 0,
             },
         };
-        const {videoID} = this.props
+
+    
+
         return (
             <div className="ElearningApp">
             <Header />
                 <div className="ElearningAppPage">
                     <Sidebar />
                     <div>
-                        {this.dummyVideo.title}
+                        {this.state.videos[4].title}
+                        <script>
+                            console.log("HELLO WORLD")
+                        </script>
                         <YouTube 
-                            videoId={this.dummyVideo.id} 
+                            videoId={this.state.videos[4].link}
                             opts={opts} 
                             onReady={this._onReady} 
                         />
-                        <p> Lesson by: {this.dummyVideo.uploader}</p>
+                        <p> Lesson by: {this.state.videos[4].uploader}</p>
                         <hr/>
                     </div>
                 </div>
             </div>
+
+
+
         )
+        
     }
+   
 
     _onReady(event) {
         // access to player in all event handlers via event.target
