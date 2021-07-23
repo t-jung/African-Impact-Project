@@ -20,7 +20,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import "@fontsource/roboto";
 import { Avatar, ListItemAvatar } from '@material-ui/core';
-import theme from '../styles.js';
+// import theme from '../styles.js';
 
 let email = sessionStorage.getItem('email')
 
