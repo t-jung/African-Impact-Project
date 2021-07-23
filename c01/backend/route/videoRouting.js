@@ -95,15 +95,27 @@ async(req,res)=>{
              return res.status(400).json({errors: errors.array()});
 
              var newVideo = new Video();
+             //Video Link cleaning
+             let linkYT = ''
+                let take = false
+                for(let char of req.body.link){
+                    if(char === '=') {
+                        take = true
+                    } else if (char === '&') {
+                        break;
+                    } else if (take) {
+                        linkYT = linkYT + char
+                    }
+                }
         newVideo.title = req.body.title;
-        newVideo.link = req.body.link;
+        newVideo.link = linkYT;
         newVideo.description = req.body.description;
         newVideo.likes = 0;
         newVideo.uploader = req.body.uploader;
         newVideo.uploadDate = req.body.uploadDate;
         newVideo.tags = req.body.tags;
         
-        // check if video already exists based on email
+        // check if video already exists
         let checkVideo = await Video.findOne({link : newVideo.link})
         if(checkVideo)
             return res.status(401).json("Video already exists in database.");

@@ -56,10 +56,10 @@ class ELearning extends React.Component {
                         linkYT = linkYT + char
                     }
                 }
-                console.log(item.linkYT)
+                console.log(linkYT)
                 return {
                     title: item.title,
-                    link: linkYT,
+                    link: item.linkYT,
                     uploader: item.uploader
                 }
                 
@@ -91,7 +91,7 @@ class ELearning extends React.Component {
         };
 
     
-
+        console.log(this.state.videos[4].link)
         return (
             <div className="ElearningApp">
             <Header />
@@ -99,9 +99,6 @@ class ELearning extends React.Component {
                     <Sidebar />
                     <div>
                         {this.state.videos[4].title}
-                        <script>
-                            console.log("HELLO WORLD")
-                        </script>
                         <YouTube 
                             videoId={this.state.videos[4].link}
                             opts={opts} 
