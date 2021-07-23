@@ -371,7 +371,10 @@ async(req, res) => {
                     }
                 })
                 Promise.all(foo).then((values) => {
-                    return res.status(200).json(values[0]);
+                    var filtered = values.filter(function(x) {
+                        return x !== undefined;
+                    })
+                    return res.status(200).json(filtered);
                 })
 
             } else {
@@ -530,7 +533,7 @@ async(req, res) => {
                         for(const index in post.likes) {
                             let liker = post.likes[index]
                             if(liker === req.body.email){
-                                post.likes.pull("dar.liu@mail.utoronto.ca");
+                                post.likes.pull(req.body.email);
                                 await user.save();
                                 return;
                             }

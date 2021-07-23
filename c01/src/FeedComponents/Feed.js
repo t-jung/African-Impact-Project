@@ -27,7 +27,7 @@ class FeedPage extends Component {
             .then(res => {
                 console.log(email)
                 console.log('getting names')
-                console.log(res.data)
+                console.log(res)
                 let postInfo = [];
                 for(const post of res.data) {
                     axios.get('http://localhost:5000/api/users/getUserByEmail/' + post.posterEmail)

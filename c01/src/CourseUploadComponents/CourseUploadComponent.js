@@ -110,23 +110,9 @@ class CourseUpload extends Component {
             console.log(res)
             this.setState({videoRaw: res.data})
             return res.data.map(item =>{ 
-                let imgId = ''
-                let take = false
-                console.log(item.link)
-                for(let char of item.link){
-                    console.log(char)
-                    if(char === '=') {
-                        take = true
-                    } else if (char === '&') {
-                        break;
-                    } else if (take) {
-                        imgId = imgId + char
-                    }
-                }
                 return {
                     title: item.title,
-                    image: imgId,
-                    link: item.link,
+                    image: item.link,
                     id: item._id
                 }
             })
