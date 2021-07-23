@@ -38,7 +38,7 @@ function Nav(props) {
                           } 
                     }).map((val,key) => {
                       return (
-                        <div class="user" key="key"></div>
+                        <div class="user" key="key2"></div>
                       );
                     })}
                   </td>
