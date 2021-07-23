@@ -10,9 +10,6 @@ import Nav from './NavbarComponents/Nav'
 import Feed from './FeedComponents/Feed';
 import NewVideo from './CourseUploadComponents/NewUpload/NewUploadComponent'
 import Elearning from './ELearningComponents/ELearning.js'
-import ViewVideo from './ELearningComponents/ViewVideo'
-// import Messenger from './MessengerComponents/Messenger'
-// import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 function App() {
   return (
@@ -26,14 +23,13 @@ function App() {
       { /* https://medium.com/@mcurena24/add-direct-messaging-to-your-app-using-react-redux-socket-io-4953ad53944d THIS SEEMS USEFUL */}
       <Route path={/\(?^.{2,}$\d{3}\/(?!register)\)/} component={ Nav } />
       <Switch>
-        <Route path="ViewVideo" exact component={ViewVideo} />
+        
         <Route path="/" exact component={LoginForm} />
         <Route path="/register" component={RegisterForm} />
         <Route path="/profile" component={ProfileFrame} />
         <Route path="/feed" component={Feed} />
         <Route path="/profile_edit" component={ProfileEditForm} />
         <Route path="/adminpage" component={AdminPage} />
-        <Route path="ViewVideo" exact component={ViewVideo} />
         <Route path="/partner_register" component={PartnerRegistrationForm} />
         <Route path="/company_register" component={CompanyForm} />
         <Route path="/new_upload_video" component={NewVideo}/>
