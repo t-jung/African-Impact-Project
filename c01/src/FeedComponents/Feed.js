@@ -29,9 +29,10 @@ class FeedPage extends Component {
                 console.log('getting names')
                 console.log(res)
                 let postInfo = [];
-                for(const post of res.data) {
+                for(const post of res.data[0]) {
                     axios.get('http://localhost:5000/api/users/getUserByEmail/' + post.posterEmail)
-                    .then( resource => (
+                    .then( resource => {
+                        console.log(resource)
                         postInfo.push(
                             {
                                 userName: resource.data.firstName + ' ' + resource.data.lastName,
@@ -42,7 +43,7 @@ class FeedPage extends Component {
                                 poster: post.posterEmail,
                                 postId: post._id
                             })
-                        )
+                        }
                     )
                     .then(() => this.setState({feedFormatted: postInfo}))
                 }
