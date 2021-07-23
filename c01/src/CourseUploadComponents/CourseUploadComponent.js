@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styles from '../styles.js'
+import axios from 'axios';
 
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -14,6 +15,7 @@ import { Icon, IconButton } from '@material-ui/core';
 
 import EditIcon from '@material-ui/icons/Edit';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import AssessmentIcon from '@material-ui/icons/Assessment';
 
 const cardStyles = makeStyles((theme) => ({
     root: {
@@ -39,21 +41,34 @@ const Courses = () => {
     )
 }
 
-const CourseCard = () => {
+const CourseCard = (props) => {
+    let videoInfo = props.videoInfo
+    console.log(props)
+    if(typeof videoInfo === 'undefined') {
+        return(
+            <div></div>
+        )
+    }
     const classes = cardStyles();
+    let imgLink = 'http://img.youtube.com/vi/' + videoInfo.image + '/0.jpg'
     return(
         <Card className={classes.root}>
             <CardMedia
-                title="video"
+                title= {videoInfo.title}
                 component='img'
-                image="http://img.youtube.com/vi/D8IjiKj-U5c/0.jpg"
+                image={imgLink}
             />
             <CardHeader
-                title="Video"/>
+                title={videoInfo.title}/>
             <CardActions disableSpacing>
                 <IconButton
                     className={classes.expand}
+                    href="/view_uploaded_assignments"
+                    onClick={ sessionStorage.setItem('videoTitle', videoInfo.title) }
                 >
+                    <AssessmentIcon/>
+                </IconButton>
+                <IconButton>
                     <EditIcon/>
                 </IconButton>
             </CardActions>
@@ -76,14 +91,64 @@ const CourseAdd = () => {
 }
 
 class CourseUpload extends Component {
+
     constructor(props) {
         super(props);
+        this.state = {
+            videoList: [
+                {
+                    title: '',
+                    image: ''
+                },
+            ]
+        }
     }
+
+    componentDidMount() {
+        axios.get('http://localhost:5000/api/videos/admin/getAllVideos')
+        .then(res => {
+            console.log(res)
+            this.setState({videoRaw: res.data})
+            return res.data.map(item =>{ 
+                let imgId = ''
+                let take = false
+                console.log(item.link)
+                for(let char of item.link){
+                    console.log(char)
+                    if(char === '=') {
+                        take = true
+                    } else if (char === '&') {
+                        break;
+                    } else if (take) {
+                        imgId = imgId + char
+                    }
+                }
+                return {
+                    title: item.title,
+                    image: imgId,
+                    link: item.link,
+                    id: item._id
+                }
+            })
+        })
+        .then(res => (
+            this.setState({videoList: res})
+        )).then(res => console.log(this.state))
+        .catch(err => {
+            console.log(err);
+            this.setState([]);
+        })
+    }
+
     render() {
+        console.log(this.state.videoList)
         return(
             <div>
                 <Grid container>
                     <Grid item container direction="row" justify="flex-start" alignItems="center">
+                        {this.state.videoList.map(item => (
+                            <CourseCard videoInfo={item}/>
+                        ))}
                         <CourseCard></CourseCard>
                         <CourseAdd/>
                     </Grid>
