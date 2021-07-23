@@ -33,55 +33,133 @@ class ELearning extends React.Component {
                 title: "Loading Title...",
                 link:"hFoqBbqfhXo",
                 uploader:"Loading Uploader..."
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader..."
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader..."
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader..."
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader..."
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader..."
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader..."
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader..."
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader..."
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader..."
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader..."
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader..."
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader..."
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader..."
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader..."
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader..."
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader..."
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader..."
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader..."
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader..."
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader..."
             }
         ]
     }
-
-
     componentDidMount() {
         axios.get(`http://localhost:5000/api/videos/admin/getAllVideos`)
         .then(res => {
-            
-            // Cheryl's magic mushroom
             this.setState({videos:res.data});
             return res.data.map(item =>{ 
-                let linkYT = ''
-                let take = false
-                for(let char of item.link){
-                    if(char === '=') {
-                        take = true
-                    } else if (char === '&') {
-                        break;
-                    } else if (take) {
-                        linkYT = linkYT + char
-                    }
-                }
-                console.log(linkYT)
                 return {
                     title: item.title,
-                    link: item.linkYT,
+                    link: item.link,
                     uploader: item.uploader
-                }
-                
+                }    
             })
         })
         .then(res => (
             this.setState({state: res})
-        )).then(res => console.log(this.state))
+        ))
         .catch(err => {
             console.log(err);
             this.setState([]);
         })
     }
-    
     videoOnReady (event) {
-        // pauses video on load
         event.target.pauseVideo()
-        console.log(event.target)
     }
-
     render() {
-        // video parameters
         const opts ={
             height: '600',
             width: '900',
@@ -89,9 +167,6 @@ class ELearning extends React.Component {
                 autoplay: 0,
             },
         };
-
-    
-        console.log(this.state.videos[4].link)
         return (
             <div className="ElearningApp">
             <Header />
@@ -109,19 +184,12 @@ class ELearning extends React.Component {
                     </div>
                 </div>
             </div>
-
-
-
         )
-        
     }
-   
-
     _onReady(event) {
         // access to player in all event handlers via event.target
         event.target.pauseVideo();
       }
-
 }
 export default ELearning
 
