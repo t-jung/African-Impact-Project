@@ -228,6 +228,7 @@ async function recommendation(tags) {
                 index++;
             }
         }
+        
         // take out the largest elem
         reco_company = [];
         let number = tags.length;
