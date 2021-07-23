@@ -45,6 +45,8 @@ app.use("/api/partner",require("./route/partnerRegistration"));
 app.use("/api/users", require("./route/userRouting"));
 app.use("/api/search",require("./route/searchRouting"));
 app.use("/api/videos", require("./route/videoRouting"));
+app.use("/api/chatroom/conversations", require("./route/ChatRoom/conversation"));
+app.use("/api/chatroom/messages", require("./route/ChatRoom/message"));
 
 // Starts the server: listens to the port
 app.listen(port, () => {

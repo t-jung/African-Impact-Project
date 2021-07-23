@@ -10,7 +10,11 @@ import Nav from './NavbarComponents/Nav'
 import Feed from './FeedComponents/Feed';
 import NewVideo from './CourseUploadComponents/NewUpload/NewUploadComponent'
 import Elearning from './ELearningComponents/ELearning.js'
+import UploadedAssignments from './CourseUploadComponents/ViewUploadedAssignments/ViewUploadedAssignments.js'
+import ChatRoom from './ChatRoomComponents/ChatRoomComponent'
+import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import ViewUploadedAssignments from './CourseUploadComponents/ViewUploadedAssignments/ViewUploadedAssignments.js';
 function App() {
   return (
 
@@ -33,7 +37,9 @@ function App() {
         <Route path="/partner_register" component={PartnerRegistrationForm} />
         <Route path="/company_register" component={CompanyForm} />
         <Route path="/new_upload_video" component={NewVideo}/>
-         <Route path="/elearning" component={Elearning}/>
+        <Route path="/elearning" component={Elearning}/>
+        <Route path="/view_uploaded_assignments" component={ViewUploadedAssignments}/>
+        <Route path="/chatroom" component={ChatRoom}/>
       </Switch>
     </div>
 

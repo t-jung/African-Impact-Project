@@ -15,12 +15,14 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import UploadNewVideo from '../CourseUploadComponents/NewUpload/NewUploadComponent.js'
+import ViewVideo from '../CourseUploadComponents/CourseUploadComponent.js'
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import "@fontsource/roboto";
 import { Avatar, ListItemAvatar } from '@material-ui/core';
 // import theme from '../styles.js';
+
 
 let email = sessionStorage.getItem('email')
 
@@ -121,6 +123,7 @@ const AdminPage = () => {
     const [displayViewUserList, setViewUserList] = React.useState(false);
     const [displayBannedUsers , setBannedUsers ] = React.useState(false);
     const [displayUploadVideo , setUploadVideo ] = React.useState(false);
+    const [displayVideo , setVideo ] = React.useState(false);
 
     const selectPendingBoard = () => {
         setPendingBoard(true);
@@ -128,6 +131,7 @@ const AdminPage = () => {
         setViewUserList(false);
         setBannedUsers(false);
         setUploadVideo(false);
+        setVideo(false);
     };
 
     const selectPendingVerif = () => {
@@ -136,6 +140,7 @@ const AdminPage = () => {
         setViewUserList(false);
         setBannedUsers(false);
         setUploadVideo(false);
+        setVideo(false);
     };
 
     const selectViewUserList = () => {
@@ -152,6 +157,7 @@ const AdminPage = () => {
         setViewUserList(false);
         setBannedUsers(true);
         setUploadVideo(false);
+        setVideo(false);
     };
 
     const selectUploadVideo = () => {
@@ -160,6 +166,16 @@ const AdminPage = () => {
         setViewUserList(false);
         setBannedUsers(false);
         setUploadVideo(true);
+        setVideo(false);
+    };
+
+    const selectVideo = () => {
+        setPendingBoard(false);
+        setPendingVerif(false);
+        setViewUserList(false);
+        setBannedUsers(false);
+        setUploadVideo(false);
+        setVideo(true);
     };
 
     useEffect(() => {
@@ -197,7 +213,6 @@ const AdminPage = () => {
                     </Grid>
                 </Grid>
             </ThemeProvider>
-
             </div>
             <div class="admin-tabbuttons">
                 <Grid container direction="row" nowrap="false" justify="space-between" alignItems="center">
@@ -212,6 +227,8 @@ const AdminPage = () => {
                                                 <TabButton onClick={selectBannedUsers}>View banned users</TabButton>}
                         {displayUploadVideo ? <TabButtonSelected onClick={selectUploadVideo}>Upload new video</TabButtonSelected> :
                                                 <TabButton onClick={selectUploadVideo}>Upload new video</TabButton>}
+                        {displayVideo ? <TabButtonSelected onClick={selectVideo}>View video</TabButtonSelected> :
+                                                <TabButton onClick={selectVideo}>View video</TabButton>}
                     </ThemeProvider>
                     
                 </Grid>
@@ -221,7 +238,8 @@ const AdminPage = () => {
                 displayPendingVerif={displayPendingVerif}
                 displayViewUserList={displayViewUserList}
                 displayPendingBoard={displayPendingBoard}
-                uploadNewVideo={displayUploadVideo}/>
+                uploadNewVideo={displayUploadVideo}
+                displayVideo={displayVideo}/>
         </div>
     );
 }
@@ -243,7 +261,11 @@ const DisplayBoard = (props) => {
         return(
             <UploadNewVideo/>
         )
-    } else {
+    } else if(props.displayVideo){
+        return (
+            <ViewVideo/>
+        )
+    }  else {
         return (
             <PendingBoard/>
         );

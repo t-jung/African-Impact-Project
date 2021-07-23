@@ -1394,7 +1394,100 @@
     ],
       "responses": {}
     }
-}
+},
+"/chatroom/conversations/{userId}": {
+  "get": {
+    "x-swagger-router-controller": "bar",
+    "operationId": "0",
+    "tags": ["/api/chatroom"],
+    "description": "Gets conversation of a user.",
+    "parameters": [
+      {
+        "name": "userId",
+        "in": "path",
+        "required": true
+      }
+    ],
+      "responses": {}
+    }
+},
+"/chatroom/conversations/": {
+  "post": {
+    "x-swagger-router-controller": "bar",
+    "operationId": "1",
+    "tags": ["/api/chatroom"],
+    "description": "Creates a conversation between two users.",
+    "parameters": [
+      {
+        "name":"request body", 
+        "in":"body", 
+        "schema":
+          {
+            "type": "object",
+            "properties": {
+              "senderId": {
+                "type": "string",
+                "require": true
+              },
+              "receiverId": {
+                "type": "string",
+                "require": true
+              }
+            }
+          }
+        }
+      ],
+      "responses": {}
+    }
+  },
+  "/chatroom/messages/{conversationId}": {
+    "get": {
+      "x-swagger-router-controller": "bar",
+      "operationId": "2",
+      "tags": ["/api/chatroom"],
+      "description": "Gets messages of a conversation.",
+      "parameters": [
+        {
+          "name": "conversationId",
+          "in": "path",
+          "required": true
+        }
+      ],
+        "responses": {}
+      }
+  },
+  "/chatroom/messages/": {
+    "post": {
+      "x-swagger-router-controller": "bar",
+      "operationId": "3",
+      "tags": ["/api/chatroom"],
+      "description": "Saves a message.",
+      "parameters": [
+        {
+          "name":"request body", 
+          "in":"body", 
+          "schema":
+            {
+              "type": "object",
+              "properties": {
+                "conversationId": {
+                  "type": "string",
+                  "require": true
+                },
+                "sender": {
+                    "type": "string",
+                    "require": true
+                },
+                "text": {
+                    "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {}
+      }
+    }
       
   }
     
