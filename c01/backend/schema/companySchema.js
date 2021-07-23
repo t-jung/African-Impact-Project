@@ -36,6 +36,10 @@ let CompanySchema = mongoose.Schema({
     description:{
         type: String
     },
+    tags: {
+        type:[String],
+        default:[]
+    },
     status:{
         type: String,
         require: true
