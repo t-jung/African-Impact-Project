@@ -9,6 +9,11 @@
 .admin-topbar{
 }
 
+.admin-avatar{
+    margin: 5;
+}
+
+
 .admin-sidebyside{
     display: flex;
     flex-direction: row;
