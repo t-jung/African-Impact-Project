@@ -577,6 +577,47 @@ async(req, res) => {
     }
 })
 
+//Routing for adding an assignment to a user list (for scheduling purposes)
+
+router.post('/assignments/addAssignment',
+async(req, res) => {
+        try {
+            let assignment = {"assignmentName": req.body.assignmentName, "dueDate": req.body.dueDate}
+            await User.findOneAndUpdate({email: req.body.email}, {$push: {assignments: assignment}})//ADDS ASSIGNMENTS BASED ON
+            return res.status(200).json("assignment added successfully")
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("/addAssignment Server error.");
+    }
+})
+
+//Gets all assignments of user BASED ON EMAIL
+router.get('/assignments/getAllAssignments',
+async(req,res) =>{
+        try {
+            let email = req.body.email;
+            let user = await User.findOne({email:email}).select('-password');
+            return res.status(200).json(user.assignments);
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json("/getAllAssignments/ Server error.");
+        }
+    
+})
+
+router.delete('/assignments/removeAssignment',
+async(req,res) => {
+    try {
+        console.log("hell0")
+        let assignment = {"assignmentName": req.body.assignmentName, "dueDate": req.body.dueDate}
+        await User.findOneAndUpdate({email:req.body.email}, {$pull : {assignments : assignment}})//Removes assignment based on email
+        return res.status(200).json('Assignment removed from user assignment list');
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("/removeAssignment error")
+    }
+})
+
 
 
 

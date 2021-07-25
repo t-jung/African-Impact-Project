@@ -1316,6 +1316,10 @@
               "tags":
               {
                 "type": ["string"]
+              },
+              "isAssignment":
+              {
+                "type":"boolean"
               }
             }
           }

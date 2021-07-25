@@ -114,6 +114,7 @@ async(req,res)=>{
         newVideo.uploader = req.body.uploader;
         newVideo.uploadDate = req.body.uploadDate;
         newVideo.tags = req.body.tags;
+        newVideo.isAssignment = req.body.isAssignment;
         
         // check if video already exists
         let checkVideo = await Video.findOne({link : newVideo.link})
