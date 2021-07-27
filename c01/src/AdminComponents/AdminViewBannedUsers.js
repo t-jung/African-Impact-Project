@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import './AdminPage.css'
 import styles from '../styles.js'
 import ReportCard from './AdminPendingReports';
+import VerifCard from './AdminPendingVerifications';
 
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -15,7 +16,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import axios from 'axios';
-import VerifCard from './AdminPendingVerifications';
+import { NavLink} from 'react-router-dom';
 
 import UploadNewVideo from '../CourseUploadComponents/NewUpload/NewUploadComponent.js'
 
@@ -25,18 +26,20 @@ import "@fontsource/roboto";
 import { Avatar, ListItemAvatar } from '@material-ui/core';
 import theme from '../styles.js';
 
-
-export default class VerifBoard extends React.Component {
-    render(){
-        return (
-            // <Grid container>
-            //     <Grid item container direction="row" justify="flex-start" alignItems="center">
-            //         {verifList.map(item => {
-            //             <VerifCard companyName={item.name} link={item.site}/>
-            //         })}
-            //     </Grid>
-            // </Grid>
-            <p>placeholder</p>
+export default class ViewBannedUsers extends React.Component {
+    render() {
+        return(
+        //     <List>
+        //         {list.map(item => (
+        //             <ListItem key={item.name}>
+        //                 <ListItemAvatar>{item.icon}</ListItemAvatar>
+        //                 <ListItemText primary={item.name}/>
+        //             </ListItem>
+        //         ))}
+        //     </List>
+        // );
+        <p>View Banned Users</p>
         )
     }
+    
 }

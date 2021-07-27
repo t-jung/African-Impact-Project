@@ -26,3 +26,20 @@ import "@fontsource/roboto";
 import { Avatar, ListItemAvatar } from '@material-ui/core';
 import theme from '../styles.js';
 
+export default class ViewUserList extends React.Component {
+    render() {
+        return(
+        //     <List>
+        //         {list.map(item => (
+        //             <ListItem key={item.name}>
+        //                 <ListItemAvatar>{item.icon}</ListItemAvatar>
+        //                 <ListItemText primary={item.name}/>
+        //             </ListItem>
+        //         ))}
+        //     </List>
+        // );
+        <p>View User List</p>
+        )
+    }
+    
+}
