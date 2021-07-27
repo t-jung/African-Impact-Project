@@ -12,6 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import styles from '../../styles'
+import Chip from '@material-ui/core/Chip';
 
 import Nav from '../../NavbarComponents/Nav.js'
 import './ResultPage.css'
@@ -22,55 +23,137 @@ let email = sessionStorage.getItem('email')
 let searchTerm = sessionStorage.getItem('searchTerm')
 let found = true
 
+let classNameHolder = ['greenAvatar', 'yellowAvatar', 'pinkAvatar', 'blueAvatar']
+
 const useStyles = makeStyles((theme) => ({
     root: {
-      width: '15vw',
-      height: '20vw',
+      color: 'white',
       margin: '1vw',
     },
     large: {
-        width: '9vw',
-        height: '9vw',
-      }
+        width: '5vw',
+        height: '5vw',
+      },
+    cardSize: {
+        width: '15vw',
+        height: '17vw',
+        padding: '5vh',
+        background: styles.palette.primary.main,
+        borderRadius: 10,
+        borderWidth: 2,
+    },
+    avatarStyle:{
+        fontSize: 25,
+        color: styles.palette.primary.main,
+        fontWeight: 700,
+        border: '7px solid orange'
+    },
+    greenAvatar:{
+        backgroundColor: styles.palette.green.main,
+    },
+    yellowAvatar:{
+        backgroundColor: styles.palette.yellowLemon.main,
+    },
+    pinkAvatar:{
+        backgroundColor: styles.palette.pink.main,
+    },
+    blueAvatar:{
+        backgroundColor: styles.palette.blue.main,
+    },
   }));
 
-const ProfileCard = (props) => {
-    let user = props.user
-    const classes = useStyles();
+const UserCard = (props) => {
+    let name = ''
+    const [hover, setHover] = React.useState(false)
+    if(props.type === 'user') {
+        name = props.info.firstName + ' ' + props.info.lastName
+    } else {
+        name = props.info.name
+    }
+    const classes = useStyles()
+    console.log(props.info.email)
     return(
-        <Card className={classes.root}>
-            <CardContent>
-                <div class="result-header">
-                    <a
-                        href='/profile'
-                        onClick={() => {sessionStorage.setItem('loadUser', user.email); sessionStorage.setItem('loadType', user.profile_type)} } >
-                        <Avatar className={classes.large}>
-                            {user.profile_type === 'user' ? user.firstName[0]
-                                : user.name[0]}
-                        </Avatar>
-                    </a>
-                    <Typography>
-                        {user.profile_type === 'user' ? user.firstName + ' ' + user.lastName: user.name}  
-                    </Typography>
-                </div>
-                <Typography variant="body2"component="p">
-                    { typeof user.description !== 'undefined' ? user.description : "" }
-                </Typography>
-            </CardContent>
-        </Card>
+        <a href="/profile">
+            <div onClick={() => {sessionStorage.setItem('loadUser', props.info.email); sessionStorage.setItem('loadType', props.info.profile_type)}}  class="result-card">
+            <Card className={classes.root}>
+                    <CardContent className={classes.cardSize}>
+                        <div class="result-header">
+                            <Avatar className={[classes.avatarStyle, classes.large, classes[classNameHolder[Math.floor(Math.random() * classNameHolder.length)]]]}>{name[0]}</Avatar>    
+                            <Typography
+                                noWrap={true}
+                                style={{
+                                    color: 'white',
+                                    fontWeight: 300,
+                                    fontSize: 20,
+                                    verticalAlign: true,
+                                    marginTop: 15,
+                                    width: '13vw',
+                                    textAlign: 'center',
+                                }}>
+                                {name}
+                            </Typography>
+
+                            <Typography
+                                noWrap={true}
+                                paragraph={true}
+                                style={{
+                                    color: 'white',
+                                    fontWeight: 100,
+                                    fontSize: 16,
+                                    verticalAlign: true,
+                                    marginTop: 15,
+                                    width: '13vw',
+                                    height: 20,
+                                    textAlign: 'center',
+                                }}>
+                                {props.info.description}
+                            </Typography>
+                            
+                            {props.type === 'user' ? 
+                                <div class="results-nav">
+                                <Typography
+                                    style={{
+                                        color: 'white',
+                                        fontWeight: 100,
+                                        fontSize: 12,
+                                        verticalAlign: true,
+                                        textAlign: 'center',
+                                    }}>
+                                    following: {props.info.following.length} 
+                                </Typography>
+                                <Typography
+                                    style={{
+                                        color: 'white',
+                                        fontWeight: 100,
+                                        fontSize: 12,
+                                        verticalAlign: true,
+                                        textAlign: 'center',
+                                    }}>
+                                    followers: {props.info.follower.length}
+                                </Typography>
+                                </div>
+                                
+                            : null}
+                        </div>
+                    </CardContent>
+                </Card> 
+            </div>
+        </a>
+        
+        
     )
 }
 
 class ResultPage extends React.Component {
     constructor(props) {
         super(props)
-        this.state = [
-            {
-                firstName: " ",
-                name: " ",
-                profile_type: "user",
-            }
-        ]
+        this.state = {
+            found: true,
+            status: "404",
+            company: [],
+            partner: [],
+            user: [],
+        }
     }
 
     componentDidMount(){
@@ -84,14 +167,12 @@ class ResultPage extends React.Component {
             axios.get('http://localhost:5000/api/search/' + searchTerm)
                 .then(res => {
                     this.setState(res.data)
+                    if(res.data.status === "404") {
+                        this.setState({found: false})
+                    }
                     console.log(res.data)
                 })
-                .catch(err => {
-                    if(err.response.status === 404) {
-                        this.setState(err.response.data)
-                        found = false
-                    }
-                })
+                .catch(err => console.log(err))
         }
         
     }
@@ -99,23 +180,82 @@ class ResultPage extends React.Component {
     render() {
         console.log(this.state)
         console.log(typeof this.state)
-
+        
         return(
             <div>
-                <NavBar/>
+                <NavBar found={this.state.found}/>
+                {this.state.user.length !== 0 ? 
+                    <Typography
+                        style={{
+                            color: styles.palette.primary.main,
+                            fontWeight: 900,
+                            fontSize: 18,
+                            verticalAlign: true,
+                            margin: '1vw',
+                        }}>
+                        User
+                    </Typography>
+                    : null }
                 <Grid container>
                     <Grid item container direction="row" justify="flex-start" alignItems="center">
-                        {Object.entries(this.state).map(item => <ProfileCard user={item[1]}/> )}
+                        {this.state.user.map(item => (
+                                <UserCard type='user' info={item} />
+                            
+                        ))}
+                        
                     </Grid>
                 </Grid>
+
+                {this.state.company.length !== 0 ? 
+                    <Typography
+                        style={{
+                            color: styles.palette.primary.main,
+                            fontWeight: 900,
+                            fontSize: 18,
+                            verticalAlign: true,
+                            margin: '1vw',
+                        }}>
+                        Company
+                    </Typography>
+                    : null }
+                    <Grid container>
+                    <Grid item container direction="row" justify="flex-start" alignItems="center">
+                        {this.state.company.map(item => (
+                            <UserCard type='company' info={item} />
+                        ))}
+                        
+                    </Grid>
+                </Grid>
+
+                {this.state.partner.length !== 0 ? 
+                    <Typography
+                        style={{
+                            color: styles.palette.primary.main,
+                            fontWeight: 900,
+                            fontSize: 18,
+                            verticalAlign: true,
+                            margin: '1vw',
+                        }}>
+                        Partner
+                    </Typography>
+                    : null }
+                <Grid container>
+                    <Grid item container direction="row" justify="flex-start" alignItems="center">
+                        {this.state.partner.map(item => (
+                            <UserCard type='partner' info={item} />
+                        ))}
+                        
+                    </Grid>
+                </Grid>
+                
             </div>   
         )
     }
 
 }
 
-const NavBar = () => {
-    const headerDisplay = (found === true ? ("Results for: " + searchTerm) : "No results found, check these usesr: ")
+const NavBar = (props) => {
+    const headerDisplay = (props.found === true ? ("Results for: " + searchTerm) : "No results found, check these usesr: ")
     return(
         <nav>
             <div class="results-nav">

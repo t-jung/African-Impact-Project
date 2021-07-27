@@ -155,9 +155,11 @@ function Feed(props) {
                 <Nav user={props.user}/>
                 <div class="feedSection">
                 <div class="postBox">
-                <a href="/profile" type="button" onClick={() => {sessionStorage.setItem('loadUser', email) ; console.log(email) }}>
-                    <Avatar>{typeof props.user.name !== 'undefined' ? props.user.name[0] : 'U'}</Avatar>
-                </a>
+                    <div class="feed-avatar">
+                        <a href="/profile" type="button" onClick={() => {sessionStorage.setItem('loadUser', email) ; console.log(email) }}>
+                            <Avatar>{typeof props.user.name !== 'undefined' ? props.user.name[0] : 'U'}</Avatar>
+                        </a>
+                    </div>
                 <textarea id="userPOst" rows="2" cols="100" placeholder="Post something!" onChange={e => setPostItem(e.target.value)}></textarea>
                 <button class="btn btn_post_blog" onClick={submitPost}>  POST  </button>
             </div>

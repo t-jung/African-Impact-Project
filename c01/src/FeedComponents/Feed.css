@@ -124,3 +124,7 @@ border-color: transparent;
     height: 75px;
     border-radius: 140px;
 }
+
+.feed-avatar{
+  margin-right: 8px;
+}

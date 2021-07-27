@@ -26,6 +26,18 @@ const theme = createMuiTheme({
         },
         verificationBackground: {
             main: '#bfded6'
+        },
+        green: {
+            main: '#c5dca0'
+        },
+        yellowLemon: {
+            main: '#FFFACD'
+        },
+        pink: {
+            main: '#efced6'
+        },
+        blue: {
+            main: '#a0dae0'
         }
     },
     typography: {

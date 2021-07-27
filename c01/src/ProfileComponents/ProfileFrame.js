@@ -13,10 +13,9 @@ import styles from '../styles'
 
 let token = sessionStorage.getItem('token')
 let type = sessionStorage.getItem('type')
-//let loadUser = sessionStorage.getItem('loadUser')
-//let loadType = sessionStorage.getItem('loadType')
-let loadUser = 'company_3@gmail.com'
-let loadType = 'company'
+let loadUser = sessionStorage.getItem('loadUser')
+let loadType = sessionStorage.getItem('loadType')
+
 sessionStorage.removeItem('loadUser');
 let userEmail = sessionStorage.getItem('email')
 
@@ -264,7 +263,7 @@ const NameCard = (props) => {
     return (
         <div class="nameCard">
             <div class="p-2 align-self-center">
-                <Avatar className={classes.large} alt={props.userName} src={props.profilePic}>{props.userName[0]}</Avatar>
+                <Avatar className={classes.large} alt={props.userName} src={props.profilePic}>{props.userName}</Avatar>
             </div>
             <div class="p-2 align-self-center">
                 <h4 class="userName">{props.userName}</h4>

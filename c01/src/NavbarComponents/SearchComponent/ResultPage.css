@@ -53,3 +53,24 @@
   justify-content: center;
   align-items: center;
 }
+
+.result-card{
+  border-width: 100;
+}
+
+.results-card-shadow{
+  box-shadow: 10px 10px #888888;
+}
+
+.result-avatar{
+    background: linear-gradient(130deg, #74b9ff, #e66867);
+    margin: auto;
+    border-radius: 50%;
+    border: 5px;
+    width: 5vw;
+    height: 5vw;
+}
+
+a {
+  text-decoration: none !important;
+}
