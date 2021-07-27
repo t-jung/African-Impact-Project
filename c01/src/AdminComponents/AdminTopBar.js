@@ -16,6 +16,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import axios from 'axios';
+import { NavLink} from 'react-router-dom';
 
 import UploadNewVideo from '../CourseUploadComponents/NewUpload/NewUploadComponent.js'
 
@@ -25,7 +26,9 @@ import "@fontsource/roboto";
 import { Avatar, ListItemAvatar } from '@material-ui/core';
 import theme from '../styles.js';
 
-let email = sessionStorage.getItem('email')
+let email = sessionStorage.getItem('email');
+
+
 
 const useStyles = makeStyles(() => ({
     root:{
@@ -67,6 +70,13 @@ export const AdminTopBar = () => {
             </Grid>
         </ThemeProvider>
 
+        </div>
+        <div>
+        <NavLink to="/adminpage" activeClassName="is-active" exact = {true}>Pending Reports</NavLink>
+        <NavLink to="/adminpage/verification" activeClassName="is-active">Pending Verifications</NavLink>
+        <NavLink to="/adminpage/users" activeClassName="is-active">View User List</NavLink>
+        <NavLink to="/adminpage/banned" activeClassName="is-active">View Banned Users</NavLink>
+        <NavLink to="/adminpage/video" activeClassName="is-active">Upload New Video</NavLink>
         </div>
         </div>
     );

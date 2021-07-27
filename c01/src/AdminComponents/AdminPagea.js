@@ -33,6 +33,7 @@ const useStyles = makeStyles(() => ({
     }
 }))
 
+
 axios.get('http://localhost:5000/api/users/admin/getAllUsers')
     .then(response => console.log(response.data))
     .catch(() => console.log("cancer"));
@@ -283,7 +284,7 @@ const PendingBoard = () => {
             </Grid>
         </Grid>
     )
-}
+};
 
 const verifList = [
     {

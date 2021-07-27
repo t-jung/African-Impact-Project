@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import './AdminPage.css'
 import styles from '../styles.js'
+import ReportCard from './AdminReportCard';
 
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -23,60 +24,39 @@ import "@fontsource/roboto";
 import { Avatar, ListItemAvatar } from '@material-ui/core';
 import theme from '../styles.js';
 
-const ReportCardStyled =  withStyles((theme) => ({
-    root: {
-        background: theme.palette.secondaryBackground.main,
-        width: '30%',
-        height: 180,
-        minWidth: 200,
-        borderRadius: 20,
-        border: 0,
-        color: 'black',
-        fontFamily: theme.typography.fontFamily,
-        margin: 10
-    },
-}))(Card);
 
+export default class PendingBoard extends React.Component{
+    state = {
+        pendingReports: []
+    }
 
-export const ReportCard = (props) => {
-    return(
-        <ThemeProvider theme={styles}>
-            <ReportCardStyled variant="outlined">
-                <Grid
-                    container
-                    direction="column"
-                    justify="flex-start"
-                    alignItems="stretch">
-                    <Grid item xs zeroMinWidth wrap="nowrap">
-                        <div>
-                            <CardContent>
-                                <Typography style={{fontWeight: 700}}>
-                                    {props.reporter} to {props.reported}
-                                </Typography>
-                                <Typography noWrap>
-                                    {props.reason}
-                                </Typography>
-                            </CardContent>
-                        </div>
-                    </Grid>
-                    <Grid item
-                        container
-                        direction="row"
-                        justify="center"
-                        alignItems="center">
-                        <CardActions alignself="flex-end">
-                            <div class="admin-cardBtn admin-stickBottom">
-                                <Button size="small">Ban</Button>
-                                <Button size="small">Ignore</Button>
-                                <Button size="small">Details</Button>
-                            </div>
-                        </CardActions>
-                    </Grid>
+    axiosGetReports = () => {
+        axios.get('http://localhost:5000/api/reports/')
+    .then(response => this.setState({pendingReports: response.data}))
+    .catch(console.log("error yes"));
+    }
+
+    componentDidMount() {
+
+        try {
+            axios.get('http://localhost:5000/api/reports/')
+        .then(response => this.setState({pendingReports: response.data}))
+        .catch(console.log("error yes"));
+        } catch (e){
+            
+        }
+    }
+    
+    render () {
+     return (
+            <Grid container>
+                <Grid item container direction="row" justify="flex-start" alignItems="center">
+                    {this.state.pendingReports.map(item => (
+                        <ReportCard reporter={item.reporter} reported={item.reported} reason={item.reason}/>
+                    ))}
                 </Grid>
-            </ReportCardStyled>
-        </ThemeProvider>
-        
-    );
+            </Grid>
+         );
+   }
 }
 
-export default ReportCard;
