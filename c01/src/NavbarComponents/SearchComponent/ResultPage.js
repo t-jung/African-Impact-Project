@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import Grid from '@material-ui/core/Grid';
 
 import Avatar from '@material-ui/core/Avatar';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -19,8 +18,6 @@ import SearchBar from './SearchBar';
 import { IconButton } from '@material-ui/core';
 
 let email = sessionStorage.getItem('email')
-let searchTerm = sessionStorage.getItem('searchTerm')
-let found = true
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -43,7 +40,7 @@ const ProfileCard = (props) => {
                 <div class="result-header">
                     <a
                         href='/profile'
-                        onClick={() => {sessionStorage.setItem('loadUser', user.email); sessionStorage.setItem('loadType', user.profile_type)} } >
+                        onClick={ sessionStorage.setItem('loadUser', user.email)} >
                         <Avatar className={classes.large}>
                             {user.profile_type === 'user' ? user.firstName[0]
                                 : user.name[0]}
@@ -74,26 +71,11 @@ class ResultPage extends React.Component {
     }
 
     componentDidMount(){
-        if(searchTerm.length === 0) {
-            axios.get('http://localhost:5000/api/all_result')
-                .then(res => {
-                    this.setState(res.data)
-                    console.log(res.data)
-                })
-        } else {
-            axios.get('http://localhost:5000/api/search/' + searchTerm)
-                .then(res => {
-                    this.setState(res.data)
-                    console.log(res.data)
-                })
-                .catch(err => {
-                    if(err.response.status === 404) {
-                        this.setState(err.response.data)
-                        found = false
-                    }
-                })
-        }
-        
+        axios.get('http://localhost:5000/api/search/' + sessionStorage.getItem('searchTerm'))
+            .then(res => {
+                this.setState(res.data)
+                console.log(res.data)
+            })
     }
 //{(this.state).map(item => <ProfileCard user={item}/>)}
     render() {
@@ -103,19 +85,17 @@ class ResultPage extends React.Component {
         return(
             <div>
                 <NavBar/>
-                <Grid container>
-                    <Grid item container direction="row" justify="flex-start" alignItems="center">
-                        {Object.entries(this.state).map(item => <ProfileCard user={item[1]}/> )}
-                    </Grid>
-                </Grid>
-            </div>   
+               <div class="result-cards">
+                    {Object.entries(this.state).map(item => <ProfileCard user={item[1]}/> )}
+                </div> 
+            </div>
+            
         )
     }
 
 }
 
 const NavBar = () => {
-    const headerDisplay = (found === true ? ("Results for: " + searchTerm) : "No results found, check these usesr: ")
     return(
         <nav>
             <div class="results-nav">
@@ -132,7 +112,7 @@ const NavBar = () => {
                             fontSize: 25,
                             verticalAlign: true,
                         }}>
-                            {headerDisplay}  
+                        Results 
                     </Typography>  
                 </div>
                 

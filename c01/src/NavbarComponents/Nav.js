@@ -43,7 +43,7 @@ function Nav(props) {
                     })}
                   </td>
                   <td>
-                    <a href="/profile" onClick={() => {sessionStorage.setItem('loadUser', email); sessionStorage.setItem('loadType', sessionStorage.getItem('type')) }}>
+                    <a href="/profile" onClick={() => {sessionStorage.setItem('loadUser', email) }}>
                       <Avatar>
                         {typeof props.user.name !== 'undefined' ? props.user.name[0] : 'U'}
                       </Avatar>

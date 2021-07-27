@@ -139,15 +139,6 @@
     margin-top: 0;
 }
 
-.company-card {
-    background-color: #ffc8c8;
-    border-radius: 20px;
-    padding: 30px;
-    border-width: 10px;
-    border-color: grey;
-    margin-bottom: 5vh;
-}
-
 .lessonBoard {
     max-width: 25vh;
     min-width: fit-content;
@@ -190,13 +181,4 @@ label.title{
     color: #E5E5E5;
     background-color: #0b3142;
     margin: 1%;
-}
-
-.company-recommendations{
-    margin-bottom: 5vh;
-}
-
-.company-website{
-    display: flex;
-    flex-direction: row;
 }

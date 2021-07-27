@@ -37,7 +37,7 @@
 .result-cards{
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .results-nav{
