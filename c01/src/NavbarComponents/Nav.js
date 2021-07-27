@@ -3,6 +3,7 @@ import { Link }from 'react-router-dom'
 import JSONDATA from './MOCKDATA.json'
 import { useState } from 'react'
 import { Avatar } from '@material-ui/core';
+import SearchBar from './SearchComponent/SearchBar';
 
 
 let email = sessionStorage.getItem('email')
@@ -18,29 +19,12 @@ function Nav(props) {
   return (
     <nav>
         <ul className="nav-links">   
-
             <li>
               <div class="nav-topbar">
                 <table>
                 <tr>
                   <td width="500">
-                    <input type="text" placeholder="  Search" 
-                      onChange={event =>{
-                        setSearchTerm(event.target.value)
-                      }}
-                    />
-                    {JSONDATA.filter((val) => {
-                      if (searchTerm == "") {
-                        return val
-                          } else if (val.first_name.toLowerCase().includes(searchTerm.toLowerCase())
-                                      || val.last_name.toLowerCase().includes(searchTerm.toLowerCase())) {
-                            return val
-                          } 
-                    }).map((val,key) => {
-                      return (
-                        <div class="user" key="key2"></div>
-                      );
-                    })}
+                    <SearchBar/>
                   </td>
                   <td>
                     <a href="/profile" onClick={() => {sessionStorage.setItem('loadUser', email) }}>

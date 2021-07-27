@@ -36,7 +36,6 @@
     left: 0;
     width: 70%;
     height: 100vh;
-    min-width: 1000px;
   }
   
   .feedSection {
@@ -45,7 +44,6 @@
   }
 
   .right {
-    min-width: 350px;
     right: 0;
     width: 30%;
     display: flex;
@@ -69,7 +67,7 @@
 }
 
 .container_feed {  
-  padding: 50px; 
+  padding: 50px;  
 }  
 
 .card {
@@ -110,8 +108,7 @@ border-color: transparent;
 
 .btn_post_blog{
   background: cornflowerblue;
-  margin-top: 10px;
-  margin-left: 10px;
+  margin-left: 20px;
   margin-bottom:13px;
 }
 
@@ -127,13 +124,3 @@ border-color: transparent;
     height: 75px;
     border-radius: 140px;
 }
-
-#photo {
-  margin-right: 10px;
-}
-
-#userPOst{
-  max-width: 500px;
-  min-width: 300px;
-}
-
