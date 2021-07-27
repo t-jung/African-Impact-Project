@@ -12,6 +12,7 @@ import NewVideo from './CourseUploadComponents/NewUpload/NewUploadComponent'
 import Elearning from './ELearningComponents/ELearning.js'
 import UploadedAssignments from './CourseUploadComponents/ViewUploadedAssignments/ViewUploadedAssignments.js'
 import ChatRoom from './ChatRoomComponents/ChatRoomComponent'
+import ResultPage from './NavbarComponents/SearchComponent/ResultPage'
 import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import ViewUploadedAssignments from './CourseUploadComponents/ViewUploadedAssignments/ViewUploadedAssignments.js';
@@ -40,6 +41,7 @@ function App() {
         <Route path="/elearning" component={Elearning}/>
         <Route path="/view_uploaded_assignments" component={ViewUploadedAssignments}/>
         <Route path="/chatroom" component={ChatRoom}/>
+        <Route path="/search_results" component={ResultPage}/>
       </Switch>
     </div>
 

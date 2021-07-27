@@ -59,6 +59,7 @@ class FeedPage extends Component {
                     name: response.data.firstName + ' ' + response.data.lastName
                 }})
             })
+            .then(sessionStorage.setItem('name', this.state.name))
             .catch((err) => console.log(err))
         } else if (type === "Company") {
             axios.get('http://localhost:5000/api/company/show_company_info_email/' + email)
@@ -67,7 +68,7 @@ class FeedPage extends Component {
                 this.setState({user: {
                     name: response.data.name
                 }})
-            })
+            }).then(sessionStorage.setItem('name', this.state.name))
             .catch((err) => console.log(err))
         } else {
             axios.get('http://localhost:5000/api/partner/show_partner_info_email/' + email)
@@ -76,7 +77,7 @@ class FeedPage extends Component {
                 this.setState({user: {
                     name: response.data.name
                 }})
-            })
+            }).then(sessionStorage.setItem('name', this.state.name))
             .catch((err) => console.log(err))
         }
     }
