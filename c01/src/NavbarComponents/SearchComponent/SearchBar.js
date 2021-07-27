@@ -16,7 +16,10 @@ const Search = () => {
             value={searchTerm}
             placeHolder="Search"
             onChange={e => setSearchTerm(e)}
-            onRequestSearch={search} />
+            onRequestSearch={search}
+            style={{
+                marginRight: '5vw',
+            }} />
     )
 }
 

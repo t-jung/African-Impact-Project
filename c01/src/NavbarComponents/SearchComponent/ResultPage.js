@@ -110,7 +110,7 @@ const NavBar = () => {
                             color: styles.palette.primary.main,
                             fontWeight: 900,
                             fontSize: 25,
-                            marginRight: '20vw',
+                            verticalAlign: true,
                         }}>
                         Results 
                     </Typography>  
