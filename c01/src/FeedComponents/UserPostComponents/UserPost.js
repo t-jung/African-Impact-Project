@@ -78,7 +78,7 @@ const SingleComment = (props) => {
               <Card className={classes.root}>
                   <CardHeader
                       avatar={
-                        <a href='/profile' onClick={ sessionStorage.setItem('loadUser', commentedUser.email)} >
+                        <a href='/profile' onClick={ () => {sessionStorage.setItem('loadUser', commentedUser.email); sessionStorage.setItem('loadType', commentedUser.profile_type)}} >
                           <Avatar className={classes.avatar}>
                               {commentedUser.firstName[0]}
                           </Avatar>
@@ -186,7 +186,7 @@ export default function UserPost(props) {
     <Card className={classes.root}>
       <CardHeader
         avatar={
-          <a href="/profile" onClick={ sessionStorage.setItem('loadUser', feed.poster) }>
+          <a href="/profile" onClick={() => {sessionStorage.setItem('loadUser', feed.email); sessionStorage.setItem('loadType', sessionStorage.getItem('type'))}}>
             <Avatar aria-label="recipe" className={classes.avatar} src={feed.img}>
               {feed.userName[0]}
             </Avatar>
