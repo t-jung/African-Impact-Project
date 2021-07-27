@@ -59,7 +59,6 @@ class FeedPage extends Component {
                     name: response.data.firstName + ' ' + response.data.lastName
                 }})
             })
-            .then(sessionStorage.setItem('name', this.state.name))
             .catch((err) => console.log(err))
         } else if (type === "Company") {
             axios.get('http://localhost:5000/api/company/show_company_info_email/' + email)
@@ -68,7 +67,7 @@ class FeedPage extends Component {
                 this.setState({user: {
                     name: response.data.name
                 }})
-            }).then(sessionStorage.setItem('name', this.state.name))
+            })
             .catch((err) => console.log(err))
         } else {
             axios.get('http://localhost:5000/api/partner/show_partner_info_email/' + email)
@@ -77,7 +76,7 @@ class FeedPage extends Component {
                 this.setState({user: {
                     name: response.data.name
                 }})
-            }).then(sessionStorage.setItem('name', this.state.name))
+            })
             .catch((err) => console.log(err))
         }
     }
@@ -155,7 +154,7 @@ function Feed(props) {
                 <Nav user={props.user}/>
                 <div class="feedSection">
                 <div class="postBox">
-                <a href="/profile" type="button" onClick={() => {sessionStorage.setItem('loadUser', email) ; console.log(email) }}>
+                <a href="/profile" id="photo" type="button" onClick={() => {sessionStorage.setItem('loadUser', email) ; console.log(email) }}>
                     <Avatar>{typeof props.user.name !== 'undefined' ? props.user.name[0] : 'U'}</Avatar>
                 </a>
                 <textarea id="userPOst" rows="2" cols="100" placeholder="Post something!" onChange={e => setPostItem(e.target.value)}></textarea>
@@ -167,6 +166,7 @@ function Feed(props) {
                 </div>
                 
             </div>
+            <div></div>
             <div class="split right">
                 <GetSchedule />
             </div>
