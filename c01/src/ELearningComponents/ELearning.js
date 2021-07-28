@@ -244,7 +244,6 @@ const Upload = (props) => {
                     class="elearning-button"
                 />
             </form>
-            
         </div>
     )
 }

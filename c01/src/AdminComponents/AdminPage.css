@@ -18,15 +18,16 @@
 }
 
 .admin-container{
-    margin-right: 10vh;
-    margin-left: 10vh;
+    margin-right: 5vw;
+    margin-left: 5vw;
+    margin-top: 2vw;
 }
 
 .admin-cardBtns{
     flex: 1;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
     flex-direction: row;
 }
 

@@ -44,8 +44,8 @@ export default class AdminPage extends React.Component {
     render(){
         return (
             <div class="admin-container">
-            <AdminTopBar />
-            <AdminRouter />
+                <AdminTopBar />
+                <AdminRouter />
             </div>
         )
     }
