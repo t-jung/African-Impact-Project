@@ -609,8 +609,6 @@ async(req,res) =>{
 router.delete('/notes/removeNotes',
 async(req,res) => {
     try {
-        console.log("hell0")
-        let assignment = {"assignmentName": req.body.assignmentName, "dueDate": req.body.dueDate}
         await User.findOneAndUpdate({email:req.body.email}, {notes: ""})
         return res.status(200).json('Note removed from user notes');
     } catch (error) {
