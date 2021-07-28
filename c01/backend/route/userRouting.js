@@ -593,10 +593,10 @@ async(req, res) => {
 })
 
 //Gets notes of user BASED ON EMAIL
-router.get('/notes/getNotes',
+router.get('/notes/getNotes/:email',
 async(req,res) =>{
         try {
-            let email = req.body.email;
+            let email = req.params.email;
             let user = await User.findOne({email:email}).select('-password');
             return res.status(200).json(user.notes);
         } catch (error) {
