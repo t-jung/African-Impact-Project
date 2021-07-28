@@ -199,6 +199,7 @@ router.post('/uploadDeliverable', [
     if (req.files === null) {
         return res.status(400).json({msg: 'No file was uploaded.'});
     }
+    console.log(req.body);
 
     const file = req.files.file;
     console.log(file.name);
