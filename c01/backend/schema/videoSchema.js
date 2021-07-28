@@ -44,7 +44,18 @@ let videoSchema = mongoose.Schema({
             }],
     isAssignment: 
             {type: Boolean
-            }
+            },
+    deliverables:
+    [{
+        uploader: {
+            type: String,
+            required: true
+        },
+        path: {
+            type:String,
+            required: true
+        }
+    }]
 })
 
 module.exports = video = mongoose.model("Video",videoSchema);
