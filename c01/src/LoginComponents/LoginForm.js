@@ -76,12 +76,13 @@ export default class Login extends Component {
                  }
             });
         } else {
-            axios.post('http://localhost:5000/api/login/partner_email', userInfo)
-            .then(res => { console.log(res)
+            axios.post('http://localhost:5000/api/partner/login/partner_email', userInfo)
+            .then(res => {
+                console.log(res)
             sessionStorage.setItem('token', res.data.token)
             sessionStorage.setItem('type', 'Partner')
             sessionStorage.setItem('email', this.state.email)
-                window.location("feed");
+            window.location = '/feed'
             })
             .catch(err =>{
                  console.log(err)
