@@ -220,17 +220,17 @@ async(req, res) => {
     /* Files are stored on the server as 'videoObjectId-uploaderEmail' This 
        allows for easy overwriting (only one deliverable per user per 
        assignment). */
-    serverFileName = req.body.video + "-" + req.body.uploader;
-    serverPath = `${__dirname}/../../filesys/deliverables/${serverFileName}`;
+    var serverFileName = req.body.video + "-" + req.body.uploader;
+    var serverPath = `${__dirname}/../../filesys/deliverables/${serverFileName}`;
 
-    newDeliverables = {
+    var newDeliverables = {
         uploader: req.body.uploader,
         path: serverPath,
         fileName: file.name
     }
 
     /* Overwrite entries if needed. Only one deliverable per user per assignment. */
-    valid = [] // This array contains all entrys which do not have the current uploader.
+    var valid = [] // This array contains all entrys which do not have the current uploader.
     for(const index in video.deliverables) {
         entry = video.deliverables[index];
         if(entry.uploader != req.body.uploader){
@@ -256,7 +256,7 @@ async(req, res) => {
     });
 })
 
-router.post('/DeleteDeliverables', [
+router.delete('/DeleteDeliverables', [
     check('video', 'No Video id was provided.').not().isEmpty()
 ],
 async(req, res) => {
