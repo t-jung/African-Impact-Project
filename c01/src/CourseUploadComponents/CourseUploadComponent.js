@@ -92,16 +92,22 @@ const CourseCard = (props) => {
             </CardContent>
             <CardActions
                 disableSpacing>
-                <IconButton
-                    className={[classes.expand, classes.action]}
-                    href="/view_uploaded_assignments"
-                    onClick={() =>{
-                        sessionStorage.setItem('videoId', videoInfo.id);
-                        sessionStorage.setItem('videoTitle', videoInfo.title)
-                    }}
-                >
-                    <AssessmentIcon/>
-                </IconButton>
+
+                {videoInfo.isAssignment === true ? 
+                    <IconButton
+                        className={[classes.expand, classes.action]}
+                        href="/view_uploaded_assignments"
+                        onClick={() =>{
+                            sessionStorage.setItem('videoId', videoInfo.id);
+                            sessionStorage.setItem('videoTitle', videoInfo.title)
+                        }}
+                    >
+                        <AssessmentIcon/>
+                    </IconButton>
+                    : null
+                }
+                
+                    
             </CardActions>
         </Card>
     );  
@@ -115,7 +121,8 @@ class CourseUpload extends Component {
             videoList: [
                 {
                     title: '',
-                    image: ''
+                    image: '',
+                    isAssignment: false,
                 },
             ]
         }
@@ -130,7 +137,8 @@ class CourseUpload extends Component {
                 return {
                     title: item.title,
                     image: item.link,
-                    id: item._id
+                    id: item._id,
+                    isAssignment: item.isAssignment,
                 }
             })
         })

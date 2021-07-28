@@ -2,7 +2,9 @@ const express = require("express");
 const router = express.Router();
 const Video = require("../schema/videoSchema");
 const {check,validationResult} = require("express-validator");
-const ObjectId = require('mongodb').ObjectID;
+const path = require('path');
+const fs = require('fs');
+const { useTheme } = require("@material-ui/core");
 
 router.put("/updateDescription/:id",
 async(req,res)=>{
@@ -108,6 +110,11 @@ async(req,res)=>{
                         linkYT = linkYT + char
                     }
                 }
+                
+        if (linkYT === ""){
+            return res.status(400).json("Invalid link provided.")
+        }
+
         newVideo.title = req.body.title;
         newVideo.link = linkYT;
         newVideo.description = req.body.description;
@@ -115,12 +122,14 @@ async(req,res)=>{
         newVideo.uploader = req.body.uploader;
         newVideo.uploadDate = req.body.uploadDate;
         newVideo.tags = req.body.tags;
-        console.log(typeof req.body.isAssignment);
-        console.log(req.body.isAssignment);
         newVideo.isAssignment = req.body.isAssignment;
+        if(!req.body.isAssignment){
+            newVideo.isAssignment = false;
+        }
         
         // check if video already exists
         let checkVideo = await Video.findOne({link : newVideo.link})
+        console.log(checkVideo);
         if(checkVideo)
             return res.status(401).json("Video already exists in database.");
 
@@ -201,12 +210,16 @@ async(req, res) => {
         return res.status(400).json({msg: 'No file was uploaded.'});
     }
 
+    /* Find the video where we want to upload to. */
     let video = await Video.findById(req.body.video);
     if(!video) return res.status(404).json("Invalid videoId.")
     if(!video.isAssignment) return res.status(403).json("The provided videoId is not an assignment, and therefore can not have assignments uploaded to it.")
     
     const file = req.files.file;
 
+    /* Files are stored on the server as 'videoObjectId-uploaderEmail' This 
+       allows for easy overwriting (only one deliverable per user per 
+       assignment). */
     serverFileName = req.body.video + "-" + req.body.uploader;
     serverPath = `${__dirname}/../../filesys/deliverables/${serverFileName}`;
 
@@ -216,9 +229,7 @@ async(req, res) => {
         fileName: file.name
     }
 
-    /* Check if there is an existing entry. */
-    
-    // For Some reason all of the remove commands do not work.
+    /* Overwrite entries if needed. Only one deliverable per user per assignment. */
     valid = [] // This array contains all entrys which do not have the current uploader.
     for(const index in video.deliverables) {
         entry = video.deliverables[index];
@@ -227,12 +238,14 @@ async(req, res) => {
         }
     }
 
+    /* Add the new deliverable to the list of valid deliverables. */
     valid.unshift(newDeliverables);
     video.deliverables = valid;
     video.save();
 
-    serverFileName = req.body.video + req.body.uploader;
-
+    /* Store the file on the server. Files are stored on the server as
+       'videoObjectId-uploaderEmail' This allows for easy overwriting
+       (only one deliverable per user per assignment). */
     file.mv(serverPath, err => {
         if (err) {
             console.error(err);
@@ -255,6 +268,7 @@ async(req, res) => {
     if(!video) return res.status(404).json("Invalid videoId.")
     if(!video.isAssignment) return res.status(403).json("The provided videoId is not an assignment, and therefore can not have its deliverables deleted.")
 
+    /* Simply set the deliverables array to an empty array (thus deleting all entries) */
     video.deliverables = [];
     video.save();
 
@@ -278,27 +292,31 @@ async(req, res) => {
     })
     
     Promise.all(foo).then((values)=>{
-        console.log(values)
         return res.status(200).json(values);
     })
 })
 
-router.get('/downloadDeliverable/:id',
+router.get('/downloadDeliverable/:user/:id',
 async(req, res) => {
+    try{
+        /* Find video */
+        let video = await Video.findById(req.params.id);
+        if(!video) return res.status(404).json("Invalid videoId.")
+        if(!video.isAssignment) return res.status(403).json("The provided videoId is not an assignment, and does not have deliverables.")
 
-    console.log("1")
-    let file = await Video.findById(req.params.id);
-    if(!file) return res.status(404).json("Invalid videoId.")
-
-    console.log("2")
-    console.log(file)
-    res.set({
-        'Content-Type': file.video_mimetype
-    })
-    
-    console.log("3")
-    res.sendFile(__dirname + '..' + file.path);
-    //return res.status(200).json("Deliverables cleared.");
+        /* Find deliverable file */
+        for(const index in video.deliverables) {
+            file = video.deliverables[index];
+            if(video.deliverables[index].uploader === req.params.user){
+                 /* Send server-side file with the stored file name. */
+                res.download(path.resolve(file.path), file.fileName);
+            }
+        }
+        
+    } catch (error) {
+        res.status(400).send('Error while downloading file. Try again later.');
+        console.error(error);
+    }
 })
 
 
