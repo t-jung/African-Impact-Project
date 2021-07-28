@@ -204,12 +204,8 @@ const Upload = (props) => {
         
         const data = new FormData();
         data.append('file', file)
-
-        let upload = {
-            video: props.video,
-            uploader: props.upload,
-            data: data
-        }
+        data.append('video', props.video)
+        data.append('uploader', props.upload)
 
         let config = {
             headers: {
@@ -217,10 +213,7 @@ const Upload = (props) => {
             }
         }
 
-        console.log(data)
-
-        
-        axios.post('http://localhost:5000/api/videos/uploadDeliverable', upload, config)
+        axios.post('http://localhost:5000/api/videos/uploadDeliverable', data, config)
             .then(() => alert("Uploaded!"))
             .catch(err => alert(err.response.data))
         
