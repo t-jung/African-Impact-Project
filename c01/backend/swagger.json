@@ -728,17 +728,9 @@
             "description": "Gets user notes.",
             "parameters": [
               {
-                "name": "request body",
-                "in": "body",
-                "schema" : {
-                  "type": "object",
-                  "properties":{
-                  "email": {
-                    "type": "string",
-                    "require": true
-                  }
-              }
-              }
+                "name": "userEmail",
+                "in": "path",
+                  "require" : true
             }
             ],
             "responses": {}
