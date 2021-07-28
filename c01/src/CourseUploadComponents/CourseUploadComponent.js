@@ -3,7 +3,7 @@ import styles from '../styles.js'
 import axios from 'axios';
 
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 // import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
@@ -20,26 +20,31 @@ import AssessmentIcon from '@material-ui/icons/Assessment';
 const cardStyles = makeStyles((theme) => ({
     root: {
         width: '30vh',
-        margin: '2vw',
+        height: 'auto',
+        margin: '2vh',
     },
     expand: {
         marginLeft: 'auto'
+    },
+    media: {
+        width: '30vh',
+        height: '17vh',
+    },
+    content: {
+        padding: 3,
+        paddingLeft: 15,
+        fontSize: 18,
+        width: 'fit-content',
+    },
+    actions: {
+        width: 'fit-content',
+        padding: 0,
+    },
+    action: {
+        padding: 1,
+        paddingRight: 8,
     }
 }))
-
-const Courses = () => {
-    return (
-        <div class="formContainer">
-            <ThemeProvider theme={styles}>
-            <Typography style={{
-                        color: styles.palette.primary.main,
-                        fontWeight: 900,
-                        fontSize: 30,
-                    }}>Courses</Typography><br/>
-            </ThemeProvider>
-        </div>
-    )
-}
 
 const CourseCard = (props) => {
     let videoInfo = props.videoInfo
@@ -57,18 +62,21 @@ const CourseCard = (props) => {
                 title= {videoInfo.title}
                 component='img'
                 image={imgLink}
+                className={classes.media}
             />
-            <CardHeader
-                title={videoInfo.title}/>
-            <CardActions disableSpacing>
+            <CardContent className={classes.content}>
+                {videoInfo.title}
+            </CardContent>
+            <CardActions
+                disableSpacing>
                 <IconButton
-                    className={classes.expand}
+                    className={[classes.expand, classes.action]}
                     href="/view_uploaded_assignments"
                     onClick={ sessionStorage.setItem('videoTitle', videoInfo.title) }
                 >
                     <AssessmentIcon/>
                 </IconButton>
-                <IconButton>
+                <IconButton className={classes.action}>
                     <EditIcon/>
                 </IconButton>
             </CardActions>
