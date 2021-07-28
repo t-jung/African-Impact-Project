@@ -105,47 +105,6 @@ const ViewAssignments = () => {
     )
 }
 
-const Upload = (props) => {
-
-    const[file, setFile] = React.useState('');
-
-    const onSubmit = (e) => {
-        e.preventDefault();
-
-        const data = new FormData();
-        data.append('file', file)
-
-        console.log(data)
-
-    }
-
-    const selectFile = (e) => {
-        setFile(e.target.files[0])
-    }
-
-    const onDownload = () => {
-        return download(file, "test", 'multipart/form-data')
-    }
-
-    return(
-        <div class="elearning-upload-container">
-            <form onSubmit={onSubmit}>
-                <input
-                    id="upload-btn"
-                    class="elearning-button"
-                    type="file"
-                    onChange={selectFile}
-                /> 
-                <input
-                    type='submit'
-                    class="elearning-button"
-                />
-                <button onClick={onDownload}>click</button>
-            </form>
-        </div>
-    )
-}
-
 class ViewUploadedAssignments extends Component {
     constructor(props) {
         super(props)
@@ -172,7 +131,6 @@ class ViewUploadedAssignments extends Component {
                 <div class="view-assignments-container">
                     <UserList list={this.state}/>
                 </div>
-                <Upload/>
             </div>
         )
     }
