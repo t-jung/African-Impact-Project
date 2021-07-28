@@ -47,7 +47,9 @@ const UserList = (props) => {
     function onDownload(email, fileName) {
         console.log("CLICKED" + email)
         console.log(email)
-        return axios.get('http://localhost:5000/api/videos/downloadDeliverable/' + email + '/' + videoId)
+        return axios.get('http://localhost:5000/api/videos/downloadDeliverable/' + email + '/' + videoId, {
+            responseType: 'blob'
+          })
             .then(res => {
                 console.log("clicked")
                 console.log(res.data)
