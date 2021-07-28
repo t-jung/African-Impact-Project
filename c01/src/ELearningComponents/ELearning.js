@@ -5,7 +5,8 @@ import YouTube from 'react-youtube'
 import React from 'react'
 import axios from 'axios'
 
-import Button from '@material-ui/core/Button';
+let email = sessionStorage.getItem('email')
+
 
 class ELearning extends React.Component {
 
@@ -207,7 +208,7 @@ const Upload = (props) => {
         const data = new FormData();
         data.append('file', file)
         data.append('video', props.video);
-        data.append('uploader', props.uploader);
+        data.append('uploader', email);
 
         let config = {
             headers: {
