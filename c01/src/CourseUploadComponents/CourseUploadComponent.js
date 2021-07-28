@@ -95,7 +95,10 @@ const CourseCard = (props) => {
                 <IconButton
                     className={[classes.expand, classes.action]}
                     href="/view_uploaded_assignments"
-                    onClick={ sessionStorage.setItem('videoId', videoInfo.id) }
+                    onClick={() =>{
+                        sessionStorage.setItem('videoId', videoInfo.id);
+                        sessionStorage.setItem('videoTitle', videoInfo.title)
+                    }}
                 >
                     <AssessmentIcon/>
                 </IconButton>
