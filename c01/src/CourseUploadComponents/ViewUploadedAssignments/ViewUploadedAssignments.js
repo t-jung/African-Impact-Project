@@ -42,22 +42,35 @@ const useStyles = makeStyles((theme) => ({
 const UserList = (props) => {
     const list = props.list
     const classes = useStyles()
+    console.log(list)
 
-    const onDownload = (props) => {
-        return download()
+    function onDownload(email, fileName) {
+        console.log("CLICKED" + email)
+        console.log(email)
+        return axios.get('http://localhost:5000/api/videos/downloadDeliverable/' + email + '/' + videoId)
+            .then(res => {
+                console.log("clicked")
+                console.log(res.data)
+                return download(res.data, fileName, 'multipart/form-data')
+            })
+            .then(() => console.log("Finished"))
+            .catch(err => console.log)
     }
 
     return(
         <List>
-            {list.map(item => (
-                <ListItem key={item.uploader}>
-                    <Avatar className={[classes.avatarStyle, classes[classNameHolder[Math.floor(Math.random() * classNameHolder.length)]]]}>{item.uploader[0].toUpperCase()}</Avatar>
-                    <ListItemText primary={item.filename} secondary={item.uploader}/>
-                    <IconButton>
+            {Object.entries(list).map(item => {
+                return(
+                <ListItem key={item[1].uploader}>
+                    <Avatar className={[classes.avatarStyle, classes[classNameHolder[Math.floor(Math.random() * classNameHolder.length)]]]}>
+                        {typeof item[1].uploader !== 'undefined' ? item[1].uploader[0].toUpperCase() : 'U'}
+                    </Avatar>
+                    <ListItemText primary={item[1].fileName} secondary={item[1].uploader}/>
+                    <IconButton onClick={() => onDownload(item[1].uploader, item[1].fileName)} >
                         <GetAppIcon/>
                     </IconButton>
-                </ListItem>
-            ))}
+                </ListItem>)
+            })}
         </List>
     )
 }
@@ -135,15 +148,17 @@ class ViewUploadedAssignments extends Component {
     constructor(props) {
         super(props)
         this.state = [
-            {uploader: "cheryl", filename: "asd.png"},
-            {uploader: "dawwen", filename: "dsa.pdf"}
+            {uploader: "cheryl", fileName: "asd.png"},
+            {uploader: "dawwen", fileName: "dsa.pdf"}
         ]
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/api/video/getDeliverables' + videoId)
+        console.log(videoId)
+        axios.get('http://localhost:5000/api/videos/getDeliverables/' + videoId)
             .then(res => {
-                //this.setState(res.data)
+                console.log(res.data)
+                this.setState(res.data)
             })
             .catch(err => console.log(err))
     }
