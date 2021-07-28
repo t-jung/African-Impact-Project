@@ -203,7 +203,8 @@ async(req, res) => {
 
     let video = await Video.findById(req.body.video);
     if(!video) return res.status(404).json("Invalid videoId.")
-
+    if(!video.isAssignment) return res.status(403).json("The provided videoId is not an assignment, and therefore can not have assignments uploaded to it.")
+    
     const file = req.files.file;
 
     serverFileName = req.body.video + "-" + req.body.uploader;
@@ -252,6 +253,7 @@ async(req, res) => {
 
     let video = await Video.findById(req.body.video);
     if(!video) return res.status(404).json("Invalid videoId.")
+    if(!video.isAssignment) return res.status(403).json("The provided videoId is not an assignment, and therefore can not have its deliverables deleted.")
 
     video.deliverables = [];
     video.save();
@@ -261,33 +263,12 @@ async(req, res) => {
     return res.status(200).json("Deliverables cleared.");
 })
 
-
-router.get('/downloadDeliverable/:id',
-async(req, res) => {
-    if (req.files === null) {
-        return res.status(400).json({msg: 'No file was uploaded.'});
-    }
-
-    console.log("1")
-    let file = await Video.findById(req.params.id);
-    if(!file) return res.status(404).json("Invalid videoId.")
-
-    console.log("2")
-    console.log(file)
-    res.set({
-        'Content-Type': file.video_mimetype
-    })
-    
-    console.log("3")
-    res.sendFile(__dirname + '..' + file.path);
-    //return res.status(200).json("Deliverables cleared.");
-})
-
 router.get('/getDeliverables/:id',
 async(req, res) => {
 
     let video = await Video.findById(req.params.id);
     if(!video) return res.status(404).json("Invalid videoId.")
+    if(!video.isAssignment) return res.status(403).json("The provided videoId is not an assignment, and does not have deliverables.")
 
     let foo = await (video.deliverables).map(async entry => {
         var obj = Object();
