@@ -157,11 +157,11 @@ class ResultPage extends React.Component {
     }
 
     componentDidMount(){
+        console.log(typeof searchTerm.length)
         if(searchTerm.length === 0) {
-            axios.get('http://localhost:5000/api/all_result')
+            axios.get('http://localhost:5000/api/search/all_result')
                 .then(res => {
                     this.setState(res.data)
-                    console.log(res.data)
                 })
         } else {
             axios.get('http://localhost:5000/api/search/' + searchTerm)
@@ -170,7 +170,6 @@ class ResultPage extends React.Component {
                     if(res.data.status === "404") {
                         this.setState({found: false})
                     }
-                    console.log(res.data)
                 })
                 .catch(err => console.log(err))
         }
@@ -178,9 +177,6 @@ class ResultPage extends React.Component {
     }
 //{(this.state).map(item => <ProfileCard user={item}/>)}
     render() {
-        console.log(this.state)
-        console.log(typeof this.state)
-        
         return(
             <div>
                 <NavBar found={this.state.found}/>
