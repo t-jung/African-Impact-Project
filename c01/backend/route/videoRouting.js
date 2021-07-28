@@ -110,6 +110,11 @@ async(req,res)=>{
                         linkYT = linkYT + char
                     }
                 }
+                
+        if (linkYT === ""){
+            return res.status(400).json("Invalid link provided.")
+        }
+
         newVideo.title = req.body.title;
         newVideo.link = linkYT;
         newVideo.description = req.body.description;
@@ -118,9 +123,13 @@ async(req,res)=>{
         newVideo.uploadDate = req.body.uploadDate;
         newVideo.tags = req.body.tags;
         newVideo.isAssignment = req.body.isAssignment;
+        if(!req.body.isAssignment){
+            newVideo.isAssignment = false;
+        }
         
         // check if video already exists
         let checkVideo = await Video.findOne({link : newVideo.link})
+        console.log(checkVideo);
         if(checkVideo)
             return res.status(401).json("Video already exists in database.");
 
