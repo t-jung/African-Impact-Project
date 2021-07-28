@@ -176,17 +176,21 @@ class ELearning extends React.Component {
                 <div className="ElearningAppPage">
                     <Sidebar />
                     <div>
-                        {this.state.videos[4].title}
+                        {this.state.videos[10].title}
                         <YouTube 
-                            videoId={this.state.videos[4].link}
+                            videoId={this.state.videos[10].link}
                             opts={opts} 
                             onReady={this._onReady} 
                         />
-                        <p> Lesson by: {this.state.videos[4].uploader}</p>
+                        <p> Lesson by: {this.state.videos[10].uploader}</p>
                         <hr/>
                     </div>
                 </div>
-                <Upload video={this.state.videos[4]._id} uploader={this.state.videos[4].uploader}/>
+                {this.state.videos[10].isAssignment === true ? 
+                    <Upload video={this.state.videos[10]._id} uploader={this.state.videos[10].uploader}/>
+                    : null
+                }
+                
             </div>
             
         )
@@ -215,9 +219,6 @@ const Upload = (props) => {
                 'Content-Type': 'multipart/form-data'
             }
         }
-
-        console.log(data)
-
         
         axios.post('http://localhost:5000/api/videos/uploadDeliverable', data, config)
             .then(() => alert("Uploaded!"))
