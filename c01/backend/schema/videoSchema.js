@@ -52,7 +52,11 @@ let videoSchema = mongoose.Schema({
             required: true
         },
         path: {
-            type:String,
+            type: String,
+            required: true
+        },
+        fileName: {
+            type: String,
             required: true
         }
     }]

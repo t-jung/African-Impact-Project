@@ -193,23 +193,40 @@ async(req, res) => {
 
 router.post('/uploadDeliverable', [
     check('uploader', 'No uploader provided for deliverable.').not().isEmpty(),
-    check('video', 'No Video id').not().isEmpty()
+    check('video', 'No Video id was provided.').not().isEmpty()
 ],
-(req, res) => {
+async(req, res) => {
     if (req.files === null) {
         return res.status(400).json({msg: 'No file was uploaded.'});
     }
-    console.log(req.body);
 
+    let video = await Video.findById(req.body.video);
+    if(!video) return res.status(404).json("Invalid videoId.")
+
+    
     const file = req.files.file;
-    console.log(file.name);
-    file.mv(`${__dirname}/../../filesys/deliverables/${file.name}`, err => {
+
+    serverFileName = req.body.video + "-" + req.body.uploader;
+    serverPath = `${__dirname}/../../filesys/deliverables/${serverFileName}`;
+
+    newDeliverables = {
+        uploader: req.body.uploader,
+        path: serverPath,
+        fileName: file.name
+    }
+
+    video.deliverables.unshift(newDeliverables);
+    video.save();
+
+    serverFileName = req.body.video + req.body.uploader;
+
+    file.mv(serverPath, err => {
         if (err) {
             console.error(err);
             return res.status(500).send(err);
         }
 
-        res.json({fileName: file.name, filePath: `/uploads/${file.name}`});
+        return res.status(200).json("Deliverable Uploaded.");
     });
 })
 
