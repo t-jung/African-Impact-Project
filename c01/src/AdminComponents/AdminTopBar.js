@@ -57,6 +57,10 @@ let tabs = [
         tabName: "Upload new video",
         link: "/adminpage/video",
     },
+    {
+        tabName: "View uploaded videos",
+        link: "/adminpage/view_uploaded",
+    },
 ]
 
 const useStyles = makeStyles(() => ({
@@ -80,6 +84,7 @@ export const AdminTopBar = () => {
         "View user list": false,
         "View banned users": false,
         "Upload new video": false,
+        "View uploaded videos": false,
     });
 
     const handleFocus = (selected) => {

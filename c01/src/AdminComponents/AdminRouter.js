@@ -5,6 +5,7 @@ import VerifBoard from './AdminPendingVerifications';
 import ViewUserList from './AdminViewUserList';
 import ViewBannedUsers from './AdminViewBannedUsers';
 import AdminUploadVideo from './AdminUploadVideo';
+import ViewUploaded from '../CourseUploadComponents/CourseUploadComponent'
 
 const AdminRouter = () => (
         <div>
@@ -13,6 +14,7 @@ const AdminRouter = () => (
         <Route path="/adminpage/users" component={ViewUserList} /> 
         <Route path="/adminpage/banned" component={ViewBannedUsers} />
         <Route path="/adminpage/video" component={AdminUploadVideo} />
+        <Route path="/adminpage/view_uploaded" component={ViewUploaded}/>
         </div>
 
 );
