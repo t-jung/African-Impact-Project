@@ -183,7 +183,7 @@ class ELearning extends React.Component {
                         <hr/>
                     </div>
                 </div>
-                <Upload/>
+                <Upload video={this.state.videos[4]._id} uplaoder={this.state.videos[4].uploader}/>
             </div>
             
         )
@@ -201,8 +201,15 @@ const Upload = (props) => {
 
     const onSubmit = (e) => {
         e.preventDefault();
+        
         const data = new FormData();
         data.append('file', file)
+
+        let upload = {
+            video: props.video,
+            uploader: props.upload,
+            data: data
+        }
 
         let config = {
             headers: {
@@ -212,11 +219,11 @@ const Upload = (props) => {
 
         console.log(data)
 
-        /*
-        axios.post('http://localhost:5000/api/videos/uploadDeliverable', data, config)
+        
+        axios.post('http://localhost:5000/api/videos/uploadDeliverable', upload, config)
             .then(() => alert("Uploaded!"))
             .catch(err => alert(err.response.data))
-        */
+        
 
     }
 
