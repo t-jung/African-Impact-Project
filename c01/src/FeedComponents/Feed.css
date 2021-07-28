@@ -86,7 +86,8 @@ border-color: transparent;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-top: 5vh;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
 }
 
 .barProfilePic {
