@@ -185,7 +185,7 @@ class ELearning extends React.Component {
                         <hr/>
                     </div>
                 </div>
-                <Upload video={this.state.videos[4]._id} uplaoder={this.state.videos[4].uploader}/>
+                <Upload video={this.state.videos[4]._id} uploader={this.state.videos[4].uploader}/>
             </div>
             
         )
