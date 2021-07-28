@@ -1399,6 +1399,81 @@
       "responses": {}
     }
 },
+"/videos/uploadDeliverable/": {
+  "post": {
+    "x-swagger-router-controller": "bar",
+    "operationId": "1",
+    "tags": ["/api/videos"],
+    "description": "Allows users to upload deliverables to an assignment. 'uploader' is the user who is uploading the deliverable. 'video' is the ObjectId for the Video object which is an assignment.",
+    "parameters": [
+      {
+        "name":"request body", 
+        "in":"body", 
+        "schema":
+        {
+          "type":"object",
+          "properties":
+          {
+            "uploader":
+            {
+              "type": "string",
+              "require": true
+            },
+            "video":
+            {
+              "type": "string",
+              "require": true
+            }
+          }
+        }
+      }
+    ],
+      "responses": {}
+    }
+},
+"/videos/deleteDeliverables/": {
+  "post": {
+    "x-swagger-router-controller": "bar",
+    "operationId": "2",
+    "tags": ["/api/videos"],
+    "description": "Removes all deliverable entries for a specific video. Currently does not actually remove the uploaded submissions, but does allow them to be overwritten.'video' is the ObjectId for the Video object which is an assignment.",
+    "parameters": [
+      {
+        "name":"request body", 
+        "in":"body", 
+        "schema":
+        {
+          "type":"object",
+          "properties":
+          {
+            "video":
+            {
+              "type": "string",
+              "require": true
+            }
+          }
+        }
+      }
+    ],
+      "responses": {}
+    }
+},
+"/videos/getDeliverables/:id": {
+  "get": {
+    "x-swagger-router-controller": "bar",
+    "operationId": "3",
+    "tags": ["/api/videos"],
+    "description": "Returns a list of JSON objects containing the name of the deliverable uploaded and the user who uploaded it. 'id' is the ObjectId of a Video Object, which is an assignment.",
+    "parameters": [
+      {
+        "id": "id",
+        "in": "path",
+        "required": true
+      }
+    ],
+      "responses": {}
+    }
+},
 "/chatroom/conversations/{userId}": {
   "get": {
     "x-swagger-router-controller": "bar",

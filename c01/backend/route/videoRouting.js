@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Video = require("../schema/videoSchema");
 const {check,validationResult} = require("express-validator");
+const ObjectId = require('mongodb').ObjectID;
 
 router.put("/updateDescription/:id",
 async(req,res)=>{
@@ -202,7 +203,7 @@ async(req, res) => {
 
     let video = await Video.findById(req.body.video);
     if(!video) return res.status(404).json("Invalid videoId.")
-
+    if(!video.isAssignment) return res.status(403).json("The provided videoId is not an assignment, and therefore can not have assignments uploaded to it.")
     
     const file = req.files.file;
 
@@ -215,7 +216,19 @@ async(req, res) => {
         fileName: file.name
     }
 
-    video.deliverables.unshift(newDeliverables);
+    /* Check if there is an existing entry. */
+    
+    // For Some reason all of the remove commands do not work.
+    valid = [] // This array contains all entrys which do not have the current uploader.
+    for(const index in video.deliverables) {
+        entry = video.deliverables[index];
+        if(entry.uploader != req.body.uploader){
+            valid.push(entry);
+        }
+    }
+
+    valid.unshift(newDeliverables);
+    video.deliverables = valid;
     video.save();
 
     serverFileName = req.body.video + req.body.uploader;
@@ -240,11 +253,52 @@ async(req, res) => {
 
     let video = await Video.findById(req.body.video);
     if(!video) return res.status(404).json("Invalid videoId.")
+    if(!video.isAssignment) return res.status(403).json("The provided videoId is not an assignment, and therefore can not have its deliverables deleted.")
 
     video.deliverables = [];
     video.save();
+
+    // TODO: Remove them from the File System? Technically it doesn't matter.
     
     return res.status(200).json("Deliverables cleared.");
+})
+
+router.get('/getDeliverables/:id',
+async(req, res) => {
+
+    let video = await Video.findById(req.params.id);
+    if(!video) return res.status(404).json("Invalid videoId.")
+    if(!video.isAssignment) return res.status(403).json("The provided videoId is not an assignment, and does not have deliverables.")
+
+    let foo = await (video.deliverables).map(async entry => {
+        var obj = Object();
+        obj.uploader = entry.uploader;
+        obj.fileName = entry.fileName;
+        return obj;
+    })
+    
+    Promise.all(foo).then((values)=>{
+        console.log(values)
+        return res.status(200).json(values);
+    })
+})
+
+router.get('/downloadDeliverable/:id',
+async(req, res) => {
+
+    console.log("1")
+    let file = await Video.findById(req.params.id);
+    if(!file) return res.status(404).json("Invalid videoId.")
+
+    console.log("2")
+    console.log(file)
+    res.set({
+        'Content-Type': file.video_mimetype
+    })
+    
+    console.log("3")
+    res.sendFile(__dirname + '..' + file.path);
+    //return res.status(200).json("Deliverables cleared.");
 })
 
 
