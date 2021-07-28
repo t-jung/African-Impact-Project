@@ -21,7 +21,7 @@ const cardStyles = makeStyles((theme) => ({
     root: {
         width: '30vh',
         height: 'auto',
-        margin: '2vw',
+        margin: '2vh',
     },
     expand: {
         marginLeft: 'auto'
