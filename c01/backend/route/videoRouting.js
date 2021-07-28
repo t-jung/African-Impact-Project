@@ -84,7 +84,7 @@ async(req,res)=>{
 router.post("/uploadVideo", [
     check('title', 'No title to video provided.').not().isEmpty(),
     check('link',' Link to video is empty.').not().isEmpty(),
-    check('uploader','Uploader not provided.').not().isEmpty(),
+    check('uploader','Uploader not provided.').not().isEmpty()
 ],
 async(req,res)=>{
     try {
@@ -114,6 +114,8 @@ async(req,res)=>{
         newVideo.uploader = req.body.uploader;
         newVideo.uploadDate = req.body.uploadDate;
         newVideo.tags = req.body.tags;
+        console.log(typeof req.body.isAssignment);
+        console.log(req.body.isAssignment);
         newVideo.isAssignment = req.body.isAssignment;
         
         // check if video already exists
@@ -189,6 +191,26 @@ async(req, res) => {
 })
 
 
+router.post('/uploadDeliverable', [
+    check('uploader', 'No uploader provided for deliverable.').not().isEmpty(),
+    check('video', 'No Video id').not().isEmpty()
+],
+(req, res) => {
+    if (req.files === null) {
+        return res.status(400).json({msg: 'No file was uploaded.'});
+    }
+
+    const file = req.files.file;
+    console.log(file.name);
+    file.mv(`${__dirname}/../../filesys/deliverables/${file.name}`, err => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send(err);
+        }
+
+        res.json({fileName: file.name, filePath: `/uploads/${file.name}`});
+    });
+})
 
 
 

@@ -12,6 +12,9 @@ const swaggerUi = require('swagger-ui-express');
 // Swagger ui document
 const swaggerDocument = require('./swagger.json');
 
+// For uploading files - dar
+const fileUpload = require('express-fileupload');
+
 // Configures the environment so we can have it in the .env file
 require('dotenv').config();
 
@@ -23,6 +26,9 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json()); // Allow us to parse json
 // Server will send and receive json
+
+// For uploading files - Dar
+app.use(fileUpload());
 
 // database uri, get from mongodb from the dashboard
 // ATLAS_URI is the envionrment variable, we need to set it (backend/.env)
