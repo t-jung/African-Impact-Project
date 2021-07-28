@@ -1474,6 +1474,27 @@
       "responses": {}
     }
 },
+"/videos/downloadDeliverable/:user/:id": {
+  "get": {
+    "x-swagger-router-controller": "bar",
+    "operationId": "4",
+    "tags": ["/api/videos"],
+    "description": "For a given video objectId `id`, and a given `user`, return their deliverable which is stored on the servers file system. Undefined behavior if not found.",
+    "parameters": [
+      {
+        "id": "user",
+        "in": "path",
+        "required": true
+      },
+      {
+        "id": "id",
+        "in": "path",
+        "required": true
+      }
+    ],
+      "responses": {}
+    }
+},
 "/chatroom/conversations/{userId}": {
   "get": {
     "x-swagger-router-controller": "bar",
