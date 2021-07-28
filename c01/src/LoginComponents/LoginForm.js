@@ -104,19 +104,6 @@ export default class Login extends Component {
     onSubmit(e) {
         e.preventDefault();
         console.log("hello")
-
-        /*
-        const userInfo = {
-            email:this.state.email,
-            password: this.state.password,
-        };
-
-        
-        axios.post('http://localhost:5000/api/user/login', userInfo)
-            .then(res => console.log(res.data))
-            .catch(e => console.log(e));
-            */
-
     } 
 
     render(){
@@ -136,7 +123,7 @@ export default class Login extends Component {
                                         onChange={(e) => {this.setState({userType: e.target.value})}}>
                                             <MenuItem value="User">User</MenuItem>
                                             <MenuItem value="Company">Company</MenuItem>
-                                            <MenuItem value="Partner">Parnter</MenuItem>
+                                            <MenuItem value="Partner">Partner</MenuItem>
                                         </Select>
                                     <div class="form-group">
                                         <label for="email"></label>
