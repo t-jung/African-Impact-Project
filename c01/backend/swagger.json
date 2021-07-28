@@ -622,7 +622,7 @@
         "/users/likePost":{
           "post": {
             "x-swagger-router-controller": "bar",
-            "operationId": "1",
+            "operationId": "15",
             "tags": ["/api/users"],
             "description": "Likes a post. PostId is the MongoDB id for the post object. Email is the email of the account which is liking the post. Liking a liked post already will return 200.",
             "parameters": [
@@ -651,7 +651,7 @@
         "/users/unlikePost":{
           "post": {
             "x-swagger-router-controller": "bar",
-            "operationId": "2",
+            "operationId": "16",
             "tags": ["/api/users"],
             "description": "Unlikes a post. PostId is the MongoDB id for the post object. Email is the email of the account which is unliking the post. Unliking a post which the user did not like will simply do nothing.",
             "parameters": [
@@ -680,7 +680,7 @@
         "/users/getPost": {
           "get": {
             "x-swagger-router-controller": "bar",
-            "operationId": "3",
+            "operationId": "17",
             "tags": ["/api/users"],
             "description": "Get all the users who liked a post.",
             "parameters": [
@@ -689,6 +689,73 @@
                 "in": "path",
                 "required": true
               }
+            ],
+            "responses": {}
+          }
+        },
+        "/users/notes/addNote": {
+          "post": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "18",
+            "tags": ["/api/users"],
+            "description": "Adds a note to user's notes. Overwrites old notes.",
+            "parameters": [
+              {
+                "name": "request body",
+                "in": "body",
+                "schema" : {
+                  "type": "object",
+                  "properties":{
+                  "email": {
+                    "type": "string",
+                    "require": true
+                  },
+                  "notes": {
+                    "type" : "string"
+                }
+              }
+              }
+            }
+            ],
+            "responses": {}
+          }
+        },
+        "/users/notes/getNotes": {
+          "get": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "19",
+            "tags": ["/api/users"],
+            "description": "Gets user notes.",
+            "parameters": [
+              {
+                "name": "userEmail",
+                "in": "path",
+                  "require" : true
+            }
+            ],
+            "responses": {}
+          }
+        },
+        "/users/notes/deleteNotes": {
+          "delete": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "20",
+            "tags": ["/api/users"],
+            "description": "Deletes user notes.",
+            "parameters": [
+              {
+                "name": "request body",
+                "in": "body",
+                "schema" : {
+                  "type": "object",
+                  "properties":{
+                  "email": {
+                    "type": "string",
+                    "require": true
+                  }
+              }
+              }
+            }
             ],
             "responses": {}
           }

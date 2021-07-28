@@ -93,16 +93,10 @@ const userSchema = new Schema({
             }
         }
     ],
-    assignments:[
+    notes:[
         {
-            assignmentName:{
-                type:String,
-                require: true
-            },
-            dueDate: {
-                type: Date,
-                require: true
-            }
+                type:String
+           
         }
     ]
 });
