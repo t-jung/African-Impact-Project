@@ -92,6 +92,18 @@ const userSchema = new Schema({
                 require: true
             }
         }
+    ],
+    assignments:[
+        {
+            assignmentName:{
+                type:String,
+                require: true
+            },
+            dueDate: {
+                type: Date,
+                require: true
+            }
+        }
     ]
 });
 

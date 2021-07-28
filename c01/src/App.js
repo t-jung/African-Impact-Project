@@ -15,6 +15,7 @@ import ChatRoom from './ChatRoomComponents/ChatRoomComponent'
 import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import ViewUploadedAssignments from './CourseUploadComponents/ViewUploadedAssignments/ViewUploadedAssignments.js';
+import AdminRouter from './AdminComponents/AdminRouter';
 function App() {
   return (
 

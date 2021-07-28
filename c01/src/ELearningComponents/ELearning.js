@@ -5,6 +5,9 @@ import YouTube from 'react-youtube'
 import React from 'react'
 import axios from 'axios'
 
+let email = sessionStorage.getItem('email')
+
+
 class ELearning extends React.Component {
 
     state = {
@@ -183,7 +186,9 @@ class ELearning extends React.Component {
                         <hr/>
                     </div>
                 </div>
+                <Upload video={this.state.videos[4]._id} uploader={this.state.videos[4].uploader}/>
             </div>
+            
         )
     }
     _onReady(event) {
@@ -193,67 +198,52 @@ class ELearning extends React.Component {
 }
 export default ELearning
 
-/*
-class ELearning extends Component {
-    constructor(props){
-        super(props)
+const Upload = (props) => {
 
-        this.state={
-            resultYT: []
+    const[file, setFile] = React.useState('');
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+
+        const data = new FormData();
+        data.append('file', file)
+        data.append('video', props.video);
+        data.append('uploader', email);
+
+        let config = {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
         }
-        this.clicked = this.clicked.bind(this);
+
+        console.log(data)
+
+        
+        axios.post('http://localhost:5000/api/videos/uploadDeliverable', data, config)
+            .then(() => alert("Uploaded!"))
+            .catch(err => alert(err.response.data))
+        
+
     }
 
-    clicked(){
-        fetch(finalURL)
-            .then((response) => response.json()) // promise handling
-            .then((responseJson) => {
-                //console.log(responseJson)
-                const resultYT = responseJson.items.map(obj => "https://www.youtube.com/embed/"+obj.id.videoId)
-                this.setState({resultYT})
-                //console.log(this.state.resultYT)
-            })
-            .catch((error) => {
-                console.error(error)
-            })
+    const selectFile = (e) => {
+        setFile(e.target.files[0])
     }
 
-
-    render() {
-        //console.log(this.state.resultYT)
-        return (
-            <div className="ElearningApp">
-                <Header />
-               
-                <div className="ElearningAppPage">
-                    <Sidebar />
-                    <VideoFeed />
-                    <div className = "feedVideos">
-                    {
-                        this.state.resultYT.map((link, i) => {
-                            var frame = 
-                            <div><iframe 
-                                key={ i }
-                                width="560" 
-                                height="315" 
-                                src={ link } 
-                                title="YouTube video player" 
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowFullScreen>
-                            </iframe></div>
-                            return frame
-                        })
-                    }
-                    </div>
-                    {this.frame}
-                    
-                    
-                </div>
-                <button onClick={this.clicked}> Load more Videos </button>
-            </div>
-        )
-    }
+    return(
+        <div class="elearning-upload-container">
+            <form onSubmit={onSubmit}>
+                <input
+                    id="upload-btn"
+                    class="elearning-button"
+                    type="file"
+                    onChange={selectFile}
+                /> 
+                <input
+                    type='submit'
+                    class="elearning-button"
+                />
+            </form>
+        </div>
+    )
 }
-export default ELearning
-*/
