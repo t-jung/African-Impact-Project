@@ -54,6 +54,14 @@
   align-items: center;
 }
 
+.results-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 5vw;
+}
+
 .result-card{
   border-width: 100;
 }

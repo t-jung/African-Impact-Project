@@ -180,69 +180,79 @@ class ResultPage extends React.Component {
         return(
             <div>
                 <NavBar found={this.state.found}/>
-                {this.state.user.length !== 0 ? 
-                    <Typography
-                        style={{
-                            color: styles.palette.primary.main,
-                            fontWeight: 900,
-                            fontSize: 18,
-                            verticalAlign: true,
-                            margin: '1vw',
-                        }}>
-                        User
-                    </Typography>
-                    : null }
-                <Grid container>
-                    <Grid item container direction="row" justify="flex-start" alignItems="center">
-                        {this.state.user.map(item => (
-                                <UserCard type='user' info={item} />
-                            
-                        ))}
-                        
-                    </Grid>
-                </Grid>
-
-                {this.state.company.length !== 0 ? 
-                    <Typography
-                        style={{
-                            color: styles.palette.primary.main,
-                            fontWeight: 900,
-                            fontSize: 18,
-                            verticalAlign: true,
-                            margin: '1vw',
-                        }}>
-                        Company
-                    </Typography>
-                    : null }
-                    <Grid container>
-                    <Grid item container direction="row" justify="flex-start" alignItems="center">
-                        {this.state.company.map(item => (
-                            <UserCard type='company' info={item} />
-                        ))}
-                        
-                    </Grid>
-                </Grid>
-
-                {this.state.partner.length !== 0 ? 
-                    <Typography
-                        style={{
-                            color: styles.palette.primary.main,
-                            fontWeight: 900,
-                            fontSize: 18,
-                            verticalAlign: true,
-                            margin: '1vw',
-                        }}>
-                        Partner
-                    </Typography>
-                    : null }
-                <Grid container>
-                    <Grid item container direction="row" justify="flex-start" alignItems="center">
-                        {this.state.partner.map(item => (
-                            <UserCard type='partner' info={item} />
-                        ))}
-                        
-                    </Grid>
-                </Grid>
+                <div class="results-container">
+                    <div>
+                        {this.state.user.length !== 0 ? 
+                            <Typography
+                                style={{
+                                    color: styles.palette.primary.main,
+                                    fontWeight: 900,
+                                    fontSize: 18,
+                                    verticalAlign: true,
+                                    margin: '1vw',
+                                }}>
+                                User
+                            </Typography>
+                            : null }
+                        <Grid container>
+                            <Grid item container direction="row" justify="flex-start" alignItems="center">
+                                {this.state.user.map(item => (
+                                        <UserCard type='user' info={item} />
+                                    
+                                ))}
+                                
+                            </Grid>
+                        </Grid>
+                    </div>
+                    
+                    <div>
+                        {this.state.company.length !== 0 ? 
+                            <Typography
+                                style={{
+                                    color: styles.palette.primary.main,
+                                    fontWeight: 900,
+                                    fontSize: 18,
+                                    verticalAlign: true,
+                                    margin: '1vw',
+                                }}>
+                                Company
+                            </Typography>
+                            : null }
+                            <Grid container>
+                            <Grid item container direction="row" justify="flex-start" alignItems="center">
+                                {this.state.company.map(item => (
+                                    <UserCard type='company' info={item} />
+                                ))}
+                                
+                            </Grid>
+                        </Grid>
+                    </div>
+                    
+                    <div>
+                            {this.state.partner.length !== 0 ? 
+                            <Typography
+                                style={{
+                                    color: styles.palette.primary.main,
+                                    fontWeight: 900,
+                                    fontSize: 18,
+                                    verticalAlign: true,
+                                    margin: '1vw',
+                                }}>
+                                Partner
+                            </Typography>
+                            : null }
+                        <Grid container>
+                            <Grid item container direction="row" justify="flex-start" alignItems="center">
+                                {this.state.partner.map(item => (
+                                    <UserCard type='partner' info={item} />
+                                ))}
+                                
+                            </Grid>
+                        </Grid>
+                    </div>
+                    
+                </div>
+                
                 
             </div>   
         )
