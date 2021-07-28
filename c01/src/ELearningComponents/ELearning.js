@@ -5,6 +5,8 @@ import YouTube from 'react-youtube'
 import React from 'react'
 import axios from 'axios'
 
+import Button from '@material-ui/core/Button';
+
 class ELearning extends React.Component {
 
     state = {
@@ -201,15 +203,11 @@ const Upload = (props) => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        
+
         const data = new FormData();
         data.append('file', file)
-
-        let upload = {
-            video: props.video,
-            uploader: props.upload,
-            data: data
-        }
+        data.append('video', props.video);
+        data.append('uploader', props.uploader);
 
         let config = {
             headers: {
@@ -220,7 +218,7 @@ const Upload = (props) => {
         console.log(data)
 
         
-        axios.post('http://localhost:5000/api/videos/uploadDeliverable', upload, config)
+        axios.post('http://localhost:5000/api/videos/uploadDeliverable', data, config)
             .then(() => alert("Uploaded!"))
             .catch(err => alert(err.response.data))
         
@@ -236,11 +234,13 @@ const Upload = (props) => {
             <form onSubmit={onSubmit}>
                 <input
                     id="upload-btn"
+                    class="elearning-button"
                     type="file"
                     onChange={selectFile}
-                />
+                /> 
                 <input
                     type='submit'
+                    class="elearning-button"
                 />
             </form>
             
