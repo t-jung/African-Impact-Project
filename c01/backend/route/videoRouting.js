@@ -230,6 +230,22 @@ async(req, res) => {
     });
 })
 
+router.post('/DeleteDeliverables', [
+    check('video', 'No Video id was provided.').not().isEmpty()
+],
+async(req, res) => {
+    if (req.files === null) {
+        return res.status(400).json({msg: 'No file was uploaded.'});
+    }
+
+    let video = await Video.findById(req.body.video);
+    if(!video) return res.status(404).json("Invalid videoId.")
+
+    video.deliverables = [];
+    video.save();
+    
+    return res.status(200).json("Deliverables cleared.");
+})
 
 
 module.exports = router;
