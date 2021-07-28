@@ -8,7 +8,7 @@ import AdminUploadVideo from './AdminUploadVideo';
 import ViewUploaded from '../CourseUploadComponents/CourseUploadComponent'
 
 const AdminRouter = () => (
-        <div>
+        <div class=".admin-sidebyside">
         <Route path="/adminpage/" component={PendingBoard} exact={true}/>
         <Route path="/adminpage/verification" component={VerifBoard} />
         <Route path="/adminpage/users" component={ViewUserList} /> 

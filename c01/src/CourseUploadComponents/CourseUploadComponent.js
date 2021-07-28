@@ -17,24 +17,28 @@ import EditIcon from '@material-ui/icons/Edit';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 
+import './CourseUploadComponent.css'
+
 const cardStyles = makeStyles((theme) => ({
     root: {
-        width: '30vh',
+        width: '31.5vh',
         height: 'auto',
-        margin: '2vh',
+        minHeight: '23vh',
+        margin: '1vh',
     },
     expand: {
         marginLeft: 'auto'
     },
     media: {
-        width: '30vh',
-        height: '17vh',
+        width: '100%',
+        height: '17.6vh',
     },
     content: {
         padding: 3,
         paddingLeft: 15,
         fontSize: 18,
         width: 'fit-content',
+        height: '3vh',
     },
     actions: {
         width: 'fit-content',
@@ -43,8 +47,27 @@ const cardStyles = makeStyles((theme) => ({
     action: {
         padding: 1,
         paddingRight: 8,
+    },
+    gridStyles: {
+        margin: 0,
     }
 }))
+
+const DisplayVideos = (props) => {
+    const classes = cardStyles()
+    return(
+        <div class="view-uploaded-container">
+            <Grid>
+                <Grid item container direction="row" spacing={10} className={classes.gridStyles}>
+                    {props.videoList.map(item => (
+                        <CourseCard videoInfo={item}/>
+                    ))}
+                    <CourseCard></CourseCard>
+                </Grid>
+            </Grid>
+        </div>
+    )
+}
 
 const CourseCard = (props) => {
     let videoInfo = props.videoInfo
@@ -64,7 +87,7 @@ const CourseCard = (props) => {
                 image={imgLink}
                 className={classes.media}
             />
-            <CardContent className={classes.content}>
+            <CardContent className={classes.content} noWrap>
                 {videoInfo.title}
             </CardContent>
             <CardActions
@@ -72,30 +95,13 @@ const CourseCard = (props) => {
                 <IconButton
                     className={[classes.expand, classes.action]}
                     href="/view_uploaded_assignments"
-                    onClick={ sessionStorage.setItem('videoTitle', videoInfo.title) }
+                    onClick={ sessionStorage.setItem('videoId', videoInfo.id) }
                 >
                     <AssessmentIcon/>
-                </IconButton>
-                <IconButton className={classes.action}>
-                    <EditIcon/>
                 </IconButton>
             </CardActions>
         </Card>
     );  
-}
-
-const CourseAdd = () => {
-    const classes = cardStyles();
-    return (
-        <Card className={classes.root}>
-            <CardActions>
-                <IconButton
-                href="/new_upload_video">
-                    <AddCircleIcon/>
-                </IconButton>
-            </CardActions>
-        </Card>
-    );
 }
 
 class CourseUpload extends Component {
@@ -137,18 +143,7 @@ class CourseUpload extends Component {
     render() {
         console.log(this.state.videoList)
         return(
-            <div>
-                <Grid container>
-                    <Grid item container direction="row" justify="flex-start" alignItems="center">
-                        {this.state.videoList.map(item => (
-                            <CourseCard videoInfo={item}/>
-                        ))}
-                        <CourseCard></CourseCard>
-                        <CourseAdd/>
-                    </Grid>
-                </Grid>
-            </div>
-            
+            <DisplayVideos videoList={this.state.videoList}/>
         )
     }
 }
