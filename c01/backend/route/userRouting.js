@@ -577,44 +577,45 @@ async(req, res) => {
     }
 })
 
-//Routing for adding an assignment to a user list (for scheduling purposes)
+//Routing for adding a note to user's notes.
 
-router.post('/assignments/addAssignment',
+router.post('/notes/addNote',
 async(req, res) => {
         try {
-            let assignment = {"assignmentName": req.body.assignmentName, "dueDate": req.body.dueDate}
-            await User.findOneAndUpdate({email: req.body.email}, {$push: {assignments: assignment}})//ADDS ASSIGNMENTS BASED ON
-            return res.status(200).json("assignment added successfully")
+            let notes = req.body.notes;
+            let user = await User.findOneAndUpdate({email: req.body.email})
+            user.notes = notes.toString()
+            return res.status(200).json("Note added successfully")
     } catch (error) {
         console.error(error);
-        return res.status(500).json("/addAssignment Server error.");
+        return res.status(500).json("/addNote Server error.");
     }
 })
 
-//Gets all assignments of user BASED ON EMAIL
-router.get('/assignments/getAllAssignments',
+//Gets notes of user BASED ON EMAIL
+router.get('/notes/getNotes',
 async(req,res) =>{
         try {
             let email = req.body.email;
             let user = await User.findOne({email:email}).select('-password');
-            return res.status(200).json(user.assignments);
+            return res.status(200).json(user.notes);
         } catch (error) {
             console.error(error);
-            return res.status(500).json("/getAllAssignments/ Server error.");
+            return res.status(500).json("/getNotes/ Server error.");
         }
     
 })
 
-router.delete('/assignments/removeAssignment',
+router.delete('/notes/removeNotes',
 async(req,res) => {
     try {
         console.log("hell0")
         let assignment = {"assignmentName": req.body.assignmentName, "dueDate": req.body.dueDate}
-        await User.findOneAndUpdate({email:req.body.email}, {$pull : {assignments : assignment}})//Removes assignment based on email
-        return res.status(200).json('Assignment removed from user assignment list');
+        await User.findOneAndUpdate({email:req.body.email}, {notes: ""})
+        return res.status(200).json('Note removed from user notes');
     } catch (error) {
         console.error(error);
-        return res.status(500).json("/removeAssignment error")
+        return res.status(500).json("/removeNotes error")
     }
 })
 
