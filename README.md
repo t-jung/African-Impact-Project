@@ -3,9 +3,9 @@ The motivation of this project is to create a platform for entrepreneurs, compan
 
 ## Installation 
 ### How to Run
-Front-end (in /c01): npm start 
-Back-end (in /c01/backend): nodemon server / node server
-Socket (in /c01/backend/socket): nodemon socket.js (or node socket.js)
+- Front-end (in /c01): npm start 
+- Back-end (in /c01/backend): nodemon server (or node server)
+- Socket (in /c01/backend/socket): nodemon socket.js (or node socket.js)
 
 ### Required Tools / Programs
 - MongoDB
