@@ -17,8 +17,28 @@ async(req,res)=>{
         let company = await Company.find().select('-password');
         let partner = await Partner.find().select('-password');
 
-        let all = user.concat(partner).concat(company);
-        res.json(all);
+        let company_array = [];
+        for(const single_company of company) {
+            company_array.push(single_company);
+        }
+
+        let partner_array = [];
+        for(const single_partner of partner) {
+            partner_array.push(single_partner);
+        }
+
+        let user_array = [];
+        for(const single_user of user) {
+            user_array.push(single_user);
+        }
+
+        return res.status(200).json({
+            "status": "200",
+            "company":company_array,
+            "user":user_array,
+            "partner":partner_array,
+        });
+    
 
     } catch (error) {
         console.error(error);
@@ -47,14 +67,52 @@ async(req,res)=>{
         
         let result = companyFromDB.concat(partnerFromDB).concat(userFromDB);
     
-        if(result.length === 0){
-            let all = user.concat(partner).concat(company);
-            res.json(all);
-        }
-        else{
-            res.json(result);
+        if(result.length === 0){    
+            let company_array = [];
+            for(const single_company of company) {
+                company_array.push(single_company);
+            }
+    
+            let partner_array = [];
+            for(const single_partner of partner) {
+                partner_array.push(single_partner);
+            }
+    
+            let user_array = [];
+            for(const single_user of user) {
+                user_array.push(single_user);
+            }
+    
+            return res.status(200).json({
+                "status": "404",
+                "company":company_array,
+                "user":user_array,
+                "partner":partner_array,
+            });    
         }
 
+        let company_array = [];
+        for(const single_company of companyFromDB) {
+            company_array.push(single_company);
+        }
+
+        let partner_array = [];
+        for(const single_partner of partnerFromDB) {
+            partner_array.push(single_partner);
+        }
+
+        let user_array = [];
+        for(const single_user of userFromDB) {
+            user_array.push(single_user);
+        }
+
+        return res.status(200).json({
+            "status": "200",
+            "company": company_array,
+            "user": user_array,
+            "partner": partner_array,
+        });
+        
     } catch (error) {
         console.error(error);
         res.status(500).json("Server error.");        

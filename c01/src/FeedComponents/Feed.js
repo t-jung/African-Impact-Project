@@ -5,12 +5,31 @@ import jwt_decode from "jwt-decode";
 import axios from 'axios';
 import React, { Component } from 'react';
 import { Avatar } from '@material-ui/core';
+import styles from '../styles'
+import { makeStyles } from '@material-ui/core/styles';
 
 import Nav from '../NavbarComponents/Nav.js'
 
 let token = sessionStorage.getItem('token');
 let email = sessionStorage.getItem('email');
 let type = sessionStorage.getItem('type')
+
+let classNameHolder = ['greenAvatar', 'yellowAvatar', 'pinkAvatar', 'blueAvatar']
+
+const useStyles = makeStyles((theme) => ({
+    greenAvatar:{
+      backgroundColor: styles.palette.green.main,
+      },
+      yellowAvatar:{
+          backgroundColor: styles.palette.yellowLemon.main,
+      },
+      pinkAvatar:{
+          backgroundColor: styles.palette.pink.main,
+      },
+      blueAvatar:{
+          backgroundColor: styles.palette.blue.main,
+      },
+  }));
 
 class FeedPage extends Component {
     constructor(props) {
@@ -59,6 +78,7 @@ class FeedPage extends Component {
                     name: response.data.firstName + ' ' + response.data.lastName
                 }})
             })
+            .then(sessionStorage.setItem('name', this.state.name))
             .catch((err) => console.log(err))
         } else if (type === "Company") {
             axios.get('http://localhost:5000/api/company/show_company_info_email/' + email)
@@ -67,7 +87,7 @@ class FeedPage extends Component {
                 this.setState({user: {
                     name: response.data.name
                 }})
-            })
+            }).then(sessionStorage.setItem('name', this.state.name))
             .catch((err) => console.log(err))
         } else {
             axios.get('http://localhost:5000/api/partner/show_partner_info_email/' + email)
@@ -76,7 +96,7 @@ class FeedPage extends Component {
                 this.setState({user: {
                     name: response.data.name
                 }})
-            })
+            }).then(sessionStorage.setItem('name', this.state.name))
             .catch((err) => console.log(err))
         }
     }
@@ -136,27 +156,21 @@ function Feed(props) {
         )
     }
 
-    const PostBox = () => {
-        return (
-            <div class="postBox">
-                <a href="/profile" type="button" onClick={() => {sessionStorage.setItem('loadUser', email) ; console.log(email) }}>
-                    <Avatar>{typeof props.user.name !== 'undefined' ? props.user.name[0] : 'U'}</Avatar>
-                </a>
-                <textarea id="userPOst" rows="2" cols="100" placeholder="Post something!" onChange={e => setPostItem(e.target.value)}></textarea>
-                <button class="btn btn_post_blog" onClick={submitPost}>  POST  </button>
-            </div>
-        )
-    }
+    const classes=useStyles()
+
+    const chooseClass=classes[classNameHolder[Math.floor(Math.random() * classNameHolder.length)]];
 
     return (
         <div class="conatiner_feed">
             <div class="split left">
-                <Nav user={props.user}/>
+                <Nav user={props.user} avatarClass={chooseClass}/>
                 <div class="feedSection">
                 <div class="postBox">
-                <a href="/profile" type="button" onClick={() => {sessionStorage.setItem('loadUser', email) ; console.log(email) }}>
-                    <Avatar>{typeof props.user.name !== 'undefined' ? props.user.name[0] : 'U'}</Avatar>
-                </a>
+                    <div class="feed-avatar">
+                        <a href="/profile" type="button" onClick={() => {sessionStorage.setItem('loadUser', email) ; console.log(email) }}>
+                            <Avatar className={chooseClass}>{typeof props.user.name !== 'undefined' ? props.user.name[0] : 'U'}</Avatar>
+                        </a>
+                    </div>
                 <textarea id="userPOst" rows="2" cols="100" placeholder="Post something!" onChange={e => setPostItem(e.target.value)}></textarea>
                 <button class="btn btn_post_blog" onClick={submitPost}>  POST  </button>
             </div>

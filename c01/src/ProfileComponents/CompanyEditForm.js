@@ -6,11 +6,25 @@ import { ThemeProvider, withStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 
 import styles from '../styles'
-import { Typography, Button } from '@material-ui/core';
+import { Typography, Button, Chip } from '@material-ui/core';
 
 import jwt_decode from "jwt-decode";
+import tagCategories from '../tagCategories'
+import tagsCategories from '../tagCategories';
 
 let token = sessionStorage.getItem('token')
+
+
+let trackTagged = tagsCategories.map(() => false)
+
+console.log(trackTagged)
+
+const taggedChange = (id) => {
+    console.log(id)
+    const previous = trackTagged[id]
+    trackTagged[id] = !previous;
+    console.log(trackTagged)
+}
 
 const StyledTextField = withStyles((theme) => ({
     root: {
@@ -31,16 +45,57 @@ const StyledTypography = (withStyles({
     },
 }))(Typography);
 
+const SingleTag = (props) => {
+    const[clicked, setClicked] = React.useState(props.status)
+
+    const handleClick = (e) => {
+        let prev = clicked
+        setClicked(!prev)
+        taggedChange(props.id)
+    }
+
+    console.log(props.id)
+
+    return(
+        <Chip
+            style={{
+                margin: '10px',
+            }}
+            id={props.id}
+            label={props.label}
+            onClick={handleClick}
+            color={clicked === true ? "primary" : "grey" }/>
+    )
+}
+
+const Tags = (props) => {
+    console.log(props)
+    return(
+        <div>
+            {tagsCategories.map((item, index) => ( 
+                <SingleTag label={item} id={index} status={props.status[index]} onClick={props.handle}/>
+            ))}
+        </div>
+        
+    )
+}
+
 class CompanyEditForm extends Component {
     
     state ={ 
         name: '', 
         email: '', 
-        password: '',
         location: '',
         industry: '',
         website: '',
         description: '',
+        MCs: '',
+        financials: '',
+        pitch_decks: '',
+        founding_team: '',
+        tags: [],
+        tagsStatus: [],
+        startUpDate: '1997-01-01',
         status: 'unverified'
     }
 
@@ -63,34 +118,47 @@ class CompanyEditForm extends Component {
         this.setState({
             [fieldName]: value
         })
-        console.log(this.state)
 
-        axios.put('http://localhost:5000/api/company/change_company_info/', this.state, config)
-        .then(res => console.log(res))
+        this.setState({tags: ['']})
+
+        let data = this.state
+        let array = []
+
+        for(let i = 0; i < trackTagged.length; i++) {
+            if(trackTagged[i]) {
+                array.push(tagCategories[i])
+            }
+        }
+
+        data.tags = array
+
+        sessionStorage.setItem('email', data.email)
+
+        axios.put('http://localhost:5000/api/company/change_company_info/', data, config)
+        .then(res => alert("Edited!"))
         .catch(e => console.log(e));
     }
-
-
 
     componentDidMount() {
         console.log(jwt_decode(token));
         axios.get('http://localhost:5000/api/company/show_company_info_id/' + jwt_decode(token).company.id)
             .then(response => {
-                this.setState({
-                    name:response.data.name,
-                    email: response.data.email,
-                    password: response.data.password,
-                    location: response.data.location,
-                    industry: response.data.industry,
-                    website: response.data.website,
-                    description: response.data.description,
-                    status: response.data.status
-                });
+                console.log(response.data)
+                this.setState(response.data);
+                let tagsStatus = tagsCategories.map(item => false);
+                for(let index = 0; index < tagCategories.length; index++) {
+                    if(response.data.tags.includes(tagCategories[index])) {
+                        tagsStatus[index] = true
+                    }
+                }
+                this.setState({tagsStatus: tagsStatus})
             })
+            .then(() => trackTagged = this.state.tagsStatus)
             .catch(error => console.log("error", error))
     }
 
     render () {
+
         return (
             <div class="formContainer">
                 <ThemeProvider theme={styles}>
@@ -107,22 +175,60 @@ class CompanyEditForm extends Component {
                     <StyledTextField variant="outlined" size="small"required type="email"
                         onChange={(e) => {this.setState({email: e.target.value})}}
                         value={this.state.email}/>
-                    <StyledTypography>Company phone number</StyledTypography>
-                    <StyledTextField variant="outlined" size="small"  required type="tel"
-                        onChange={(e) => {this.setState({phone_number: e.target.value})}}
-                        value={this.state.phone_number}
-                        defaultValue={123456789}/>
                     <StyledTypography>Company website</StyledTypography>
                     <StyledTextField variant="outlined" size="small" type="url"
                         onChange={(e) => {this.setState({website: e.target.value})}}
                         value={this.state.website}/>
                     <StyledTypography>Start up date</StyledTypography>
-                    <StyledTextField variant="outlined" size="small" type="date" />
+                    <StyledTextField variant="outlined" size="small" type="date"
+                        onChange={(e) => {this.setState({startUpDate: (e.target.value).toString().replace("/", "-")})}} 
+                        value={ this.state.startUpDate }/>
                     <StyledTypography>Description</StyledTypography>
                     <StyledTextField variant="outlined" size="small" multiline rows={4} 
                         onChange={(e) => {this.setState({description: e.target.value})}}
                         defaultValue={this.state.description}/> 
+                    <Typography style={{
+                        color: styles.palette.primary.main,
+                        fontWeight: 900,
+                        fontSize: 30,
+                    }}>More information</Typography><br/>
+                    <StyledTypography>Location</StyledTypography>
+                    <StyledTextField variant="outlined" size="small" required
+                        onChange={(e) => {this.setState({location: e.target.value})}}
+                        value={this.state.location}/>
+                    <StyledTypography>industry</StyledTypography>
+                    <StyledTextField variant="outlined" size="small" required
+                        onChange={(e) => {this.setState({industry: e.target.value})}}
+                        value={this.state.industry}/>
+                    <StyledTypography>MCs</StyledTypography>
+                    <StyledTextField variant="outlined" size="small" required
+                        onChange={(e) => {this.setState({MCs: e.target.value})}}
+                        value={this.state.MCs}/>
+                    <StyledTypography>Pitch decks</StyledTypography>
+                    <StyledTextField variant="outlined" size="small" required
+                        onChange={(e) => {this.setState({pitch_decks: e.target.value})}}
+                        value={this.state.pitch_decks}/>
+                    <StyledTypography>Financials</StyledTypography>
+                    <StyledTextField variant="outlined" size="small" required
+                        onChange={(e) => {this.setState({financials: e.target.value})}}
+                        value={this.state.financials}/>
+                    <StyledTypography>Founding team</StyledTypography>
+                    <StyledTextField variant="outlined" size="small" required
+                        onChange={(e) => {this.setState({founding_team: e.target.value})}}
+                        value={this.state.founding_team}/>
+                    <Typography style={{
+                        color: styles.palette.primary.main,
+                        fontWeight: 900,
+                        fontSize: 30,
+                    }}>Categories</Typography>
+                    <div>
+                        { typeof this.state.tags !== 'undefined' && typeof this.state.tagsStatus !== 'undefined' ? 
+                            <Tags status={this.state.tagsStatus} handle={taggedChange}/>
+                            : null
+                        }
+                    </div><br/>
                 </ThemeProvider>
+                
                 <div class="d-flex justify-content-center">
                     <Button style={{
                         background: styles.palette.secondary.main,
@@ -130,6 +236,8 @@ class CompanyEditForm extends Component {
                         fontSize: 15,
                     }}
                     onClick={this.handleStateChange}>Submit</Button>
+                    
+               
                 </div>
             </div>
         )

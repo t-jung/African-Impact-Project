@@ -374,7 +374,13 @@ async(req, res) => {
                     var filtered = values.filter(function(x) {
                         return x !== undefined;
                     })
-                    return res.status(200).json(filtered);
+
+                    var merged = [].concat.apply([], filtered);
+                    var sorted = merged;
+                    sorted.sort(function(a,b){
+                      return new Date(b.date) - new Date(a.date);
+                    });
+                    return res.status(200).json(sorted);
                 })
 
             } else {
