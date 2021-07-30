@@ -3,3 +3,16 @@
     font-size: x-large;
 } 
 
+.elearning-upload-container{
+    margin: 5vw;
+}
+
+.elearning-button{
+    border-radius: 800px;
+    font-weight: 700;
+    color: white;
+    border-width: 5px;
+    border-color: rgb(255, 193, 170);
+    background-color: #ee9f9f;
+    margin: 5px;
+}

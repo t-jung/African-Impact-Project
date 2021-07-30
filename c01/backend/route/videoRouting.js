@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const Video = require("../schema/videoSchema");
 const {check,validationResult} = require("express-validator");
+const path = require('path');
+const fs = require('fs');
+const { useTheme } = require("@material-ui/core");
 
 router.put("/updateDescription/:id",
 async(req,res)=>{
@@ -84,7 +87,7 @@ async(req,res)=>{
 router.post("/uploadVideo", [
     check('title', 'No title to video provided.').not().isEmpty(),
     check('link',' Link to video is empty.').not().isEmpty(),
-    check('uploader','Uploader not provided.').not().isEmpty(),
+    check('uploader','Uploader not provided.').not().isEmpty()
 ],
 async(req,res)=>{
     try {
@@ -107,6 +110,11 @@ async(req,res)=>{
                         linkYT = linkYT + char
                     }
                 }
+                
+        if (linkYT === ""){
+            return res.status(400).json("Invalid link provided.")
+        }
+
         newVideo.title = req.body.title;
         newVideo.link = linkYT;
         newVideo.description = req.body.description;
@@ -114,9 +122,14 @@ async(req,res)=>{
         newVideo.uploader = req.body.uploader;
         newVideo.uploadDate = req.body.uploadDate;
         newVideo.tags = req.body.tags;
+        newVideo.isAssignment = req.body.isAssignment;
+        if(!req.body.isAssignment){
+            newVideo.isAssignment = false;
+        }
         
         // check if video already exists
         let checkVideo = await Video.findOne({link : newVideo.link})
+        console.log(checkVideo);
         if(checkVideo)
             return res.status(401).json("Video already exists in database.");
 
@@ -188,7 +201,123 @@ async(req, res) => {
 })
 
 
+router.post('/uploadDeliverable', [
+    check('uploader', 'No uploader provided for deliverable.').not().isEmpty(),
+    check('video', 'No Video id was provided.').not().isEmpty()
+],
+async(req, res) => {
+    if (req.files === null) {
+        return res.status(400).json({msg: 'No file was uploaded.'});
+    }
 
+    /* Find the video where we want to upload to. */
+    let video = await Video.findById(req.body.video);
+    if(!video) return res.status(404).json("Invalid videoId.")
+    if(!video.isAssignment) return res.status(403).json("The provided videoId is not an assignment, and therefore can not have assignments uploaded to it.")
+    
+    const file = req.files.file;
+
+    /* Files are stored on the server as 'videoObjectId-uploaderEmail' This 
+       allows for easy overwriting (only one deliverable per user per 
+       assignment). */
+    var serverFileName = req.body.video + "-" + req.body.uploader;
+    var serverPath = `${__dirname}/../../filesys/deliverables/${serverFileName}`;
+
+    var newDeliverables = {
+        uploader: req.body.uploader,
+        path: serverPath,
+        fileName: file.name
+    }
+
+    /* Overwrite entries if needed. Only one deliverable per user per assignment. */
+    var valid = [] // This array contains all entrys which do not have the current uploader.
+    for(const index in video.deliverables) {
+        entry = video.deliverables[index];
+        if(entry.uploader != req.body.uploader){
+            valid.push(entry);
+        }
+    }
+
+    /* Add the new deliverable to the list of valid deliverables. */
+    valid.unshift(newDeliverables);
+    video.deliverables = valid;
+    video.save();
+
+    /* Store the file on the server. Files are stored on the server as
+       'videoObjectId-uploaderEmail' This allows for easy overwriting
+       (only one deliverable per user per assignment). */
+    file.mv(serverPath, err => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send(err);
+        }
+
+        return res.status(200).json("Deliverable Uploaded.");
+    });
+})
+
+router.delete('/DeleteDeliverables', [
+    check('video', 'No Video id was provided.').not().isEmpty()
+],
+async(req, res) => {
+    if (req.files === null) {
+        return res.status(400).json({msg: 'No file was uploaded.'});
+    }
+
+    let video = await Video.findById(req.body.video);
+    if(!video) return res.status(404).json("Invalid videoId.")
+    if(!video.isAssignment) return res.status(403).json("The provided videoId is not an assignment, and therefore can not have its deliverables deleted.")
+
+    /* Simply set the deliverables array to an empty array (thus deleting all entries) */
+    video.deliverables = [];
+    video.save();
+
+    // TODO: Remove them from the File System? Technically it doesn't matter.
+    
+    return res.status(200).json("Deliverables cleared.");
+})
+
+router.get('/getDeliverables/:id',
+async(req, res) => {
+
+    let video = await Video.findById(req.params.id);
+    if(!video) return res.status(404).json("Invalid videoId.")
+    if(!video.isAssignment) return res.status(403).json("The provided videoId is not an assignment, and does not have deliverables.")
+
+    let foo = await (video.deliverables).map(async entry => {
+        var obj = Object();
+        obj.uploader = entry.uploader;
+        obj.fileName = entry.fileName;
+        return obj;
+    })
+    
+    Promise.all(foo).then((values)=>{
+        return res.status(200).json(values);
+    })
+})
+
+router.get('/downloadDeliverable/:user/:id',
+async(req, res) => {
+    try{
+        /* Find video */
+        let video = await Video.findById(req.params.id);
+        if(!video) return res.status(404).json("Invalid videoId.")
+        if(!video.isAssignment) return res.status(403).json("The provided videoId is not an assignment, and does not have deliverables.")
+
+        /* Find deliverable file */
+        for(const index in video.deliverables) {
+            file = video.deliverables[index];
+            if(video.deliverables[index].uploader === req.params.user){
+                 /* Send server-side file with the stored file name. */
+                res.download(path.resolve(file.path), file.fileName);
+            }
+        }
+        
+    } catch (error) {
+        res.status(400).send('Error while downloading file. Try again later.');
+        console.error(error);
+    }
+})
 
 
 module.exports = router;

@@ -2,3 +2,9 @@
     margin-right: 5rem;
     margin-left: 5rem;
 }
+
+.view-uploaded-container{
+    margin-top: 2vh;
+    width: fit-content;
+    margin-bottom: 5vh;
+}

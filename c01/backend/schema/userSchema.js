@@ -92,6 +92,12 @@ const userSchema = new Schema({
                 require: true
             }
         }
+    ],
+    notes:[
+        {
+                type:String
+           
+        }
     ]
 });
 
