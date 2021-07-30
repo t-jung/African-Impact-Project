@@ -6,27 +6,387 @@ import { Component } from 'react'
 class VideoFeed extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            videos: [],
-        }
     }
 
-    componentDidMount(){
-        axios.get()
+    state = {
+        videos: [
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader...",
+                likes:0,
+                uploadDate:"Loading Upload date...",
+                tags:"Loading tags...",
+                imgsrc:"Loading thumbnails... ",
+                id:"_0"
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader...",
+                likes:0,
+                uploadDate:"Loading Upload date...",
+                tags:"Loading tags...",
+                imgsrc:"Loading thumbnails... ",
+                id:"_0"
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader...",
+                likes:0,
+                uploadDate:"Loading Upload date...",
+                tags:"Loading tags...",
+                imgsrc:"Loading thumbnails... ",
+                id:"_0"
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader...",
+                likes:0,
+                uploadDate:"Loading Upload date...",
+                tags:"Loading tags...",
+                imgsrc:"Loading thumbnails... ",
+                id:"_0"
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader...",
+                likes:0,
+                uploadDate:"Loading Upload date...",
+                tags:"Loading tags...",
+                imgsrc:"Loading thumbnails... ",
+                id:"_0"
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader...",
+                likes:0,
+                uploadDate:"Loading Upload date...",
+                tags:"Loading tags...",
+                imgsrc:"Loading thumbnails... ",
+                id:"_0"
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader...",
+                likes:0,
+                uploadDate:"Loading Upload date...",
+                tags:"Loading tags...",
+                imgsrc:"Loading thumbnails... ",
+                id:"_0"
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader...",
+                likes:0,
+                uploadDate:"Loading Upload date...",
+                tags:"Loading tags...",
+                imgsrc:"Loading thumbnails... ",
+                id:"_0"
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader...",
+                likes:0,
+                uploadDate:"Loading Upload date...",
+                tags:"Loading tags...",
+                imgsrc:"Loading thumbnails... ",
+                id:"_0"
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader...",
+                likes:0,
+                uploadDate:"Loading Upload date...",
+                tags:"Loading tags...",
+                imgsrc:"Loading thumbnails... ",
+                id:"_0"
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader...",
+                likes:0,
+                uploadDate:"Loading Upload date...",
+                tags:"Loading tags...",
+                imgsrc:"Loading thumbnails... ",
+                id:"_0"
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader...",
+                likes:0,
+                uploadDate:"Loading Upload date...",
+                tags:"Loading tags...",
+                imgsrc:"Loading thumbnails... ",
+                id:"_0"
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader...",
+                likes:0,
+                uploadDate:"Loading Upload date...",
+                tags:"Loading tags...",
+                imgsrc:"Loading thumbnails... ",
+                id:"_0"
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader...",
+                likes:0,
+                uploadDate:"Loading Upload date...",
+                tags:"Loading tags...",
+                imgsrc:"Loading thumbnails... ",
+                id:"_0"
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader...",
+                likes:0,
+                uploadDate:"Loading Upload date...",
+                tags:"Loading tags...",
+                imgsrc:"Loading thumbnails... ",
+                id:"_0"
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader...",
+                likes:0,
+                uploadDate:"Loading Upload date...",
+                tags:"Loading tags...",
+                imgsrc:"Loading thumbnails... ",
+                id:"_0"
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader...",
+                likes:0,
+                uploadDate:"Loading Upload date...",
+                tags:"Loading tags...",
+                imgsrc:"Loading thumbnails... ",
+                id:"_0"
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader...",
+                likes:0,
+                uploadDate:"Loading Upload date...",
+                tags:"Loading tags...",
+                imgsrc:"Loading thumbnails... ",
+                id:"_0"
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader...",
+                likes:0,
+                uploadDate:"Loading Upload date...",
+                tags:"Loading tags...",
+                imgsrc:"Loading thumbnails... ",
+                id:"_0"
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader...",
+                likes:0,
+                uploadDate:"Loading Upload date...",
+                tags:"Loading tags...",
+                imgsrc:"Loading thumbnails... ",
+                id:"_0"
+            },
+            {
+                title: "Loading Title...",
+                link:"hFoqBbqfhXo",
+                uploader:"Loading Uploader...",
+                likes:0,
+                uploadDate:"Loading Upload date...",
+                tags:"Loading tags...",
+                imgsrc:"Loading thumbnails... ",
+                id:"_0"
+            }
+           
+        ]
+    }
+
+    componentDidMount() {
+        axios.get(`http://localhost:5000/api/videos/admin/getAllVideos`)
         .then(res => {
-            console.log(res.data)
-            this.setState(res.data)
+            this.setState({videos:res.data});
+            return res.data.map(item =>{ 
+                return {
+                    title: item.title,
+                    link: item.link,
+                    uploader: item.uploader,
+                    likes: item.likes,
+                    uploadDate: item.uploadDate,
+                    tags: item.tags,
+                    id: item.id
+
+                }    
+            })
+        })
+        .then(res => (
+            this.setState({state: res})
+        ))
+        .catch(err => {
+            console.log(err);
+            this.setState([]);
         })
     }
+    videoOnReady (event) {
+        event.target.pauseVideo()
+    }
+
+    
 
     render() {
+        const opts ={
+            height: '600',
+            width: '900',
+            playerVars:{
+                autoplay: 0,
+            },
+        };
+
+        if (this.state.videos[0].title === "Loading Title...") {
+            console.log("WAITING")
+            return null
+          }
         return(
-            <Videos videos={this.state.videos}/>
+            <div className="videoFeed">
+            <h2>Videos</h2>
+        
+            <div className="videoFeedVideos">
+            
+            <Video 
+                title={this.state.videos[0].title}
+                likes={this.state.videos[0].likes}
+                uploadDate={this.state.videos[0].uploadDate}
+                uploader={this.state.videos[0].uploader}
+                link={this.state.videos[0].link}
+                imgsrc={this.state.videos[0].link}
+                tags={this.state.videos[0].tags}
+                id={this.state.videos[0].id}
+            />
+                        <Video 
+                title={this.state.videos[1].title}
+                likes={this.state.videos[1].likes}
+                uploadDate={this.state.videos[1].uploadDate}
+                uploader={this.state.videos[1].uploader}
+                link={this.state.videos[1].link}
+                tags={this.state.videos[1].tags}
+                id={this.state.videos[1].id}
+            />
+                        <Video 
+                title={this.state.videos[2].title}
+                likes={this.state.videos[2].likes}
+                uploadDate={this.state.videos[2].uploadDate}
+                uploader={this.state.videos[2].uploader}
+                link={this.state.videos[2].link}
+                tags={this.state.videos[2].tags}
+                id={this.state.videos[2].id}
+            />
+                        <Video 
+                title={this.state.videos[3].title}
+                likes={this.state.videos[3].likes}
+                uploadDate={this.state.videos[3].uploadDate}
+                uploader={this.state.videos[3].uploader}
+                link={this.state.videos[3].link}
+                tags={this.state.videos[3].tags}
+                id={this.state.videos[3].id}
+
+            />
+                        <Video 
+                title={this.state.videos[4].title}
+                likes={this.state.videos[4].likes}
+                uploadDate={this.state.videos[4].uploadDate}
+                uploader={this.state.videos[4].uploader}
+                link={this.state.videos[4].link}
+                tags={this.state.videos[4].tags}
+                id={this.state.videos[4].id}
+            />
+                        <Video 
+                title={this.state.videos[5].title}
+                likes={this.state.videos[5].likes}
+                uploadDate={this.state.videos[5].uploadDate}
+                uploader={this.state.videos[5].uploader}
+                link={this.state.videos[5].link}
+                tags={this.state.videos[5].tags}
+                id={this.state.videos[5].id}
+            />
+                        <Video 
+                title={this.state.videos[6].title}
+                likes={this.state.videos[6].likes}
+                uploadDate={this.state.videos[6].uploadDate}
+                uploader={this.state.videos[6].uploader}
+                link={this.state.videos[6].link}
+                tags={this.state.videos[6].tags}
+                id={this.state.videos[6].id}
+            />
+                        <Video 
+                title={this.state.videos[7].title}
+                likes={this.state.videos[7].likes}
+                uploadDate={this.state.videos[7].uploadDate}
+                uploader={this.state.videos[7].uploader}
+                link={this.state.videos[7].link}
+                tags={this.state.videos[7].tags}
+                id={this.state.videos[7].id}
+            />
+                        <Video 
+                title={this.state.videos[8].title}
+                likes={this.state.videos[8].likes}
+                uploadDate={this.state.videos[8].uploadDate}
+                uploader={this.state.videos[8].uploader}
+                link={this.state.videos[8].link}
+                tags={this.state.videos[8].tags}
+                id={this.state.videos[8].id}
+            />
+                        <Video 
+                title={this.state.videos[9].title}
+                likes={this.state.videos[9].likes}
+                uploadDate={this.state.videos[9].uploadDate}
+                uploader={this.state.videos[9].uploader}
+                link={this.state.videos[9].link}
+                tags={this.state.videos[9].tags}
+                id={this.state.videos[9].id}
+            />
+                                    <Video 
+                title={this.state.videos[10].title}
+                likes={this.state.videos[10].likes}
+                uploadDate={this.state.videos[10].uploadDate}
+                uploader={this.state.videos[10].uploader}
+                link={this.state.videos[10].link}
+                tags={this.state.videos[10].tags}
+                id={this.state.videos[10].id}
+            />
+            </div>
+
+
+
+            </div>
         )
     }
 }
 
-const Videos = ({videos}) => {
+export default VideoFeed
+
+/*
     return (
         <div className="videoFeed">
             <h2>Videos</h2>
@@ -150,4 +510,4 @@ const Videos = ({videos}) => {
     )
 }
 
-export default VideoFeed
+*/

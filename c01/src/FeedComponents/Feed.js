@@ -5,7 +5,7 @@ import jwt_decode from "jwt-decode";
 import axios from 'axios';
 import React, { Component } from 'react';
 import { Avatar } from '@material-ui/core';
-
+import Notepad from './Notpad'
 import Nav from '../NavbarComponents/Nav.js'
 
 let token = sessionStorage.getItem('token');
@@ -129,7 +129,8 @@ function Feed(props) {
         return(
             <div class="schedule" >
                 <div className="schedule_text"> 
-                <p className="makevisible">TODO:<br/><br/>0800: Attend lecture 1 <br/> 13:00 Attending Meeting 3</p>
+                <p className="makevisible">Notepad<br/><Notepad/></p>
+                
                 </div>
                 
             </div>

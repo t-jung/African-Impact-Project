@@ -1,11 +1,17 @@
 import "./Sidebar.css"
 import SidebarRow from './SidebarRow.js'
 
+
+
 const Sidebar = () => {
     return (
         <div className="sidebar">
-            <SidebarRow title="Home" />
-            <SidebarRow title="Reccomended" />
+            <a href="/feed" class="nav-link">
+                <SidebarRow title="Home" />
+            </a>
+            <a href="/profile" class="nav-link">
+                <SidebarRow title="Profile" />
+            </a>
 
             <hr/>
             

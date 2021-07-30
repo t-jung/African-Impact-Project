@@ -15,7 +15,8 @@ import ChatRoom from './ChatRoomComponents/ChatRoomComponent'
 import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import ViewUploadedAssignments from './CourseUploadComponents/ViewUploadedAssignments/ViewUploadedAssignments.js';
-import AdminRouter from './AdminComponents/AdminRouter';
+import AdminRouter from './AdminComponents/AdminRouter'
+import Landing from './ELearningComponents/Landing'
 function App() {
   return (
 
@@ -38,6 +39,7 @@ function App() {
         <Route path="/partner_register" component={PartnerRegistrationForm} />
         <Route path="/company_register" component={CompanyForm} />
         <Route path="/new_upload_video" component={NewVideo}/>
+        <Route path="/landing" component={Landing} />
         <Route path="/elearning" component={Elearning}/>
         <Route path="/view_uploaded_assignments" component={ViewUploadedAssignments}/>
         <Route path="/chatroom" component={ChatRoom}/>
