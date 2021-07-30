@@ -134,7 +134,7 @@ async(req,res)=>{
     }
 });
 
-router.get("/partner_view_name/:company_email",
+router.get("/partner_view_email/:company_email",
 partner_authentication,
 async(req,res)=>{
     try{
@@ -155,7 +155,7 @@ router.get("/show_company_info_id/:company_id",
 async(req,res)=>{
     try {
         let companyID = req.params.company_id;
-        let company = await Company.findById(companyID).select(['-password','-pitch_decks','-financials','-MCs','-founding_team']);
+        let company = await Company.findById(companyID).select('-password');
         res.json(company);       
     } catch (error) {
         console.error(error);

@@ -139,13 +139,21 @@
     margin-top: 0;
 }
 
+.company-card-one {
+    background-color: #a0dae0;
+}
+
+.company-card-two {
+    background-color: #c5dca0;
+}
+
 .company-card {
-    background-color: #ffc8c8;
     border-radius: 20px;
     padding: 30px;
     border-width: 10px;
     border-color: grey;
     margin-bottom: 5vh;
+    border: #000000;
 }
 
 .lessonBoard {
@@ -199,4 +207,8 @@ label.title{
 .company-website{
     display: flex;
     flex-direction: row;
+}
+
+.company-display-space{
+    margin-left: 8px;
 }

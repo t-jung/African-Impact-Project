@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
+import Chip from '@material-ui/core/Chip';
 
 import styles from '../styles'
 
@@ -15,8 +16,6 @@ let token = sessionStorage.getItem('token')
 let type = sessionStorage.getItem('type')
 let loadUser = sessionStorage.getItem('loadUser')
 let loadType = sessionStorage.getItem('loadType')
-
-sessionStorage.removeItem('loadUser');
 let userEmail = sessionStorage.getItem('email')
 
 const useStyles = makeStyles((theme) => ({
@@ -87,23 +86,27 @@ export default class ProfileFrame extends Component {
                 
         } else if (loadType.toLowerCase() === 'company') {
             console.log("Is company")
+            axios.get('http://localhost:5000/api/company/show_company_info_email/' + loadUser)
+                .then(response=> {
+                    console.log(response.data);
+                    this.setState(response.data)
+                })
+                .catch((err) => console.log(err))
             if(type.toLowerCase() === 'partner') {
-                axios.get('http://localhost:5000/api/company/partner_view_name/' + loadUser)
-                    .then(response=> {
-                        console.log(response.data);
-                        this.setState(response.data)
-                    })
-                    .catch((err) => console.log(err))
-
-            } else {
-                axios.get('http://localhost:5000/api/company/show_company_info_email/' + loadUser)
-                    .then(response=> {
-                        console.log(response.data);
-                        this.setState(response.data)
-                    })
-                    .catch((err) => console.log(err))
+                let config = {
+                    headers: {
+                        'authentication-token-partner': token,
+                    }
                 }
-            
+                console.log("Is partner viewing company");
+                axios.get('http://localhost:5000/api/company/partner_view_email/' + loadUser, config)
+                    .then(response=> {
+                        console.log(response.data);
+                        this.setState({ moreDetails: response.data })
+                    })
+                    .then(() => console.log(this.state))
+                    .catch((err) => console.log(err))
+            }
         } else {
             axios.get('http://localhost:5000/api/partner/show_partner_info_email/' + loadUser)
             .then(response=> {
@@ -187,10 +190,15 @@ const ProfileUserFrame = (info) => {
 
                 </div>
                 <div class="postBoard">
-                    {loadType.toLowerCase() === 'company' ? <CompanyBoard company={info.user}/> 
+                    {loadType.toLowerCase() === 'company' ? 
+                        <CompanyBoard company={info.user}/> 
                         : <PostBoard feedList={user.userPosts}
                         userName={user.firstName  + ' ' + user.lastName}
                         profilePic={user.profilePic}/>
+                    }
+                    {loadType.toLowerCase() === 'company' && type.toLowerCase() === 'partner' ? 
+                        <PartnerViewCompany company={info.user}/> 
+                        : null
                     }
                 </div>
                 
@@ -320,9 +328,14 @@ const CompanyRecommendations = (props) => {
 const DisplayTag = (props) => {
     const list = props.list
     return(
-        <div class="company-website">
+        <div class="company-website company-display-space">
             {list.map(item => (
-                <h5>{item}, </h5>
+                <Chip 
+                    style={{
+                        marginRight: '1vw',
+                        backgroundColor: styles.palette.yellowLemon.main,
+                    }}
+                    label={item}/>
             ))}
         </div>
     )
@@ -351,10 +364,10 @@ const CompanyBoard = (props) => {
             </div>
             <div>
                 <h3>More about the company:</h3>
-                <div class="company-card">
+                <div class="company-card company-card-one">
                     { typeof company.location !== 'undefined' ? <h5>Location: {company.location}</h5> : null }
                     { typeof company.industry !== 'undefined' ? <h5>Industry: {company.industry}</h5> : null }
-                    { typeof company.website !== 'undefined' ? <div class="company-website"><h5>Website: </h5> <a href={company.website}><h5>{company.website}</h5></a></div> : null } 
+                    { typeof company.website !== 'undefined' ? <div class="company-website"><h5>Website: </h5> <a class="company-display-space" href={company.website}><h5>{company.website}</h5></a></div> : null } 
                     { typeof company.startUpDate !== 'undefined' ? <h5>Industry: {company.startUpDate}</h5> : null }
                     { typeof company.tags !== 'undefined' ? <div class="company-website"><h5>Tags:</h5><DisplayTag list={company.tags}/></div> : null }
                 </div>
@@ -365,7 +378,33 @@ const CompanyBoard = (props) => {
 }
 
 const PartnerViewCompany = (props) => {
-
+    /*
+    MCs: "This is MCs"
+    financials: "This is financials"
+    founding_team: "This is founding_team"
+    pitch_decks: "This is pitch_decks"
+    _id: "60df66799f61d542fc810705"
+    */
+   const details = props.company.moreDetails
+   console.log(props)
+   if(typeof props.company.moreDetails === 'undefined') {
+       return(
+           <div></div>
+       )
+   } else {
+        return(
+            <div>
+                <h3>Additional information: </h3>
+                <div class="company-card company-card-two">
+                    <h5>MC: {details.MCs}</h5>
+                    <h5>Financials: {details.financials}</h5>
+                    <h5>Founding team: {details.founding_team}</h5>
+                    <h5>Pitch desks: {details.pitch_desks}</h5>
+                </div>
+                
+            </div>
+        )
+    }
 }
 
 const PostBoard = (props) => {

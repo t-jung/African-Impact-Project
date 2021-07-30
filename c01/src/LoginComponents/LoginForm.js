@@ -53,11 +53,11 @@ export default class Login extends Component {
             axios.post('http://localhost:5000/api/company/login/company_email', userInfo)
             .then(res => {
                 console.log(res)
-            sessionStorage.setItem('token', res.data.token)
-            sessionStorage.setItem('email', this.state.email)
-            sessionStorage.setItem('type', 'Company')
-            window.location = '/feed'
-        }
+                sessionStorage.setItem('token', res.data.token)
+                sessionStorage.setItem('email', this.state.email)
+                sessionStorage.setItem('type', 'Company')
+                window.location = '/feed'
+            }
             )
             .catch(err =>{
                  console.log(err)
@@ -78,11 +78,11 @@ export default class Login extends Component {
         } else {
             axios.post('http://localhost:5000/api/partner/login/partner_email', userInfo)
             .then(res => { console.log(res)
-            sessionStorage.setItem('token', res.data.token)
-            sessionStorage.setItem('type', 'Partner')
-            sessionStorage.setItem('email', this.state.email)
-                window.location("feed");
-            })
+                    sessionStorage.setItem('token', res.data.token)
+                    sessionStorage.setItem('type', 'Partner')
+                    sessionStorage.setItem('email', this.state.email)
+                    window.location = "/feed";
+                })
             .catch(err =>{
                  console.log(err)
                  if(err.response.status === 401) {
