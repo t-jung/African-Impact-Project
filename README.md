@@ -13,6 +13,9 @@ The motivation of this project is to create a platform for entrepreneurs, compan
 - React
 - Node
 
+###  API Documentation
+Please go to localhost:5000/api-docs to access the API documentation for endpoints.
+
 ## Contributions
 We will be contributing to the development branch and then to the master branch.
 To contribute to our project, first clone this repo. ```git clone git@github.com:UTSCCSCC01/project-cscc01-group.git```
