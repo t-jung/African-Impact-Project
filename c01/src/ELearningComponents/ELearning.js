@@ -8,7 +8,7 @@ import axios from 'axios'
 let email = sessionStorage.getItem('email')
 
 
-class ELearning extends React.Component {
+class ELearning extends React.Component{
 
     state = {
         videos: [

@@ -1,17 +1,18 @@
 import Avatar from "@material-ui/core/Avatar"
 import './Video.css'
+import Elearning from './ELearning'
+import { render } from "@testing-library/react"
 
 const Video = ({ title, uploader, likes, uploadDate, id, tags, link, imgsrc}) => { 
 
     var concatLink = "http://img.youtube.com/vi/"+link+"/hqdefault.jpg"
 
-    console.log(link)
-    console.log(concatLink)
+    var concatHref = "/elearning?id="+id+""
+    console.log(concatHref)
     return (
-
         
         <div className="videoVideo">
-            <a href="/elearning">
+            <a href={concatHref}>
                 <img className="videoThumbnail" src={ concatLink } alt="" />
             </a>
             <div className="videoInfo">
@@ -28,6 +29,7 @@ const Video = ({ title, uploader, likes, uploadDate, id, tags, link, imgsrc}) =>
                 </div>
             </div>
         </div>
+        
     )
 }
 

@@ -61,6 +61,9 @@ function Nav(props) {
             <Link class="nav_padding" style={navStyle} to='/AdminPage'>
             <li> Adminpage</li>
             </Link>
+            <Link class="nav_padding" style={navStyle} to='/Landing'>
+            <li> Elearning</li>
+            </Link>
         </ul>
     </nav>
   );
