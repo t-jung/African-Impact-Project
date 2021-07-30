@@ -1,7 +1,5 @@
 import './Nav.css';
 import { Link }from 'react-router-dom'
-import JSONDATA from './MOCKDATA.json'
-import { useState } from 'react'
 import { Avatar } from '@material-ui/core';
 import SearchBar from './SearchComponent/SearchBar';
 
@@ -9,8 +7,6 @@ import SearchBar from './SearchComponent/SearchBar';
 let email = sessionStorage.getItem('email')
 
 function Nav(props) {
-
-  const [searchTerm, setSearchTerm] = useState('')
 
   const navStyle={
     color:'black'
