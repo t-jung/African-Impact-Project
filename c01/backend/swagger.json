@@ -622,7 +622,7 @@
         "/users/likePost":{
           "post": {
             "x-swagger-router-controller": "bar",
-            "operationId": "1",
+            "operationId": "15",
             "tags": ["/api/users"],
             "description": "Likes a post. PostId is the MongoDB id for the post object. Email is the email of the account which is liking the post. Liking a liked post already will return 200.",
             "parameters": [
@@ -651,7 +651,7 @@
         "/users/unlikePost":{
           "post": {
             "x-swagger-router-controller": "bar",
-            "operationId": "2",
+            "operationId": "16",
             "tags": ["/api/users"],
             "description": "Unlikes a post. PostId is the MongoDB id for the post object. Email is the email of the account which is unliking the post. Unliking a post which the user did not like will simply do nothing.",
             "parameters": [
@@ -680,7 +680,7 @@
         "/users/getPost": {
           "get": {
             "x-swagger-router-controller": "bar",
-            "operationId": "3",
+            "operationId": "17",
             "tags": ["/api/users"],
             "description": "Get all the users who liked a post.",
             "parameters": [
@@ -689,6 +689,73 @@
                 "in": "path",
                 "required": true
               }
+            ],
+            "responses": {}
+          }
+        },
+        "/users/notes/addNote": {
+          "post": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "18",
+            "tags": ["/api/users"],
+            "description": "Adds a note to user's notes. Overwrites old notes.",
+            "parameters": [
+              {
+                "name": "request body",
+                "in": "body",
+                "schema" : {
+                  "type": "object",
+                  "properties":{
+                  "email": {
+                    "type": "string",
+                    "require": true
+                  },
+                  "notes": {
+                    "type" : "string"
+                }
+              }
+              }
+            }
+            ],
+            "responses": {}
+          }
+        },
+        "/users/notes/getNotes": {
+          "get": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "19",
+            "tags": ["/api/users"],
+            "description": "Gets user notes.",
+            "parameters": [
+              {
+                "name": "userEmail",
+                "in": "path",
+                  "require" : true
+            }
+            ],
+            "responses": {}
+          }
+        },
+        "/users/notes/deleteNotes": {
+          "delete": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "20",
+            "tags": ["/api/users"],
+            "description": "Deletes user notes.",
+            "parameters": [
+              {
+                "name": "request body",
+                "in": "body",
+                "schema" : {
+                  "type": "object",
+                  "properties":{
+                  "email": {
+                    "type": "string",
+                    "require": true
+                  }
+              }
+              }
+            }
             ],
             "responses": {}
           }
@@ -1316,6 +1383,10 @@
               "tags":
               {
                 "type": ["string"]
+              },
+              "isAssignment":
+              {
+                "type":"boolean"
               }
             }
           }
@@ -1386,6 +1457,102 @@
     "tags": ["/api/videos"],
     "description": "Gets all comments on a video.",
     "parameters": [
+      {
+        "id": "id",
+        "in": "path",
+        "required": true
+      }
+    ],
+      "responses": {}
+    }
+},
+"/videos/uploadDeliverable/": {
+  "post": {
+    "x-swagger-router-controller": "bar",
+    "operationId": "1",
+    "tags": ["/api/videos"],
+    "description": "Allows users to upload deliverables to an assignment. 'uploader' is the user who is uploading the deliverable. 'video' is the ObjectId for the Video object which is an assignment.",
+    "parameters": [
+      {
+        "name":"request body", 
+        "in":"body", 
+        "schema":
+        {
+          "type":"object",
+          "properties":
+          {
+            "uploader":
+            {
+              "type": "string",
+              "require": true
+            },
+            "video":
+            {
+              "type": "string",
+              "require": true
+            }
+          }
+        }
+      }
+    ],
+      "responses": {}
+    }
+},
+"/videos/deleteDeliverables/": {
+  "post": {
+    "x-swagger-router-controller": "bar",
+    "operationId": "2",
+    "tags": ["/api/videos"],
+    "description": "Removes all deliverable entries for a specific video. Currently does not actually remove the uploaded submissions, but does allow them to be overwritten.'video' is the ObjectId for the Video object which is an assignment.",
+    "parameters": [
+      {
+        "name":"request body", 
+        "in":"body", 
+        "schema":
+        {
+          "type":"object",
+          "properties":
+          {
+            "video":
+            {
+              "type": "string",
+              "require": true
+            }
+          }
+        }
+      }
+    ],
+      "responses": {}
+    }
+},
+"/videos/getDeliverables/:id": {
+  "get": {
+    "x-swagger-router-controller": "bar",
+    "operationId": "3",
+    "tags": ["/api/videos"],
+    "description": "Returns a list of JSON objects containing the name of the deliverable uploaded and the user who uploaded it. 'id' is the ObjectId of a Video Object, which is an assignment.",
+    "parameters": [
+      {
+        "id": "id",
+        "in": "path",
+        "required": true
+      }
+    ],
+      "responses": {}
+    }
+},
+"/videos/downloadDeliverable/:user/:id": {
+  "get": {
+    "x-swagger-router-controller": "bar",
+    "operationId": "4",
+    "tags": ["/api/videos"],
+    "description": "For a given video objectId `id`, and a given `user`, return their deliverable which is stored on the servers file system. Undefined behavior if not found.",
+    "parameters": [
+      {
+        "id": "user",
+        "in": "path",
+        "required": true
+      },
       {
         "id": "id",
         "in": "path",

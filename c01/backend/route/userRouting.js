@@ -583,6 +583,46 @@ async(req, res) => {
     }
 })
 
+//Routing for adding a note to user's notes.
+
+router.post('/notes/addNote',
+async(req, res) => {
+        try {
+            let notes = req.body.notes;
+            let user = await User.findOneAndUpdate({email: req.body.email})
+            user.notes = notes.toString()
+            return res.status(200).json("Note added successfully")
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("/addNote Server error.");
+    }
+})
+
+//Gets notes of user BASED ON EMAIL
+router.get('/notes/getNotes/:email',
+async(req,res) =>{
+        try {
+            let email = req.params.email;
+            let user = await User.findOne({email:email}).select('-password');
+            return res.status(200).json(user.notes);
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json("/getNotes/ Server error.");
+        }
+    
+})
+
+router.delete('/notes/removeNotes',
+async(req,res) => {
+    try {
+        await User.findOneAndUpdate({email:req.body.email}, {notes: ""})
+        return res.status(200).json('Note removed from user notes');
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("/removeNotes error")
+    }
+})
+
 
 
 

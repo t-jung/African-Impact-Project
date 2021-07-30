@@ -3,8 +3,6 @@ import './AdminPage.css'
 import styles from '../styles.js'
 import ReportCard from './AdminPendingReports';
 import VerifCard from './AdminPendingVerifications';
-import AdminTopBar from './AdminTopBar';
-import { NavLink} from 'react-router-dom';
 
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -18,36 +16,30 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import axios from 'axios';
+import { NavLink} from 'react-router-dom';
 
 import UploadNewVideo from '../CourseUploadComponents/NewUpload/NewUploadComponent.js'
-import ViewVideo from '../CourseUploadComponents/CourseUploadComponent.js'
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import "@fontsource/roboto";
 import { Avatar, ListItemAvatar } from '@material-ui/core';
 import theme from '../styles.js';
-import {BrowserRouter, Route, Switch, Link } from 'react-router-dom';
-import AdminRouter from './AdminRouter';
 
-let email = sessionStorage.getItem('email');
-
-
-export default class AdminPage extends React.Component {
-
-    getUsers = () => {
-    axios.get('http://localhost:5000/api/users/admin/getAllUsers')
-    .then(response => console.log(response.data[0]))
-    .catch(console.log("error yes"));
-    }
-    
-    render(){
-        return (
-            <div class="admin-container">
-                <AdminTopBar />
-                <AdminRouter />
-            </div>
+export default class ViewUserList extends React.Component {
+    render() {
+        return(
+        //     <List>
+        //         {list.map(item => (
+        //             <ListItem key={item.name}>
+        //                 <ListItemAvatar>{item.icon}</ListItemAvatar>
+        //                 <ListItemText primary={item.name}/>
+        //             </ListItem>
+        //         ))}
+        //     </List>
+        // );
+        <p>View User List</p>
         )
     }
+    
 }
-

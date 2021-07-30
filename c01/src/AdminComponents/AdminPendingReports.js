@@ -1,10 +1,7 @@
 import React, { useEffect } from 'react';
 import './AdminPage.css'
 import styles from '../styles.js'
-import ReportCard from './AdminPendingReports';
-import VerifCard from './AdminPendingVerifications';
-import AdminTopBar from './AdminTopBar';
-import { NavLink} from 'react-router-dom';
+import ReportCard from './AdminReportCard';
 
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -20,34 +17,46 @@ import ListItemText from '@material-ui/core/ListItemText';
 import axios from 'axios';
 
 import UploadNewVideo from '../CourseUploadComponents/NewUpload/NewUploadComponent.js'
-import ViewVideo from '../CourseUploadComponents/CourseUploadComponent.js'
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import "@fontsource/roboto";
 import { Avatar, ListItemAvatar } from '@material-ui/core';
 import theme from '../styles.js';
-import {BrowserRouter, Route, Switch, Link } from 'react-router-dom';
-import AdminRouter from './AdminRouter';
-
-let email = sessionStorage.getItem('email');
 
 
-export default class AdminPage extends React.Component {
+export default class PendingBoard extends React.Component{
+    state = {
+        pendingReports: []
+    }
 
-    getUsers = () => {
-    axios.get('http://localhost:5000/api/users/admin/getAllUsers')
-    .then(response => console.log(response.data[0]))
+    axiosGetReports = () => {
+        axios.get('http://localhost:5000/api/reports/')
+    .then(response => this.setState({pendingReports: response.data}))
     .catch(console.log("error yes"));
     }
-    
-    render(){
-        return (
-            <div class="admin-container">
-                <AdminTopBar />
-                <AdminRouter />
-            </div>
-        )
+
+    componentDidMount() {
+
+        try {
+            axios.get('http://localhost:5000/api/reports/')
+        .then(response => this.setState({pendingReports: response.data}))
+        .catch(console.log("error yes"));
+        } catch (e){
+            
+        }
     }
+    
+    render () {
+     return (
+            <Grid container>
+                <Grid item container direction="row" justify="flex-start" alignItems="center">
+                    {this.state.pendingReports.map(item => (
+                        <ReportCard reporter={item.reporter} reported={item.reported} reason={item.reason}/>
+                    ))}
+                </Grid>
+            </Grid>
+         );
+   }
 }
 
