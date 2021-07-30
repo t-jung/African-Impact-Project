@@ -68,7 +68,6 @@ export const VerifCard = (props) => {
                             <div class="admin-cardBtn admin-stickBottom">
                                 <Button size="small">Approve</Button>
                                 <Button size="small">Disapprove</Button>
-                                <Button size="small">Details</Button>
                             </div>
                         </CardActions>
                     </Grid>

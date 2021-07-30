@@ -27,16 +27,22 @@ import theme from '../styles.js';
 
 
 export default class VerifBoard extends React.Component {
+    state = {
+        pendingVerifications: []
+    }
+    
     render(){
         return (
-            // <Grid container>
-            //     <Grid item container direction="row" justify="flex-start" alignItems="center">
-            //         {verifList.map(item => {
-            //             <VerifCard companyName={item.name} link={item.site}/>
-            //         })}
-            //     </Grid>
-            // </Grid>
+            <div>
+            <Grid container>
+            <Grid item container direction="row" justify="flex-start" alignItems="center">
+                {this.state.pendingVerifications.map(item => (
+                    <VerifCard companyName={item.name} link={item.site}/>
+                ))}
+            </Grid>
+            </Grid>
             <p>placeholder</p>
+            </div>
         )
     }
 }

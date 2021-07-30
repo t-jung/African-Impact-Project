@@ -27,18 +27,30 @@ import { Avatar, ListItemAvatar } from '@material-ui/core';
 import theme from '../styles.js';
 
 export default class ViewBannedUsers extends React.Component {
+
+    state = {
+        bannedUsers: [
+            {
+                email: 'abc@gmail.com',
+                icon: <Avatar>T</Avatar>,
+                userType: 'user'
+            }
+        ]
+    }
+
     render() {
         return(
-        //     <List>
-        //         {list.map(item => (
-        //             <ListItem key={item.name}>
-        //                 <ListItemAvatar>{item.icon}</ListItemAvatar>
-        //                 <ListItemText primary={item.name}/>
-        //             </ListItem>
-        //         ))}
-        //     </List>
-        // );
+        <div>
         <p>View Banned Users</p>
+            <List>
+                {this.state.bannedUsers.map(item => (
+                    <ListItem key={item.name}>
+                        <ListItemAvatar>{item.icon}</ListItemAvatar>
+                        <ListItemText primary={item.email}/>
+                    </ListItem>
+                ))}
+            </List>
+        </div>
         )
     }
     
