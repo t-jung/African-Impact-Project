@@ -18,6 +18,8 @@ let loadUser = sessionStorage.getItem('loadUser')
 let loadType = sessionStorage.getItem('loadType')
 let userEmail = sessionStorage.getItem('email')
 
+let classNameHolder = ['greenAvatar', 'yellowAvatar', 'pinkAvatar', 'blueAvatar']
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -33,7 +35,19 @@ const useStyles = makeStyles((theme) => ({
     width: 70,
     height: 70,
     margin: 5
-  }
+  },
+  greenAvatar:{
+    backgroundColor: styles.palette.green.main,
+    },
+    yellowAvatar:{
+        backgroundColor: styles.palette.yellowLemon.main,
+    },
+    pinkAvatar:{
+        backgroundColor: styles.palette.pink.main,
+    },
+    blueAvatar:{
+        backgroundColor: styles.palette.blue.main,
+    },
 }));
 
 export default class ProfileFrame extends Component {
@@ -155,8 +169,6 @@ const ProfileUserFrame = (info) => {
     } 
     var show = loadUser === userEmail ? true : false;
 
-    const classes = useStyles();
-
     return (
         <div class="bigContainer">                   
             <div class="d-flex align-item-center">
@@ -271,17 +283,23 @@ const NameCard = (props) => {
     return (
         <div class="nameCard">
             <div class="p-2 align-self-center">
-                <Avatar className={classes.large} alt={props.userName} src={props.profilePic}>{props.userName}</Avatar>
+                <Avatar 
+                    style={{
+                        fontSize: 100,
+                    }}
+                    className={[classes.large, classes[classNameHolder[Math.floor(Math.random() * classNameHolder.length)]]]} alt={props.userName} src={props.profilePic}>{typeof props.userName !== 'undefined' ? props.userName[0].toUpperCase() : "U"}</Avatar>
             </div>
             <div class="p-2 align-self-center">
                 <h4 class="userName">{props.userName}</h4>
-                <h5>{props.email} | {props.userPhone}</h5>
+                <h5>{props.email} {typeof props.userPhone !== 'undefined' ? '|' : ''} {props.userPhone}</h5>
                 { props.show === false ? (
                     <div class="d-flex" >
                         <button class="btn btn_profile message text-uppercase ">message</button>
-                        {props.followed === true ? <button class="btn btn_profile follow text-uppercase " onClick={unfollowAction} >unfollow</button> : 
-                        <button class="btn btn_profile follow text-uppercase " onClick={followAction} >follow</button>}
-                        
+                        {loadType.toLowerCase() === 'user' ? 
+                            props.followed === true ? <button class="btn btn_profile follow text-uppercase " onClick={unfollowAction} >unfollow</button> : 
+                            <button class="btn btn_profile follow text-uppercase " onClick={followAction} >follow</button>
+                            : null
+                        }
                     </div>
                 ) : null }
             </div>
@@ -315,8 +333,8 @@ const CompanyRecommendations = (props) => {
             <Grid item container direction="row" justify="flex-start" alignItems="center">
                 {list.map(item => (
                     <a href="/profile" onClick={() => {sessionStorage.setItem('loadUser', item); sessionStorage.setItem('loadType', 'company')}}>
-                        <Avatar className={classes.middle}>
-                            {item[0]}
+                        <Avatar className={[classes.middle, classes[classNameHolder[Math.floor(Math.random() * classNameHolder.length)]]]}>
+                            {item[0].toUpperCase()}
                         </Avatar>
                     </a>
                 )) }
@@ -334,6 +352,7 @@ const DisplayTag = (props) => {
                     style={{
                         marginRight: '1vw',
                         backgroundColor: styles.palette.yellowLemon.main,
+                        fontSize: 18,
                     }}
                     label={item}/>
             ))}
@@ -437,22 +456,6 @@ const PostBoard = (props) => {
             </div>
         </div>
         
-
-    )
-}
-
-const LessonBoard = () => {
-    var courses = ["Course 1", "Course 2"];
-    return (
-        <div>
-            <div class="card">
-                <h4>Currently learning:</h4>
-                <div class="lessonBoard">
-                    {courses.map(course => <pre>{course}, </pre>)}
-                </div> 
-            </div>
-
-        </div>
 
     )
 }

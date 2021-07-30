@@ -191,7 +191,7 @@ async(req,res)=>{
             "industry":company.industry,
             "website":company.website,
             "startUpDate":company.startUpDate,
-            "description":company.discription,
+            "description":company.description,
             "tags":company.tags,
             "recommendation":similar_company
         }

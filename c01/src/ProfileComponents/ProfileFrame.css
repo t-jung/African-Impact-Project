@@ -30,6 +30,7 @@
 .bigContainer{
     display: flex;
     flex-direction: column;
+    background-color: #fffdf9;
 }
 
 .topContainer{
@@ -57,6 +58,7 @@
         flex-direction: column;
         text-align: center;
         margin: auto;
+        margin-left: auto;
     }
 
     .topContainer{
@@ -97,7 +99,7 @@
 }
 
 .infoCard{
-    margin-left: 5%;
+    margin-left: 20%;
 }
 
 .userName{
