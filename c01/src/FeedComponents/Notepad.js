@@ -22,14 +22,14 @@ const Notepad = () => {
 
 // fetch Tasks 
 const fetchTasks = async() => {
-  const res = await fetch('http://localhost:5000/tasks')
+  const res = await fetch('http://localhost:3000/tasks')
   const data = await res.json()
 
   return data
 }
 // fetch Task 
 const fetchTask = async(id) => {
-  const res = await fetch(`http://localhost:5000/tasks/${id}`)
+  const res = await fetch(`http://localhost:3000/tasks/${id}`)
   const data = await res.json()
 
   return data
@@ -38,7 +38,7 @@ const fetchTask = async(id) => {
 // Add Task
 const addTask = async (task) => {
 
-  const res = await fetch(`http://localhost:5000/tasks/`,
+  const res = await fetch(`http://localhost:3000/tasks/`,
   {
     method: 'POST',
     headers: {
@@ -57,7 +57,7 @@ const addTask = async (task) => {
 
 // Delete Task
 const deleteTask = async (id) => {
-  await fetch(`http://localhost:5000/tasks/${id}`,
+  await fetch(`http://localhost:3000/tasks/${id}`,
    {
      method: 'DELETE'
 
@@ -72,7 +72,7 @@ const toggleReminder = async (id) => {
   const updTask= { ...taskToToggle,
   reminder: !taskToToggle.reminder }
 
-  const res = await fetch(`http://localhost:5000/tasks/${id}`, {
+  const res = await fetch(`http://localhost:3000/tasks/${id}`, {
     method:'PUT',
     headers: {
       'content-type': 'application/json'
@@ -100,7 +100,7 @@ const toggleReminder = async (id) => {
       />
     
       <Route 
-       path='/' 
+       path='/feed' 
        exact 
        render={(props) => (
         <>
