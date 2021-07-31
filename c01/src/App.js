@@ -10,7 +10,6 @@ import Nav from './NavbarComponents/Nav'
 import Feed from './FeedComponents/Feed';
 import NewVideo from './CourseUploadComponents/NewUpload/NewUploadComponent'
 import Elearning from './ELearningComponents/ELearning.js'
-import UploadedAssignments from './CourseUploadComponents/ViewUploadedAssignments/ViewUploadedAssignments.js'
 import ChatRoom from './ChatRoomComponents/ChatRoomComponent'
 import ResultPage from './NavbarComponents/SearchComponent/ResultPage'
 import { useState, useEffect } from 'react'
@@ -36,7 +35,6 @@ function App() {
         <Route path="/feed" component={Feed} />
         <Route path="/profile_edit" component={ProfileEditForm} />
         <Route path="/adminpage" component={AdminPage} />
-        <AdminRouter />
         <Route path="/partner_register" component={PartnerRegistrationForm} />
         <Route path="/company_register" component={CompanyForm} />
         <Route path="/new_upload_video" component={NewVideo}/>
