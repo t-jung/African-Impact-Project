@@ -17,6 +17,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 
+
 import './CourseUploadComponent.css'
 
 const cardStyles = makeStyles((theme) => ({
@@ -92,7 +93,6 @@ const CourseCard = (props) => {
             </CardContent>
             <CardActions
                 disableSpacing>
-
                 {videoInfo.isAssignment === true ? 
                     <IconButton
                         className={[classes.expand, classes.action]}

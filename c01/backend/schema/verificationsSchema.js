@@ -10,6 +10,14 @@ const verificationsSchema = new Schema({
     userType:{
         type: String,
         require: true
+    },
+    name: {
+        type: String,
+        require: true
+    },
+    link: {
+        type: String,
+        website: true
     }
 });
 

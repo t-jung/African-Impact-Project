@@ -51,6 +51,8 @@ export const ReportCard = (props) => {
                         <div>
                             <CardContent>
                                 <Typography style={{fontWeight: 700}}>
+
+
                                     {props.reporter} to {props.reported}
                                 </Typography>
                                 <Typography noWrap>
@@ -66,8 +68,9 @@ export const ReportCard = (props) => {
                         alignItems="center">
                         <CardActions alignself="flex-end">
                             <div class="admin-cardBtn admin-stickBottom">
-                                <Button size="small">Ban</Button>
-                                <Button size="small">Ignore</Button>
+                                <Button size="small" onClick={() => {props.axiosSetReport(props.reported, props.reportedType, props.id)}}>Ban</Button>
+                                <Button size="small" onClick={() => {props.axiosDeleteReport(props.id)}}>Ignore</Button>
+
                             </div>
                         </CardActions>
                     </Grid>

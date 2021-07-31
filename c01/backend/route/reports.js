@@ -26,7 +26,7 @@ async(req, res) =>{
     newReport.reporter = req.body.reporter;
     newReport.reporterType = req.body.reporterType;
     newReport.reported = req.body.reported;
-    newReport.reportedType = req.body.reported; 
+    newReport.reportedType = req.body.reportedType; 
     newReport.reason = req.body.reason;
     await newReport.save()
     .then(() => res.json("report Added!"));
@@ -35,20 +35,22 @@ async(req, res) =>{
 router.post("/ban",
 async(req, res) =>{
     let type = req.body.reportedType;
-    let id = req.body.id;
+    let email = req.body.reported;
+
+    console.log(req.body);
 
     if (type === "company"){
-        let company = await Company.findById(id);
+        let company = await Company.findOne({email});
         if(!company) return res.status(404).json("Company does not exist");
         company.status = "banned";
         await company.save();
     } else if (type === "user") {
-        let user = await User.findById(id);
+        let user = await User.findOne({email});
         if(!user) return res.status(404).json("User does not exist");
         user.status = "banned";
         await user.save();
     } else if (type === "partner"){
-        let partner = await Partner.findById(id);
+        let partner = await Partner.findOne({email});
         if(!partner) return res.status(404).json("Partner does not exist");
         partner.status = 'banned';
         await partner.save();

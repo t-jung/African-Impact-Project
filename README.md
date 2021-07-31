@@ -3,14 +3,15 @@ The motivation of this project is to create a platform for entrepreneurs, compan
 
 ## Installation 
 ### How to Run
-TODO.
+- Front-end (in /c01): npm start 
+- Back-end (in /c01/backend): node server
+- Socket (in /c01/backend/socket): node socket.js
 
 ### Required Tools / Programs
 - MongoDB
 - ExpressJS
 - React
 - Node
-- Docker
 
 ## Contributions
 We will be contributing to the development branch and then to the master branch.

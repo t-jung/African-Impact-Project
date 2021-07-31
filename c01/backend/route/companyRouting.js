@@ -134,7 +134,7 @@ async(req,res)=>{
     }
 });
 
-router.get("/partner_view_name/:company_email",
+router.get("/partner_view_email/:company_email",
 partner_authentication,
 async(req,res)=>{
     try{
@@ -155,7 +155,7 @@ router.get("/show_company_info_id/:company_id",
 async(req,res)=>{
     try {
         let companyID = req.params.company_id;
-        let company = await Company.findById(companyID).select(['-password','-pitch_decks','-financials','-MCs','-founding_team']);
+        let company = await Company.findById(companyID).select('-password');
         res.json(company);       
     } catch (error) {
         console.error(error);
@@ -181,7 +181,8 @@ async(req,res)=>{
     try {
         let email = req.params.company_email;
         let company = await Company.findOne({email:email}).select(['-password','-pitch_decks','-financials','-MCs','-founding_team']);
-        similar_company = await recommendation(company.tags);
+
+        similar_company = await recommendation(company.tags,email);
         console.log(similar_company);
         let result = {
             "name":company.name,
@@ -204,9 +205,13 @@ async(req,res)=>{
 
 
 // KNN algorithm
-async function recommendation(tags) {
+async function recommendation(tags,email) {
     try {
-        let companies = await Company.find().select("-password");
+        let company = await Company.find().select("-password");
+        let companies = await company.filter(
+            (single_company) => single_company.email !== email 
+        )
+        console.log(companies);
         let k_nearest = [];
         let company_email = [];
         for(const company of companies){
@@ -236,11 +241,14 @@ async function recommendation(tags) {
         for(let i = number; i >=0; i --){
             for(let j = 0; j < k_nearest.length - 1; j++){
                 if(k_nearest[j]==i) reco_company.push(company_email[j]);
-                if(reco_company.lenght>=5)
-                    return reco_company;
             }
         }
-        return reco_company;
+        let result = []
+        for(let j=0; j < 5; j++) {
+            result.push(reco_company[j]);
+        }
+        
+        return result;
     } catch (error) {
         console.error(error);
         return res.status(500).json("Server error.");
