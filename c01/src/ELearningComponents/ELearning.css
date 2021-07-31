@@ -16,3 +16,18 @@
     background-color: #ee9f9f;
     margin: 5px;
 }
+
+.elearning-comment-container{
+    padding: 5%;
+    width: 80%;
+    margin: 5vw;
+}
+
+.elearning-postBox{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+  }

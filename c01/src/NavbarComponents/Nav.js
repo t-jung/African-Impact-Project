@@ -44,6 +44,9 @@ function Nav(props) {
             <Link class="nav_padding" style={navStyle} to='/Landing'>
             <li> Elearning</li>
             </Link>
+            <Link class="nav_padding" style={navStyle} to='/chatroom'>
+            <li> Chatroom</li>
+            </Link>
         </ul>
     </nav>
   );
