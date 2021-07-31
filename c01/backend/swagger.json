@@ -1,0 +1,1663 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "African Impact Challenge",
+      "description": "",
+      "version": "1.0"
+    },
+    "basePath":"/api",
+    "produces": ["application/json"],
+    "paths": {
+      "/search/all_result":{
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "sprint3-4",
+          "tags": ["/api/search"],
+          "description": "Get all the users, companys, partners.",
+          "responses": {}
+        }
+      },
+      "/search/{search_key}":{
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "sprint3-5",
+          "tags": ["/api/search"],
+          "description": "Get the users, companys, partners by the corresponding search key.",
+          "parameters": [
+            {"name":"search_key","in":"path","required":true}
+          ],
+          "responses": {}
+        }
+      },
+      "/company/change_company_password": {
+        "put": {
+          "x-swagger-router-controller": "home",
+          "operationId": "1",
+          "tags": ["/api/company"],
+          "description": "Changing the company's password.",
+          "parameters": [
+            {"name":"authentication-token","in":"header","required":true},
+            {"name":"request body","in":"body","schema":{
+              "type":"object",
+              "properties":{
+                "newPassword":{
+                  "type":"string",
+                  "required":true
+                }
+              }
+            }}
+          ],
+          "responses": {}
+        }
+      },
+      "/company/change_company_info": {
+        "put": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "2",
+          "tags": ["/api/company"],
+          "description": "Changing company's infomation.",
+          "parameters": [
+            {"name":"authentication-token","in":"header","required":true},
+            {"name":"request body","in":"body","schema":{
+              "type":"object",
+              "properties":{
+                "name":{
+                  "type":"string",
+                  "required":true
+                },
+                "email":{
+                  "type":"string",
+                  "required":true
+                },
+                "location":{
+                  "type":"string"
+                },
+                "industry":{
+                  "type":"string"
+                },
+                "website":{
+                  "type":"string"
+                },
+                "description":{
+                  "type":"string"
+                }
+              }
+            }}
+          ],
+          "responses": {}
+        }
+      },
+      "/company/partner_view_id/{company_id}": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "sprint3-1",
+          "tags": ["/api/company"],
+          "description": "Partner could get the company's more information by its ID.",
+          "parameters": [
+            {"name":"company_id","in":"path","required":true}
+          ],
+          "responses": {}
+        }
+      },
+      "/company/partner_view_name/{company_name}": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "sprint3-2",
+          "tags": ["/api/company"],
+          "description": "Partner could get the company's more information by its name.",
+          "parameters": [
+            {"name":"company_name","in":"path","required":true}
+          ],
+          "responses": {}
+        }
+      },
+      "/company/show_company_info_email/{company_email}": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "sprint3-3",
+          "tags": ["/api/company"],
+          "description": "Get the company's information by its email.",
+          "parameters": [
+            {"name":"company_email","in":"path","required":true}
+          ],
+          "responses": {}
+        }
+      },
+      "/company/show_company_info_id/{company_id}": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "3",
+          "tags": ["/api/company"],
+          "description": "Get the company's information by its ID.",
+          "parameters": [
+            {"name":"company_id","in":"path","required":true}
+          ],
+          "responses": {}
+        }
+      },
+      "/company/show_company_info_name/{company_name}": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "4",
+          "tags": ["/api/company"],
+          "description": "Get the company's information by its name",
+          "parameters": [
+            {"name":"company_name","in":"path","required":true}
+          ],
+          "responses": {}
+        }
+      },
+      "/company/get_all_company": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "5",
+          "tags": ["/api/company"],
+          "description": "Get all companies' information.",
+          "parameters": [],
+          "responses": {}
+        }
+      },
+      "/company/login/company_email": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "6",
+          "tags": ["/api/company"],
+          "description": "Login to company account by email",
+          "parameters": [
+            {"name":"request body","in":"body","schema":{
+              "type":"object",
+              "properties":{
+                "email":{
+                  "type":"string",
+                  "required":true
+                },
+                "password":{
+                  "type":"string",
+                  "required":true
+                }}
+              }
+            }            
+          ],
+          "responses": {}
+        }
+      },
+      "/company/login/company_name": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "7",
+          "tags": ["/api/company"],
+          "description": "Login to company account by name",
+          "parameters": [
+            {"name":"request body","in":"body","schema":{
+              "type":"object",
+              "properties":{
+                "name":{
+                  "type":"string",
+                  "required":true
+                },
+                "password":{
+                  "type":"string",
+                  "required":true
+                }
+              }}
+            }            
+          ],
+          "responses": {}
+        }
+      },
+      "/company/company_register": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "8",
+          "tags": ["/api/company"],
+          "description": "Company registration",
+          "parameters":[
+            {"name":"request body","in":"body","schema":{
+              "type":"object",
+              "properties":{
+                "name":{
+                  "type":"string",
+                  "required":true
+                },
+                "email":{
+                  "type":"string",
+                  "required":true
+                },
+                "password":{
+                  "type":"string",
+                  "required":true
+                },
+                "location":{
+                  "type":"string"
+                },
+                "industry":{
+                  "type":"string"
+                },
+                "website":{
+                  "type":"string"
+                },
+                "description":{
+                  "type":"string"
+                }
+              }}
+            } 
+          ],
+          "responses": {}
+        }
+      },
+      "/users/changePassword": {
+        "put": {
+          "x-swagger-router-controller": "home",
+          "operationId": "1",
+          "tags": ["/api/users"],
+          "description": "Changing the user profile's password.",
+          "parameters": [
+            {
+            "name":"authentication-token", 
+            "in":"header", 
+            "required":true
+            },
+            {
+              "name":"request body", 
+              "in":"body", 
+              "schema":
+              {
+                "type":"object",
+                "properties":
+                {
+                  "newPassword":
+                  {
+                    "type":"string",
+                    "required":true
+                  }
+                }
+              }
+            }
+          ],
+            "responses": {}
+          }
+      },
+      "/users/updateInfo": {
+        "put": {
+           "x-swagger-router-controller": "bar",
+           "operationId": "2",
+           "tags": ["/api/users"],
+           "description": "Updating user's infomation, excluding password",
+           "parameters": [
+           {
+             "name":"authentication-token",
+             "in":"header",
+             "required":true
+           },
+           {
+             "name":"request body",
+             "in":"body",
+             "schema":
+             {
+               "type":"object",
+               "properties":
+               {
+                 "firstName": {
+                   "type": "string",
+                   "required": true,
+                   "trim": true
+                 },
+                 "lastName": {
+                   "type": "string",
+                   "required": true,
+                    "trim" :true
+                 },
+                 "gender": {
+                   "type": "string"
+                 },
+                 "phoneNumber": {
+                   "type": "string"
+                 },
+                 "address": {
+                   "type":"string"
+                 },
+                 "email": {
+                   "type": "string",
+                   "required": true, 
+                   "unique": true
+                 },
+                 "password": {
+                   "type":"string",
+                   "required": true
+                 }
+               }
+             }
+           }
+         ],
+         "responses": {}
+       }
+      },
+       "/users/getUserByEmail/{email}": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "3",
+          "tags": ["/api/users"],
+          "description": "Get the user's infromation by email.",
+          "parameters": [
+            {
+              "email": "user_email",
+              "in": "path",
+              "required": true
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/users/getUserById/{id}": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "4",
+          "tags": ["/api/users"],
+          "description": "Get the user's infromation by ID.",
+          "parameters": [
+            {
+              "id": "user_id",
+              "in": "path",
+              "required": true
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/users/admin/getAllUsers": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "5",
+          "tags": ["/api/users"],
+          "description": "Gets user information of all users.",
+          "parameters": [],
+          "responses": {}
+        }
+      },
+      "/users/login": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "6",
+          "tags": ["/api/users"],
+          "description": "Lets users log in based on email and password credentials.",
+          "parameters": [
+            {
+              "name":"request body",
+              "in":"body",
+              "schema":
+              {
+                "type":"object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "password": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/users/register": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "7",
+          "tags": ["/api/users"],
+          "description": "Lets users create an account based on inputted information. Name, email, and password are mandatory.",
+          "parameters": [
+            {
+              "name":"request body",
+              "in":"body",
+              "schema":
+              {
+                "type":"object",
+                "properties": {
+                  "firstName": {
+                    "type": "string",
+                    "required": true,
+                    "trim": true
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "required":true,
+                    "trim": true
+                  },
+                  "gender": {
+                    "type": "string"
+                  },
+                  "phoneNumber": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string",
+                    "required": true,
+                    "unique": true
+                  },
+                  "password": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/users/delete/{id}": {
+        "delete": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "8",
+          "tags": ["/api/users"],
+          "description": "Deletes user specified from ID in database.",
+          "parameters": [
+            {
+              "name": "user_id",
+              "in": "path",
+              "required": true
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/users/follow":{
+        "put": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "9",
+          "tags": ["/api/users"],
+          "description": "Follow a particular user by their email.",
+          "parameters": [
+            {"name":"authentication-token","in":"header","required":true},
+            {
+              "name":"request body",
+              "in":"body",
+              "schema":
+              {
+                "type":"object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/users/unfollow":{
+        "put": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "10",
+          "tags": ["/api/users"],
+          "description": "Unfollow a particular user by their email.",
+          "parameters": [
+            {"name":"authentication-token","in":"header","required":true},
+            {
+              "name":"request body",
+              "in":"body",
+              "schema":
+              {
+                "type":"object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {}
+        }
+      },
+        "/users/getUserPosts/{email}":{
+          "post": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "11",
+            "tags": ["/api/users"],
+            "description": "Get user all the posts from a user by their email.",
+            "parameters": [
+              {
+                "name":"request body",
+                "in":"body",
+                "schema":
+                {
+                  "type":"object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "required": true
+                    }
+                  }
+                }
+              }
+            ],
+            "responses": {}
+          }
+        },
+        "/users/createComment":{
+          "post": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "12",
+            "tags": ["/api/users"],
+            "description": "Create comment under a certain post.",
+            "parameters": [
+              {
+                "name":"request body",
+                "in":"body",
+                "schema":
+                {
+                  "type":"object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "required": true
+                    },
+                    "postId": {
+                      "type": "string",
+                      "required": true
+                    },
+                    "text": {
+                      "type": "string",
+                      "required": true
+                    }
+                  }
+                }
+              }
+            ],
+            "responses": {}
+          }
+        },
+        "/users/createPost":{
+          "post": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "13",
+            "tags": ["/api/users"],
+            "description": "Create a post.",
+            "parameters": [
+              {
+                "name":"request body",
+                "in":"body",
+                "schema":
+                {
+                  "type":"object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "required": true
+                    },
+                    "text": {
+                      "type": "string",
+                      "required": true
+                    }
+                  }
+                }
+              }
+            ],
+            "responses": {}
+          }
+        },
+        "/users/getCommentByPost/{post}":{
+          "post": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "14",
+            "tags": ["/api/users"],
+            "description": "Get comments for a particular post.",
+            "parameters": [
+              {"name":"post","in":"path","required":true}      
+            ],
+            "responses": {}
+          }
+        },
+        "/users/likePost":{
+          "post": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "15",
+            "tags": ["/api/users"],
+            "description": "Likes a post. PostId is the MongoDB id for the post object. Email is the email of the account which is liking the post. Liking a liked post already will return 200.",
+            "parameters": [
+              {
+                "name":"request body",
+                "in":"body",
+                "schema":
+                {
+                  "type":"object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "required": true
+                    },
+                    "postId": {
+                      "type": "string",
+                      "required": true
+                    }
+                  }
+                }
+              }
+            ],
+            "responses": {}
+          }
+        },
+        "/users/unlikePost":{
+          "post": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "16",
+            "tags": ["/api/users"],
+            "description": "Unlikes a post. PostId is the MongoDB id for the post object. Email is the email of the account which is unliking the post. Unliking a post which the user did not like will simply do nothing.",
+            "parameters": [
+              {
+                "name":"request body",
+                "in":"body",
+                "schema":
+                {
+                  "type":"object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "required": true
+                    },
+                    "postId": {
+                      "type": "string",
+                      "required": true
+                    }
+                  }
+                }
+              }
+            ],
+            "responses": {}
+          }
+        },
+        "/users/getPost": {
+          "get": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "17",
+            "tags": ["/api/users"],
+            "description": "Get all the users who liked a post.",
+            "parameters": [
+              {
+                "name": "postId",
+                "in": "path",
+                "required": true
+              }
+            ],
+            "responses": {}
+          }
+        },
+        "/users/notes/addNote": {
+          "post": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "18",
+            "tags": ["/api/users"],
+            "description": "Adds a note to user's notes. Overwrites old notes.",
+            "parameters": [
+              {
+                "name": "request body",
+                "in": "body",
+                "schema" : {
+                  "type": "object",
+                  "properties":{
+                  "email": {
+                    "type": "string",
+                    "require": true
+                  },
+                  "notes": {
+                    "type" : "string"
+                }
+              }
+              }
+            }
+            ],
+            "responses": {}
+          }
+        },
+        "/users/notes/getNotes": {
+          "get": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "19",
+            "tags": ["/api/users"],
+            "description": "Gets user notes.",
+            "parameters": [
+              {
+                "name": "userEmail",
+                "in": "path",
+                  "require" : true
+            }
+            ],
+            "responses": {}
+          }
+        },
+        "/users/notes/deleteNotes": {
+          "delete": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "20",
+            "tags": ["/api/users"],
+            "description": "Deletes user notes.",
+            "parameters": [
+              {
+                "name": "request body",
+                "in": "body",
+                "schema" : {
+                  "type": "object",
+                  "properties":{
+                  "email": {
+                    "type": "string",
+                    "require": true
+                  }
+              }
+              }
+            }
+            ],
+            "responses": {}
+          }
+        },
+      "/partner/change_partner_password": {
+        "put": {
+          "x-swagger-router-controller": "home",
+          "operationId": "1",
+          "tags": ["/api/partner"],
+          "description": "Changing the partner profile's password.",
+          "parameters": [
+            {
+            "name":"authentication-token", 
+            "in":"header", 
+            "required":true
+            },
+            {
+              "name":"request body", 
+              "in":"body", 
+              "schema":
+              {
+                "type":"object",
+                "properties":
+                {
+                  "newPassword":
+                  {
+                    "type":"string",
+                    "required":true
+                  }
+                }
+              }
+            }
+          ],
+            "responses": {}
+          }
+       },
+       "/partner/change_partner_info": {
+         "put": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "2",
+            "tags": ["/api/partner"],
+            "description": "Updating partner's infomation.",
+            "parameters": [
+            {
+              "name":"authentication-token",
+              "in":"header",
+              "required":true
+            },
+            {
+              "name":"request body",
+              "in":"body",
+              "schema":
+              {
+                "type":"object",
+                "properties":
+                {
+                  "name": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "email": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "company": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "phone_number": {
+                    "type":"string",
+                    "required": true
+                  },
+                  "address": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "fax": {
+                    "type":"string"
+                  },
+                  "investing_area": {
+                    "type":"string"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/partner/show_partner_info_id/{partner_email}": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "sprint3-6",
+          "tags": ["/api/partner"],
+          "description": "Get the partner's infromation by email.",
+          "parameters": [
+            {
+              "name": "partner_email",
+              "in": "path",
+              "required": true
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/partner/show_partner_info_id/{partner_id}": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "3",
+          "tags": ["/api/partner"],
+          "description": "Get the partner's infromation by ID.",
+          "parameters": [
+            {
+              "name": "partner_id",
+              "in": "path",
+              "required": true
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/partner/show_partner_info_name/{partner_name}": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "4",
+          "tags": ["/api/partner"],
+          "description": "Get the partner's infromation by name.",
+          "parameters": [
+            {
+              "name": "partner_name",
+              "in": "path",
+              "required": true
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/partner/get_all_partner": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "5",
+          "tags": ["/api/partner"],
+          "description": "Get all partner information.",
+          "parameters": [],
+          "responses": {}
+        }
+      },
+      "/partner/login/partner_name": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "6",
+          "tags": ["/api/partner"],
+          "description": "Login to partner account by name.",
+          "parameters": [
+            {
+              "name":"request body",
+              "in":"body",
+              "schema":
+              {
+                "type":"object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "password": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/partner/login/partner_email": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "7",
+          "tags": ["/api/partner"],
+          "description": "Lets partner log in using email.",
+          "parameters": [
+            {
+              "name":"request body",
+              "in":"body",
+              "schema":
+              {
+                "type":"object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "password": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/partner/partner_register": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "8",
+          "tags": ["/api/partner"],
+          "description": "Lets partner create an account.",
+          "parameters": [
+            {
+              "name":"request body",
+              "in":"body",
+              "schema":
+              {
+                "type":"object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "password": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "email": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "company": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "phone_number": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "address": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "fax": {
+                    "type": "string"
+                  },
+                  "investing_area": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/reports/": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "1",
+          "tags": ["/api/reports"],
+          "description": "Lets admin views all the reports made from one user to another.",
+          "parameters": [],
+          "responses": {}
+        }
+      },
+      "/reports/add": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "2",
+          "tags": ["/api/reports"],
+          "description": "Creates a report and adds it to database.",
+          "parameters": [
+            {
+              "name":"request body",
+              "in":"body",
+              "schema":
+              {
+                "type":"object",
+                "properties": {
+                  "reporter": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "reporterType": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "reported": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "reportedType": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "reason": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/reports/ban": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "3",
+          "tags": ["/api/reports"],
+          "description": "Bans a specific user.",
+          "parameters": [
+            {
+              "name":"request body",
+              "in":"body",
+              "schema":
+              {
+                "type":"object",
+                "properties": {
+                  "email": {
+                  "reportedType": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "id": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          }],
+          "responses": {}
+        }
+      },
+      "/reports/unban": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "4",
+          "tags": ["/api/reports"],
+          "description": "Unbans a specific user.",
+          "parameters": [
+            {
+              "name":"request body",
+              "in":"body",
+              "schema":
+              {
+                "type":"object",
+                "properties": {
+                  "reportedType": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "id": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/reports/{id}": {
+        "delete": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "5",
+          "tags": ["/api/reports"],
+          "description": "Deletes a report.",
+          "parameters": [
+            {
+              "id": "id",
+              "in": "path",
+              "required": true
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/verification/": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "1",
+          "tags": ["/api/verification"],
+          "description": "Looks at all verification requests.",
+          "parameters": [],
+          "responses": {}
+        }
+      },
+      "/verification/{id}": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "2",
+          "tags": ["/api/verification"],
+          "description": "Looks at a specific verification request.",
+          "parameters": [
+            {
+              "id": "id",
+              "in": "path",
+              "required": true
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/verification/add": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "3",
+          "tags": ["/api/verification"],
+          "description": "Adds verification request to database.",
+          "parameters": [
+            {
+              "name":"request body",
+              "in":"body",
+              "schema":
+              {
+                "type":"object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "userType": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/verification/verifyUser": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "4",
+          "tags": ["/api/verification"],
+          "description": "Verifies a user.",
+          "parameters": [
+            {
+              "name":"request body",
+              "in":"body",
+              "schema":
+              {
+                "type":"object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "reportedType": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/verification/delete/{id}": {
+        "post": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "5",
+          "tags": ["/api/verification"],
+          "description": "Deletes a verification request.",
+          "parameters": [
+            {
+              "id": "id",
+              "in": "path",
+              "required": true
+            }
+          ],
+          "responses": {}
+        }
+      },
+      "/videos/updateDescription/{id}": {
+        "put": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "1",
+          "tags": ["/api/videos"],
+          "description": "Allows admin to update the description of a video.",
+          "parameters": [
+            {
+              "id": "id",
+              "in": "path",
+              "required": true
+            },
+            {
+              "name":"request body", 
+              "in":"body", 
+              "schema":
+              {
+                "type":"object",
+                "properties":
+                {
+                  "description":
+                  {
+                    "type":"string"
+                  }
+                }
+              }
+            }
+          ],
+            "responses": {}
+          }
+    },
+    "/videos/updateTags/{id}": {
+      "put": {
+        "x-swagger-router-controller": "bar",
+        "operationId": "2",
+        "tags": ["/api/videos"],
+        "description": "Allows admin to update the tags of a video.",
+        "parameters": [
+          {
+            "id": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name":"request body", 
+            "in":"body", 
+            "schema":
+            {
+              "type":"object",
+              "properties":
+              {
+                "tags":
+                {
+                  "type":["string"]
+                }
+              }
+            }
+          }
+        ],
+          "responses": {}
+        }
+      },
+        "/videos/likeVideo/{id}": {
+          "put": {
+            "x-swagger-router-controller": "bar",
+            "operationId": "3",
+            "tags": ["/api/videos"],
+            "description": "Allows user to like a video, increasing its like count.",
+            "parameters": [
+              {
+                "id": "id",
+                "in": "path",
+                "required": true
+              }
+            ],
+              "responses": {}
+            }
+      },
+      "/videos/getVideoById/{id}": {
+        "get": {
+          "x-swagger-router-controller": "bar",
+          "operationId": "4",
+          "tags": ["/api/videos"],
+          "description": "Gets the video specified in URL.",
+          "parameters": [
+            {
+              "id": "id",
+              "in": "path",
+              "required": true
+            }
+          ],
+            "responses": {}
+          }
+    },
+    "/videos/admin/getAllVideos/": {
+      "get": {
+        "x-swagger-router-controller": "bar",
+        "operationId": "5",
+        "tags": ["/api/videos"],
+        "description": "Allows admin to get all videos in DB.",
+          "responses": {}
+        }
+  },
+  "/videos/uploadVideo/": {
+    "post": {
+      "x-swagger-router-controller": "bar",
+      "operationId": "6",
+      "tags": ["/api/videos"],
+      "description": "Allows admin to upload a video to the database.",
+      "parameters": [
+        {
+          "name":"request body", 
+          "in":"body", 
+          "schema":
+          {
+            "type":"object",
+            "properties":
+            {
+              "title":
+              {
+                "type": "string",
+                "require": true
+              },
+              "link":
+              {
+                "type": "string",
+                "require": true
+
+              },
+              "description":
+              {
+                "type":"string"
+              },
+              "uploader":
+              {
+                "type": "string",
+                "require": true
+              },
+              "uploadDate":
+              {
+                "type": "date"
+              },
+              "tags":
+              {
+                "type": ["string"]
+              },
+              "isAssignment":
+              {
+                "type":"boolean"
+              }
+            }
+          }
+        }
+      ],
+        "responses": {}
+      }
+},
+"/videos/delete/{id}": {
+  "delete": {
+    "x-swagger-router-controller": "bar",
+    "operationId": "7",
+    "tags": ["/api/videos"],
+    "description": "Allows admin to delete a video.",
+    "parameters": [
+      {
+        "id": "id",
+        "in": "path",
+        "required": true
+      }
+    ],
+      "responses": {}
+    }
+},
+"/videos/createComment/{id}": {
+  "post": {
+    "x-swagger-router-controller": "bar",
+    "operationId": "8",
+    "tags": ["/api/videos"],
+    "description": "Allows users to create a comment on a video.",
+    "parameters": [
+      {
+        "id": "id",
+        "in": "path",
+        "required": true
+      },
+      {
+        "name":"request body", 
+        "in":"body", 
+        "schema":
+      {
+        "type": "object",
+        "properties": {
+        "commenter":
+              {
+                "type": "string",
+                "require": true
+              },
+        "date":
+              {
+                "type": "date"
+              },
+              "text":
+              {
+                "type": "string"
+              }
+            }
+          }
+        }
+    ],
+      "responses": {}
+    }
+},
+"/videos/getAllComments/:id": {
+  "get": {
+    "x-swagger-router-controller": "bar",
+    "operationId": "9",
+    "tags": ["/api/videos"],
+    "description": "Gets all comments on a video.",
+    "parameters": [
+      {
+        "id": "id",
+        "in": "path",
+        "required": true
+      }
+    ],
+      "responses": {}
+    }
+},
+"/videos/uploadDeliverable/": {
+  "post": {
+    "x-swagger-router-controller": "bar",
+    "operationId": "1",
+    "tags": ["/api/videos"],
+    "description": "Allows users to upload deliverables to an assignment. 'uploader' is the user who is uploading the deliverable. 'video' is the ObjectId for the Video object which is an assignment.",
+    "parameters": [
+      {
+        "name":"request body", 
+        "in":"body", 
+        "schema":
+        {
+          "type":"object",
+          "properties":
+          {
+            "uploader":
+            {
+              "type": "string",
+              "require": true
+            },
+            "video":
+            {
+              "type": "string",
+              "require": true
+            }
+          }
+        }
+      }
+    ],
+      "responses": {}
+    }
+},
+"/videos/deleteDeliverables/": {
+  "post": {
+    "x-swagger-router-controller": "bar",
+    "operationId": "2",
+    "tags": ["/api/videos"],
+    "description": "Removes all deliverable entries for a specific video. Currently does not actually remove the uploaded submissions, but does allow them to be overwritten.'video' is the ObjectId for the Video object which is an assignment.",
+    "parameters": [
+      {
+        "name":"request body", 
+        "in":"body", 
+        "schema":
+        {
+          "type":"object",
+          "properties":
+          {
+            "video":
+            {
+              "type": "string",
+              "require": true
+            }
+          }
+        }
+      }
+    ],
+      "responses": {}
+    }
+},
+"/videos/getDeliverables/:id": {
+  "get": {
+    "x-swagger-router-controller": "bar",
+    "operationId": "3",
+    "tags": ["/api/videos"],
+    "description": "Returns a list of JSON objects containing the name of the deliverable uploaded and the user who uploaded it. 'id' is the ObjectId of a Video Object, which is an assignment.",
+    "parameters": [
+      {
+        "id": "id",
+        "in": "path",
+        "required": true
+      }
+    ],
+      "responses": {}
+    }
+},
+"/videos/downloadDeliverable/:user/:id": {
+  "get": {
+    "x-swagger-router-controller": "bar",
+    "operationId": "4",
+    "tags": ["/api/videos"],
+    "description": "For a given video objectId `id`, and a given `user`, return their deliverable which is stored on the servers file system. Undefined behavior if not found.",
+    "parameters": [
+      {
+        "id": "user",
+        "in": "path",
+        "required": true
+      },
+      {
+        "id": "id",
+        "in": "path",
+        "required": true
+      }
+    ],
+      "responses": {}
+    }
+},
+"/chatroom/conversations/{userId}": {
+  "get": {
+    "x-swagger-router-controller": "bar",
+    "operationId": "0",
+    "tags": ["/api/chatroom"],
+    "description": "Gets conversation of a user.",
+    "parameters": [
+      {
+        "name": "userId",
+        "in": "path",
+        "required": true
+      }
+    ],
+      "responses": {}
+    }
+},
+"/chatroom/conversations/": {
+  "post": {
+    "x-swagger-router-controller": "bar",
+    "operationId": "1",
+    "tags": ["/api/chatroom"],
+    "description": "Creates a conversation between two users.",
+    "parameters": [
+      {
+        "name":"request body", 
+        "in":"body", 
+        "schema":
+          {
+            "type": "object",
+            "properties": {
+              "senderId": {
+                "type": "string",
+                "require": true
+              },
+              "receiverId": {
+                "type": "string",
+                "require": true
+              }
+            }
+          }
+        }
+      ],
+      "responses": {}
+    }
+  },
+  "/chatroom/messages/{conversationId}": {
+    "get": {
+      "x-swagger-router-controller": "bar",
+      "operationId": "2",
+      "tags": ["/api/chatroom"],
+      "description": "Gets messages of a conversation.",
+      "parameters": [
+        {
+          "name": "conversationId",
+          "in": "path",
+          "required": true
+        }
+      ],
+        "responses": {}
+      }
+  },
+  "/chatroom/messages/": {
+    "post": {
+      "x-swagger-router-controller": "bar",
+      "operationId": "3",
+      "tags": ["/api/chatroom"],
+      "description": "Saves a message.",
+      "parameters": [
+        {
+          "name":"request body", 
+          "in":"body", 
+          "schema":
+            {
+              "type": "object",
+              "properties": {
+                "conversationId": {
+                  "type": "string",
+                  "require": true
+                },
+                "sender": {
+                    "type": "string",
+                    "require": true
+                },
+                "text": {
+                    "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {}
+      }
+    }
+      
+  }
+    
+}
+
+

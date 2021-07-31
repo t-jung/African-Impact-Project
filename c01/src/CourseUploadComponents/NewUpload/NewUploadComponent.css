@@ -1,0 +1,22 @@
+.formContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+.rowContainer{
+    display: flex;
+    flex-direction: row;
+}
+
+.tagContainer{
+    height: 100;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.indivTags{
+    min-width: fit-content;
+    margin: 1%;;
+}

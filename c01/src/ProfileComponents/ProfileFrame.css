@@ -1,0 +1,216 @@
+
+.profileEdit_container{
+    display: flex; 
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: row;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.profileEdit_split {
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 100;
+    overflow-x: hidden;
+    padding-top: 400px;
+  }
+  
+
+.profileEdit_left {
+    margin-top: 5vh;
+    left: 200px;
+}
+
+.profileEdit_formContainer {
+    width: 80%;
+    right: 100px;
+}
+
+.bigContainer{
+    display: flex;
+    flex-direction: column;
+    background-color: #fffdf9;
+}
+
+.topContainer{
+    margin: 5% 5%;
+    display: flex;
+}
+
+.bottomContainer{
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.nameCard{
+    width: auto;
+    min-width:max-content;
+    display: flex;
+}
+
+@media screen and (max-width: 1127px) {
+    .nameCard{
+        flex-direction: column;
+    }
+
+    .infoCard{
+        flex-direction: column;
+        text-align: center;
+        margin: auto;
+        margin-left: auto;
+    }
+
+    .topContainer{
+        min-height: fit-content;
+        flex-direction: column;
+    }
+
+    .bottomContainer{
+        flex-direction: column;
+    }
+
+    .lessonBoard{
+        margin: 5%;
+        align-items: stretch;
+        min-width: 100vh;
+        display:flex;
+        flex-direction: row;
+    }
+
+    .lessonMargin{
+        margin: 5%;
+    }
+
+    .inputContainer{
+        flex-direction: column;
+    }
+
+    label.title{
+        min-width: fit-content;
+        text-align: center;
+    }
+}
+
+.postBoard{
+    width: 100vw;
+    margin-right: 1%;
+    margin-left: 5%;
+}
+
+.infoCard{
+    margin-left: 20%;
+}
+
+.userName{
+    text-align: center;
+}
+
+.sub{
+    margin-left: 10%;
+}
+
+.profilePicture{
+    width: 280px;
+    height: 280px;
+    border-radius: 140px;
+}
+
+.btn{
+    margin-right: 10px;
+}
+
+.btn_profile{
+    color:blueviolet;
+    width: 200px;
+}
+
+.message{
+    color: white;
+	background-color: rgb(63, 130, 255);
+}
+
+.follow{
+    color: white;
+	background-color: rgb(255, 109, 153);
+}
+
+.card {
+	background-color: #ffffff;
+	border-radius: 20px ;
+    margin-top: 0;
+}
+
+.company-card-one {
+    background-color: #a0dae0;
+}
+
+.company-card-two {
+    background-color: #c5dca0;
+}
+
+.company-card {
+    border-radius: 20px;
+    padding: 30px;
+    border-width: 10px;
+    border-color: grey;
+    margin-bottom: 5vh;
+    border: #000000;
+}
+
+.lessonBoard {
+    max-width: 25vh;
+    min-width: fit-content;
+    display: flex;
+}
+
+.lessonMargin {
+    margin-right: 5%;
+}
+
+
+.navbar{
+    width: 5rem;
+    height: 100vh;
+    position: fixed;
+}
+
+label.title{
+    min-width: 15ch;
+    text-align: right;
+    vertical-align: center;
+    margin-right: 1rem;
+}
+
+.inputContainer{
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.multiText{
+    min-height: fit-content;
+}
+
+.formContainer{
+    margin-right: 5rem;
+    margin-left: 5rem;
+}
+
+.profile-editBtn{
+    color: #E5E5E5;
+    background-color: #0b3142;
+    margin: 1%;
+}
+
+.company-recommendations{
+    margin-bottom: 5vh;
+}
+
+.company-website{
+    display: flex;
+    flex-direction: row;
+}
+
+.company-display-space{
+    margin-left: 8px;
+}

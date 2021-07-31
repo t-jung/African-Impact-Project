@@ -1,0 +1,37 @@
+/*
+input[type="text"]{
+    border-radius: 10px;
+    width: 100%;
+    border: 3px solid lightgray;
+    height: 35px; 
+}
+
+input[type="password"]{
+    border-radius: 10px;
+    width: 100%;
+    border: 3px solid lightgray;
+    height: 35px; 
+}
+
+
+input:focus{
+    outline: 0;
+    border-color: lightskyblue;
+}
+
+input[type="text"].onclick{
+    border-radius: 10px;
+    border: 2px solid lightgray;
+    height: 35px; 
+}
+
+*/
+
+.btn{
+    color: white;
+    height: 50px;
+}
+
+.btn2{
+    background-color: dimgray;    
+}

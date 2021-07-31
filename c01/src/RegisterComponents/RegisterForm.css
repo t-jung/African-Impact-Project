@@ -1,0 +1,23 @@
+
+.container {  
+      padding: 50px;  
+    background-color: lightblue;  
+  }  
+    
+.card {
+	margin-top: 60px;
+	background-color: #ffffff;
+	border-radius: 20px ;
+	padding: 40px;
+}
+
+
+
+.text{
+    border: none ;
+    border-color: transparent;
+ }
+
+.btn_REG {
+	background-color: blue;
+}

@@ -1,0 +1,66 @@
+{
+  "name": "c01",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@fontsource/roboto": "^4.4.5",
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/lab": "^4.0.0-alpha.58",
+    "@testing-library/jest-dom": "^5.12.0",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
+    "axios": "^0.21.1",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "download.js": "^1.0.0",
+    "downloadjs": "^1.4.7",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "express-validator": "^6.12.0",
+    "i": "^0.3.6",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
+    "material-ui-search-bar": "^1.0.0",
+    "mongoose": "^5.13.2",
+    "react": "^17.0.2",
+    "react-admin": "^3.16.0",
+    "react-chat-engine": "^1.10.0",
+    "react-dom": "^17.0.2",
+    "react-icons": "^4.2.0",
+    "react-native": "^0.64.2",
+    "react-pro-sidebar": "^0.6.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "react-youtube": "^7.13.1",
+    "socket.io": "^4.0.1",
+    "socket.io-client": "^4.0.1",
+    "swagger-ui-express": "^4.1.6",
+    "timeago.js": "^4.0.2",
+    "web-vitals": "^1.1.2"
+  },
+  "scripts": {
+    "start": "react-scripts start && nodemon backend/socket/socket.js",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
