@@ -38,7 +38,7 @@ class Notepad extends Component {
         <textarea id="w3review" name="w3review" rows="4" cols="50">
           {this.state.notes}
         </textarea>
-        <button onClick={saveNote}>
+        <button /*onClick={saveNote}*/>
           save
         </button>
       </div>
@@ -47,7 +47,7 @@ class Notepad extends Component {
 }
 
 export default Notepad
-
+/*
 function saveNote(event) {
   event.preventDefault();
   this.setState({
@@ -57,3 +57,4 @@ function saveNote(event) {
         .then(res => console.log(res))
         .catch(err => console.log(err));
     });}
+    */
