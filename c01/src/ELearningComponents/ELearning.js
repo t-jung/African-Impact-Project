@@ -5,6 +5,8 @@ import YouTube from 'react-youtube'
 import React from 'react'
 import axios from 'axios'
 
+import SingleFeed from '../FeedComponents/SingleFeed'
+
 let email = sessionStorage.getItem('email')
 
 const currentUrl = window.location.href
@@ -23,7 +25,8 @@ class ELearning extends React.Component{
                 link:"hFoqBbqfhXo",
                 uploader:"Loading Uploader..."
             }
-        ]
+        ],
+        feedFormatted: [],
     }
 
     
@@ -48,6 +51,30 @@ class ELearning extends React.Component{
         .catch(err => {
             console.log(err);
             this.setState([]);
+        })
+
+        axios.get('http://localhost:5000/api/videos/getAllComments/'+currentID)
+        .then(res => {
+            console.log(res.data)
+            let postInfo = []
+            for(const post of res.data) {
+                axios.get('http://localhost:5000/api/users/getUserByEmail/' + post.commenter)
+                .then( resource => {
+                    console.log(resource)
+                    postInfo.push(
+                        {
+                            userName: resource.data.firstName + ' ' + resource.data.lastName,
+                            img: resource.data.profilePic,
+                            content: post.text,
+                            likes: [],
+                            comments: [],
+                            poster: post.commenter,
+                            postId: post._id
+                        })
+                    }
+                )
+                .then(() => this.setState({feedFormatted: postInfo}))
+            }
         })
     }
     videoOnReady (event) {
@@ -85,7 +112,14 @@ class ELearning extends React.Component{
                     <Upload video={this.state.videos._id} uploader={this.state.videos.uploader}/>
                     : null
                 }
-                
+                <div class="elearning-upload-container">
+                    <div>
+                        <PostBox/>
+                        <div>
+                            <SingleFeed feedList={this.state.feedFormatted}/>
+                        </div>
+                    </div>
+                </div>
             </div>
             
         )
@@ -105,7 +139,39 @@ function getVideoObect(str) {
     //TODO: use id to get title
 }
 
+const PostBox = (props) => {
+    const [postItem, setPostItem] = React.useState('')
 
+    const submitPost = (e) => {
+        e.preventDefault()
+        console.log(email)
+        if(postItem.length != 0) {
+            console.log(postItem)
+
+            let data = {
+                commenter: email,
+                text: postItem
+            }
+
+            axios.post('http://localhost:5000/api/videos/createComment/' + currentID, data)
+                .then(() => {
+                    setPostItem('')
+                    alert("Posted!")
+                })
+                .catch(err => console.log(err));
+        } else {
+            alert("Cannot post empty blog!");
+        }
+        
+    }
+
+    return (
+        <div class="elearning-postBox">
+           <textarea id="userPOst" rows="2" cols="100" placeholder="Post something!" onChange={e => setPostItem(e.target.value)}></textarea>
+            <button class="btn btn_post_blog" onClick={submitPost}>  POST  </button> 
+        </div>
+    )
+}
 
 const Upload = (props) => {
 
@@ -149,7 +215,9 @@ const Upload = (props) => {
                     type='submit'
                     class="elearning-button"
                 />
+                
             </form>
+            
         </div>
     )
 }
