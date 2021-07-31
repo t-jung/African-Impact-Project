@@ -44,7 +44,7 @@ export default class ViewBannedUsers extends React.Component {
             .catch(console.log("error yes"));
         
             axios.get('http://localhost:5000/api/partner/get_all_partner')
-            .then(response => this.setState({companies:this.filterBanned(response)}))
+            .then(response => this.setState({partners: this.filterBanned(response)}))
             .catch(console.log("error yes"));
     }
 
@@ -71,7 +71,7 @@ export default class ViewBannedUsers extends React.Component {
             .catch(console.log("error yes"));
         
             axios.get('http://localhost:5000/api/partner/get_all_partner')
-            .then(response => this.setState({companies:this.filterBanned(response)}))
+            .then(response => this.setState({partners: this.filterBanned(response)}))
             .catch(console.log("error yes"));
 
         } catch (e){
@@ -81,6 +81,11 @@ export default class ViewBannedUsers extends React.Component {
     
     
     render() {
+        if(!this.state.partners && !this.state.users && !this.state.companies){
+            return (<div>
+                no Banned Users
+                </div>)
+        }
         return(
             <div>
             <List>
