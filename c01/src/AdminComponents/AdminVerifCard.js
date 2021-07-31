@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import './AdminPage.css'
 import styles from '../styles.js'
-import ReportCard from './AdminPendingReports';
 
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -11,14 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import { ThemeProvider, withStyles, makeStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import axios from 'axios';
 
-import UploadNewVideo from '../CourseUploadComponents/NewUpload/NewUploadComponent.js'
 
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import "@fontsource/roboto";
 import { Avatar, ListItemAvatar } from '@material-ui/core';
@@ -26,7 +19,7 @@ import theme from '../styles.js';
 
 const VerifCardStyled =  withStyles((theme) => ({
     root: {
-        background: theme.palette.verificationBackground.main,
+        background: theme.palette.secondaryBackground.main,
         width: '30%',
         height: 180,
         minWidth: 200,
@@ -38,6 +31,7 @@ const VerifCardStyled =  withStyles((theme) => ({
     },
 }))(Card);
 
+
 export const VerifCard = (props) => {
     return(
         <ThemeProvider theme={styles}>
@@ -48,16 +42,16 @@ export const VerifCard = (props) => {
                     justify="flex-start"
                     alignItems="stretch">
                     <Grid item xs zeroMinWidth wrap="nowrap">
-                        <div>
-                            <CardContent>
-                                <Typography style={{fontWeight: 700}}>
-                                    {props.companyName}
-                                </Typography>
-                                <Typography noWrap>
-                                    <a href={props.link}/>
-                                </Typography>
-                            </CardContent>
-                        </div>
+                    <div>
+                    <CardContent>
+                            <Typography style={{fontWeight: 700}}>
+                                {props.name} ({props.userType})
+                            </Typography>
+                            <Typography noWrap>
+                                {props.link}
+                            </Typography>
+                        </CardContent>
+                    </div>
                     </Grid>
                     <Grid item
                         container
@@ -66,8 +60,8 @@ export const VerifCard = (props) => {
                         alignItems="center">
                         <CardActions alignself="flex-end">
                             <div class="admin-cardBtn admin-stickBottom">
-                                <Button size="small">Approve</Button>
-                                <Button size="small">Disapprove</Button>
+                                <Button size="small" onClick={() => props.axiosSetVerification(props.userType, props.id, props._id)}>Approve</Button>
+                                <Button size="small" onClick={() => props.axiosDeleteVerification(props._id)}>Disapprove</Button>
                             </div>
                         </CardActions>
                     </Grid>

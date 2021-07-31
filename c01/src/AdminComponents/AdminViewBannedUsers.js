@@ -27,31 +27,81 @@ import { Avatar, ListItemAvatar } from '@material-ui/core';
 import theme from '../styles.js';
 
 export default class ViewBannedUsers extends React.Component {
-
     state = {
-        bannedUsers: [
-            {
-                email: 'abc@gmail.com',
-                icon: <Avatar>T</Avatar>,
-                userType: 'user'
-            }
-        ]
+        users: [],
+        companies: [],
+        partners: []
+
     }
 
+    axiosGetAll = () => {
+        axios.get('http://localhost:5000/api/users/getAllUsers')
+            .then(response => this.setState({users: this.filterBanned(response)}))
+            .catch(console.log("error yes"));
+            
+            axios.get('http://localhost:5000/api/company/get_all_company')
+            .then(response => this.setState({companies: this.filterBanned(response)}))
+            .catch(console.log("error yes"));
+        
+            axios.get('http://localhost:5000/api/partner/get_all_partner')
+            .then(response => this.setState({companies:this.filterBanned(response)}))
+            .catch(console.log("error yes"));
+    }
+
+    filterBanned (response) {
+
+        // console.log(response.data);
+
+        const result = response.data.filter(item => item.status === "banned");
+
+        return result;
+    }
+
+ 
+    componentDidMount() {
+        console.log(this.state.pendingVerifications);
+        try {
+
+            axios.get('http://localhost:5000/api/users/admin/getAllUsers')
+            .then(response => this.setState({users: this.filterBanned(response)}))
+            .catch(console.log("error yes"));
+            
+            axios.get('http://localhost:5000/api/company/get_all_company')
+            .then(response => this.setState({companies: this.filterBanned(response)}))
+            .catch(console.log("error yes"));
+        
+            axios.get('http://localhost:5000/api/partner/get_all_partner')
+            .then(response => this.setState({companies:this.filterBanned(response)}))
+            .catch(console.log("error yes"));
+
+        } catch (e){
+            
+        }
+    }
+    
+    
     render() {
         return(
-        <div>
-        <p>View Banned Users</p>
+            <div>
             <List>
-                {this.state.bannedUsers.map(item => (
-                    <ListItem key={item.name}>
-                        <ListItemAvatar>{item.icon}</ListItemAvatar>
-                        <ListItemText primary={item.email}/>
-                    </ListItem>
-                ))}
-            </List>
-        </div>
-        )
+            {this.state.users.map(item => (
+                <ListItem key={item._id}>
+                    <ListItemText primary={item.email} secondary="User"/>
+                </ListItem>
+            ))}
+            {this.state.companies.map(item => (
+                <ListItem key={item._id}>
+                    <ListItemText primary={item.email} secondary="Company"/>
+                </ListItem>
+            ))}
+            {this.state.partners.map(item => (
+                <ListItem key={item._id}>
+                    <ListItemText primary={item.email} secondary="Partner"/>
+                </ListItem>
+            ))}
+        </List>
+            </div>
+        );
     }
     
 }

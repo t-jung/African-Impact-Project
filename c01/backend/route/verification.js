@@ -28,7 +28,9 @@ async(req, res) =>{
     }
     var newVerification = new Verification();
     newVerification.id = req.body.id;
+    newVerification.name = req.body.name;
     newVerification.userType = req.body.userType;
+    newVerification.link = req.body.link;
 
     await newVerification.save()
     .then(() => res.json("verification request Added!"));
@@ -36,21 +38,24 @@ async(req, res) =>{
 
 router.post("/verifyUser",
 async(req, res) =>{
-    let type = req.body.reportedType;
+    let type = req.body.type;
     let id = req.body.id;
 
     if (type === "company"){
         let company = await Company.findById(id);
         if(!company) return res.status(404).json("Company does not exist");
         company.status = "verified";
+        await company.save();
     } else if (type === "user") {
         let user = await User.findById(id);
         if(!user) return res.status(404).json("User does not exist");
         user.status = "verified";
+        await user.save();
     } else if (type === "partner"){
         let partner = await Partner.findById(id);
         if(!partner) return res.status(404).json("Partner does not exist");
         partner.status = 'verified';
+        await partner.save();
     } else {
         return res.status(400).json("Incorrect user type");
     }
