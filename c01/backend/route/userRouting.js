@@ -579,12 +579,13 @@ async(req, res) => {
 
 //Routing for adding a note to user's notes.
 
-router.post('/notes/addNote',
+router.post('/notes/addNote/:email',
 async(req, res) => {
         try {
             let notes = req.body.notes;
-            let user = await User.findOneAndUpdate({email: req.body.email})
+            let user = await User.findOne({email: req.params.email})
             user.notes = notes.toString()
+            user.save();
             return res.status(200).json("Note added successfully")
     } catch (error) {
         console.error(error);

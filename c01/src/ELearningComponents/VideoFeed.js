@@ -18,7 +18,7 @@ class VideoFeed extends Component {
                 uploadDate:"Loading Upload date...",
                 tags:"Loading tags...",
                 imgsrc:"Loading thumbnails... ",
-                id:"_0"
+                _id:"_0"
             },
             {
                 title: "Loading Title...",
@@ -28,7 +28,7 @@ class VideoFeed extends Component {
                 uploadDate:"Loading Upload date...",
                 tags:"Loading tags...",
                 imgsrc:"Loading thumbnails... ",
-                id:"_0"
+                _id:"_0"
             },
             {
                 title: "Loading Title...",
@@ -38,7 +38,7 @@ class VideoFeed extends Component {
                 uploadDate:"Loading Upload date...",
                 tags:"Loading tags...",
                 imgsrc:"Loading thumbnails... ",
-                id:"_0"
+                _id:"_0"
             },
             {
                 title: "Loading Title...",
@@ -48,7 +48,7 @@ class VideoFeed extends Component {
                 uploadDate:"Loading Upload date...",
                 tags:"Loading tags...",
                 imgsrc:"Loading thumbnails... ",
-                id:"_0"
+                _id:"_0"
             },
             {
                 title: "Loading Title...",
@@ -58,7 +58,7 @@ class VideoFeed extends Component {
                 uploadDate:"Loading Upload date...",
                 tags:"Loading tags...",
                 imgsrc:"Loading thumbnails... ",
-                id:"_0"
+                _id:"_0"
             },
             {
                 title: "Loading Title...",
@@ -68,7 +68,7 @@ class VideoFeed extends Component {
                 uploadDate:"Loading Upload date...",
                 tags:"Loading tags...",
                 imgsrc:"Loading thumbnails... ",
-                id:"_0"
+                _id:"_0"
             },
             {
                 title: "Loading Title...",
@@ -78,7 +78,7 @@ class VideoFeed extends Component {
                 uploadDate:"Loading Upload date...",
                 tags:"Loading tags...",
                 imgsrc:"Loading thumbnails... ",
-                id:"_0"
+                _id:"_0"
             },
             {
                 title: "Loading Title...",
@@ -88,7 +88,7 @@ class VideoFeed extends Component {
                 uploadDate:"Loading Upload date...",
                 tags:"Loading tags...",
                 imgsrc:"Loading thumbnails... ",
-                id:"_0"
+                _id:"_0"
             },
             {
                 title: "Loading Title...",
@@ -98,7 +98,7 @@ class VideoFeed extends Component {
                 uploadDate:"Loading Upload date...",
                 tags:"Loading tags...",
                 imgsrc:"Loading thumbnails... ",
-                id:"_0"
+                _id:"_0"
             },
             {
                 title: "Loading Title...",
@@ -108,7 +108,7 @@ class VideoFeed extends Component {
                 uploadDate:"Loading Upload date...",
                 tags:"Loading tags...",
                 imgsrc:"Loading thumbnails... ",
-                id:"_0"
+                _id:"_0"
             },
             {
                 title: "Loading Title...",
@@ -118,7 +118,7 @@ class VideoFeed extends Component {
                 uploadDate:"Loading Upload date...",
                 tags:"Loading tags...",
                 imgsrc:"Loading thumbnails... ",
-                id:"_0"
+                _id:"_0"
             },
             {
                 title: "Loading Title...",
@@ -128,7 +128,7 @@ class VideoFeed extends Component {
                 uploadDate:"Loading Upload date...",
                 tags:"Loading tags...",
                 imgsrc:"Loading thumbnails... ",
-                id:"_0"
+                _id:"_0"
             },
             {
                 title: "Loading Title...",
@@ -138,7 +138,7 @@ class VideoFeed extends Component {
                 uploadDate:"Loading Upload date...",
                 tags:"Loading tags...",
                 imgsrc:"Loading thumbnails... ",
-                id:"_0"
+                _id:"_0"
             },
             {
                 title: "Loading Title...",
@@ -148,7 +148,7 @@ class VideoFeed extends Component {
                 uploadDate:"Loading Upload date...",
                 tags:"Loading tags...",
                 imgsrc:"Loading thumbnails... ",
-                id:"_0"
+                _id:"_0"
             },
             {
                 title: "Loading Title...",
@@ -158,7 +158,7 @@ class VideoFeed extends Component {
                 uploadDate:"Loading Upload date...",
                 tags:"Loading tags...",
                 imgsrc:"Loading thumbnails... ",
-                id:"_0"
+                _id:"_0"
             },
             {
                 title: "Loading Title...",
@@ -168,7 +168,7 @@ class VideoFeed extends Component {
                 uploadDate:"Loading Upload date...",
                 tags:"Loading tags...",
                 imgsrc:"Loading thumbnails... ",
-                id:"_0"
+                _id:"_0"
             },
             {
                 title: "Loading Title...",
@@ -178,7 +178,7 @@ class VideoFeed extends Component {
                 uploadDate:"Loading Upload date...",
                 tags:"Loading tags...",
                 imgsrc:"Loading thumbnails... ",
-                id:"_0"
+                _id:"_0"
             },
             {
                 title: "Loading Title...",
@@ -188,7 +188,7 @@ class VideoFeed extends Component {
                 uploadDate:"Loading Upload date...",
                 tags:"Loading tags...",
                 imgsrc:"Loading thumbnails... ",
-                id:"_0"
+                _id:"_0"
             },
             {
                 title: "Loading Title...",
@@ -198,7 +198,7 @@ class VideoFeed extends Component {
                 uploadDate:"Loading Upload date...",
                 tags:"Loading tags...",
                 imgsrc:"Loading thumbnails... ",
-                id:"_0"
+                _id:"_0"
             },
             {
                 title: "Loading Title...",
@@ -208,7 +208,7 @@ class VideoFeed extends Component {
                 uploadDate:"Loading Upload date...",
                 tags:"Loading tags...",
                 imgsrc:"Loading thumbnails... ",
-                id:"_0"
+                _id:"_0"
             },
             {
                 title: "Loading Title...",
@@ -218,7 +218,7 @@ class VideoFeed extends Component {
                 uploadDate:"Loading Upload date...",
                 tags:"Loading tags...",
                 imgsrc:"Loading thumbnails... ",
-                id:"_0"
+                _id:"_0"
             }
            
         ]
@@ -236,9 +236,10 @@ class VideoFeed extends Component {
                     likes: item.likes,
                     uploadDate: item.uploadDate,
                     tags: item.tags,
-                    id: item.id
+                    _id: item._id
 
                 }    
+   
             })
         })
         .then(res => (
@@ -248,6 +249,7 @@ class VideoFeed extends Component {
             console.log(err);
             this.setState([]);
         })
+
     }
     videoOnReady (event) {
         event.target.pauseVideo()
@@ -282,7 +284,7 @@ class VideoFeed extends Component {
                 link={this.state.videos[0].link}
                 imgsrc={this.state.videos[0].link}
                 tags={this.state.videos[0].tags}
-                id={this.state.videos[0].id}
+                id={this.state.videos[0]._id}
             />
                         <Video 
                 title={this.state.videos[1].title}
@@ -291,7 +293,7 @@ class VideoFeed extends Component {
                 uploader={this.state.videos[1].uploader}
                 link={this.state.videos[1].link}
                 tags={this.state.videos[1].tags}
-                id={this.state.videos[1].id}
+                id={this.state.videos[1]._id}
             />
                         <Video 
                 title={this.state.videos[2].title}
@@ -300,7 +302,7 @@ class VideoFeed extends Component {
                 uploader={this.state.videos[2].uploader}
                 link={this.state.videos[2].link}
                 tags={this.state.videos[2].tags}
-                id={this.state.videos[2].id}
+                id={this.state.videos[2]._id}
             />
                         <Video 
                 title={this.state.videos[3].title}
@@ -309,7 +311,7 @@ class VideoFeed extends Component {
                 uploader={this.state.videos[3].uploader}
                 link={this.state.videos[3].link}
                 tags={this.state.videos[3].tags}
-                id={this.state.videos[3].id}
+                id={this.state.videos[3]._id}
 
             />
                         <Video 
@@ -319,7 +321,7 @@ class VideoFeed extends Component {
                 uploader={this.state.videos[4].uploader}
                 link={this.state.videos[4].link}
                 tags={this.state.videos[4].tags}
-                id={this.state.videos[4].id}
+                id={this.state.videos[4]._id}
             />
                         <Video 
                 title={this.state.videos[5].title}
@@ -328,7 +330,7 @@ class VideoFeed extends Component {
                 uploader={this.state.videos[5].uploader}
                 link={this.state.videos[5].link}
                 tags={this.state.videos[5].tags}
-                id={this.state.videos[5].id}
+                id={this.state.videos[5]._id}
             />
                         <Video 
                 title={this.state.videos[6].title}
@@ -337,7 +339,7 @@ class VideoFeed extends Component {
                 uploader={this.state.videos[6].uploader}
                 link={this.state.videos[6].link}
                 tags={this.state.videos[6].tags}
-                id={this.state.videos[6].id}
+                id={this.state.videos[6]._id}
             />
                         <Video 
                 title={this.state.videos[7].title}
@@ -346,7 +348,7 @@ class VideoFeed extends Component {
                 uploader={this.state.videos[7].uploader}
                 link={this.state.videos[7].link}
                 tags={this.state.videos[7].tags}
-                id={this.state.videos[7].id}
+                id={this.state.videos[7]._id}
             />
                         <Video 
                 title={this.state.videos[8].title}
@@ -355,7 +357,7 @@ class VideoFeed extends Component {
                 uploader={this.state.videos[8].uploader}
                 link={this.state.videos[8].link}
                 tags={this.state.videos[8].tags}
-                id={this.state.videos[8].id}
+                id={this.state.videos[8]._id}
             />
                         <Video 
                 title={this.state.videos[9].title}
@@ -364,7 +366,7 @@ class VideoFeed extends Component {
                 uploader={this.state.videos[9].uploader}
                 link={this.state.videos[9].link}
                 tags={this.state.videos[9].tags}
-                id={this.state.videos[9].id}
+                id={this.state.videos[9]._id}
             />
                                     <Video 
                 title={this.state.videos[10].title}
@@ -373,7 +375,7 @@ class VideoFeed extends Component {
                 uploader={this.state.videos[10].uploader}
                 link={this.state.videos[10].link}
                 tags={this.state.videos[10].tags}
-                id={this.state.videos[10].id}
+                id={this.state.videos[10]._id}
             />
             </div>
 

@@ -6,9 +6,7 @@ import { render } from "@testing-library/react"
 const Video = ({ title, uploader, likes, uploadDate, id, tags, link, imgsrc}) => { 
 
     var concatLink = "http://img.youtube.com/vi/"+link+"/hqdefault.jpg"
-
     var concatHref = "/elearning?id="+id+""
-    console.log(concatHref)
     return (
         
         <div className="videoVideo">
