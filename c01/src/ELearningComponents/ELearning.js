@@ -7,8 +7,14 @@ import axios from 'axios'
 
 let email = sessionStorage.getItem('email')
 
+const currentUrl = window.location.href
+const currentID = getID(currentUrl)
 
-class ELearning extends React.Component {
+
+console.log(currentID)
+
+
+class ELearning extends React.Component{
 
     state = {
         videos: [
@@ -16,131 +22,14 @@ class ELearning extends React.Component {
                 title: "Loading Title...",
                 link:"hFoqBbqfhXo",
                 uploader:"Loading Uploader..."
-            },
-            {
-                title: "Loading Title...",
-                link:"hFoqBbqfhXo",
-                uploader:"Loading Uploader..."
-            },
-            {
-                title: "Loading Title...",
-                link:"hFoqBbqfhXo",
-                uploader:"Loading Uploader..."
-            },
-            {
-                title: "Loading Title...",
-                link:"hFoqBbqfhXo",
-                uploader:"Loading Uploader..."
-            },
-            {
-                title: "Loading Title...",
-                link:"hFoqBbqfhXo",
-                uploader:"Loading Uploader..."
-            },
-            {
-                title: "Loading Title...",
-                link:"hFoqBbqfhXo",
-                uploader:"Loading Uploader..."
-            },
-            {
-                title: "Loading Title...",
-                link:"hFoqBbqfhXo",
-                uploader:"Loading Uploader..."
-            },
-            {
-                title: "Loading Title...",
-                link:"hFoqBbqfhXo",
-                uploader:"Loading Uploader..."
-            },
-            {
-                title: "Loading Title...",
-                link:"hFoqBbqfhXo",
-                uploader:"Loading Uploader..."
-            },
-            {
-                title: "Loading Title...",
-                link:"hFoqBbqfhXo",
-                uploader:"Loading Uploader..."
-            },
-            {
-                title: "Loading Title...",
-                link:"hFoqBbqfhXo",
-                uploader:"Loading Uploader..."
-            },
-            {
-                title: "Loading Title...",
-                link:"hFoqBbqfhXo",
-                uploader:"Loading Uploader..."
-            },
-            {
-                title: "Loading Title...",
-                link:"hFoqBbqfhXo",
-                uploader:"Loading Uploader..."
-            },
-            {
-                title: "Loading Title...",
-                link:"hFoqBbqfhXo",
-                uploader:"Loading Uploader..."
-            },
-            {
-                title: "Loading Title...",
-                link:"hFoqBbqfhXo",
-                uploader:"Loading Uploader..."
-            },
-            {
-                title: "Loading Title...",
-                link:"hFoqBbqfhXo",
-                uploader:"Loading Uploader..."
-            },
-            {
-                title: "Loading Title...",
-                link:"hFoqBbqfhXo",
-                uploader:"Loading Uploader..."
-            },
-            {
-                title: "Loading Title...",
-                link:"hFoqBbqfhXo",
-                uploader:"Loading Uploader..."
-            },
-            {
-                title: "Loading Title...",
-                link:"hFoqBbqfhXo",
-                uploader:"Loading Uploader..."
-            },
-            {
-                title: "Loading Title...",
-                link:"hFoqBbqfhXo",
-                uploader:"Loading Uploader..."
-            },
-            {
-                title: "Loading Title...",
-                link:"hFoqBbqfhXo",
-                uploader:"Loading Uploader..."
-            },
-            {
-                title: "Loading Title...",
-                link:"hFoqBbqfhXo",
-                uploader:"Loading Uploader..."
-            },
-            {
-                title: "Loading Title...",
-                link:"hFoqBbqfhXo",
-                uploader:"Loading Uploader..."
-            },
-            {
-                title: "Loading Title...",
-                link:"hFoqBbqfhXo",
-                uploader:"Loading Uploader..."
-            },
-            {
-                title: "Loading Title...",
-                link:"hFoqBbqfhXo",
-                uploader:"Loading Uploader..."
             }
         ]
     }
+
+    
+
     componentDidMount() {
-        axios.get(`http://localhost:5000/api/videos/admin/getAllVideos`)
+        axios.get(`http://localhost:5000/api/videos/getVideoById/`+currentID)
         .then(res => {
             this.setState({videos:res.data});
             return res.data.map(item =>{ 
@@ -152,7 +41,9 @@ class ELearning extends React.Component {
             })
         })
         .then(res => (
+            
             this.setState({state: res})
+
         ))
         .catch(err => {
             console.log(err);
@@ -162,6 +53,8 @@ class ELearning extends React.Component {
     videoOnReady (event) {
         event.target.pauseVideo()
     }
+
+        
     render() {
         const opts ={
             height: '600',
@@ -171,23 +64,25 @@ class ELearning extends React.Component {
             },
         };
         return (
+
             <div className="ElearningApp">
+                
             <Header />
                 <div className="ElearningAppPage">
                     <Sidebar />
                     <div>
-                        {this.state.videos[10].title}
+                        {this.state.videos.title}
                         <YouTube 
-                            videoId={this.state.videos[10].link}
+                            videoId={this.state.videos.link}
                             opts={opts} 
                             onReady={this._onReady} 
                         />
-                        <p> Lesson by: {this.state.videos[10].uploader}</p>
+                        <p> Lesson by: {this.state.videos.uploader}</p>
                         <hr/>
                     </div>
                 </div>
-                {this.state.videos[10].isAssignment === true ? 
-                    <Upload video={this.state.videos[10]._id} uploader={this.state.videos[10].uploader}/>
+                {this.state.videos.isAssignment === true ? 
+                    <Upload video={this.state.videos._id} uploader={this.state.videos.uploader}/>
                     : null
                 }
                 
@@ -201,6 +96,16 @@ class ELearning extends React.Component {
       }
 }
 export default ELearning
+
+function getID(str) {
+    return str.split('?id=')[1];
+}
+
+function getVideoObect(str) {
+    //TODO: use id to get title
+}
+
+
 
 const Upload = (props) => {
 
