@@ -35,7 +35,6 @@ export default class PendingBoard extends React.Component{
     .then(response => this.setState({pendingReports: response.data}))
     .catch(console.log("error yes"));
 
-    console.log(this.state);
     }
 
     axiosSetReport = (reported, reportedType, id) => {
@@ -58,8 +57,10 @@ export default class PendingBoard extends React.Component{
         console.log("help1");
     }
 
+
+
     componentDidMount() {
-        console.log(this.state.pendingReports);
+
         try {
             axios.get('http://localhost:5000/api/reports/')
         .then(response => this.setState({pendingReports: response.data}))
@@ -83,6 +84,7 @@ export default class PendingBoard extends React.Component{
                         axiosDeleteReport={this.axiosDeleteReport}
                         />
                       ))}
+
                 </Grid>
             </Grid>
          );

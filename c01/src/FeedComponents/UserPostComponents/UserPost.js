@@ -78,7 +78,7 @@ const SingleComment = (props) => {
               <Card className={classes.root}>
                   <CardHeader
                       avatar={
-                        <a href='/profile' onClick={ sessionStorage.setItem('loadUser', commentedUser.email)} >
+                        <a href='/profile' onClick={ () => {sessionStorage.setItem('loadUser', commentedUser.email); sessionStorage.setItem('loadType', commentedUser.profile_type)}} >
                           <Avatar className={classes.avatar}>
                               {commentedUser.firstName[0]}
                           </Avatar>
@@ -122,11 +122,34 @@ export default function UserPost(props) {
   const [expanded, setExpanded] = React.useState(false);
   const [comment, setComment] = React.useState('');
   const [commentList, setCommentList] = React.useState(feed.comments);
+  let likeBoolean = feed.likes.includes(email) ? true : false;
+  const [liked, setLiked] = React.useState(likeBoolean);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  console.log(feed.posterEmail)
+
+  const handleLiked = () => {
+    setLiked(!liked);
+    let data = {
+      email: email,
+      postId: props.feed.postId
+    }
+    let config = {
+      headers: {
+          'authentication-token-user': token,
+      }
+     }
+    if(liked){
+      axios.post('http://localhost:5000/api/users/unlikePost', data, config)
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+    } else {
+      axios.post('http://localhost:5000/api/users/likePost', data, config)
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+    }
+  }
 
   const submitComment = () => {
     console.log(props)
@@ -163,7 +186,7 @@ export default function UserPost(props) {
     <Card className={classes.root}>
       <CardHeader
         avatar={
-          <a href="/profile" onClick={ sessionStorage.setItem('loadUser', feed.poster) }>
+          <a href="/profile" onClick={() => {sessionStorage.setItem('loadUser', feed.email); sessionStorage.setItem('loadType', sessionStorage.getItem('type'))}}>
             <Avatar aria-label="recipe" className={classes.avatar} src={feed.img}>
               {feed.userName[0]}
             </Avatar>
@@ -183,8 +206,8 @@ export default function UserPost(props) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="like">
-          <FavoriteIcon />
+        <IconButton aria-label="like" onClick={handleLiked}>
+          {liked ? <FavoriteIcon style={{fill: "red"}} /> : <FavoriteIcon/> }
         </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />

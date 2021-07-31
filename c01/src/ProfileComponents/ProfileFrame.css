@@ -30,6 +30,7 @@
 .bigContainer{
     display: flex;
     flex-direction: column;
+    background-color: #fffdf9;
 }
 
 .topContainer{
@@ -57,6 +58,7 @@
         flex-direction: column;
         text-align: center;
         margin: auto;
+        margin-left: auto;
     }
 
     .topContainer{
@@ -97,7 +99,7 @@
 }
 
 .infoCard{
-    margin-left: 5%;
+    margin-left: 20%;
 }
 
 .userName{
@@ -137,6 +139,23 @@
 	background-color: #ffffff;
 	border-radius: 20px ;
     margin-top: 0;
+}
+
+.company-card-one {
+    background-color: #a0dae0;
+}
+
+.company-card-two {
+    background-color: #c5dca0;
+}
+
+.company-card {
+    border-radius: 20px;
+    padding: 30px;
+    border-width: 10px;
+    border-color: grey;
+    margin-bottom: 5vh;
+    border: #000000;
 }
 
 .lessonBoard {
@@ -181,4 +200,17 @@ label.title{
     color: #E5E5E5;
     background-color: #0b3142;
     margin: 1%;
+}
+
+.company-recommendations{
+    margin-bottom: 5vh;
+}
+
+.company-website{
+    display: flex;
+    flex-direction: row;
+}
+
+.company-display-space{
+    margin-left: 8px;
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route} from 'react-router-dom';
+
 import PendingBoard from './AdminPendingReports';
 import VerifBoard from './AdminPendingVerifications';
 import ViewUserList from './AdminViewUserList';

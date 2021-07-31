@@ -31,7 +31,6 @@ const VerifCardStyled =  withStyles((theme) => ({
     },
 }))(Card);
 
-
 export const VerifCard = (props) => {
     return(
         <ThemeProvider theme={styles}>
@@ -62,6 +61,7 @@ export const VerifCard = (props) => {
                             <div class="admin-cardBtn admin-stickBottom">
                                 <Button size="small" onClick={() => props.axiosSetVerification(props.userType, props.id, props._id)}>Approve</Button>
                                 <Button size="small" onClick={() => props.axiosDeleteVerification(props._id)}>Disapprove</Button>
+
                             </div>
                         </CardActions>
                     </Grid>

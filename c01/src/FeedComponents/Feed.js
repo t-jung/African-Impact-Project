@@ -5,12 +5,31 @@ import jwt_decode from "jwt-decode";
 import axios from 'axios';
 import React, { Component } from 'react';
 import { Avatar } from '@material-ui/core';
+import styles from '../styles'
+import { makeStyles } from '@material-ui/core/styles';
 
 import Nav from '../NavbarComponents/Nav.js'
 
 let token = sessionStorage.getItem('token');
 let email = sessionStorage.getItem('email');
 let type = sessionStorage.getItem('type')
+
+let classNameHolder = ['greenAvatar', 'yellowAvatar', 'pinkAvatar', 'blueAvatar']
+
+const useStyles = makeStyles((theme) => ({
+    greenAvatar:{
+      backgroundColor: styles.palette.green.main,
+      },
+      yellowAvatar:{
+          backgroundColor: styles.palette.yellowLemon.main,
+      },
+      pinkAvatar:{
+          backgroundColor: styles.palette.pink.main,
+      },
+      blueAvatar:{
+          backgroundColor: styles.palette.blue.main,
+      },
+  }));
 
 class FeedPage extends Component {
     constructor(props) {
@@ -27,11 +46,12 @@ class FeedPage extends Component {
             .then(res => {
                 console.log(email)
                 console.log('getting names')
-                console.log(res.data)
+                console.log(res)
                 let postInfo = [];
-                for(const post of res.data) {
+                for(const post of res.data[0]) {
                     axios.get('http://localhost:5000/api/users/getUserByEmail/' + post.posterEmail)
-                    .then( resource => (
+                    .then( resource => {
+                        console.log(resource)
                         postInfo.push(
                             {
                                 userName: resource.data.firstName + ' ' + resource.data.lastName,
@@ -42,7 +62,7 @@ class FeedPage extends Component {
                                 poster: post.posterEmail,
                                 postId: post._id
                             })
-                        )
+                        }
                     )
                     .then(() => this.setState({feedFormatted: postInfo}))
                 }
@@ -58,6 +78,7 @@ class FeedPage extends Component {
                     name: response.data.firstName + ' ' + response.data.lastName
                 }})
             })
+            .then(sessionStorage.setItem('name', this.state.name))
             .catch((err) => console.log(err))
         } else if (type === "Company") {
             axios.get('http://localhost:5000/api/company/show_company_info_email/' + email)
@@ -66,7 +87,7 @@ class FeedPage extends Component {
                 this.setState({user: {
                     name: response.data.name
                 }})
-            })
+            }).then(sessionStorage.setItem('name', this.state.name))
             .catch((err) => console.log(err))
         } else {
             axios.get('http://localhost:5000/api/partner/show_partner_info_email/' + email)
@@ -75,7 +96,7 @@ class FeedPage extends Component {
                 this.setState({user: {
                     name: response.data.name
                 }})
-            })
+            }).then(sessionStorage.setItem('name', this.state.name))
             .catch((err) => console.log(err))
         }
     }
@@ -97,6 +118,7 @@ function Feed(props) {
     console.log(data);
 
     const submitPost = (e) => {
+        e.preventDefault()
         console.log(email)
         if(postItem.length != 0) {
             console.log(postItem)
@@ -112,7 +134,10 @@ function Feed(props) {
             }
 
             axios.post('http://localhost:5000/api/users/createPost', data, config)
-                .then(res => console.log(res))
+                .then(() => {
+                    setPostItem('')
+                    alert("Posted!")
+                })
                 .catch(e => console.log(e));
         } else {
             alert("Cannot post empty blog!");
@@ -131,24 +156,24 @@ function Feed(props) {
         )
     }
 
-    const PostBox = () => {
-        return (
-            <div class="postBox">
-                <a href="/profile" type="button" onClick={() => {sessionStorage.setItem('loadUser', email) ; console.log(email) }}>
-                    <Avatar>{typeof props.user.name !== 'undefined' ? props.user.name[0] : 'U'}</Avatar>
-                </a>
-                <textarea id="userPOst" rows="2" cols="100" placeholder="Post something!" onChange={e => setPostItem(e.target.value)}></textarea>
-                <button class="btn btn_post_blog" onClick={submitPost}>  POST  </button>
-            </div>
-        )
-    }
+    const classes=useStyles()
+
+    const chooseClass=classes[classNameHolder[Math.floor(Math.random() * classNameHolder.length)]];
 
     return (
         <div class="conatiner_feed">
             <div class="split left">
-                <Nav user={props.user}/>
+                <Nav user={props.user} avatarClass={chooseClass}/>
                 <div class="feedSection">
-                {type === 'User' ? <PostBox/> : null}
+                <div class="postBox">
+                    <div class="feed-avatar">
+                        <a href="/profile" type="button" onClick={() => {sessionStorage.setItem('loadUser', email) ; console.log(email) }}>
+                            <Avatar className={chooseClass}>{typeof props.user.name !== 'undefined' ? props.user.name[0] : 'U'}</Avatar>
+                        </a>
+                    </div>
+                <textarea id="userPOst" rows="2" cols="100" placeholder="Post something!" onChange={e => setPostItem(e.target.value)}></textarea>
+                <button class="btn btn_post_blog" onClick={submitPost}>  POST  </button>
+            </div>
                 <div class="feed_top">
                     {typeof props.feedList !== 'undefined' ? <SingleFeed feedList={props.feedList}/> : <h5>No posts!</h5>}
                 </div>

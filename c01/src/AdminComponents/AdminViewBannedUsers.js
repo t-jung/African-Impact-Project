@@ -107,6 +107,7 @@ export default class ViewBannedUsers extends React.Component {
         </List>
             </div>
         );
+
     }
     
 }

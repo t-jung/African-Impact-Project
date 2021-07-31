@@ -53,11 +53,11 @@ export default class Login extends Component {
             axios.post('http://localhost:5000/api/company/login/company_email', userInfo)
             .then(res => {
                 console.log(res)
-            sessionStorage.setItem('token', res.data.token)
-            sessionStorage.setItem('email', this.state.email)
-            sessionStorage.setItem('type', 'Company')
-            window.location = '/feed'
-        }
+                sessionStorage.setItem('token', res.data.token)
+                sessionStorage.setItem('email', this.state.email)
+                sessionStorage.setItem('type', 'Company')
+                window.location = '/feed'
+            }
             )
             .catch(err =>{
                  console.log(err)
@@ -76,13 +76,13 @@ export default class Login extends Component {
                  }
             });
         } else {
-            axios.post('http://localhost:5000/api/login/partner_email', userInfo)
+            axios.post('http://localhost:5000/api/partner/login/partner_email', userInfo)
             .then(res => { console.log(res)
-            sessionStorage.setItem('token', res.data.token)
-            sessionStorage.setItem('type', 'Partner')
-            sessionStorage.setItem('email', this.state.email)
-                window.location("feed");
-            })
+                    sessionStorage.setItem('token', res.data.token)
+                    sessionStorage.setItem('type', 'Partner')
+                    sessionStorage.setItem('email', this.state.email)
+                    window.location = "/feed";
+                })
             .catch(err =>{
                  console.log(err)
                  if(err.response.status === 401) {
@@ -104,19 +104,6 @@ export default class Login extends Component {
     onSubmit(e) {
         e.preventDefault();
         console.log("hello")
-
-        /*
-        const userInfo = {
-            email:this.state.email,
-            password: this.state.password,
-        };
-
-        
-        axios.post('http://localhost:5000/api/user/login', userInfo)
-            .then(res => console.log(res.data))
-            .catch(e => console.log(e));
-            */
-
     } 
 
     render(){
@@ -136,7 +123,7 @@ export default class Login extends Component {
                                         onChange={(e) => {this.setState({userType: e.target.value})}}>
                                             <MenuItem value="User">User</MenuItem>
                                             <MenuItem value="Company">Company</MenuItem>
-                                            <MenuItem value="Partner">Parnter</MenuItem>
+                                            <MenuItem value="Partner">Partner</MenuItem>
                                         </Select>
                                     <div class="form-group">
                                         <label for="email"></label>

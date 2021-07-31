@@ -371,7 +371,16 @@ async(req, res) => {
                     }
                 })
                 Promise.all(foo).then((values) => {
-                    return res.status(200).json(values[0]);
+                    var filtered = values.filter(function(x) {
+                        return x !== undefined;
+                    })
+
+                    var merged = [].concat.apply([], filtered);
+                    var sorted = merged;
+                    sorted.sort(function(a,b){
+                      return new Date(b.date) - new Date(a.date);
+                    });
+                    return res.status(200).json(sorted);
                 })
 
             } else {
@@ -530,7 +539,7 @@ async(req, res) => {
                         for(const index in post.likes) {
                             let liker = post.likes[index]
                             if(liker === req.body.email){
-                                post.likes.pull("dar.liu@mail.utoronto.ca");
+                                post.likes.pull(req.body.email);
                                 await user.save();
                                 return;
                             }
@@ -571,6 +580,47 @@ async(req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json("/getLikes Server error.");
+    }
+})
+
+//Routing for adding a note to user's notes.
+
+router.post('/notes/addNote/:email',
+async(req, res) => {
+        try {
+            let notes = req.body.notes;
+            let user = await User.findOne({email: req.params.email})
+            user.notes = notes.toString()
+            user.save();
+            return res.status(200).json("Note added successfully")
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("/addNote Server error.");
+    }
+})
+
+//Gets notes of user BASED ON EMAIL
+router.get('/notes/getNotes/:email',
+async(req,res) =>{
+        try {
+            let email = req.params.email;
+            let user = await User.findOne({email:email}).select('-password');
+            return res.status(200).json(user.notes);
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json("/getNotes/ Server error.");
+        }
+    
+})
+
+router.delete('/notes/removeNotes',
+async(req,res) => {
+    try {
+        await User.findOneAndUpdate({email:req.body.email}, {notes: ""})
+        return res.status(200).json('Note removed from user notes');
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json("/removeNotes error")
     }
 })
 
