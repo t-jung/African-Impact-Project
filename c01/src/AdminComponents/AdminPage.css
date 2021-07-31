@@ -87,3 +87,7 @@
 .backArrowButton{
     color: black;
 }
+
+.userHeader{
+    font-weight: bold;
+}

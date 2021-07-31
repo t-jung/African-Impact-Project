@@ -36,6 +36,7 @@ function App() {
         <Route path="/feed" component={Feed} />
         <Route path="/profile_edit" component={ProfileEditForm} />
         <Route path="/adminpage" component={AdminPage} />
+        <AdminRouter />
         <Route path="/partner_register" component={PartnerRegistrationForm} />
         <Route path="/company_register" component={CompanyForm} />
         <Route path="/new_upload_video" component={NewVideo}/>

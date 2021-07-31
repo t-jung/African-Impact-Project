@@ -100,7 +100,7 @@ export const AdminTopBar = () => {
 
     const classes = useStyles();
     return (
-        <div>
+        <div class="admin-container">
             <div class="admin-topbar">
                 <ThemeProvider theme={styles}>
                     <Grid container direction="row" justify="space-between" alignItems="center">
