@@ -111,9 +111,6 @@ class FeedPage extends Component {
 }
 
 function Feed(props) {
-    console.log(props.feedList);
-    console.log(props.user);
-    const [searchTerm, setSearchTerm] = useState('')
     const [postItem, setPostItem] = useState('')
     let data = sessionStorage.getItem('token');
     console.log(data);

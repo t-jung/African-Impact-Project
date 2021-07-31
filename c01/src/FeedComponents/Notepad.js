@@ -1,10 +1,9 @@
 import React from 'react'
 import axios from 'axios'
 import { Component } from 'react'
+import './Notepad.css'
 
-let token = sessionStorage.getItem('token');
 let email = sessionStorage.getItem('email');
-let type = sessionStorage.getItem('type')
 
 class Notepad extends Component {
   state = {
@@ -53,7 +52,7 @@ class Notepad extends Component {
     }
     return (
       <div>
-        <textarea id="w3review" name="w3review" rows="4" cols="50"
+        <textarea class="notepad-container" id="w3review" name="w3review" rows="20" cols="32"
         onChange={this.saveNote}>
           {this.state.notes}
         </textarea>

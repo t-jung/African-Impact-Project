@@ -159,7 +159,7 @@ const ProfileUserFrame = (info) => {
     let phone = user.phoneNumber
     let description = user.description
     let follower = []
-    if(loadType === 'User') {
+    if(loadType.toLowerCase() === 'user') {
         name = user.firstName + ' ' + user.lastName
         profilePic = user.profilePic
         description = user.description
@@ -277,6 +277,10 @@ const NameCard = (props) => {
             .catch(err => console.log(err))
     }
 
+    const messageUser = () => {
+        window.location = "/chatroom"
+    }
+
     const classes = useStyles();
     console.log(props.userName);
 
@@ -294,7 +298,7 @@ const NameCard = (props) => {
                 <h5>{props.email} {typeof props.userPhone !== 'undefined' ? '|' : ''} {props.userPhone}</h5>
                 { props.show === false ? (
                     <div class="d-flex" >
-                        <button class="btn btn_profile message text-uppercase ">message</button>
+                        <button class="btn btn_profile message text-uppercase " onClick={messageUser}>message</button>
                         {loadType.toLowerCase() === 'user' ? 
                             props.followed === true ? <button class="btn btn_profile follow text-uppercase " onClick={unfollowAction} >unfollow</button> : 
                             <button class="btn btn_profile follow text-uppercase " onClick={followAction} >follow</button>
