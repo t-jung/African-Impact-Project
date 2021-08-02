@@ -19,17 +19,17 @@ let classNameHolder = ['greenAvatar', 'yellowAvatar', 'pinkAvatar', 'blueAvatar'
 
 const useStyles = makeStyles((theme) => ({
     greenAvatar:{
-      backgroundColor: styles.palette.green.main,
-      },
-      yellowAvatar:{
-          backgroundColor: styles.palette.yellowLemon.main,
-      },
-      pinkAvatar:{
-          backgroundColor: styles.palette.pink.main,
-      },
-      blueAvatar:{
-          backgroundColor: styles.palette.blue.main,
-      },
+        backgroundColor: styles.palette.green.main,
+    },
+    yellowAvatar:{
+        backgroundColor: styles.palette.yellowLemon.main,
+    },
+    pinkAvatar:{
+        backgroundColor: styles.palette.pink.main,
+    },
+    blueAvatar:{
+        backgroundColor: styles.palette.blue.main,
+    },
   }));
 
 class FeedPage extends Component {

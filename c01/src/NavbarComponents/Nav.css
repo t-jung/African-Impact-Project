@@ -27,3 +27,9 @@ nav{
     align-items: center;
     list-style: none;
   }
+
+.nav-icon-container{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
