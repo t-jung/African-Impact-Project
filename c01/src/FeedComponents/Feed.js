@@ -33,23 +33,26 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 class FeedPage extends Component {
+
     constructor(props) {
         super(props)
         this.state = {
             feedList: [],
             feedFormatted: [],
-            user: {}
+            user: {},
+            chooseClass: classNameHolder[Math.floor(Math.random() * classNameHolder.length)],
         }
     }
 
     componentDidMount() {
+        
         axios.get('http://localhost:5000/api/users/getFollowedPosts/' + email)
             .then(res => {
                 console.log(email)
                 console.log('getting names')
-                console.log(res)
+                console.log(res.data)
                 let postInfo = [];
-                for(const post of res.data[0]) {
+                for(const post of res.data) {
                     axios.get('http://localhost:5000/api/users/getUserByEmail/' + post.posterEmail)
                     .then( resource => {
                         console.log(resource)
@@ -105,7 +108,7 @@ class FeedPage extends Component {
     render() {
         console.log(this.state.feedFormatted)
         return(
-            <Feed feedList={this.state.feedFormatted} user={this.state.user}/>
+            <Feed feedList={this.state.feedFormatted} user={this.state.user} avatarClass={this.state.chooseClass}/>
         )
     }
 }
@@ -162,12 +165,12 @@ function Feed(props) {
     return (
         <div class="conatiner_feed">
             <div class="split left">
-                <Nav user={props.user} avatarClass={chooseClass}/>
+                <Nav user={props.user} avatarClass={classes[props.avatarClass]}/>
                 <div class="feedSection">
                 <div class="postBox">
                     <div class="feed-avatar">
                         <a href="/profile" type="button" onClick={() => {sessionStorage.setItem('loadUser', email) ; console.log(email) }}>
-                            <Avatar className={chooseClass}>{typeof props.user.name !== 'undefined' ? props.user.name[0] : 'U'}</Avatar>
+                            <Avatar className={classes[props.avatarClass]}>{typeof props.user.name !== 'undefined' ? props.user.name[0] : 'U'}</Avatar>
                         </a>
                     </div>
                 <textarea id="userPOst" rows="2" cols="100" placeholder="Post something!" onChange={e => setPostItem(e.target.value)}></textarea>
