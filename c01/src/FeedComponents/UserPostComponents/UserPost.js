@@ -225,8 +225,11 @@ export default function UserPost(props) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-            <textarea id="userComment" rows="2" cols="100" placeholder="Post something!" value={comment} onChange={e => setComment(e.target.value)}></textarea>
-            <button class="btn btn_post_blog" onClick={submitComment}>  POST  </button>
+          <div class="postBox">
+            <textarea id="userComment" class="postBoxStyling" rows="2" cols="150" placeholder="Post something!" value={comment} onChange={e => setComment(e.target.value)}></textarea>
+            <button class="btn btn_post_blog" onClick={submitComment}>  COMMENT  </button>
+          </div>
+            
             {feed.hasOwnProperty("comments") ? <CommentList comment={commentList}/> : <h5>No comments</h5>}
             
         </CardContent>

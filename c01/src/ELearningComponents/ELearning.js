@@ -166,8 +166,8 @@ const PostBox = (props) => {
     }
 
     return (
-        <div class="elearning-postBox">
-           <textarea id="userPOst" rows="2" cols="100" placeholder="Post something!" onChange={e => setPostItem(e.target.value)}></textarea>
+        <div class="postBox">
+           <textarea id="userPOst" class="postBoxStyling" rows="2" cols="150" placeholder="Post something!" onChange={e => setPostItem(e.target.value)}></textarea>
             <button class="btn btn_post_blog" onClick={submitPost}>  POST  </button> 
         </div>
     )

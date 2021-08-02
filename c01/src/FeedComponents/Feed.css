@@ -129,3 +129,8 @@ border-color: transparent;
 .feed-avatar{
   margin-right: 8px;
 }
+
+.postBoxStyling{
+  border-radius: 10px;
+  padding: 10px;
+}

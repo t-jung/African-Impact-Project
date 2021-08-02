@@ -129,12 +129,12 @@ function Feed(props) {
                 }
             }
 
-            let data = {
+            let dataSubmit = {
                 email: email,
                 text: postItem
             }
 
-            axios.post('http://localhost:5000/api/users/createPost', data, config)
+            axios.post('http://localhost:5000/api/users/createPost', dataSubmit, config)
                 .then(() => {
                     setPostItem('')
                     alert("Posted!")
@@ -160,8 +160,6 @@ function Feed(props) {
 
     const classes=useStyles()
 
-    const chooseClass=classes[classNameHolder[Math.floor(Math.random() * classNameHolder.length)]];
-
     return (
         <div class="conatiner_feed">
             <div class="split left">
@@ -173,7 +171,7 @@ function Feed(props) {
                             <Avatar className={classes[props.avatarClass]}>{typeof props.user.name !== 'undefined' ? props.user.name[0] : 'U'}</Avatar>
                         </a>
                     </div>
-                <textarea id="userPOst" rows="2" cols="100" placeholder="Post something!" onChange={e => setPostItem(e.target.value)}></textarea>
+                <textarea id="userPOst" class="postBoxStyling" rows="1" cols="100" placeholder="Post something!" onChange={e => setPostItem(e.target.value)}></textarea>
                 <button class="btn btn_post_blog" onClick={submitPost}>  POST  </button>
             </div>
                 <div class="feed_top">
