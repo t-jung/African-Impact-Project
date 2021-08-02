@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
-import styles from '../../styles.js'
-import './NewUploadComponent.css'
 import './NewUploadComponent.css'
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
-import { Checkbox, FormControlLabel, InputLabel } from '@material-ui/core';
-import { ThemeProvider, withStyles } from '@material-ui/styles';
+import { Checkbox } from '@material-ui/core';
+import { withStyles } from '@material-ui/styles';
 import axios from 'axios'
 
 const tagsCategories = [

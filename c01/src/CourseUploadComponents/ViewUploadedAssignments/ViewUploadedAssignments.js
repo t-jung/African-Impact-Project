@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styles from '../../styles'
 import './ViewUploadedAssignments.css'
 
-import { Avatar, ListItemAvatar, List, ListItem, ListItemText, IconButton,
+import { Avatar, List, ListItem, ListItemText, IconButton,
      Grid, Typography} from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import GetAppIcon from '@material-ui/icons/GetApp';

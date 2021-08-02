@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './AdminPage.css'
 import styles from '../styles.js'
 
@@ -7,15 +7,10 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import { ThemeProvider, withStyles, makeStyles } from '@material-ui/styles';
+import { ThemeProvider, withStyles } from '@material-ui/styles';
 import Grid from '@material-ui/core/Grid';
 
-
-
 import "@fontsource/roboto";
-import { Avatar, ListItemAvatar } from '@material-ui/core';
-import theme from '../styles.js';
 
 const VerifCardStyled =  withStyles((theme) => ({
     root: {

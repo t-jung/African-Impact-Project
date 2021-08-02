@@ -1,7 +1,6 @@
 import './Feed.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import SingleFeed from '../FeedComponents/SingleFeed.js';
-import jwt_decode from "jwt-decode";
 import axios from 'axios';
 import React, { Component } from 'react';
 import { Avatar } from '@material-ui/core';
