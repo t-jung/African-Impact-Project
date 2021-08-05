@@ -1,7 +1,5 @@
 import Avatar from "@material-ui/core/Avatar"
 import './Video.css'
-import Elearning from './ELearning'
-import { render } from "@testing-library/react"
 
 const Video = ({ title, uploader, likes, uploadDate, id, tags, link, imgsrc}) => { 
 

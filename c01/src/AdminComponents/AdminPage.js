@@ -1,13 +1,8 @@
 import React from 'react';
 import './AdminPage.css'
-
 import AdminTopBar from './AdminTopBar';
 
-
 import axios from 'axios';
-
-
-
 
 import "@fontsource/roboto";
 

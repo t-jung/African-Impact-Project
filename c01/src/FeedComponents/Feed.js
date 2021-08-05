@@ -1,7 +1,6 @@
 import './Feed.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import SingleFeed from '../FeedComponents/SingleFeed.js';
-import jwt_decode from "jwt-decode";
 import axios from 'axios';
 import React, { Component } from 'react';
 import { Avatar } from '@material-ui/core';
@@ -19,37 +18,40 @@ let classNameHolder = ['greenAvatar', 'yellowAvatar', 'pinkAvatar', 'blueAvatar'
 
 const useStyles = makeStyles((theme) => ({
     greenAvatar:{
-      backgroundColor: styles.palette.green.main,
-      },
-      yellowAvatar:{
-          backgroundColor: styles.palette.yellowLemon.main,
-      },
-      pinkAvatar:{
-          backgroundColor: styles.palette.pink.main,
-      },
-      blueAvatar:{
-          backgroundColor: styles.palette.blue.main,
-      },
+        backgroundColor: styles.palette.green.main,
+    },
+    yellowAvatar:{
+        backgroundColor: styles.palette.yellowLemon.main,
+    },
+    pinkAvatar:{
+        backgroundColor: styles.palette.pink.main,
+    },
+    blueAvatar:{
+        backgroundColor: styles.palette.blue.main,
+    },
   }));
 
 class FeedPage extends Component {
+
     constructor(props) {
         super(props)
         this.state = {
             feedList: [],
             feedFormatted: [],
-            user: {}
+            user: {},
+            chooseClass: classNameHolder[Math.floor(Math.random() * classNameHolder.length)],
         }
     }
 
     componentDidMount() {
+        
         axios.get('http://localhost:5000/api/users/getFollowedPosts/' + email)
             .then(res => {
                 console.log(email)
                 console.log('getting names')
-                console.log(res)
+                console.log(res.data)
                 let postInfo = [];
-                for(const post of res.data[0]) {
+                for(const post of res.data) {
                     axios.get('http://localhost:5000/api/users/getUserByEmail/' + post.posterEmail)
                     .then( resource => {
                         console.log(resource)
@@ -105,7 +107,7 @@ class FeedPage extends Component {
     render() {
         console.log(this.state.feedFormatted)
         return(
-            <Feed feedList={this.state.feedFormatted} user={this.state.user}/>
+            <Feed feedList={this.state.feedFormatted} user={this.state.user} avatarClass={this.state.chooseClass}/>
         )
     }
 }
@@ -126,12 +128,12 @@ function Feed(props) {
                 }
             }
 
-            let data = {
+            let dataSubmit = {
                 email: email,
                 text: postItem
             }
 
-            axios.post('http://localhost:5000/api/users/createPost', data, config)
+            axios.post('http://localhost:5000/api/users/createPost', dataSubmit, config)
                 .then(() => {
                     setPostItem('')
                     alert("Posted!")
@@ -157,20 +159,18 @@ function Feed(props) {
 
     const classes=useStyles()
 
-    const chooseClass=classes[classNameHolder[Math.floor(Math.random() * classNameHolder.length)]];
-
     return (
         <div class="conatiner_feed">
             <div class="split left">
-                <Nav user={props.user} avatarClass={chooseClass}/>
+                <Nav user={props.user} avatarClass={classes[props.avatarClass]}/>
                 <div class="feedSection">
                 <div class="postBox">
                     <div class="feed-avatar">
                         <a href="/profile" type="button" onClick={() => {sessionStorage.setItem('loadUser', email) ; console.log(email) }}>
-                            <Avatar className={chooseClass}>{typeof props.user.name !== 'undefined' ? props.user.name[0] : 'U'}</Avatar>
+                            <Avatar className={classes[props.avatarClass]}>{typeof props.user.name !== 'undefined' ? props.user.name[0] : 'U'}</Avatar>
                         </a>
                     </div>
-                <textarea id="userPOst" rows="2" cols="100" placeholder="Post something!" onChange={e => setPostItem(e.target.value)}></textarea>
+                <textarea id="userPOst" class="postBoxStyling" rows="1" cols="100" placeholder="Post something!" onChange={e => setPostItem(e.target.value)}></textarea>
                 <button class="btn btn_post_blog" onClick={submitPost}>  POST  </button>
             </div>
                 <div class="feed_top">

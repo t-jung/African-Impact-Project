@@ -12,10 +12,8 @@ import NewVideo from './CourseUploadComponents/NewUpload/NewUploadComponent'
 import Elearning from './ELearningComponents/ELearning.js'
 import ChatRoom from './ChatRoomComponents/ChatRoomComponent'
 import ResultPage from './NavbarComponents/SearchComponent/ResultPage'
-import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import ViewUploadedAssignments from './CourseUploadComponents/ViewUploadedAssignments/ViewUploadedAssignments.js';
-import AdminRouter from './AdminComponents/AdminRouter'
 import Landing from './ELearningComponents/Landing'
 function App() {
   return (
